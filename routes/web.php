@@ -16,7 +16,7 @@ use App\Http\Controllers\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/l', [GeneralController::class, 'login'])->name('login');
+Route::get('/', [UserController::class, 'dashboard'])->name('user.dashboard');
 
 
 
@@ -42,7 +42,6 @@ Route::get('login', [UserAuthenticatedSessionController::class, 'create'])->name
 Route::post('login', [UserAuthenticatedSessionController::class, 'store'])->name('login');
 
 Route::prefix('user')->group(function () {         
-    Route::group(['middleware' => 'auth:user'], function () {
         Route::get('dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
         Route::get('profile', [UserController::class, 'profile'])->name('user.profile');
         Route::post('profile', [UserController::class, 'profile'])->name('user.profile');
@@ -61,8 +60,7 @@ Route::prefix('user')->group(function () {
         // Route::get('/', [userDashboardController::class, 'home'])->name('user.home');
         // Route::get('dashboard', [userDashboardController::class, 'index'])->name('user.dashboard');
         // Route::resource('app-settings', AppSettingController::class);
-        Route::get('logout', [userController::class, 'logout'])->name('user.logout');  
-    });
+        // Route::get('logout', [userController::class, 'logout'])->name('user.logout');  
 });    
 
 // views iframe

@@ -16,4 +16,4 @@ yarn-error.log
 /.vscode
 /public/uploads/loanlead/*
 /public/uploads/documents/
-
+vendor

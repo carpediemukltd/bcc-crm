@@ -2,8 +2,8 @@
    $login = "no";
    $title = "Contact Details";
    ?>
-@extends('admin.layout.app')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <?php
    $notificationService = app('App\Services\NotificationService');
    $helperService = app('App\Services\HelperService');
@@ -15,7 +15,7 @@
       <div class="user_details_view" id="user_details_view">
          <div class="user_profile_view">
             <div class="img-holder">
-               <img class="rounded-circle " src="{{asset('assets/theme/images/35.png')}}" alt="">
+               <img class="rounded-circle " src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="">
             </div>
             <div class="text-holder">
                <h3>Saddam Hussain</h3>
@@ -167,7 +167,7 @@
                         <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="CRM">
                            
                            <li class="nav-item">
-                              <a class="nav-link" href="{{route('user.dealslisting')}}" data-bs-toggle="" aria-expanded="false">
+                              <a class="nav-link" href="<?php echo e(route('user.dealslisting')); ?>" data-bs-toggle="" aria-expanded="false">
                                  <div class="d-flex align-items-center"><span class="nav-link-text">Deals Listing</span></div>
                               </a>
                               <!-- more inner pages-->
@@ -220,7 +220,7 @@
                         <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="view-documents">
                            
                            <li class="nav-item">
-                              <a class="nav-link" href="{{route('user.viewportal')}}" data-bs-toggle="" aria-expanded="false">
+                              <a class="nav-link" href="<?php echo e(route('user.viewportal')); ?>" data-bs-toggle="" aria-expanded="false">
                                  <div class="d-flex align-items-center"><span class="nav-link-text">View BCC Portal</span></div>
                               </a>
                               <!-- more inner pages-->
@@ -251,4 +251,5 @@
 }
 
 </script>
-@endsection()
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layout.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\xampp\htdocs\crm\resources\views/admin/contactdetails.blade.php ENDPATH**/ ?>

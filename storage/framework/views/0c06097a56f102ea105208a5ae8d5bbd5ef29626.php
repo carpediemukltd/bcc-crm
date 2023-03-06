@@ -2,8 +2,8 @@
    $login = "no";
    $title = "Contact List";
    ?>
-@extends('admin.layout.app')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <?php
    $notificationService = app('App\Services\NotificationService');
    $helperService = app('App\Services\HelperService');
@@ -189,7 +189,7 @@
                         </td>
                         <td class="name align-middle white-space-nowrap">
                            <div class="d-flex align-items-center">
-                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="{{asset('assets/theme/images/35.png')}}" alt=""></div>
+                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt=""></div>
                               <div>
                                  <a class="fs-0 fw-bold" href="#">Anthoney Michael</a>
                                  <div class="d-flex align-items-center">
@@ -226,7 +226,7 @@
                         </td>
                         <td class="name align-middle white-space-nowrap">
                            <div class="d-flex align-items-center">
-                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="{{asset('assets/theme/images/35.png')}}" alt=""></div>
+                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt=""></div>
                               <div>
                                  <a class="fs-0 fw-bold" href="#">Jacob Russell</a>
                                  <div class="d-flex align-items-center">
@@ -263,7 +263,7 @@
                         </td>
                         <td class="name align-middle white-space-nowrap">
                            <div class="d-flex align-items-center">
-                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="{{asset('assets/theme/images/35.png')}}" alt=""></div>
+                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt=""></div>
                               <div>
                                  <a class="fs-0 fw-bold" href="#">Diego Anthony</a>
                                  <div class="d-flex align-items-center">
@@ -300,7 +300,7 @@
                         </td>
                         <td class="name align-middle white-space-nowrap">
                            <div class="d-flex align-items-center">
-                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="{{asset('assets/theme/images/35.png')}}" alt=""></div>
+                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt=""></div>
                               <div>
                                  <a class="fs-0 fw-bold" href="#">Austin James</a>
                                  <div class="d-flex align-items-center">
@@ -337,7 +337,7 @@
                         </td>
                         <td class="name align-middle white-space-nowrap">
                            <div class="d-flex align-items-center">
-                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="{{asset('assets/theme/images/35.png')}}" alt=""></div>
+                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt=""></div>
                               <div>
                                  <a class="fs-0 fw-bold" href="#">Sarah Lynn</a>
                                  <div class="d-flex align-items-center">
@@ -374,7 +374,7 @@
                         </td>
                         <td class="name align-middle white-space-nowrap">
                            <div class="d-flex align-items-center">
-                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="{{asset('assets/theme/images/35.png')}}" alt=""></div>
+                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt=""></div>
                               <div>
                                  <a class="fs-0 fw-bold" href="#">Reyna Denise</a>
                                  <div class="d-flex align-items-center">
@@ -411,7 +411,7 @@
                         </td>
                         <td class="name align-middle white-space-nowrap">
                            <div class="d-flex align-items-center">
-                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="{{asset('assets/theme/images/35.png')}}" alt=""></div>
+                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt=""></div>
                               <div>
                                  <a class="fs-0 fw-bold" href="#">Roy Anderson</a>
                                  <div class="d-flex align-items-center">
@@ -448,7 +448,7 @@
                         </td>
                         <td class="name align-middle white-space-nowrap">
                            <div class="d-flex align-items-center">
-                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="{{asset('assets/theme/images/35.png')}}" alt=""></div>
+                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt=""></div>
                               <div>
                                  <a class="fs-0 fw-bold" href="#">Emily Beazley</a>
                                  <div class="d-flex align-items-center">
@@ -485,7 +485,7 @@
                         </td>
                         <td class="name align-middle white-space-nowrap">
                            <div class="d-flex align-items-center">
-                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="{{asset('assets/theme/images/35.png')}}" alt=""></div>
+                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt=""></div>
                               <div>
                                  <a class="fs-0 fw-bold" href="#">Layla Beckstrand</a>
                                  <div class="d-flex align-items-center">
@@ -522,7 +522,7 @@
                         </td>
                         <td class="name align-middle white-space-nowrap">
                            <div class="d-flex align-items-center">
-                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="{{asset('assets/theme/images/35.png')}}" alt=""></div>
+                              <div class="avatar avatar-xl me-3"><img class="rounded-circle" src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt=""></div>
                               <div>
                                  <a class="fs-0 fw-bold" href="#">Olivia Bensinger</a>
                                  <div class="d-flex align-items-center">
@@ -660,4 +660,5 @@
       </div>
    </div>
             
-@endsection()
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layout.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\xampp\htdocs\crm\resources\views/admin/contactlisting.blade.php ENDPATH**/ ?>

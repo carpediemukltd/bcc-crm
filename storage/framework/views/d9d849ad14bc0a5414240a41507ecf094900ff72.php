@@ -2,8 +2,8 @@
    $login = "no";
    $title = "customfields";
    ?>
-@extends('admin.layout.app')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <?php
    $notificationService = app('App\Services\NotificationService');
    $helperService = app('App\Services\HelperService');
@@ -125,4 +125,5 @@
     </form>
               
    
-@endsection()
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layout.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\xampp\htdocs\crm\resources\views/admin/customfields.blade.php ENDPATH**/ ?>

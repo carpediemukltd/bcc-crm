@@ -52,53 +52,7 @@
    </head>
    <body class="bcc-dashboard">
       <!-- Bcc Header Start -->
-      <!-- <header>
-         <div class="bcc-header">
-            <div class="row">
-               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <nav class="navbar navbar-expand-lg navbar-light">
-                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                     <div class="collapse navbar-collapse" id="navbarText">
-                        <ul class="navbar-nav align-items-center" style="width:100%">
-                        </ul>
-                        <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
-                           <li class="nav-item dropdown hidden-caret submenu">
-                              <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
-                                 <div class="avatar-sm">
-                                    <img src="<?php echo e(asset('uploads/images/placeholder-user.jpg')); ?>" alt="..." class="avatar-img rounded-circle">
-                                 </div>
-                              </a>
-                              <ul class="dropdown-menu dropdown-user animated fadeIn">
-                                 <div class="scroll-wrapper dropdown-user-scroll scrollbar-outer" style="position: relative;">
-                                    <div class="dropdown-user-scroll scrollbar-outer scroll-content" style="height: 175.328px; margin-bottom: 0px; margin-right: 0px; max-height: none;">
-                                       <li>
-                                          <div class="user-box">
-                                             <div class="avatar-lg">
-                                                <img src="<?php echo e(asset('uploads/images/placeholder-user.jpg')); ?>" alt="..." class="avatar-img rounded-circle">
-                                             </div>
-                                             <div class="u-text">
-                                                <h4><?php echo e(ucwords(auth()->user()->full_name)); ?></h4>
-                                                <p class="text-muted"><?php echo e(auth()->user()->email); ?></p>
-                                                <a href="#" class="btn btn-xs btn-secondary btn-sm">Edit Profile</a>
-                                             </div>
-                                          </div>
-                                       </li>
-                                       <li>
-                                          <div class="dropdown-divider"></div>
-                                          <a class="dropdown-item" href="#">Edit My Profile</a>
-                                          <a class="dropdown-item fancy-logout-btn" href="<?php echo e(route('user.logout')); ?>">Logout</a>
-                                       </li>
-                                    </div>
-                                 </div>
-                              </ul>
-                           </li>
-                        </ul>
-                     </div>
-                  </nav>
-               </div>
-            </div>
-         </div>
-         </header> -->
+     
       <!-- Bcc Header End -->
       <main class="main" id="top">
       <div class="container-fluid px-0" data-layout="container">

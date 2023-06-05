@@ -65,7 +65,7 @@
                      <p class="navbar-vertical-label">Apps</p>
                      <hr class="navbar-vertical-line">
                      <div class="nav-item-wrapper">
-                        <a class="nav-link label-1" href="<?php echo e(route('user.dashboard')); ?>" role="button" data-bs-toggle="" aria-expanded="false">
+                        <a class="nav-link label-1 <?php if($current_slug == 'dashboard'){echo 'active';}?>" href="<?php echo e(route('user.dashboard')); ?>" role="button" data-bs-toggle="" aria-expanded="false">
                            <div class="d-flex align-items-center">
                               <span class="nav-link-icon">
                               <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-monitor"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
@@ -76,7 +76,7 @@
                      </div>
                      <!--  -->
                      <div class="nav-item-wrapper">
-                        <a class="nav-link label-1" href="<?php echo e(route('user.contactlisting')); ?>" data-bs-toggle="" aria-expanded="false">
+                        <a class="nav-link label-1 <?php if($current_slug == 'contact_listing'){echo 'active';}?>" href="<?php echo e(route('user.contactlisting')); ?>" data-bs-toggle="" aria-expanded="false">
                            <div class="d-flex align-items-center">
                               <span class="nav-link-icon">
                                  <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-columns"><path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18"></path></svg>
@@ -410,6 +410,9 @@
                </div>
             </div>
             <ul class="navbar-nav navbar-nav-icons flex-row">
+               <?php
+                  /*
+               ?>
                <li class="nav-item">
                   <div class="theme-control-toggle fa-icon-wait px-2">
                      <input class="form-check-input ms-0 theme-control-toggle-input" type="checkbox" data-theme-control="phoenixTheme" value="dark" id="themeControlToggle">
@@ -462,7 +465,7 @@
                                                 <div class="p-3 border-300 notification-card position-relative read border-bottom">
                                                    <div class="d-flex align-items-center justify-content-between position-relative">
                                                       <div class="d-flex">
-                                                         <div class="avatar avatar-m status-online me-3"><img class="rounded-circle" src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt=""></div>
+                                                         <div class="avatar avatar-m status-online me-3"><img class="rounded-circle" src="{{asset('assets/theme/images/35.png')}}" alt=""></div>
                                                          <div class="me-3 flex-1">
                                                             <h4 class="fs--1 text-black">Jessie Samson</h4>
                                                             <p class="fs--1 text-1000 mb-2 mb-sm-3 fw-normal"><span class="me-1 fs--2">💬</span>Mentioned you in a comment.<span class="ms-2 text-400 fw-bold fs--2">10m</span></p>
@@ -514,7 +517,7 @@
                                                 <div class="p-3 border-300 notification-card position-relative unread border-bottom">
                                                    <div class="d-flex align-items-center justify-content-between position-relative">
                                                       <div class="d-flex">
-                                                         <div class="avatar avatar-m status-online me-3"><img class="rounded-circle avatar-placeholder" src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt=""></div>
+                                                         <div class="avatar avatar-m status-online me-3"><img class="rounded-circle avatar-placeholder" src="{{asset('assets/theme/images/35.png')}}" alt=""></div>
                                                          <div class="me-3 flex-1">
                                                             <h4 class="fs--1 text-black">Jessie Samson</h4>
                                                             <p class="fs--1 text-1000 mb-2 mb-sm-3 fw-normal"><span class="me-1 fs--2">👍</span>Liked your comment.<span class="ms-2 text-400 fw-bold fs--2">1h</span></p>
@@ -541,7 +544,7 @@
                                                 <div class="p-3 border-300 notification-card position-relative unread border-bottom">
                                                    <div class="d-flex align-items-center justify-content-between position-relative">
                                                       <div class="d-flex">
-                                                         <div class="avatar avatar-m status-online me-3"><img class="rounded-circle" src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt=""></div>
+                                                         <div class="avatar avatar-m status-online me-3"><img class="rounded-circle" src="{{asset('assets/theme/images/35.png')}}" alt=""></div>
                                                          <div class="me-3 flex-1">
                                                             <h4 class="fs--1 text-black">Kiera Anderson</h4>
                                                             <p class="fs--1 text-1000 mb-2 mb-sm-3 fw-normal"><span class="me-1 fs--2">💬</span>Mentioned you in a comment.<span class="ms-2 text-400 fw-bold fs--2"></span></p>
@@ -566,7 +569,7 @@
                                                 <div class="p-3 border-300 notification-card position-relative unread border-bottom">
                                                    <div class="d-flex align-items-center justify-content-between position-relative">
                                                       <div class="d-flex">
-                                                         <div class="avatar avatar-m status-online me-3"><img class="rounded-circle" src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt=""></div>
+                                                         <div class="avatar avatar-m status-online me-3"><img class="rounded-circle" src="{{asset('assets/theme/images/35.png')}}" alt=""></div>
                                                          <div class="me-3 flex-1">
                                                             <h4 class="fs--1 text-black">Herman Carter</h4>
                                                             <p class="fs--1 text-1000 mb-2 mb-sm-3 fw-normal"><span class="me-1 fs--2">👤</span>Tagged you in a comment.<span class="ms-2 text-400 fw-bold fs--2"></span></p>
@@ -591,7 +594,7 @@
                                                 <div class="p-3 border-300 notification-card position-relative read ">
                                                    <div class="d-flex align-items-center justify-content-between position-relative">
                                                       <div class="d-flex">
-                                                         <div class="avatar avatar-m status-online me-3"><img class="rounded-circle" src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt=""></div>
+                                                         <div class="avatar avatar-m status-online me-3"><img class="rounded-circle" src="{{asset('assets/theme/images/35.png')}}" alt=""></div>
                                                          <div class="me-3 flex-1">
                                                             <h4 class="fs--1 text-black">Benjamin Button</h4>
                                                             <p class="fs--1 text-1000 mb-2 mb-sm-3 fw-normal"><span class="me-1 fs--2">👍</span>Liked your comment.<span class="ms-2 text-400 fw-bold fs--2"></span></p>
@@ -654,85 +657,85 @@
                            <div class="row text-center align-items-center gx-0 gy-0">
                               <div class="col-4">
                                  <a class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3" href="#!">
-                                    <img src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="" width="30">
+                                    <img src="{{asset('assets/theme/images/35.png')}}" alt="" width="30">
                                     <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Behance</p>
                                  </a>
                               </div>
                               <div class="col-4">
                                  <a class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3" href="#!">
-                                    <img src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="" width="30">
+                                    <img src="{{asset('assets/theme/images/35.png')}}" alt="" width="30">
                                     <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Cloud</p>
                                  </a>
                               </div>
                               <div class="col-4">
                                  <a class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3" href="#!">
-                                    <img src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="" width="30">
+                                    <img src="{{asset('assets/theme/images/35.png')}}" alt="" width="30">
                                     <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Slack</p>
                                  </a>
                               </div>
                               <div class="col-4">
                                  <a class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3" href="#!">
-                                    <img src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="" width="30">
+                                    <img src="{{asset('assets/theme/images/35.png')}}" alt="" width="30">
                                     <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Gitlab</p>
                                  </a>
                               </div>
                               <div class="col-4">
                                  <a class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3" href="#!">
-                                    <img src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="" width="30">
+                                    <img src="{{asset('assets/theme/images/35.png')}}" alt="" width="30">
                                     <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">BitBucket</p>
                                  </a>
                               </div>
                               <div class="col-4">
                                  <a class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3" href="#!">
-                                    <img src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="" width="30">
+                                    <img src="{{asset('assets/theme/images/35.png')}}" alt="" width="30">
                                     <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Drive</p>
                                  </a>
                               </div>
                               <div class="col-4">
                                  <a class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3" href="#!">
-                                    <img src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="" width="30">
+                                    <img src="{{asset('assets/theme/images/35.png')}}" alt="" width="30">
                                     <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Trello</p>
                                  </a>
                               </div>
                               <div class="col-4">
                                  <a class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3" href="#!">
-                                    <img src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="" width="20">
+                                    <img src="{{asset('assets/theme/images/35.png')}}" alt="" width="20">
                                     <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Figma</p>
                                  </a>
                               </div>
                               <div class="col-4">
                                  <a class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3" href="#!">
-                                    <img src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="" width="30">
+                                    <img src="{{asset('assets/theme/images/35.png')}}" alt="" width="30">
                                     <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Twitter</p>
                                  </a>
                               </div>
                               <div class="col-4">
                                  <a class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3" href="#!">
-                                    <img src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="" width="30">
+                                    <img src="{{asset('assets/theme/images/35.png')}}" alt="" width="30">
                                     <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Pinterest</p>
                                  </a>
                               </div>
                               <div class="col-4">
                                  <a class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3" href="#!">
-                                    <img src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="" width="30">
+                                    <img src="{{asset('assets/theme/images/35.png')}}" alt="" width="30">
                                     <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Linkedin</p>
                                  </a>
                               </div>
                               <div class="col-4">
                                  <a class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3" href="#!">
-                                    <img src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="" width="30">
+                                    <img src="{{asset('assets/theme/images/35.png')}}" alt="" width="30">
                                     <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Maps</p>
                                  </a>
                               </div>
                               <div class="col-4">
                                  <a class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3" href="#!">
-                                    <img src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="" width="30">
+                                    <img src="{{asset('assets/theme/images/35.png')}}" alt="" width="30">
                                     <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Photos</p>
                                  </a>
                               </div>
                               <div class="col-4">
                                  <a class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3" href="#!">
-                                    <img src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="" width="30">
+                                    <img src="{{asset('assets/theme/images/35.png')}}" alt="" width="30">
                                     <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Spotify</p>
                                  </a>
                               </div>
@@ -741,6 +744,10 @@
                      </div>
                   </div>
                </li>
+               <?php
+                  */
+               ?>
+
                <li class="nav-item dropdown">
                   <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#!" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
                      <div class="avatar avatar-l ">
@@ -754,14 +761,15 @@
                               <div class="avatar avatar-xl ">
                                  <img class="rounded-circle " src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="">
                               </div>
-                              <h6 class="mt-2 text-black">Jerry Seinfield</h6>
+                              <h6 class="mt-2 text-black"><?=ucwords($login_user['full_name']);?></h6>
                            </div>
-                           <div class="mb-3 mx-3"><input class="form-control form-control-sm" id="statusUpdateInput" type="text" placeholder="Update your status"></div>
+                           <!-- <div class="mb-3 mx-3"><input class="form-control form-control-sm" id="statusUpdateInput" type="text" placeholder="Update your status"></div> -->
                         </div>
-                        <div class="overflow-auto scrollbar" style="height: 10rem;">
+                        <!-- <div class="overflow-auto scrollbar" style="height: 10rem;"> -->
+                        <div class="overflow-auto scrollbar">
                            <ul class="nav d-flex flex-column mb-2 pb-1">
                               <li class="nav-item">
-                                 <a class="nav-link px-3" href="#!">
+                                 <a class="nav-link px-3" href="<?php echo e(route('user.profile')); ?>">
                                     <svg xmlns="" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user me-2 text-900">
                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                        <circle cx="12" cy="7" r="4"></circle>
@@ -769,7 +777,7 @@
                                     <span>Profile</span>
                                  </a>
                               </li>
-                              <li class="nav-item">
+                              <!-- <li class="nav-item">
                                  <a class="nav-link px-3" href="#!">
                                     <svg xmlns="" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart me-2 text-900">
                                        <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
@@ -815,11 +823,11 @@
                                     </svg>
                                     Language
                                  </a>
-                              </li>
+                              </li> -->
                            </ul>
                         </div>
                         <div class="card-footer p-0 border-top">
-                           <ul class="nav d-flex flex-column my-3">
+                           <!-- <ul class="nav d-flex flex-column my-3">
                               <li class="nav-item">
                                  <a class="nav-link px-3" href="#!">
                                     <svg xmlns="" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus me-2 text-900">
@@ -831,10 +839,11 @@
                                     Add another account
                                  </a>
                               </li>
-                           </ul>
-                           <hr>
+                           </ul> -->
+                           <!-- <hr> -->
                            <div class="px-3">
-                              <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="#!">
+                              <br />
+                              <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="<?php echo e(route('user.logout')); ?>">
                                  <svg xmlns="" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out me-2">
                                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                                     <polyline points="16 17 21 12 16 7"></polyline>
@@ -842,8 +851,9 @@
                                  </svg>
                                  Sign out
                               </a>
+                              <br />
                            </div>
-                           <div class="my-2 text-center fw-bold fs--2 text-600"><a class="text-600 me-1" href="#!">Privacy policy</a>•<a class="text-600 mx-1" href="#!">Terms</a>•<a class="text-600 ms-1" href="#!">Cookies</a></div>
+                           <!-- <div class="my-2 text-center fw-bold fs--2 text-600"><a class="text-600 me-1" href="#!">Privacy policy</a>•<a class="text-600 mx-1" href="#!">Terms</a>•<a class="text-600 ms-1" href="#!">Cookies</a></div> -->
                         </div>
                      </div>
                   </div>

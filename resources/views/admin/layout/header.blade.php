@@ -23,32 +23,7 @@
       <script src="{{asset('assets/theme/js/config.js')}}"></script>
       <script src="{{asset('assets/js/jquery-3.3.1.min.js')}}"></script>
       <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-      <!-- <style type="text/css">
-         @font-face {
-         font-weight: 400;
-         font-style:  normal;
-         font-family: 'Circular-Loom';
-         src: url('chrome-extension://liecbddmkiiihnedobmlmillhodjkdmb/fonts/CircularXXWeb-Book.woff2') format('woff2');
-         }
-         @font-face {
-         font-weight: 500;
-         font-style:  normal;
-         font-family: 'Circular-Loom';
-         src: url('chrome-extension://liecbddmkiiihnedobmlmillhodjkdmb/fonts/CircularXXWeb-Medium.woff2') format('woff2');
-         }
-         @font-face {
-         font-weight: 700;
-         font-style:  normal;
-         font-family: 'Circular-Loom';
-         src: url('chrome-extension://liecbddmkiiihnedobmlmillhodjkdmb/fonts/CircularXXWeb-Bold.woff2') format('woff2');
-         }
-         @font-face {
-         font-weight: 900;
-         font-style:  normal;
-         font-family: 'Circular-Loom';
-         src: url('chrome-extension://liecbddmkiiihnedobmlmillhodjkdmb/fonts/CircularXXWeb-Black.woff2') format('woff2');
-         }
-         </style> -->
+      
    </head>
    <body class="bcc-dashboard">
       <!-- Bcc Header Start -->

@@ -2,8 +2,8 @@
    $login = "no";
    $title = "Contact List";
    ?>
-@extends('admin.layout.app')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <?php
    $notificationService = app('App\Services\NotificationService');
    $helperService = app('App\Services\HelperService');
@@ -240,7 +240,7 @@
                   </thead>
                   
                   <tbody class="list" id="deal-tables-body">
-                     @include('admin.contact.contact_pagination')
+                     <?php echo $__env->make('admin.contact.contact_pagination', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                   </tbody>
                </table>
                <button type="button" style="display:none;" id="click_me" class="btn btn-primary" onclick="get_data_with_date();">Click Me</button>
@@ -316,7 +316,7 @@
 
 <script>
    function get_data_with_date(){
-      var ENDPOINT = "{{ url('user/contactlisting') }}";
+      var ENDPOINT = "<?php echo e(url('user/contactlisting')); ?>";
 
       var status = $('#status').val();
       var seach_term = $('#serach').val();
@@ -339,7 +339,7 @@
 </script>
 
 <script>
-   var ENDPOINT = "{{ url('user/contactlisting') }}";
+   var ENDPOINT = "<?php echo e(url('user/contactlisting')); ?>";
    $(document).ready(function(){
       const fetch_data = (page, status, seach_term) => {
          var start_date = $('#start_date').val();
@@ -417,4 +417,5 @@
    });
 </script>
 
-@endsection()
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layout.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\xampp\htdocs\crm\resources\views/admin/contact/contactlisting.blade.php ENDPATH**/ ?>

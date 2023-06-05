@@ -1,8 +1,8 @@
 <?php
    $title = "Edit Profile";
    ?>
-@extends('admin.layout.app')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <?php
    $notificationService = app('App\Services\NotificationService');
    $helperService = app('App\Services\HelperService');
@@ -43,7 +43,7 @@
                                  }
                               ?>
 
-                              <form class="upload-profile" action="{{route('user.profile')}}" method="POST">
+                              <form class="upload-profile" action="<?php echo e(route('user.profile')); ?>" method="POST">
                                  <div class="row pt-4">
                                     <div class="col-lg-6">
                                        <div class="form-group p-0 mb-3">
@@ -103,4 +103,5 @@
       </div>
    </div>
 </div>   
-@endsection()
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layout.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\crm\resources\views/profile/edit.blade.php ENDPATH**/ ?>

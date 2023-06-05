@@ -16,7 +16,7 @@ use App\Http\Controllers\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', [UserController::class, 'dashboard'])->name('user.dashboard');
+// Route::get('/', [UserController::class, 'dashboard'])->name('user.dashboard');
 
 
 
@@ -38,20 +38,25 @@ Route::get('/stagesview', function (){
     return view('stagesview');
  });
 //user
+Route::get('/', [UserAuthenticatedSessionController::class, 'create'])->name('login');
 Route::get('login', [UserAuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('login', [UserAuthenticatedSessionController::class, 'store'])->name('login');
 
 Route::prefix('user')->group(function () {         
-        Route::get('dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+        Route::get('dashboard', [UserController::class, 'index'])->name('user.dashboard');
         Route::get('profile', [UserController::class, 'profile'])->name('user.profile');
         Route::post('profile', [UserController::class, 'profile'])->name('user.profile');
+
+        Route::get('contactlisting', [UserController::class, 'contactListing'])->name('user.contactlisting');
+        
+
         Route::get('all', [UserController::class, 'users'])->name('user.all');
         Route::get('add', [UserController::class, 'addUser'])->name('user.add');
         Route::post('add', [UserController::class, 'addUser'])->name('user.add');
         Route::get('edit/{id}', [UserController::class, 'editUser'])->name('user.edit');
         Route::post('edit/{id}', [UserController::class, 'editUser'])->name('user.edit');
         Route::get('/stagesview', [StagesController::class, 'stagesview'])->name('user.stagesview');
-        Route::get('/contactlisting', [StagesController::class, 'contactlisting'])->name('user.contactlisting');
+
         Route::get('/contactdetails', [StagesController::class, 'contactdetails'])->name('user.contactdetails');
         Route::get('/customfields', [StagesController::class, 'customfields'])->name('user.customfields');
         Route::get('/dealslisting', [StagesController::class, 'dealslisting'])->name('user.dealslisting');
@@ -60,7 +65,7 @@ Route::prefix('user')->group(function () {
         // Route::get('/', [userDashboardController::class, 'home'])->name('user.home');
         // Route::get('dashboard', [userDashboardController::class, 'index'])->name('user.dashboard');
         // Route::resource('app-settings', AppSettingController::class);
-        // Route::get('logout', [userController::class, 'logout'])->name('user.logout');  
+        Route::get('logout', [userController::class, 'logout'])->name('user.logout');  
 });    
 
 // views iframe

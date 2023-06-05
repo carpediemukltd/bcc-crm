@@ -2,18 +2,18 @@
 <html lang="en">
    <head>
       <title>Login | BCC CRM</title>
-      <link rel="icon" type="image/x-icon" href="{{asset('../bcc-favicon.png')}}">
+      <link rel="icon" type="image/x-icon" href="<?php echo e(asset('../bcc-favicon.png')); ?>">
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <!-- Latest compiled and minified CSS -->
       
-      <link rel="stylesheet" href="{{asset('assets/css/owl.carousel.min.css')}}">
+      <link rel="stylesheet" href="<?php echo e(asset('assets/css/owl.carousel.min.css')); ?>">
       <!-- Bootstrap CSS -->
-      <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
+      <link rel="stylesheet" href="<?php echo e(asset('assets/css/bootstrap.min.css')); ?>">
       <!-- Style -->
-      <link rel="stylesheet" href="{{asset('custom.css')}}">
+      <link rel="stylesheet" href="<?php echo e(asset('custom.css')); ?>">
       <!-- jQuery library -->
-      <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
+      <script src="<?php echo e(asset('assets/js/bootstrap.min.js')); ?>"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    </head>
    <body>
@@ -43,10 +43,11 @@
                               }
                            ?>
                      
-                           <form action="{{route('login')}}" method="POST" id="commonForm" novalidate="novalidate">
-                              {{csrf_field()}}
+                           <form action="<?php echo e(route('login')); ?>" method="POST" id="commonForm" novalidate="novalidate">
+                              <?php echo e(csrf_field()); ?>
+
                               <div class="form-group position-relative clearfix">
-                                 <input name="email" required value="{{ old('email')}}" type="email" class="form-control" placeholder="Email Address" aria-label="Email Address">
+                                 <input name="email" required value="<?php echo e(old('email')); ?>" type="email" class="form-control" placeholder="Email Address" aria-label="Email Address">
                               </div>
                               <div class="form-group clearfix position-relative password-wrapper">
                                  <input name="password" type="password" class="form-control" autocomplete="off" placeholder="Password" aria-label="Password">
@@ -113,4 +114,4 @@
          </div>
       </div>
    </body>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\crm\resources\views/login.blade.php ENDPATH**/ ?>

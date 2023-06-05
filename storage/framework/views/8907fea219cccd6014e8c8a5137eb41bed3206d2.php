@@ -2,26 +2,26 @@
 <html lang="en">
    <head>
       <title>BCC Dashboard</title>
-      <link rel="icon" type="image/x-icon" href="{{asset('../bcc-favicon.png')}}">
+      <link rel="icon" type="image/x-icon" href="<?php echo e(asset('../bcc-favicon.png')); ?>">
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <!-- theme css strat -->
-      <link href="{{asset('custom.css')}}" rel="stylesheet">
-      <link href="{{asset('assets/theme/css/theme.min.css')}}" type="text/css" rel="stylesheet" id="style-default">
-      <link href="{{asset('assets/theme/css/choices.min.css')}}" rel="stylesheet">
-      <link href="{{asset('assets/theme/css/flatpickr.min.css')}}" rel="stylesheet">
-      <link href="{{asset('assets/css/theme-font.css')}}" rel="stylesheet">
-      <link href="{{asset('assets/theme/css/simplebar.min.css')}}" rel="stylesheet">
-      <link rel="stylesheet" href="{{asset('assets/theme/css/line.css')}}">
-      <link href="{{asset('assets/theme/css/theme-rtl.min.css')}}" type="text/css" rel="stylesheet" id="style-rtl" disabled="true">
-      <link href="{{asset('assets/theme/css/user-rtl.min.css')}}" type="text/css" rel="stylesheet" id="user-style-rtl" disabled="true">
-      <link href="{{asset('assets/theme/css/user.min.css')}}" type="text/css" rel="stylesheet" id="user-style-default">
+      <link href="<?php echo e(asset('custom.css')); ?>" rel="stylesheet">
+      <link href="<?php echo e(asset('assets/theme/css/theme.min.css')); ?>" type="text/css" rel="stylesheet" id="style-default">
+      <link href="<?php echo e(asset('assets/theme/css/choices.min.css')); ?>" rel="stylesheet">
+      <link href="<?php echo e(asset('assets/theme/css/flatpickr.min.css')); ?>" rel="stylesheet">
+      <link href="<?php echo e(asset('assets/css/theme-font.css')); ?>" rel="stylesheet">
+      <link href="<?php echo e(asset('assets/theme/css/simplebar.min.css')); ?>" rel="stylesheet">
+      <link rel="stylesheet" href="<?php echo e(asset('assets/theme/css/line.css')); ?>">
+      <link href="<?php echo e(asset('assets/theme/css/theme-rtl.min.css')); ?>" type="text/css" rel="stylesheet" id="style-rtl" disabled="true">
+      <link href="<?php echo e(asset('assets/theme/css/user-rtl.min.css')); ?>" type="text/css" rel="stylesheet" id="user-style-rtl" disabled="true">
+      <link href="<?php echo e(asset('assets/theme/css/user.min.css')); ?>" type="text/css" rel="stylesheet" id="user-style-default">
       <!-- theme css end -->
       <!-- jQuery library -->
-      <script src="{{asset('assets/theme/js/imagesloaded.pkgd.min.js')}}"></script>
-      <script src="{{asset('assets/theme/js/simplebar.min.js')}}"></script>
-      <script src="{{asset('assets/theme/js/config.js')}}"></script>
-      <script src="{{asset('assets/js/jquery-3.3.1.min.js')}}"></script>
+      <script src="<?php echo e(asset('assets/theme/js/imagesloaded.pkgd.min.js')); ?>"></script>
+      <script src="<?php echo e(asset('assets/theme/js/simplebar.min.js')); ?>"></script>
+      <script src="<?php echo e(asset('assets/theme/js/config.js')); ?>"></script>
+      <script src="<?php echo e(asset('assets/js/jquery-3.3.1.min.js')); ?>"></script>
       <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
       <!-- <style type="text/css">
          @font-face {
@@ -65,7 +65,7 @@
                      <p class="navbar-vertical-label">Apps</p>
                      <hr class="navbar-vertical-line">
                      <div class="nav-item-wrapper">
-                        <a class="nav-link label-1 <?php if($current_slug == 'dashboard'){echo 'active';}?>" href="{{route('user.dashboard')}}" role="button" data-bs-toggle="" aria-expanded="false">
+                        <a class="nav-link label-1 <?php if($current_slug == 'dashboard'){echo 'active';}?>" href="<?php echo e(route('user.dashboard')); ?>" role="button" data-bs-toggle="" aria-expanded="false">
                            <div class="d-flex align-items-center">
                               <span class="nav-link-icon">
                               <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-monitor"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
@@ -76,7 +76,7 @@
                      </div>
                      <!--  -->
                      <div class="nav-item-wrapper">
-                        <a class="nav-link label-1 <?php if($current_slug == 'contact_listing'){echo 'active';}?>" href="{{route('user.contactlisting')}}" data-bs-toggle="" aria-expanded="false">
+                        <a class="nav-link label-1 <?php if($current_slug == 'contact_listing'){echo 'active';}?>" href="<?php echo e(route('user.contactlisting')); ?>" data-bs-toggle="" aria-expanded="false">
                            <div class="d-flex align-items-center">
                               <span class="nav-link-icon">
                                  <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-columns"><path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18"></path></svg>
@@ -87,7 +87,7 @@
                      </div>
                      <!--  -->
                      <div class="nav-item-wrapper">
-                        <a class="nav-link label-1" href="{{route('user.contactdetails')}}" data-bs-toggle="" aria-expanded="false">
+                        <a class="nav-link label-1" href="<?php echo e(route('user.contactdetails')); ?>" data-bs-toggle="" aria-expanded="false">
                            <div class="d-flex align-items-center">
                               <span class="nav-link-icon">
                               <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
@@ -97,7 +97,7 @@
                         </a>
                      </div>
                      <div class="nav-item-wrapper">
-                        <a class="nav-link label-1" href="{{route('user.stagesview')}}" data-bs-toggle="" aria-expanded="false">
+                        <a class="nav-link label-1" href="<?php echo e(route('user.stagesview')); ?>" data-bs-toggle="" aria-expanded="false">
                            <div class="d-flex align-items-center">
                               <span class="nav-link-icon">
                               <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
@@ -107,7 +107,7 @@
                         </a>
                      </div>
                      <div class="nav-item-wrapper">
-                        <a class="nav-link label-1" href="{{route('user.customfields')}}" data-bs-toggle="" aria-expanded="false">
+                        <a class="nav-link label-1" href="<?php echo e(route('user.customfields')); ?>" data-bs-toggle="" aria-expanded="false">
                            <div class="d-flex align-items-center">
                               <span class="nav-link-icon">
                                  <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
@@ -117,7 +117,7 @@
                         </a>
                      </div>
                      <div class="nav-item-wrapper">
-                        <a class="nav-link label-1" href="{{route('user.dealslisting')}}" data-bs-toggle="" aria-expanded="false">
+                        <a class="nav-link label-1" href="<?php echo e(route('user.dealslisting')); ?>" data-bs-toggle="" aria-expanded="false">
                            <div class="d-flex align-items-center">
                               <span class="nav-link-icon">
                                  <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-columns"><path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18"></path></svg>
@@ -146,22 +146,22 @@
                            <ul class="nav parent collapse" data-bs-parent="#navbarVerticalCollapse" id="CRM" style="">
                               <li class="collapsed-nav-item-title d-none">CRM</li>
                               <li class="nav-item">
-                                 <a class="nav-link active" href="{{route('user.dashboard')}}" data-bs-toggle="" aria-expanded="false">
+                                 <a class="nav-link active" href="<?php echo e(route('user.dashboard')); ?>" data-bs-toggle="" aria-expanded="false">
                                     <div class="d-flex align-items-center"><span class="nav-link-text">Dashboard</span></div>
                                  </a>
                               </li>
                               <li class="nav-item">
-                                 <a class="nav-link" href="{{route('user.contactlisting')}}" data-bs-toggle="" aria-expanded="false">
+                                 <a class="nav-link" href="<?php echo e(route('user.contactlisting')); ?>" data-bs-toggle="" aria-expanded="false">
                                     <div class="d-flex align-items-center"><span class="nav-link-text">Contact Listing</span></div>
                                  </a>
                               </li>
                               <li class="nav-item">
-                                 <a class="nav-link" href="{{route('user.contactdetails')}}" data-bs-toggle="" aria-expanded="false">
+                                 <a class="nav-link" href="<?php echo e(route('user.contactdetails')); ?>" data-bs-toggle="" aria-expanded="false">
                                     <div class="d-flex align-items-center"><span class="nav-link-text">Contact Detail</span></div>
                                  </a>
                               </li>
                               <li class="nav-item">
-                                 <a class="nav-link" href="{{route('user.stagesview')}}" data-bs-toggle="" aria-expanded="false">
+                                 <a class="nav-link" href="<?php echo e(route('user.stagesview')); ?>" data-bs-toggle="" aria-expanded="false">
                                     <div class="d-flex align-items-center"><span class="nav-link-text">Stages</span></div>
                                  </a>
                               </li>
@@ -182,7 +182,7 @@
                <a class="navbar-brand me-1 me-sm-3" href="#">
                   <div class="d-flex align-items-center">
                      <div class="d-flex align-items-center">
-                        <img src="{{asset('assets/theme/images/bcc-logo.png')}}" alt="BCC CRM" width="100px">
+                        <img src="<?php echo e(asset('assets/theme/images/bcc-logo.png')); ?>" alt="BCC CRM" width="100px">
                         
                      </div>
                   </div>
@@ -244,14 +244,14 @@
                                        <h6 class="dropdown-header text-1000 fs--1 border-bottom border-200 py-2 lh-sm">Products</h6>
                                        <div class="py-2">
                                           <a class="dropdown-item py-2 d-flex align-items-center" href="#">
-                                             <div class="file-thumbnail me-2"><img class="h-100 w-100 fit-cover rounded-3" src="{{asset('assets/theme/images/35.png')}}" alt=""></div>
+                                             <div class="file-thumbnail me-2"><img class="h-100 w-100 fit-cover rounded-3" src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt=""></div>
                                              <div class="flex-1">
                                                 <h6 class="mb-0 text-1000 title">MacBook Air - 13″</h6>
                                                 <p class="fs--2 mb-0 d-flex text-700"><span class="fw-medium text-600">8GB Memory - 1.6GHz - 128GB Storage</span></p>
                                              </div>
                                           </a>
                                           <a class="dropdown-item py-2 d-flex align-items-center" href="#">
-                                             <div class="file-thumbnail me-2"><img class="img-fluid" src="{{asset('assets/theme/images/35.png')}}" alt=""></div>
+                                             <div class="file-thumbnail me-2"><img class="img-fluid" src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt=""></div>
                                              <div class="flex-1">
                                                 <h6 class="mb-0 text-1000 title">MacBook Pro - 13″</h6>
                                                 <p class="fs--2 mb-0 d-flex text-700"><span class="fw-medium text-600 ms-2">30 Sep at 12:30 PM</span></p>
@@ -341,7 +341,7 @@
                                        <div class="py-2">
                                           <a class="dropdown-item py-2 d-flex align-items-center" href="#">
                                              <div class="avatar avatar-l status-online  me-2 text-900">
-                                                <img class="rounded-circle " src="{{asset('assets/theme/images/35.png')}}" alt="">
+                                                <img class="rounded-circle " src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="">
                                              </div>
                                              <div class="flex-1">
                                                 <h6 class="mb-0 text-1000 title">Carry Anna</h6>
@@ -350,7 +350,7 @@
                                           </a>
                                           <a class="dropdown-item py-2 d-flex align-items-center" href="#">
                                              <div class="avatar avatar-l  me-2 text-900">
-                                                <img class="rounded-circle " src="{{asset('assets/theme/images/35.png')}}" alt="">
+                                                <img class="rounded-circle " src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="">
                                              </div>
                                              <div class="flex-1">
                                                 <h6 class="mb-0 text-1000 title">John Smith</h6>
@@ -751,7 +751,7 @@
                <li class="nav-item dropdown">
                   <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#!" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
                      <div class="avatar avatar-l ">
-                        <img class="rounded-circle " src="{{asset('assets/theme/images/35.png')}}" alt="">
+                        <img class="rounded-circle " src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="">
                      </div>
                   </a>
                   <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border border-300" aria-labelledby="navbarDropdownUser">
@@ -759,7 +759,7 @@
                         <div class="card-body p-0">
                            <div class="text-center pt-4 pb-3">
                               <div class="avatar avatar-xl ">
-                                 <img class="rounded-circle " src="{{asset('assets/theme/images/35.png')}}" alt="">
+                                 <img class="rounded-circle " src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="">
                               </div>
                               <h6 class="mt-2 text-black"><?=ucwords($login_user['full_name']);?></h6>
                            </div>
@@ -769,7 +769,7 @@
                         <div class="overflow-auto scrollbar">
                            <ul class="nav d-flex flex-column mb-2 pb-1">
                               <li class="nav-item">
-                                 <a class="nav-link px-3" href="{{route('user.profile')}}">
+                                 <a class="nav-link px-3" href="<?php echo e(route('user.profile')); ?>">
                                     <svg xmlns="" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user me-2 text-900">
                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                        <circle cx="12" cy="7" r="4"></circle>
@@ -843,7 +843,7 @@
                            <!-- <hr> -->
                            <div class="px-3">
                               <br />
-                              <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="{{route('user.logout')}}">
+                              <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="<?php echo e(route('user.logout')); ?>">
                                  <svg xmlns="" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out me-2">
                                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                                     <polyline points="16 17 21 12 16 7"></polyline>
@@ -921,14 +921,14 @@
                                              <h6 class="dropdown-header text-1000 fs--1 border-bottom border-200 py-2 lh-sm">Products</h6>
                                              <div class="py-2">
                                                 <a class="dropdown-item py-2 d-flex align-items-center" href="#">
-                                                   <div class="file-thumbnail me-2"><img class="h-100 w-100 fit-cover rounded-3" src="{{asset('assets/theme/images/35.png')}}" alt=""></div>
+                                                   <div class="file-thumbnail me-2"><img class="h-100 w-100 fit-cover rounded-3" src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt=""></div>
                                                    <div class="flex-1">
                                                       <h6 class="mb-0 text-1000 title">MacBook Air - 13″</h6>
                                                       <p class="fs--2 mb-0 d-flex text-700"><span class="fw-medium text-600">8GB Memory - 1.6GHz - 128GB Storage</span></p>
                                                    </div>
                                                 </a>
                                                 <a class="dropdown-item py-2 d-flex align-items-center" href="#">
-                                                   <div class="file-thumbnail me-2"><img class="img-fluid" src="{{asset('assets/theme/images/35.png')}}" alt=""></div>
+                                                   <div class="file-thumbnail me-2"><img class="img-fluid" src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt=""></div>
                                                    <div class="flex-1">
                                                       <h6 class="mb-0 text-1000 title">MacBook Pro - 13″</h6>
                                                       <p class="fs--2 mb-0 d-flex text-700"><span class="fw-medium text-600 ms-2">30 Sep at 12:30 PM</span></p>
@@ -1018,7 +1018,7 @@
                                              <div class="py-2">
                                                 <a class="dropdown-item py-2 d-flex align-items-center" href="#">
                                                    <div class="avatar avatar-l status-online  me-2 text-900">
-                                                      <img class="rounded-circle " src="{{asset('assets/theme/images/35.png')}}" alt="">
+                                                      <img class="rounded-circle " src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="">
                                                    </div>
                                                    <div class="flex-1">
                                                       <h6 class="mb-0 text-1000 title">Carry Anna</h6>
@@ -1027,7 +1027,7 @@
                                                 </a>
                                                 <a class="dropdown-item py-2 d-flex align-items-center" href="#">
                                                    <div class="avatar avatar-l  me-2 text-900">
-                                                      <img class="rounded-circle " src="{{asset('assets/theme/images/35.png')}}" alt="">
+                                                      <img class="rounded-circle " src="<?php echo e(asset('assets/theme/images/35.png')); ?>" alt="">
                                                    </div>
                                                    <div class="flex-1">
                                                       <h6 class="mb-0 text-1000 title">John Smith</h6>
@@ -1090,4 +1090,4 @@
             </div>
          </div>
       </div>
-      
+      <?php /**PATH C:\xampp\htdocs\crm\resources\views/admin/layout/header.blade.php ENDPATH**/ ?>

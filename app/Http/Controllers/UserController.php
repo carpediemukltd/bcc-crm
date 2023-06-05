@@ -13,46 +13,87 @@ use Validator;
 use Mail;
 use App\Core\Chat\Soachat;
 
-
-
+session_start();
 class UserController extends Controller
 {
+   function __construct(){
+      ini_set('max_execution_time', -1);
+      $this->data['current_slug'] = '';
 
-   public function Index(){
-      // return view('admin.profile.index');
+      if(isset($_SESSION['user_role']) && !empty($_SESSION['user_role'])){
+         $this->data['login_user'] = User::whereId($_SESSION['id'])->first();
+      }else{
+         $this->data['login_user'] = [];
+      }
+   }
+
+   public function index(){
+      if(empty($_SESSION)){
+         return redirect(url('login'));
+      }
+      $this->data['current_slug'] = 'dashboard';
+      return view("admin.dashboard", $this->data);
    }
 
    public function Profile(Request $request){
+      if(empty($_SESSION)){
+         return redirect(url('login'));
+      } 
       if($request->first_name){
-         $updat_data = [
+         $update_data = [
             'first_name'   => $request->first_name,
             'last_name'    => $request->last_name,
             'phone_number' => $request->phone_number
          ];
 
-         if($request->password && !$request->password_confirmation){
+         if ($request->password && !$request->confirm_password) {
+            $_SESSION['msg_error'] = 'Confirm password is required.';
             return redirect()->back()->withErrors('Confirm password is required.')->withInput();
-         }else if($request->password && ($request->password != $request->password_confirmation)){
+         } else if ($request->password && ($request->password != $request->confirm_password)) {
+            $_SESSION['msg_error'] = 'Password and Confirm password are not same.';
             return redirect()->back()->withErrors('Password and Confirm password are not same.')->withInput();
-         }else if($request->password && strlen($request->password) < 6){
+         } else if ($request->password && strlen($request->password) < 6) {
+            $_SESSION['msg_error'] = 'Password must be 6 digits.';
             return redirect()->back()->withErrors('Password must be 6 digits.')->withInput();
-         }else if($request->password && strlen($request->password) >= 6 && ($request->password == $request->password_confirmation)){
-            $updat_data['password'] = Hash::make($request->password);
+         } else if ($request->password && strlen($request->password) >= 6 && ($request->password == $request->confirm_password)) {
+            $update_data['password'] = Hash::make($request->password);
          }
-         User::whereId(Auth::user()->id)->update($updat_data);
+         User::whereId($_SESSION['id'])->update($update_data);
+         $_SESSION['msg_success'] = 'Profile Update Successfully.';
          return redirect(url('user/profile'))->withSeuucess('Profile Update Successfully.')->withInput();
       }else{
-         return view("profile.index");
+         return view("profile.edit", $this->data);
       }
    }
 
-   public function editProfile(){
-      return view("profile.edit");
+   public function contactListing(Request $request){
+      if(empty($_SESSION)){
+         return redirect(url('login'));
+      }
+      //orderBy('id', 'desc')->
+      $this->data['rs_users'] = User::where('role', 'user')->paginate(5);
+      if($request->ajax()){
+         $this->data['rs_users'] = User::where('role', 'user')
+                                       ->when($request->seach_term, function($q)use($request){
+                                          $q->where('first_name', 'like', '%'.$request->seach_term.'%')
+                                          ->orWhere('last_name', 'like', '%'.$request->seach_term.'%')
+                                          ->orWhere('email', 'like', '%'.$request->seach_term.'%')
+                                          ->orWhere('phone_number', 'like', '%'.$request->seach_term.'%');
+                                    })
+                                    ->when($request->status, function($q)use($request){
+                                          $q->where('status',$request->status);
+                                    })
+                                    ->when($request->start_date, function($q)use($request){
+                                          $q->whereBetween('created_at', [$request->start_date, $request->end_date]);
+                                    })
+                                    ->paginate(5);
+
+         return view('admin.contact.contact_pagination', $this->data)->render();
+      }
+      $this->data['current_slug'] = 'contact_listing';
+      return view('admin.contact.contactlisting', $this->data);
    }
 
-   public function dashboard(){
-      return view("admin.dashboard");
-   }
 
    private function _existSuperAdmin(){
       if(Auth()->user()->role != 'superadmin'){
@@ -126,7 +167,7 @@ class UserController extends Controller
    }
 
    public function logout(){
-      Auth::guard('user')->logout();
-      return redirect()->route('home');
+      session_destroy();
+      return redirect()->route('login');
    }
 }

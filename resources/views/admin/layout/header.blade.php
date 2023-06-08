@@ -60,6 +60,23 @@
                            </div>
                         </a>
                      </div>
+
+                     <div class="nav-item-wrapper">
+                        <a class="nav-link label-1 <?php if($current_slug == 'fields_list'){echo 'active';}?>" href="{{route('user.customfields')}}" data-bs-toggle="" aria-expanded="false">
+                           <div class="d-flex align-items-center">
+                              <span class="nav-link-icon">
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-columns"><path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18"></path></svg>
+                              </span>
+                              <span class="nav-link-text-wrapper"><span class="nav-link-text">Custom Fields</span></span>
+                           </div>
+                        </a>
+                     </div>
+
+                     <br /><br /><br /><br />
+
+
+
+
                      <!--  -->
                      <div class="nav-item-wrapper">
                         <a class="nav-link label-1" href="{{route('user.contactdetails')}}" data-bs-toggle="" aria-expanded="false">

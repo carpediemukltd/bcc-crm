@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Category;
+use App\Models\CustomFields;
 use DB;
 use Validator;
 // use Hash;
@@ -92,7 +92,70 @@ class UserController extends Controller
       }
       $this->data['current_slug'] = 'contact_listing';
       return view('admin.contact.contactlisting', $this->data);
-   }
+   } // contactListing
+
+   public function CustomFields(Request $request){
+      if(empty($_SESSION)){
+         return redirect(url('login'));
+      }
+      $this->data['rs_fields'] = CustomFields::paginate(5);
+      if($request->ajax()){
+         $this->data['rs_fields'] = CustomFields::
+                                          when($request->seach_term, function($q)use($request){
+                                             $q->where('title', 'like', '%'.$request->seach_term.'%')
+                                             ->orWhere('type', 'like', '%'.$request->seach_term.'%');
+                                          })
+                                          ->when($request->status, function($q)use($request){
+                                                $q->where('type',$request->status);
+                                          })
+                                          ->paginate(5);
+         return view('admin.customfields.fields_pagination', $this->data)->render();
+      }
+      $this->data['current_slug'] = 'fields_list';
+      return view('admin.customfields.list', $this->data);
+   } // CustomFields
+
+   public function addField(Request $request){
+      if(empty($_SESSION)){
+         return redirect(url('login'));
+      }
+      if($request->title){
+         CustomFields::create([
+            'title' => $request->title,
+            'type'  => $request->type
+         ]);
+         $_SESSION['msg_success'] = 'Create Custom Field Successfully.';
+         return redirect(url('user/customfields'))->withSeuucess('Create Custom Field Successfully.')->withInput();
+      }else{
+         $this->data['current_slug'] = 'fields_list';
+         return view('admin.customfields.add', $this->data);
+      }   
+   } // addField
+
+   public function editField(Request $request, $id){
+      if(empty($_SESSION)){
+         return redirect(url('login'));
+      }
+      if($request->title){
+         CustomFields::whereId($id)->update(['title' => $request->title]);
+         $_SESSION['msg_success'] = 'Update Custom Field Successfully.';
+         return redirect(url('user/customfields'))->withSeuucess('Update Custom Field Successfully.')->withInput();
+      }else{
+         $this->data['rs_field']     = CustomFields::whereId($id)->first();
+         $this->data['current_slug'] = 'fields_list';
+         return view('admin.customfields.edit', $this->data);
+      }   
+   } // editField
+
+   public function deleteField($id){
+      if(empty($_SESSION)){
+         return redirect(url('login'));
+      }
+      CustomFields::whereId($id)->delete();
+      
+      $_SESSION['msg_success'] = 'Delete Custom Field Successfully.';
+      return redirect(url('user/customfields'))->withSeuucess('Delete Custom Field Successfully.')->withInput();
+   } // deleteField
 
 
    private function _existSuperAdmin(){

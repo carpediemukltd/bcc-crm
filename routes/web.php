@@ -48,7 +48,16 @@ Route::prefix('user')->group(function () {
         Route::post('profile', [UserController::class, 'profile'])->name('user.profile');
 
         Route::get('contactlisting', [UserController::class, 'contactListing'])->name('user.contactlisting');
+
+        Route::get('customfields', [UserController::class, 'CustomFields'])->name('user.customfields');
+
+        Route::get('addfield', [UserController::class, 'addField'])->name('user.customfields.add');
+        Route::post('addfield', [UserController::class, 'addField'])->name('user.customfields.add');
+
+        Route::get('editfield/{id}', [UserController::class, 'editField'])->name('user.customfields.edit');
+        Route::post('editfield/{id}', [UserController::class, 'editField'])->name('user.customfields.edit');
         
+        Route::get('deletefield/{id}', [UserController::class, 'deleteField'])->name('user.customfields.delete');
 
         Route::get('all', [UserController::class, 'users'])->name('user.all');
         Route::get('add', [UserController::class, 'addUser'])->name('user.add');
@@ -58,7 +67,7 @@ Route::prefix('user')->group(function () {
         Route::get('/stagesview', [StagesController::class, 'stagesview'])->name('user.stagesview');
 
         Route::get('/contactdetails', [StagesController::class, 'contactdetails'])->name('user.contactdetails');
-        Route::get('/customfields', [StagesController::class, 'customfields'])->name('user.customfields');
+        // Route::get('/customfields', [StagesController::class, 'customfields'])->name('user.customfields');
         Route::get('/dealslisting', [StagesController::class, 'dealslisting'])->name('user.dealslisting');
         Route::get('/fieldlisting', [StagesController::class, 'fieldlisting'])->name('user.fieldlisting');
         Route::get('/viewportal', [StagesController::class, 'viewportal'])->name('user.viewportal');

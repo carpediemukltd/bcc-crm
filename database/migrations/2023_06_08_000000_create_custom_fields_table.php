@@ -15,7 +15,7 @@ class CreateCustomFieldsTable extends Migration
     {
         Schema::create('custom_fields', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
+            $table->string('title')->nullable()->unique();
             $table->enum('type', [
                 'contact',
                 'deals'

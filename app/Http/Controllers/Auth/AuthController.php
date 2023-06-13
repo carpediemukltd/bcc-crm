@@ -1,16 +1,137 @@
 <?php
-
+  
 namespace App\Http\Controllers\Auth;
-
-use App\Models\User;
-use App\ForgotPassword;
+  
 use App\Http\Controllers\Controller;
-use App\Notifications\VerifyEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-
+use Session;
+use App\Models\User;
+use Hash;
+  
 class AuthController extends Controller
 {
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function index()
+    {
+        if(Auth::check()){
+            return redirect("dashboard");
+        }
+        return view('auth.login');
+    }  
+      
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function registration()
+    {
+        if(Auth::check()){
+            return redirect("dashboard");
+        }
+        return view('auth.registration');
+    }
+      
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function postLogin(Request $request)
+    {
+        // $request->validate([
+        //     'email' => 'required',
+        //     'password' => 'required',
+        // ]);
+
+        $user_exist = User::where('email', $request->email)->first();
+        if($user_exist){
+            if($user_exist->status == 'banned'){
+                return redirect('login')->withError('You have been blocked by Admin, Please contact Admin.')->withInput();
+            }
+            if($user_exist->status == 'inactive'){
+                return redirect('login')->withError('Your accout is inactive, Please contact Admin.')->withInput();
+            }
+            if($user_exist->status == 'deleted'){
+                return redirect('login')->withError('This account deleted earlier.')->withInput();
+            }
+        }
    
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
+            return redirect()->intended('dashboard')
+                        ->withSuccess('You have Successfully loggedin');
+        }
+
+        return redirect("login")->withError('You have entered invalid credentials');
+    }
+      
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function postRegistration(Request $request)
+    {  
+        $request->validate([
+            'first_name'   => 'required',
+            'last_name'    => 'required',
+            'phone_number' => 'required',
+            'email'        => 'required|email|unique:users',
+            'password'     => 'required|confirmed|min:6'
+        ]);
+           
+        $data = $request->all();
+        $check = $this->create($data);
+         
+        return redirect("login")->withSuccess('Great! You have Successfully Registered');
+    }
+    
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function dashboard()
+    {
+        if(Auth::check()){
+            $this->data['slug'] = 'dashboard';
+            return view('dashboard', $this->data);
+        }
+  
+        return redirect("login")->withError('Opps! session is timeout plz login again.');
+    }
+    
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function create(array $data)
+    {
+      return User::create([
+        'first_name'    => $data['first_name'],
+        'last_name'     => $data['last_name'],
+        'email'         => $data['email'],
+        'phone_number'  => $data['phone_number'],
+        'password' => Hash::make($data['password'])
+      ]);
+    }
+    
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function logout() {
+        Session::flush();
+        Auth::logout();
+  
+        return Redirect('login');
+    }
 }

@@ -7,37 +7,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Str;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
-    protected $table    = 'users';
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'email',
-        'password',
-        'profile_image',
-        'phone_number',
-        'status',
-        'phone_verification_code',
-        'phone_verification_code_expiry',
-        'remember_token',
-        'uuid',
-        'role'
+        'first_name', 'last_name', 'phone_number', 'email', 'password', 'profile_image', 'status', 'role', 
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
+     * The attributes that should be hidden for serialization.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -45,27 +32,11 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    protected $appends = ['full_name'];
-
-    public function getFullNameAttribute(){
-        return "{$this->first_name} {$this->last_name}";
-    } 
-
-    public static function boot()
-    {
-        parent::boot();
-        self::creating(function ($model) {
-            $model->uuid = Str::uuid();
-        });
-    }
-   
-
-
 }

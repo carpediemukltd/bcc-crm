@@ -4,15 +4,19 @@
 * [Launch](#launch)
 
 ## General info
-Bcc project, users come and apply for loan. Loan leads go to GHL 
+Denefit Dashboard
+
 ## Technologies
-* Built with Laravel 8.65.0 & php 7
-* Blade template & Bootstrap 5 theme is used for UI
+* Denefit Dashboard is built with Laravel 8.83.27 & php 7.4.12
+* Blade template
 
 ## Launch
 * clone project
-* rename .env.example to .env & setup database credentials
-* run command to install newly cloned project: php artisan composer install
+* delete composer.lock file from root
+* copy .env.example and rename .env.example-copy to .env & setup database credentials
+* run command to install newly cloned project: composer install
+* php artisan key:generate
 * php artisan migrate
+* php artisan db:seed
 * php artisan serve
-* Finally hit http://127.0.0.1:8000/ in your browser, thats it.
+* Finally hit http://127.0.0.1:8000/ in your browser, thats it. (locally)

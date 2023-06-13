@@ -19,9 +19,9 @@ class Users extends Seeder
     {
         
         ModelsUser::create([
-            'first_name'   => 'Adward',
-            'last_name'    => 'Collin',
-            'email'        => 'admin@bcc.com',
+            'first_name'   => 'Super',
+            'last_name'    => 'Admin',
+            'email'        => 'admin@domain.com',
             'password'     => Hash::make('admin123'),
             'phone_number' => 1111111111, 
             'status'       => 'active',

@@ -1,11 +1,20 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\GeneralController;
-use App\Http\Controllers\StagesController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController as UserAuthenticatedSessionController;
-//use App\Http\Controllers\Auth\RegisteredUserController;
-//use App\Http\Controllers\DashboardController;
+
+use App\Http\Middleware\CheckStatus;
+
+use App\Http\Middleware\CheckSuperAdmin;
+use App\Http\Middleware\CheckAdmin;
+use App\Http\Middleware\CheckUser;
+
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\GeneralController;
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,65 +25,51 @@ use App\Http\Controllers\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('/', [UserController::class, 'dashboard'])->name('user.dashboard');
+
+Route::get('/', [AuthController::class, 'index'])->name('login');
+Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post'); 
+Route::get('registration', [AuthController::class, 'registration'])->name('register');
+Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post'); 
+Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post'); 
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
 
+Route::middleware([CheckStatus::class])->group(function(){
+    Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+    Route::get('privacy', [GeneralController::class, 'privacySetting'])->name('privacy');
 
-// Route::middleware(['basicAuth'])->group(function () {
-//     Route::get('/uploads/lead/{leadId}',[LoanDocController::class, 'loanDocDir'])->name('loan.loanDocDir');
-// });
+    Route::any('profile', [UserController::class, 'editProfile'])->name('profile');
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-// Route::get('lead', [GeneralController::class, 'lead'])->name('lead');
-// Route::get('leaddetails', [GeneralController::class, 'leaddetails'])->name('leaddetails');
-// userlisting page
-// Route::get('create', [GeneralController::class, 'create'])->name('admin.create');
-// Route::get('edit', [GeneralController::class, 'edit'])->name('admin.edit');
-// Route::get('userlisting', [GeneralController::class, 'userlisting'])->name('admin.userlisting');
-// Route::get('dashboard', [GeneralController::class, 'dashboard'])->name('admin.dashboard');
-// user listing page
+    Route::middleware([CheckSuperAdmin::class])->group(function(){ // SuperAdmin specific methods
+        Route::any('contact/add', [UserController::class, 'addUser'])->name('user.add');
+        Route::get('contacts', [UserController::class, 'userList'])->name('user.list');
+        Route::any('contact/edit/{id}', [UserController::class, 'editUser'])->name('user.edit');
+
+        Route::any('customfield/add', [UserController::class, 'addField'])->name('customfield.add');
+        Route::get('customfield', [UserController::class, 'fieldList'])->name('customfield.list');
+        Route::any('customfield/edit/{id}', [UserController::class, 'editField'])->name('customfield.edit');
+    });
+
+    Route::middleware([CheckAdmin::class])->group(function(){
+        // admin specific methods
+    });
+
+    Route::middleware([CheckUser::class])->group(function(){
+        // user specific methods
+    });
 
 
-Route::get('/stagesview', function (){
-    return view('stagesview');
- });
-//user
-Route::get('/', [UserAuthenticatedSessionController::class, 'create'])->name('login');
-Route::get('login', [UserAuthenticatedSessionController::class, 'create'])->name('login');
-Route::post('login', [UserAuthenticatedSessionController::class, 'store'])->name('login');
-
-Route::prefix('user')->group(function () {         
-        Route::get('dashboard', [UserController::class, 'index'])->name('user.dashboard');
-        Route::get('profile', [UserController::class, 'profile'])->name('user.profile');
-        Route::post('profile', [UserController::class, 'profile'])->name('user.profile');
-
-        Route::get('contactlisting', [UserController::class, 'contactListing'])->name('user.contactlisting');
-
-        Route::get('customfields', [UserController::class, 'CustomFields'])->name('user.customfields');
-
-        Route::get('addfield', [UserController::class, 'addField'])->name('user.customfields.add');
-        Route::post('addfield', [UserController::class, 'addField'])->name('user.customfields.add');
-
-        Route::get('editfield/{id}', [UserController::class, 'editField'])->name('user.customfields.edit');
-        Route::post('editfield/{id}', [UserController::class, 'editField'])->name('user.customfields.edit');
-        
-        Route::get('deletefield/{id}', [UserController::class, 'deleteField'])->name('user.customfields.delete');
-
-        Route::get('all', [UserController::class, 'users'])->name('user.all');
-        Route::get('add', [UserController::class, 'addUser'])->name('user.add');
-        Route::post('add', [UserController::class, 'addUser'])->name('user.add');
-        Route::get('edit/{id}', [UserController::class, 'editUser'])->name('user.edit');
-        Route::post('edit/{id}', [UserController::class, 'editUser'])->name('user.edit');
-        Route::get('/stagesview', [StagesController::class, 'stagesview'])->name('user.stagesview');
-
-        Route::get('/contactdetails', [StagesController::class, 'contactdetails'])->name('user.contactdetails');
-        // Route::get('/customfields', [StagesController::class, 'customfields'])->name('user.customfields');
-        Route::get('/dealslisting', [StagesController::class, 'dealslisting'])->name('user.dealslisting');
-        Route::get('/fieldlisting', [StagesController::class, 'fieldlisting'])->name('user.fieldlisting');
-        Route::get('/viewportal', [StagesController::class, 'viewportal'])->name('user.viewportal');
-        // Route::get('/', [userDashboardController::class, 'home'])->name('user.home');
-        // Route::get('dashboard', [userDashboardController::class, 'index'])->name('user.dashboard');
-        // Route::resource('app-settings', AppSettingController::class);
-        Route::get('logout', [userController::class, 'logout'])->name('user.logout');  
-});    
-
-// views iframe
+    Route::prefix('demo')->group(function () {
+        Route::get('userlist', [GeneralController::class, 'userList'])->name('userlist');
+        Route::get('useradd', [GeneralController::class, 'userAdd'])->name('useradd');
+        Route::get('userprofile', [GeneralController::class, 'userProfile'])->name('userprofile');
+    
+        Route::get('userform', [GeneralController::class, 'userForm'])->name('userform');
+        Route::get('usertable', [GeneralController::class, 'userTable'])->name('usertable');
+        Route::get('outlinedicon', [GeneralController::class, 'outlinedIcon'])->name('outlinedicon');
+    });
+});

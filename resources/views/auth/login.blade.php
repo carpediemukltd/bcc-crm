@@ -3,26 +3,26 @@
    <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title data-setting="app_name" data-rightJoin=" Pro | Responsive Bootstrap 5 Admin Dashboard Template">Hope UI Pro | Responsive Bootstrap 5 Admin Dashboard Template</title>
-      <meta name="description" content="Hope UI Pro is a revolutionary Bootstrap Admin Dashboard Template and UI Components Library. The Admin Dashboard Template and UI Component features 8 modules.">
-      <meta name="keywords" content="premium, admin, dashboard, template, bootstrap 5, clean ui, hope ui, admin dashboard,responsive dashboard, optimized dashboard, simple auth">
-      <meta name="author" content="Iqonic Design">
-      <meta name="DC.title" content="Hope UI Pro Simple | Responsive Bootstrap 5 Admin Dashboard Template">
+      <title data-setting="app_name" data-rightJoin=" Pro | Responsive Bootstrap 5 Admin Dashboard Template">BCC CRM</title>
+      <meta name="description" content="">
+      <meta name="keywords" content="BCC CRM">
+      <meta name="author" content="Carpe Diem">
+      <meta name="DC.title" content="">
      
-      <link rel="shortcut icon" href="../../assets/images/favicon.ico" />
+      <!-- <link rel="shortcut icon" href="../../assets/images/favicon.ico" /> -->
       <!-- Library / Plugin Css Build -->
-      <link rel="stylesheet" href="../../assets/css/core/libs.min.css" />
-      <!-- Hope Ui Design System Css -->
-      <link rel="stylesheet" href="../../assets/css/hope-ui.min.css?v=3.0.0" />
-      <link rel="stylesheet" href="../../assets/css/pro.min.css?v=3.0.0" />
+      <link rel="stylesheet" href="{{asset('assets/css/core/libs.min.css')}}" />
+      <!-- BCC Design System Css -->
+      <link rel="stylesheet" href="{{asset('assets/css/hope-ui.min.css?v=3.0.0')}}" />
+      <link rel="stylesheet" href="{{asset('assets/css/pro.min.css?v=3.0.0')}}" />
       <!-- Custom Css -->
-      <link rel="stylesheet" href="../../assets/css/custom.min.css?v=3.0.0" />
+      <link rel="stylesheet" href="{{asset('assets/css/custom.min.css?v=3.0.0')}}" />
       <!-- Dark Css -->
-      <link rel="stylesheet" href="../../assets/css/dark.min.css?v=3.0.0" />
+      <link rel="stylesheet" href="{{asset('assets/css/dark.min.css?v=3.0.0')}}" />
       <!-- Customizer Css -->
-      <link rel="stylesheet" href="../../assets/css/customizer.min.css?v=3.0.0" />
+      <link rel="stylesheet" href="{{asset('assets/css/customizer.min.css?v=3.0.0')}}" />
       <!-- RTL Css -->
-      <link rel="stylesheet" href="../../assets/css/rtl.min.css?v=3.0.0" />
+      <link rel="stylesheet" href="{{asset('assets/css/rtl.min.css?v=3.0.0')}}" />
       <!-- Google Font -->
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +33,7 @@
       <div id="loading">
          <div class="loader simple-loader">
             <div class="loader-body">
-               <img src="../../assets/images/loader.webp" alt="loader" class="light-loader img-fluid w-25" width="200" height="200">
+               <img src="{{asset('assets/images/loader.webp')}}" alt="loader" class="light-loader img-fluid w-25" width="200" height="200">
             </div>
          </div>
       </div>
@@ -67,7 +67,7 @@
                                     </div>
                                  </div>
                                  <!--logo End-->                              
-                                 <h4 class="logo-title ms-3 mb-0" data-setting="app_name">Hope UI</h4>
+                                 <h4 class="logo-title ms-3 mb-0" data-setting="app_name">BCC CRM</h4>
                               </a>
                               <h2 class="mb-2 text-center">Sign In</h2>
                               <p class="text-center">Login to stay connected.</p>
@@ -584,28 +584,28 @@
       
       <!-- Live Customizer end -->
       <!-- Library Bundle Script -->
-      <script src="../../assets/js/core/libs.min.js"></script>
+      <script src="{{asset('assets/js/core/libs.min.js')}}"></script>
       <!-- Plugin Scripts -->
       <!-- Slider-tab Script -->
-      <script src="../../assets/js/plugins/slider-tabs.js"></script>
+      <script src="{{asset('assets/js/plugins/slider-tabs.js')}}"></script>
       <!-- Lodash Utility -->
-      <script src="../../assets/vendor/lodash/lodash.min.js"></script>
+      <script src="{{asset('assets/vendor/lodash/lodash.min.js')}}"></script>
       <!-- Utilities Functions -->
-      <script src="../../assets/js/iqonic-script/utility.min.js"></script>
+      <script src="{{asset('assets/js/iqonic-script/utility.min.js')}}"></script>
       <!-- Settings Script -->
-      <script src="../../assets/js/iqonic-script/setting.min.js"></script>
+      <script src="{{asset('assets/js/iqonic-script/setting.min.js')}}"></script>
       <!-- Settings Init Script -->
-      <script src="../../assets/js/setting-init.js"></script>
+      <script src="{{asset('assets/js/setting-init.js')}}"></script>
       <!-- External Library Bundle Script -->
-      <script src="../../assets/js/core/external.min.js"></script>
+      <script src="{{asset('assets/js/core/external.min.js')}}"></script>
       <!-- Widgetchart Script -->
-      <script src="../../assets/js/charts/widgetcharts.js?v=3.0.0" defer></script>
+      <script src="{{asset('assets/js/charts/widgetcharts.js?v=3.0.0')}}" defer></script>
       <!-- Dashboard Script -->
-      <script src="../../assets/js/charts/dashboard.js?v=3.0.0" defer></script>
-      <script src="../../assets/js/charts/alternate-dashboard.js?v=3.0.0" defer></script>
+      <script src="{{asset('assets/js/charts/dashboard.js?v=3.0.0')}}" defer></script>
+      <script src="{{asset('assets/js/charts/alternate-dashboard.js?v=3.0.0')}}" defer></script>
       <!-- Hopeui Script -->
-      <script src="../../assets/js/hope-ui.js?v=3.0.0" defer></script>
-      <script src="../../assets/js/hope-uipro.js?v=3.0.0" defer></script>
-      <script src="../../assets/js/sidebar.js?v=3.0.0" defer></script>  
+      <script src="{{asset('assets/js/hope-ui.js?v=3.0.0')}}" defer></script>
+      <script src="{{asset('assets/js/hope-uipro.js?v=3.0.0')}}" defer></script>
+      <script src="{{asset('assets/js/sidebar.js?v=3.0.0')}}" defer></script>  
    </body>
 </html>

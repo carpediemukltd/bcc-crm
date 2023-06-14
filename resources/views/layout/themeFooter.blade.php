@@ -6,12 +6,8 @@
          <li class="list-inline-item"><a href="{{ route('privacy') }}">Terms of Use</a></li>
       </ul>
       <div class="right-panel">
-         ©2023 <span>BCC, CRM</span>, Made with
-         <span class="text-gray">
-            <svg class="icon-16" width="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-               <path fill-rule="evenodd" clip-rule="evenodd" d="M15.85 2.50065C16.481 2.50065 17.111 2.58965 17.71 2.79065C21.401 3.99065 22.731 8.04065 21.62 11.5806C20.99 13.3896 19.96 15.0406 18.611 16.3896C16.68 18.2596 14.561 19.9196 12.28 21.3496L12.03 21.5006L11.77 21.3396C9.48102 19.9196 7.35002 18.2596 5.40102 16.3796C4.06102 15.0306 3.03002 13.3896 2.39002 11.5806C1.26002 8.04065 2.59002 3.99065 6.32102 2.76965C6.61102 2.66965 6.91002 2.59965 7.21002 2.56065H7.33002C7.61102 2.51965 7.89002 2.50065 8.17002 2.50065H8.28002C8.91002 2.51965 9.52002 2.62965 10.111 2.83065H10.17C10.21 2.84965 10.24 2.87065 10.26 2.88965C10.481 2.96065 10.69 3.04065 10.89 3.15065L11.27 3.32065C11.3618 3.36962 11.4649 3.44445 11.554 3.50912C11.6104 3.55009 11.6612 3.58699 11.7 3.61065C11.7163 3.62028 11.7329 3.62996 11.7496 3.63972C11.8354 3.68977 11.9247 3.74191 12 3.79965C13.111 2.95065 14.46 2.49065 15.85 2.50065ZM18.51 9.70065C18.92 9.68965 19.27 9.36065 19.3 8.93965V8.82065C19.33 7.41965 18.481 6.15065 17.19 5.66065C16.78 5.51965 16.33 5.74065 16.18 6.16065C16.04 6.58065 16.26 7.04065 16.68 7.18965C17.321 7.42965 17.75 8.06065 17.75 8.75965V8.79065C17.731 9.01965 17.8 9.24065 17.94 9.41065C18.08 9.58065 18.29 9.67965 18.51 9.70065Z" fill="currentColor"></path>
-            </svg>
-         </span>
+         ©2023 <span>BCC, CRM</span>, Developed
+         
          by <a href="https://carpediem.team/" target="_blank">Carpediem</a>.
       </div>
    </div>
@@ -122,9 +118,9 @@
                            <input type="radio" value="ltr" class="btn-check" name="theme_scheme_direction"
                               data-prop="dir" id="theme-scheme-direction-ltr" checked>
                            <label class="btn btn-border d-block p-0" for="theme-scheme-direction-ltr">
-                           <img src="../../assets/images/settings/dark/01.png" alt="ltr"
+                           <img src="{{asset('assets/images/settings/dark/01.png')}}" alt="ltr"
                               class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                           <img src="../../assets/images/settings/light/01.png" alt="ltr"
+                           <img src="{{asset('assets/images/settings/light/01.png')}}" alt="ltr"
                               class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                            </label>
                            <span class=" mt-2"> LTR </span>
@@ -133,9 +129,9 @@
                            <input type="radio" value="rtl" class="btn-check" name="theme_scheme_direction"
                               data-prop="dir" id="theme-scheme-direction-rtl">
                            <label class="btn btn-border d-block p-0" for="theme-scheme-direction-rtl">
-                           <img src="../../assets/images/settings/dark/02.png" alt="ltr"
+                           <img src="{{asset('assets/images/settings/dark/02.png')}}" alt="ltr"
                               class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                           <img src="../../assets/images/settings/light/02.png" alt="ltr"
+                           <img src="{{asset('assets/images/settings/light/02.png')}}" alt="ltr"
                               class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                            </label>
                            <span class=" mt-2"> RTL </span>
@@ -361,9 +357,9 @@
                            <input type="checkbox" value="sidebar-mini" class="btn-check" name="sidebar_type"
                               id="sidebar-mini">
                            <label class="btn btn-border p-0 d-block overflow-hidden" for="sidebar-mini">
-                           <img src="../../assets/images/settings/dark/03.png" alt="mini"
+                           <img src="{{asset('assets/images/settings/dark/03.png')}}" alt="mini"
                               class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                           <img src="../../assets/images/settings/light/03.png" alt="mini"
+                           <img src="{{asset('assets/images/settings/light/03.png')}}" alt="mini"
                               class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                            </label>
                            <span class="mt-2">Mini</span>
@@ -373,9 +369,9 @@
                               data-extra="{target: '.sidebar', ClassListAdd: 'sidebar-mini'}"
                               class="btn-check" name="sidebar_type" id="sidebar-hover">
                            <label class="btn btn-border p-0 d-block overflow-hidden" for="sidebar-hover">
-                           <img src="../../assets/images/settings/dark/04.png" alt="hover"
+                           <img src="{{asset('assets/images/settings/dark/04.png')}}" alt="hover"
                               class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                           <img src="../../assets/images/settings/light/04.png" alt="hover"
+                           <img src="{{asset('assets/images/settings/light/04.png')}}" alt="hover"
                               class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                            </label>
                            <span class="mt-2">Hover</span>
@@ -384,9 +380,9 @@
                            <input type="checkbox" value="sidebar-boxed" class="btn-check" name="sidebar_type"
                               id="sidebar-boxed">
                            <label class="btn btn-border p-0 d-block overflow-hidden" for="sidebar-boxed">
-                           <img src="../../assets/images/settings/dark/05.png" alt="boxed"
+                           <img src="{{asset('assets/images/settings/dark/05.png')}}" alt="boxed"
                               class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                           <img src="../../assets/images/settings/light/05.png" alt="boxed"
+                           <img src="{{asset('assets/images/settings/light/05.png')}}" alt="boxed"
                               class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                            </label>
                            <span class="mt-2">Boxed</span>
@@ -395,9 +391,9 @@
                            <input type="checkbox" value="sidebar-soft" class="btn-check" name="sidebar_type"
                               id="sidebar-soft">
                            <label class="btn btn-border p-0 d-block overflow-hidden" for="sidebar-soft">
-                           <img src="../../assets/images/settings/dark/05.png" alt="boxed"
+                           <img src="{{asset('assets/images/settings/dark/05.png')}}" alt="boxed"
                               class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                           <img src="../../assets/images/settings/light/05.png" alt="boxed"
+                           <img src="{{asset('assets/images/settings/light/05.png')}}" alt="boxed"
                               class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                            </label>
                            <span class="mt-2">Soft</span>
@@ -414,9 +410,9 @@
                            <input type="radio" value="sidebar-default navs-rounded" class="btn-check"
                               name="sidebar_menu_style" id="navs-rounded">
                            <label class="btn btn-border p-0 d-block overflow-hidden" for="navs-rounded">
-                           <img src="../../assets/images/settings/dark/06.png" alt="mini"
+                           <img src="{{asset('assets/images/settings/dark/06.png')}}" alt="mini"
                               class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                           <img src="../../assets/images/settings/light/06.png" alt="mini"
+                           <img src="{{asset('assets/images/settings/light/06.png')}}" alt="mini"
                               class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                            </label>
                            <span class="mt-2">Rounded One Side</span>
@@ -425,9 +421,9 @@
                            <input type="radio" value="sidebar-default navs-rounded-all" class="btn-check"
                               name="sidebar_menu_style" id="navs-rounded-all">
                            <label class="btn btn-border p-0 d-block overflow-hidden" for="navs-rounded-all">
-                           <img src="../../assets/images/settings/dark/07.png" alt="hover"
+                           <img src="{{asset('assets/images/settings/dark/07.png')}}" alt="hover"
                               class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                           <img src="../../assets/images/settings/light/07.png" alt="hover"
+                           <img src="{{asset('assets/images/settings/light/07.png')}}" alt="hover"
                               class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                            </label>
                            <span class="mt-2">Rounded All</span>
@@ -436,9 +432,9 @@
                            <input type="radio" value="sidebar-default navs-pill" class="btn-check"
                               name="sidebar_menu_style" id="navs-pill">
                            <label class="btn btn-border p-0 d-block overflow-hidden" for="navs-pill">
-                           <img src="../../assets/images/settings/dark/08.png" alt="boxed"
+                           <img src="{{asset('assets/images/settings/dark/08.png')}}" alt="boxed"
                               class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                           <img src="../../assets/images/settings/light/08.png" alt="boxed"
+                           <img src="{{asset('assets/images/settings/light/08.png')}}" alt="boxed"
                               class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                            </label>
                            <span class="mt-2">Pill One Side</span>
@@ -447,9 +443,9 @@
                            <input type="radio" value="sidebar-default navs-pill-all" class="btn-check"
                               name="sidebar_menu_style" id="navs-pill-all">
                            <label class="btn btn-border p-0 d-block overflow-hidden" for="navs-pill-all">
-                           <img src="../../assets/images/settings/dark/09.png" alt="boxed"
+                           <img src="{{asset('assets/images/settings/dark/09.png')}}" alt="boxed"
                               class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                           <img src="../../assets/images/settings/light/09.png" alt="boxed"
+                           <img src="{{asset('assets/images/settings/light/09.png')}}" alt="boxed"
                               class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                            </label>
                            <span class="mt-2">Pill All</span>
@@ -459,9 +455,9 @@
                               name="sidebar_menu_style" id="left-bordered" checked>
                            <label class="btn btn-border position-relative p-0 d-block overflow-hidden"
                               for="left-bordered">
-                           <img src="../../assets/images/settings/dark/14.png" alt="boxed"
+                           <img src="{{asset('assets/images/settings/dark/14.png')}}" alt="boxed"
                               class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                           <img src="../../assets/images/settings/light/14.png" alt="boxed"
+                           <img src="{{asset('assets/images/settings/light/14.png')}}" alt="boxed"
                               class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                            <small class="badge bg-danger position-absolute top-1 end-0 m-2">Pro</small>
                            </label>
@@ -472,9 +468,9 @@
                               name="sidebar_menu_style" id="navs-full-width">
                            <label class="btn btn-border position-relative p-0 d-block overflow-hidden"
                               for="navs-full-width">
-                           <img src="../../assets/images/settings/dark/15.png" alt="boxed"
+                           <img src="{{asset('assets/images/settings/dark/15.png')}}" alt="boxed"
                               class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                           <img src="../../assets/images/settings/light/15.png" alt="boxed"
+                           <img src="{{asset('assets/images/settings/light/15.png')}}" alt="boxed"
                               class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                            <small class="badge bg-danger position-absolute top-1 end-0 m-2">Pro</small>
                            </label>
@@ -504,9 +500,9 @@
                            <input type="radio" value="nav-glass" class="btn-check" name="header_navbar"
                               id="nav-glass">
                            <label class="btn btn-border p-0 d-block overflow-hidden" for="nav-glass">
-                           <img src="../../assets/images/settings/dark/10.png" alt="hover"
+                           <img src="{{asset('assets/images/settings/dark/10.png')}}" alt="hover"
                               class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                           <img src="../../assets/images/settings/light/10.png" alt="hover"
+                           <img src="{{asset('assets/images/settings/light/10.png')}}" alt="hover"
                               class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                            </label>
                            <span class="mt-2">Glass</span>
@@ -515,9 +511,9 @@
                            <input type="radio" value="navs-sticky" class="btn-check" name="header_navbar"
                               id="navs-sticky">
                            <label class="btn btn-border p-0 d-block overflow-hidden" for="navs-sticky">
-                           <img src="../../assets/images/settings/dark/04.png" alt="hover"
+                           <img src="{{asset('assets/images/settings/dark/04.png')}}" alt="hover"
                               class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                           <img src="../../assets/images/settings/light/04.png" alt="hover"
+                           <img src="{{asset('assets/images/settings/light/04.png')}}" alt="hover"
                               class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                            </label>
                            <span class="mt-2">Sticky</span>
@@ -526,9 +522,9 @@
                            <input type="radio" value="navs-transparent" class="btn-check" name="header_navbar"
                               id="navs-transparent">
                            <label class="btn btn-border p-0 d-block overflow-hidden" for="navs-transparent">
-                           <img src="../../assets/images/settings/dark/12.png" alt="boxed"
+                           <img src="{{asset('assets/images/settings/dark/12.png')}}" alt="boxed"
                               class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                           <img src="../../assets/images/settings/light/12.png" alt="boxed"
+                           <img src="{{asset('assets/images/settings/light/12.png')}}" alt="boxed"
                               class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                            </label>
                            <span class="mt-2">Transparent</span>
@@ -537,9 +533,9 @@
                            <input type="radio" value="navs-default" class="btn-check" name="header_navbar"
                               id="navs-default" checked>
                            <label class="btn btn-border p-0 d-block overflow-hidden" for="navs-default">
-                           <img src="../../assets/images/settings/dark/01.png" alt="default"
+                           <img src="{{asset('assets/images/settings/dark/01.png')}}" alt="default"
                               class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                           <img src="../../assets/images/settings/light/01.png" alt="default"
+                           <img src="{{asset('assets/images/settings/light/01.png')}}" alt="default"
                               class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                            </label>
                            <span class="mt-2">Default</span>
@@ -592,9 +588,9 @@
                            <input type="radio" value="navs-bg-color" class="btn-check" name="header_banner"
                               id="header-banner-color">
                            <label class="btn btn-border p-0 d-block overflow-hidden" for="header-banner-color">
-                           <img src="../../assets/images/settings/dark/11.png" alt="hover"
+                           <img src="{{asset('assets/images/settings/dark/11.png')}}" alt="hover"
                               class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                           <img src="../../assets/images/settings/light/11.png" alt="hover"
+                           <img src="{{asset('assets/images/settings/light/11.png')}}" alt="hover"
                               class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                            </label>
                            <span class="mt-2">Color</span>
@@ -604,9 +600,9 @@
                               id="header-banner-default">
                            <label class="btn btn-border p-0 d-block overflow-hidden"
                               for="header-banner-default">
-                           <img src="../../assets/images/settings/dark/04.png" alt="hover"
+                           <img src="{{asset('assets/images/settings/dark/04.png')}}" alt="hover"
                               class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                           <img src="../../assets/images/settings/light/04.png" alt="hover"
+                           <img src="{{asset('assets/images/settings/light/04.png')}}" alt="hover"
                               class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                            </label>
                            <span class="mt-2">Image</span>
@@ -616,9 +612,9 @@
                               id="hide-banner" checked>
                            <label class="btn btn-border position-relative p-0 d-block overflow-hidden"
                               for="hide-banner">
-                           <img src="../../assets/images/settings/dark/05.png" alt="boxed"
+                           <img src="{{asset('assets/images/settings/dark/05.png')}}" alt="boxed"
                               class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                           <img src="../../assets/images/settings/light/05.png" alt="boxed"
+                           <img src="{{asset('assets/images/settings/light/05.png')}}" alt="boxed"
                               class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                            <small class="badge bg-danger position-absolute top-1 end-0 m-2">Pro</small>
                            </label>
@@ -851,16 +847,16 @@
                <div class="d-flex justify-content-center">
                   <ul class="list-group list-group-horizontal list-group-flush">
                      <li class="list-group-item border-0 pb-0">
-                        <a href="#"><img src="../../assets/images/brands/fb.svg" alt="fb" loading="lazy"></a>
+                        <a href="#"><img src="{{asset('assets/images/brands/fb.svg')}}" alt="fb" loading="lazy"></a>
                      </li>
                      <li class="list-group-item border-0 pb-0">
-                        <a href="#"><img src="../../assets/images/brands/gm.svg" alt="gm" loading="lazy"></a>
+                        <a href="#"><img src="{{asset('assets/images/brands/gm.svg')}}" alt="gm" loading="lazy"></a>
                      </li>
                      <li class="list-group-item border-0 pb-0">
-                        <a href="#"><img src="../../assets/images/brands/im.svg" alt="im" loading="lazy"></a>
+                        <a href="#"><img src="{{asset('assets/images/brands/im.svg')}}" alt="im" loading="lazy"></a>
                      </li>
                      <li class="list-group-item border-0 pb-0">
-                        <a href="#"><img src="../../assets/images/brands/li.svg" alt="li" loading="lazy"></a>
+                        <a href="#"><img src="{{asset('assets/images/brands/li.svg')}}" alt="li" loading="lazy"></a>
                      </li>
                   </ul>
                </div>
@@ -876,7 +872,7 @@
          <div class="modal-body">
             <form action="#">
                <h3 class="text-center">Sign Up</h3>
-               <p class="text-center">Create your Hope UI account</p>
+               <p class="text-center">Create your BCC account</p>
                <div class="d-flex justify-content-between">
                   <div class="form-group me-3">
                      <label class="form-label">First Name</label>
@@ -918,16 +914,16 @@
                <div class="d-flex justify-content-center">
                   <ul class="list-group list-group-horizontal list-group-flush">
                      <li class="list-group-item border-0 pb-0">
-                        <a href="#"><img src="../../assets/images/brands/fb.svg" alt="fb" loading="lazy"></a>
+                        <a href="#"><img src="{{asset('assets/images/brands/fb.svg')}}" alt="fb" loading="lazy"></a>
                      </li>
                      <li class="list-group-item border-0 pb-0">
-                        <a href="#"><img src="../../assets/images/brands/gm.svg" alt="gm" loading="lazy"></a>
+                        <a href="#"><img src="{{asset('assets/images/brands/gm.svg')}}" alt="gm" loading="lazy"></a>
                      </li>
                      <li class="list-group-item border-0 pb-0">
-                        <a href="#"><img src="../../assets/images/brands/im.svg" alt="im" loading="lazy"></a>
+                        <a href="#"><img src="{{asset('assets/images/brands/im.svg')}}" alt="im" loading="lazy"></a>
                      </li>
                      <li class="list-group-item border-0 pb-0">
-                        <a href="#"><img src="../../assets/images/brands/li.svg" alt="li" loading="lazy"></a>
+                        <a href="#"><img src="{{asset('assets/images/brands/li.svg')}}" alt="li" loading="lazy"></a>
                      </li>
                   </ul>
                </div>
@@ -938,6 +934,7 @@
    </div>
 </div>
 <!-- Library Bundle Script -->
+
 <script src="{{asset('assets/js/core/libs.min.js')}}"></script>
 <!-- Plugin Scripts -->
 <!-- Tour plugin Start -->
@@ -946,6 +943,7 @@
 <!-- Flatpickr Script -->
 <script src="{{asset('assets/vendor/flatpickr/dist/flatpickr.min.js')}}"></script>
 <script src="{{asset('assets/js/plugins/flatpickr.js')}}" defer></script>
+
 <!-- Slider-tab Script -->
 <script src="{{asset('assets/js/plugins/slider-tabs.js')}}"></script>
 <!-- Select2 Script -->
@@ -969,7 +967,7 @@
 <script src="{{asset('assets/js/hope-ui.js?v=3.0.0')}}" defer></script>
 <script src="{{asset('assets/js/hope-uipro.js?v=3.0.0')}}" defer></script>
 <script src="{{asset('assets/js/sidebar.js?v=3.0.0')}}" defer></script>  
-</script><script src="{{asset('assets/js/solid-icon-search-filter.js')}}"></script>  
+<script src="{{asset('assets/js/solid-icon-search-filter.js')}}"></script>  
 
 
 <script>

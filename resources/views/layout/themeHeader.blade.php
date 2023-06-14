@@ -16,11 +16,12 @@
       <!-- Flatpickr css -->
       <link rel="stylesheet" href="{{asset('assets/vendor/flatpickr/dist/flatpickr.min.css')}}" />
       <link rel="stylesheet" href="{{asset('assets/vendor/sheperd/dist/css/sheperd.css')}}">
-      <!-- Hope Ui Design System Css -->
+      <!-- BCC Design System Css -->
       <link rel="stylesheet" href="{{asset('assets/css/hope-ui.min.css?v=3.0.0')}}" />
       <link rel="stylesheet" href="{{asset('assets/css/pro.min.css?v=3.0.0')}}" />
       <!-- Custom Css -->
-      <link rel="stylesheet" href="{{asset('assets/css/custom.min.css?v=3.0.0')}}" />
+      <link rel="stylesheet" href="{{asset('assets/css/custom.min.css')}}" />
+      <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}" />
       <!-- Dark Css -->
       <link rel="stylesheet" href="{{asset('assets/css/dark.min.css?v=3.0.0')}}" />
       <!-- Customizer Css -->
@@ -28,6 +29,10 @@
       <!-- RTL Css -->
       <link rel="stylesheet" href="{{asset('assets/css/rtl.min.css?v=3.0.0')}}" />
       <!-- Google Font -->
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" defer></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -45,9 +50,9 @@
       <aside class="sidebar sidebar-base " id="first-tour" data-toggle="main-sidebar"
          data-sidebar="responsive">
          <div class="sidebar-header d-flex align-items-center justify-content-start">
-            <a href="#" class="navbar-brand">
+            <a href="{{route('dashboard')}}" class="navbar-brand">
                <!--Logo start-->
-               <div class="logo-main">
+               <!-- <div class="logo-main">
                   <div class="logo-normal">
                      <svg class=" icon-30" viewBox="0 0 30 30" fill="none" xmlns="">
                         <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor"/>
@@ -56,17 +61,9 @@
                         <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2" transform="rotate(45 10.5562 -0.556152)" fill="currentColor"/>
                      </svg>
                   </div>
-                  <div class="logo-mini">
-                     <svg class=" icon-30" viewBox="0 0 30 30" fill="none" xmlns="">
-                        <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor"/>
-                        <rect x="7.72803" y="27.728" width="28" height="4" rx="2" transform="rotate(-45 7.72803 27.728)" fill="currentColor"/>
-                        <rect x="10.5366" y="16.3945" width="16" height="4" rx="2" transform="rotate(45 10.5366 16.3945)" fill="currentColor"/>
-                        <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2" transform="rotate(45 10.5562 -0.556152)" fill="currentColor"/>
-                     </svg>
-                  </div>
-               </div>
+               </div> -->
                <!--logo End-->            
-               <h4 class="logo-title" data-setting="app_name">Hope UI</h4>
+               <h4 class="logo-title" data-setting="app_name">BCC CRM</h4>
             </a>
             <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
                <i class="icon">
@@ -157,8 +154,8 @@
                                        fill="currentColor"></path>
                                  </svg>
                               </i>
-                              <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="User Profile"
-                                 data-bs-placement="right"> U </i>
+                              <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Add Contact"
+                                 data-bs-placement="right"> A </i>
                                  <span class="item-name"> Add Contact</span>
                               </a>
                            </li>
@@ -182,7 +179,7 @@
                                           fill="currentColor"></path>
                                     </svg>
                                  </i>
-                                 <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Wishlist" data-bs-placement="right"> VD
+                                 <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Contact List" data-bs-placement="right"> C
                                  </i>
                                  <span class="item-name">Contact List</span>
                               </a>
@@ -193,7 +190,7 @@
                      <li class="nav-item <?php if(isset($slug) && in_array($slug, ['add_field', 'field_list', 'edit_field'])){echo 'active';}?>">
                         <a class="nav-link <?php if(isset($slug) && $slug == 'edit_field'){echo 'active';}?>" data-bs-toggle="collapse" href="#sidebar-custon-fields" role="button" aria-expanded="false"
                            aria-controls="sidebar-special">
-                           <i class="icon" data-bs-toggle="tooltip" title="Blog" data-bs-placement="right">
+                           <i class="icon" data-bs-toggle="tooltip" title="Custom Fields" data-bs-placement="right">
                            <svg width="20" class="icon-20" viewBox="0 0 24 24" fill="currentColor"
                               xmlns="">
                               <path opacity="0.4"
@@ -227,8 +224,8 @@
                                           fill="currentColor" />
                                     </svg>
                                  </i>
-                              <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="User Profile"
-                                 data-bs-placement="right"> U </i>
+                              <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Add Custom Field"
+                                 data-bs-placement="right"> A </i>
                                  <span class="item-name"> Add Custom Field</span>
                               </a>
                            </li>
@@ -252,7 +249,7 @@
                                           fill="currentColor"></path>
                                     </svg>
                                  </i>
-                                 <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Wishlist" data-bs-placement="right"> VD
+                                 <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="List of Custom Fields" data-bs-placement="right"> L
                                  </i>
                                  <span class="item-name">List of Custom Fields</span>
                               </a>
@@ -3082,269 +3079,261 @@
       </aside>  
 
       <main class="main-content">
-   <div class="position-relative">
-      <!--Nav Start-->
-      <nav class="nav navbar navbar-expand-xl navbar-light iq-navbar header-hover-menu left-border">
-         <div class="container-fluid navbar-inner">
-            <a href="../dashboard/index.html" class="navbar-brand">
-               <!--Logo start-->
-               <div class="logo-main">
-                  <div class="logo-normal">
-                     <svg class="text-primary icon-30" viewBox="0 0 30 30" fill="none" xmlns="">
-                        <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor"/>
-                        <rect x="7.72803" y="27.728" width="28" height="4" rx="2" transform="rotate(-45 7.72803 27.728)" fill="currentColor"/>
-                        <rect x="10.5366" y="16.3945" width="16" height="4" rx="2" transform="rotate(45 10.5366 16.3945)" fill="currentColor"/>
-                        <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2" transform="rotate(45 10.5562 -0.556152)" fill="currentColor"/>
-                     </svg>
-                  </div>
-                  <div class="logo-mini">
-                     <svg class="text-primary icon-30" viewBox="0 0 30 30" fill="none" xmlns="">
-                        <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor"/>
-                        <rect x="7.72803" y="27.728" width="28" height="4" rx="2" transform="rotate(-45 7.72803 27.728)" fill="currentColor"/>
-                        <rect x="10.5366" y="16.3945" width="16" height="4" rx="2" transform="rotate(45 10.5366 16.3945)" fill="currentColor"/>
-                        <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2" transform="rotate(45 10.5562 -0.556152)" fill="currentColor"/>
-                     </svg>
-                  </div>
-               </div>
-               <!--logo End-->         
-               <h4 class="logo-title d-block d-xl-none" data-setting="app_name">Hope UI</h4>
-            </a>
-            <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
-               <i class="icon d-flex">
-                  <svg class="icon-20" width="20" viewBox="0 0 24 24">
-                     <path fill="currentColor" d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" />
-                  </svg>
-               </i>
-            </div>
-            <div class="d-flex align-items-center justify-content-between product-offcanvas">
-               <div class="breadcrumb-title border-end me-3 pe-3 d-none d-xl-block">
-                  <small class="mb-0 text-capitalize">
-                     @if(isset($current_slug))
-                        {{$current_slug}}
-                     @endif
-                  </small>
-               </div>
-
-                <?php /* ?>  
-               <div class="offcanvas offcanvas-end shadow-none iq-product-menu-responsive" tabindex="-1" id="offcanvasBottom">
-                  <div class="offcanvas-body">
-                     <ul class="iq-nav-menu list-unstyled">
-                        <li class="nav-item active">
-                           <a class="nav-link menu-arrow justify-content-start" data-bs-toggle="collapse" href="#homeData"
-                              role="button" aria-expanded="false" aria-controls="homeData">
-                              <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="currentColor"
-                                 xmlns="">
-                                 <path
-                                    d="M9.14373 20.7821V17.7152C9.14372 16.9381 9.77567 16.3067 10.5584 16.3018H13.4326C14.2189 16.3018 14.8563 16.9346 14.8563 17.7152V20.7732C14.8562 21.4473 15.404 21.9951 16.0829 22H18.0438C18.9596 22.0023 19.8388 21.6428 20.4872 21.0007C21.1356 20.3586 21.5 19.4868 21.5 18.5775V9.86585C21.5 9.13139 21.1721 8.43471 20.6046 7.9635L13.943 2.67427C12.7785 1.74912 11.1154 1.77901 9.98539 2.74538L3.46701 7.9635C2.87274 8.42082 2.51755 9.11956 2.5 9.86585V18.5686C2.5 20.4637 4.04738 22 5.95617 22H7.87229C8.19917 22.0023 8.51349 21.8751 8.74547 21.6464C8.97746 21.4178 9.10793 21.1067 9.10792 20.7821H9.14373Z"
-                                    fill="currentColor" />
-                              </svg>
-                              <span class="nav-text ms-2">Home</span>
-                           </a>
-                           <ul class="iq-header-sub-menu list-unstyled collapse" id="homeData">
-                              <li class="nav-item"><a class="nav-link "
-                                 href="">Dashboard</a>
-                              </li>
-                              <li class="nav-item"><a
-                                 class="nav-link "
-                                 href="../dashboard/alternate-dashboard.html">Alternate Dashboard</a></li>
-                              <li class="nav-item">
-                                 <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#menuStyles" role="button"
-                                    aria-expanded="false" aria-controls="menuStyles">
-                                    Menu Style
-                                    <i class="right-icon">
-                                       <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
-                                          xmlns="">
-                                          <path d="M8.5 5L15.5 12L8.5 19" stroke="currentColor" stroke-width="1.5"
-                                             stroke-linecap="round" stroke-linejoin="round"></path>
-                                       </svg>
-                                    </i>
-                                 </a>
-                                 <ul aria-expanded="false" class="iq-header-sub-menu left list-unstyled collapse"
-                                    id="menuStyles">
-                                    <li class="nav-item"><a
-                                       class="nav-link "
-                                       href="../dashboard/index-horizontal.html">Horizontal Dashboard</a></li>
-                                    <li class="nav-item"><a
-                                       class="nav-link "
-                                       href="../dashboard/index-dual-horizontal.html">Dual Horizontal Dashboard</a>
-                                    </li>
-                                    <li class="nav-item"><a
-                                       class="nav-link "
-                                       href="../dashboard/index-dual-compact.html">Dual Compact</a></li>
-                                    <li class="nav-item"><a
-                                       class="nav-link "
-                                       href="../dashboard/index-boxed.html">Boxed Horizontal</a></li>
-                                    <li class="nav-item"><a
-                                       class="nav-link "
-                                       href="../dashboard/index-boxed-fancy.html">Boxed Fancy</a></li>
-                                 </ul>
-                              </li>
-                              <li class="nav-item"><a
-                                 class="nav-link "
-                                 href="../e-commerce/index.html">E-Commerce</a></li>
-                              <li class="nav-item"><a class="nav-link "
-                                 href="../social-app/index.html">Social App</a></li>
-                              <li class="nav-item"><a
-                                 class="nav-link "
-                                 href="../blog/index.html">Blog</a></li>
-                              <li class="nav-item"><a
-                                 class="nav-link "
-                                 href="../appointment/index.html">Appointment</a></li>
-                              <li class="nav-item"><a
-                                 class="nav-link "
-                                 href="../file-manager/index.html">File Manager</a></li>
-                              <li class="nav-item"><a class="nav-link "
-                                 href="../chat/index.html" target="_blank">Chat</a></li>
-                              <li class="nav-item"><a class="nav-link "
-                                 href="../mail/index.html">Mail</a></li>
-                           </ul>
-                        </li>
-                     </ul>
-                  </div>
-               </div>
-               <?php */ ?>
-
-            </div>
-            <div class="d-flex align-items-center">
-               <button id="navbar-toggle" class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                  aria-label="Toggle navigation">
-               <span class="navbar-toggler-icon">
-               <span class="navbar-toggler-bar bar1 mt-1"></span>
-               <span class="navbar-toggler-bar bar2"></span>
-               <span class="navbar-toggler-bar bar3"></span>
-               </span>
-               </button>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-               <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
-                  <li class="nav-item dropdown me-0 me-xl-3">
-                     <div class="d-flex align-items-center mr-2 iq-font-style" role="group" aria-label="First group"
-                        data-setting="radio">
-                        <input type="radio" class="btn-check" name="theme_font_size" value="theme-fs-sm" id="font-size-sm">
-                        <label for="font-size-sm" class="btn btn-border border-0 btn-icon btn-sm" data-bs-toggle="tooltip"
-                           title="Font size 14px" data-bs-placement="bottom">
-                        <span class="mb-0 h6" style="color: inherit !important;">A</span>
-                        </label>
-                        <input type="radio" class="btn-check" name="theme_font_size" value="theme-fs-md" id="font-size-md">
-                        <label for="font-size-md" class="btn btn-border border-0 btn-icon" data-bs-toggle="tooltip"
-                           title="Font size 16px" data-bs-placement="bottom">
-                        <span class="mb-0 h4" style="color: inherit !important;">A</span>
-                        </label>
-                        <input type="radio" class="btn-check" name="theme_font_size" value="theme-fs-lg" id="font-size-lg">
-                        <label for="font-size-lg" class="btn btn-border border-0 btn-icon" data-bs-toggle="tooltip"
-                           title="Font size 18px" data-bs-placement="bottom">
-                        <span class="mb-0 h2" style="color: inherit !important;">A</span>
-                        </label>
+      <div class="position-relative">
+         <!--Nav Start-->
+         <nav class="nav navbar navbar-expand-xl navbar-light iq-navbar header-hover-menu left-border">
+            <div class="container-fluid navbar-inner">
+               <a href="#" class="navbar-brand">
+                  <!--Logo start-->
+                  <!-- <div class="logo-main">
+                     <div class="logo-normal">
+                        <svg class="text-primary icon-30" viewBox="0 0 30 30" fill="none" xmlns="">
+                           <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor"/>
+                           <rect x="7.72803" y="27.728" width="28" height="4" rx="2" transform="rotate(-45 7.72803 27.728)" fill="currentColor"/>
+                           <rect x="10.5366" y="16.3945" width="16" height="4" rx="2" transform="rotate(45 10.5366 16.3945)" fill="currentColor"/>
+                           <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2" transform="rotate(45 10.5562 -0.556152)" fill="currentColor"/>
+                        </svg>
                      </div>
-                  </li>
-                  <li class="nav-item dropdown border-end pe-3 d-none d-xl-block">
-                     <div class="form-group input-group mb-0 search-input">
-                        <input type="text" class="form-control" placeholder="Search...">
-                        <span class="input-group-text">
-                           <svg class="icon-20" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                              xmlns="">
+                  </div> -->
+                  <!--logo End-->         
+                  <h4 class="logo-title d-block d-xl-none" data-setting="app_name">BCC CRM</h4>
+               </a>
+               <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
+                  <i class="icon d-flex">
+                     <svg class="icon-20" width="20" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" />
+                     </svg>
+                  </i>
+               </div>
+               <div class="d-flex align-items-center justify-content-between product-offcanvas">
+                  <div class="breadcrumb-title border-end me-3 pe-3 d-none d-xl-block">
+                     <small class="mb-0 text-capitalize">
+                        @if(isset($current_slug))
+                           {{$current_slug}}
+                        @endif
+                     </small>
+                  </div>
+
+                  <?php /* ?>  
+                  <div class="offcanvas offcanvas-end shadow-none iq-product-menu-responsive" tabindex="-1" id="offcanvasBottom">
+                     <div class="offcanvas-body">
+                        <ul class="iq-nav-menu list-unstyled">
+                           <li class="nav-item active">
+                              <a class="nav-link menu-arrow justify-content-start" data-bs-toggle="collapse" href="#homeData"
+                                 role="button" aria-expanded="false" aria-controls="homeData">
+                                 <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="currentColor"
+                                    xmlns="">
+                                    <path
+                                       d="M9.14373 20.7821V17.7152C9.14372 16.9381 9.77567 16.3067 10.5584 16.3018H13.4326C14.2189 16.3018 14.8563 16.9346 14.8563 17.7152V20.7732C14.8562 21.4473 15.404 21.9951 16.0829 22H18.0438C18.9596 22.0023 19.8388 21.6428 20.4872 21.0007C21.1356 20.3586 21.5 19.4868 21.5 18.5775V9.86585C21.5 9.13139 21.1721 8.43471 20.6046 7.9635L13.943 2.67427C12.7785 1.74912 11.1154 1.77901 9.98539 2.74538L3.46701 7.9635C2.87274 8.42082 2.51755 9.11956 2.5 9.86585V18.5686C2.5 20.4637 4.04738 22 5.95617 22H7.87229C8.19917 22.0023 8.51349 21.8751 8.74547 21.6464C8.97746 21.4178 9.10793 21.1067 9.10792 20.7821H9.14373Z"
+                                       fill="currentColor" />
+                                 </svg>
+                                 <span class="nav-text ms-2">Home</span>
+                              </a>
+                              <ul class="iq-header-sub-menu list-unstyled collapse" id="homeData">
+                                 <li class="nav-item"><a class="nav-link "
+                                    href="">Dashboard</a>
+                                 </li>
+                                 <li class="nav-item"><a
+                                    class="nav-link "
+                                    href="../dashboard/alternate-dashboard.html">Alternate Dashboard</a></li>
+                                 <li class="nav-item">
+                                    <a class="nav-link menu-arrow" data-bs-toggle="collapse" href="#menuStyles" role="button"
+                                       aria-expanded="false" aria-controls="menuStyles">
+                                       Menu Style
+                                       <i class="right-icon">
+                                          <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
+                                             xmlns="">
+                                             <path d="M8.5 5L15.5 12L8.5 19" stroke="currentColor" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round"></path>
+                                          </svg>
+                                       </i>
+                                    </a>
+                                    <ul aria-expanded="false" class="iq-header-sub-menu left list-unstyled collapse"
+                                       id="menuStyles">
+                                       <li class="nav-item"><a
+                                          class="nav-link "
+                                          href="../dashboard/index-horizontal.html">Horizontal Dashboard</a></li>
+                                       <li class="nav-item"><a
+                                          class="nav-link "
+                                          href="../dashboard/index-dual-horizontal.html">Dual Horizontal Dashboard</a>
+                                       </li>
+                                       <li class="nav-item"><a
+                                          class="nav-link "
+                                          href="../dashboard/index-dual-compact.html">Dual Compact</a></li>
+                                       <li class="nav-item"><a
+                                          class="nav-link "
+                                          href="../dashboard/index-boxed.html">Boxed Horizontal</a></li>
+                                       <li class="nav-item"><a
+                                          class="nav-link "
+                                          href="../dashboard/index-boxed-fancy.html">Boxed Fancy</a></li>
+                                    </ul>
+                                 </li>
+                                 <li class="nav-item"><a
+                                    class="nav-link "
+                                    href="../e-commerce/index.html">E-Commerce</a></li>
+                                 <li class="nav-item"><a class="nav-link "
+                                    href="../social-app/index.html">Social App</a></li>
+                                 <li class="nav-item"><a
+                                    class="nav-link "
+                                    href="../blog/index.html">Blog</a></li>
+                                 <li class="nav-item"><a
+                                    class="nav-link "
+                                    href="../appointment/index.html">Appointment</a></li>
+                                 <li class="nav-item"><a
+                                    class="nav-link "
+                                    href="../file-manager/index.html">File Manager</a></li>
+                                 <li class="nav-item"><a class="nav-link "
+                                    href="../chat/index.html" target="_blank">Chat</a></li>
+                                 <li class="nav-item"><a class="nav-link "
+                                    href="../mail/index.html">Mail</a></li>
+                              </ul>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <?php */ ?>
+
+               </div>
+               <div class="d-flex align-items-center">
+                  <button id="navbar-toggle" class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                     aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+                  <span class="navbar-toggler-bar bar1 mt-1"></span>
+                  <span class="navbar-toggler-bar bar2"></span>
+                  <span class="navbar-toggler-bar bar3"></span>
+                  </span>
+                  </button>
+               </div>
+               <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
+                     <li class="nav-item dropdown me-0 me-xl-3">
+                        <div class="d-flex align-items-center mr-2 iq-font-style" role="group" aria-label="First group"
+                           data-setting="radio">
+                           <input type="radio" class="btn-check" name="theme_font_size" value="theme-fs-sm" id="font-size-sm">
+                           <label for="font-size-sm" class="btn btn-border border-0 btn-icon btn-sm" data-bs-toggle="tooltip"
+                              title="Font size 14px" data-bs-placement="bottom">
+                           <span class="mb-0 h6" style="color: inherit !important;">A</span>
+                           </label>
+                           <input type="radio" class="btn-check" name="theme_font_size" value="theme-fs-md" id="font-size-md">
+                           <label for="font-size-md" class="btn btn-border border-0 btn-icon" data-bs-toggle="tooltip"
+                              title="Font size 16px" data-bs-placement="bottom">
+                           <span class="mb-0 h4" style="color: inherit !important;">A</span>
+                           </label>
+                           <input type="radio" class="btn-check" name="theme_font_size" value="theme-fs-lg" id="font-size-lg">
+                           <label for="font-size-lg" class="btn btn-border border-0 btn-icon" data-bs-toggle="tooltip"
+                              title="Font size 18px" data-bs-placement="bottom">
+                           <span class="mb-0 h2" style="color: inherit !important;">A</span>
+                           </label>
+                        </div>
+                     </li>
+                     <li class="nav-item dropdown border-end pe-3 d-none d-xl-block">
+                        <div class="form-group input-group mb-0 search-input">
+                           <input type="text" class="form-control" placeholder="Search...">
+                           <span class="input-group-text">
+                              <svg class="icon-20" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                 xmlns="">
+                                 <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round"></circle>
+                                 <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round"></path>
+                              </svg>
+                           </span>
+                        </div>
+                     </li>
+                     <li class="nav-item dropdown iq-responsive-menu border-end d-block d-xl-none">
+                        <div class="btn btn-sm bg-body" id="navbarDropdown-search-11" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                           <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="">
                               <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5"
                                  stroke-linecap="round" stroke-linejoin="round"></circle>
                               <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5"
                                  stroke-linecap="round" stroke-linejoin="round"></path>
                            </svg>
-                        </span>
-                     </div>
-                  </li>
-                  <li class="nav-item dropdown iq-responsive-menu border-end d-block d-xl-none">
-                     <div class="btn btn-sm bg-body" id="navbarDropdown-search-11" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="">
-                           <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5"
-                              stroke-linecap="round" stroke-linejoin="round"></circle>
-                           <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5"
-                              stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg>
-                     </div>
-                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-search-11"
-                        style="width: 25rem;">
-                        <li class="px-3 py-0">
-                           <div class="form-group input-group mb-0">
-                              <input type="text" class="form-control" placeholder="Search...">
-                              <span class="input-group-text">
-                                 <svg class="icon-20" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        </div>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-search-11"
+                           style="width: 25rem;">
+                           <li class="px-3 py-0">
+                              <div class="form-group input-group mb-0">
+                                 <input type="text" class="form-control" placeholder="Search...">
+                                 <span class="input-group-text">
+                                    <svg class="icon-20" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                       xmlns="">
+                                       <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5"
+                                          stroke-linecap="round" stroke-linejoin="round"></circle>
+                                       <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5"
+                                          stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                 </span>
+                              </div>
+                           </li>
+                        </ul>
+                     </li>
+                     <li class="nav-item dropdown" id="itemdropdown1">
+                        <a class="py-0 nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                           <div class="btn btn-primary btn-icon btn-sm rounded-pill">
+                              <span class="btn-inner">
+                                 <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none"
                                     xmlns="">
-                                    <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5"
-                                       stroke-linecap="round" stroke-linejoin="round"></circle>
-                                    <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5"
-                                       stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path
+                                       d="M11.997 15.1746C7.684 15.1746 4 15.8546 4 18.5746C4 21.2956 7.661 21.9996 11.997 21.9996C16.31 21.9996 19.994 21.3206 19.994 18.5996C19.994 15.8786 16.334 15.1746 11.997 15.1746Z"
+                                       fill="currentColor"></path>
+                                    <path opacity="0.4"
+                                       d="M11.9971 12.5838C14.9351 12.5838 17.2891 10.2288 17.2891 7.29176C17.2891 4.35476 14.9351 1.99976 11.9971 1.99976C9.06008 1.99976 6.70508 4.35476 6.70508 7.29176C6.70508 10.2288 9.06008 12.5838 11.9971 12.5838Z"
+                                       fill="currentColor"></path>
                                  </svg>
                               </span>
                            </div>
-                        </li>
-                     </ul>
-                  </li>
-                  <li class="nav-item dropdown" id="itemdropdown1">
-                     <a class="py-0 nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <div class="btn btn-primary btn-icon btn-sm rounded-pill">
-                           <span class="btn-inner">
-                              <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none"
-                                 xmlns="">
-                                 <path
-                                    d="M11.997 15.1746C7.684 15.1746 4 15.8546 4 18.5746C4 21.2956 7.661 21.9996 11.997 21.9996C16.31 21.9996 19.994 21.3206 19.994 18.5996C19.994 15.8786 16.334 15.1746 11.997 15.1746Z"
-                                    fill="currentColor"></path>
-                                 <path opacity="0.4"
-                                    d="M11.9971 12.5838C14.9351 12.5838 17.2891 10.2288 17.2891 7.29176C17.2891 4.35476 14.9351 1.99976 11.9971 1.99976C9.06008 1.99976 6.70508 4.35476 6.70508 7.29176C6.70508 10.2288 9.06008 12.5838 11.9971 12.5838Z"
-                                    fill="currentColor"></path>
-                              </svg>
-                           </span>
-                        </div>
-                     </a>
-                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li>
-                           <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
-                        </li>
-                        <li>
-                           <a class="dropdown-item" href="{{ route('privacy') }}">Privacy Setting</a>
-                        </li>
-                        <li>
-                           <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                           <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
-                        </li>
-                     </ul>
-                  </li>
-                  <li class="nav-item iq-full-screen d-none d-xl-block" id="fullscreen-item">
-                     <a href="#" class="nav-link" id="btnFullscreen" data-bs-toggle="dropdown">
-                        <div class="btn btn-primary btn-icon btn-sm rounded-pill">
-                           <span class="btn-inner">
-                              <svg class="normal-screen icon-24" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                 xmlns="">
-                                 <path d="M18.5528 5.99656L13.8595 10.8961" stroke="white" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round"></path>
-                                 <path d="M14.8016 5.97618L18.5524 5.99629L18.5176 9.96906" stroke="white" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round"></path>
-                                 <path d="M5.8574 18.896L10.5507 13.9964" stroke="white" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round"></path>
-                                 <path d="M9.60852 18.9164L5.85775 18.8963L5.89258 14.9235" stroke="white" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round"></path>
-                              </svg>
-                              <svg class="full-normal-screen d-none icon-24" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none" xmlns="">
-                                 <path d="M13.7542 10.1932L18.1867 5.79319" stroke="white" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round"></path>
-                                 <path d="M17.2976 10.212L13.7547 10.1934L13.7871 6.62518" stroke="currentColor"
-                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                 <path d="M10.4224 13.5726L5.82149 18.1398" stroke="white" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round"></path>
-                                 <path d="M6.74391 13.5535L10.4209 13.5723L10.3867 17.2755" stroke="currentColor"
-                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                              </svg>
-                           </span>
-                        </div>
-                     </a>
-                  </li>
-               </ul>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                           <li>
+                              <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
+                           </li>
+                           <li>
+                              <a class="dropdown-item" href="{{ route('privacy') }}">Privacy Setting</a>
+                           </li>
+                           <li>
+                              <hr class="dropdown-divider">
+                           </li>
+                           <li>
+                              <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+                           </li>
+                        </ul>
+                     </li>
+                     <li class="nav-item iq-full-screen d-none d-xl-block" id="fullscreen-item">
+                        <a href="#" class="nav-link" id="btnFullscreen" data-bs-toggle="dropdown">
+                           <div class="btn btn-primary btn-icon btn-sm rounded-pill">
+                              <span class="btn-inner">
+                                 <svg class="normal-screen icon-24" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="">
+                                    <path d="M18.5528 5.99656L13.8595 10.8961" stroke="white" stroke-width="1.5"
+                                       stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M14.8016 5.97618L18.5524 5.99629L18.5176 9.96906" stroke="white" stroke-width="1.5"
+                                       stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M5.8574 18.896L10.5507 13.9964" stroke="white" stroke-width="1.5"
+                                       stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M9.60852 18.9164L5.85775 18.8963L5.89258 14.9235" stroke="white" stroke-width="1.5"
+                                       stroke-linecap="round" stroke-linejoin="round"></path>
+                                 </svg>
+                                 <svg class="full-normal-screen d-none icon-24" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" xmlns="">
+                                    <path d="M13.7542 10.1932L18.1867 5.79319" stroke="white" stroke-width="1.5"
+                                       stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M17.2976 10.212L13.7547 10.1934L13.7871 6.62518" stroke="currentColor"
+                                       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M10.4224 13.5726L5.82149 18.1398" stroke="white" stroke-width="1.5"
+                                       stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M6.74391 13.5535L10.4209 13.5723L10.3867 17.2755" stroke="currentColor"
+                                       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                 </svg>
+                              </span>
+                           </div>
+                        </a>
+                     </li>
+                  </ul>
+               </div>
             </div>
-         </div>
-      </nav>
-      <!--Nav End-->
-   </div>
+         </nav>
+         <!--Nav End-->
+      </div>

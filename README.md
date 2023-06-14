@@ -14,6 +14,7 @@ Denefit Dashboard
 * clone project
 * delete composer.lock file from root
 * copy .env.example and rename .env.example-copy to .env & setup database credentials
+* Conect BCC bankportal Database to CRM
 * run command to install newly cloned project: composer install
 * php artisan key:generate
 * php artisan migrate

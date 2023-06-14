@@ -3,27 +3,27 @@
    <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title data-setting="app_name" data-rightJoin=" Pro | Responsive Bootstrap 5 Admin Dashboard Template">Hope UI Pro | Responsive Bootstrap 5 Admin Dashboard Template</title>
-      <meta name="description" content="Hope UI Pro is a revolutionary Bootstrap Admin Dashboard Template and UI Components Library. The Admin Dashboard Template and UI Component features 8 modules.">
-      <meta name="keywords" content="premium, admin, dashboard, template, bootstrap 5, clean ui, hope ui, admin dashboard,responsive dashboard, optimized dashboard, simple auth">
-      <meta name="author" content="Iqonic Design">
-      <meta name="DC.title" content="Hope UI Pro Simple | Responsive Bootstrap 5 Admin Dashboard Template">
+      <title data-setting="app_name" data-rightJoin=" Pro | Responsive Bootstrap 5 Admin Dashboard Template">Forgot Password Link</title>
+      <meta name="description" content="">
+      <meta name="keywords" content="BCC CRM">
+      <meta name="author" content="Carpe Diem">
+      <meta name="DC.title" content="">
       <!-- Google Font Api KEY-->
       
       <link rel="shortcut icon" href="../../assets/images/favicon.ico" />
       <!-- Library / Plugin Css Build -->
-      <link rel="stylesheet" href="../../assets/css/core/libs.min.css" />
-      <!-- Hope Ui Design System Css -->
-      <link rel="stylesheet" href="../../assets/css/hope-ui.min.css?v=3.0.0" />
-      <link rel="stylesheet" href="../../assets/css/pro.min.css?v=3.0.0" />
+      <link rel="stylesheet" href="{{asset('assets/css/core/libs.min.css')}}" />
+      <!-- BCC Design System Css -->
+      <link rel="stylesheet" href="{{asset('assets/css/hope-ui.min.css?v=3.0.0')}}" />
+      <link rel="stylesheet" href="{{asset('assets/css/pro.min.css?v=3.0.0')}}" />
       <!-- Custom Css -->
-      <link rel="stylesheet" href="../../assets/css/custom.min.css?v=3.0.0" />
+      <link rel="stylesheet" href="{{asset('assets/css/custom.min.css?v=3.0.0')}}" />
       <!-- Dark Css -->
-      <link rel="stylesheet" href="../../assets/css/dark.min.css?v=3.0.0" />
+      <link rel="stylesheet" href="{{asset('assets/css/dark.min.css?v=3.0.0')}}" />
       <!-- Customizer Css -->
-      <link rel="stylesheet" href="../../assets/css/customizer.min.css?v=3.0.0" />
+      <link rel="stylesheet" href="{{asset('assets/css/customizer.min.css?v=3.0.0')}}" />
       <!-- RTL Css -->
-      <link rel="stylesheet" href="../../assets/css/rtl.min.css?v=3.0.0" />
+      <link rel="stylesheet" href="{{asset('assets/css/rtl.min.css?v=3.0.0')}}" />
       <!-- Google Font -->
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,7 +34,7 @@
       <div id="loading">
          <div class="loader simple-loader">
             <div class="loader-body">
-               <img src="../../assets/images/loader.webp" alt="loader" class="light-loader img-fluid w-25" width="200" height="200">
+               <img src="{{asset('assets/images/loader.webp')}}" alt="loader" class="light-loader img-fluid w-25" width="200" height="200">
             </div>
          </div>
       </div>
@@ -43,12 +43,12 @@
          <section class="login-content">
             <div class="row m-0 align-items-center bg-white vh-100">
                <div class="col-md-6 d-md-block d-none bg-primary p-0 vh-100 overflow-hidden">
-                  <img src="../../assets/images/auth/02.png" class="img-fluid gradient-main animated-scaleX" alt="images" loading="lazy">
+                  <img src="{{asset('assets/images/auth/02.png')}}" class="img-fluid gradient-main animated-scaleX" alt="images" loading="lazy">
                </div>
                <div class="col-md-6 p-0">
                   <div class="card card-transparent auth-card shadow-none d-flex justify-content-center mb-0">
                      <div class="card-body">
-                        <a href="../../dashboard/index.html" class="navbar-brand d-flex align-items-center mb-3">
+                        <a href="#" class="navbar-brand d-flex align-items-center mb-3">
                            <!--Logo start-->
                            <div class="logo-main">
                               <div class="logo-normal">
@@ -69,7 +69,7 @@
                               </div>
                            </div>
                            <!--logo End-->                        
-                           <h4 class="logo-title ms-3 mb-0" data-setting="app_name">Hope UI</h4>
+                           <h4 class="logo-title ms-3 mb-0" data-setting="app_name">BCC CRM</h4>
                         </a>
                         <h2 class="mb-2">Reset Password</h2>
                         <!-- <p>Enter your email address and we'll send you an email with instructions to reset your password.</p> -->
@@ -234,9 +234,9 @@
                                  <input type="radio" value="ltr" class="btn-check" name="theme_scheme_direction"
                                     data-prop="dir" id="theme-scheme-direction-ltr" checked>
                                  <label class="btn btn-border d-block p-0" for="theme-scheme-direction-ltr">
-                                 <img src="../../assets/images/settings/dark/01.png" alt="ltr"
+                                 <img src="{{asset('assets/images/settings/dark/01.png')}}" alt="ltr"
                                     class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                                 <img src="../../assets/images/settings/light/01.png" alt="ltr"
+                                 <img src="{{asset('assets/images/settings/light/01.png')}}" alt="ltr"
                                     class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                                  </label>
                                  <span class=" mt-2"> LTR </span>
@@ -245,9 +245,9 @@
                                  <input type="radio" value="rtl" class="btn-check" name="theme_scheme_direction"
                                     data-prop="dir" id="theme-scheme-direction-rtl">
                                  <label class="btn btn-border d-block p-0" for="theme-scheme-direction-rtl">
-                                 <img src="../../assets/images/settings/dark/02.png" alt="ltr"
+                                 <img src="{{asset('assets/images/settings/dark/02.png')}}" alt="ltr"
                                     class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                                 <img src="../../assets/images/settings/light/02.png" alt="ltr"
+                                 <img src="{{asset('assets/images/settings/light/02.png')}}" alt="ltr"
                                     class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                                  </label>
                                  <span class=" mt-2"> RTL </span>
@@ -567,30 +567,30 @@
          </div>
       </div>
       
-      <!-- Live Customizer end -->
+     <!-- Live Customizer end -->
       <!-- Library Bundle Script -->
-      <script src="../../assets/js/core/libs.min.js"></script>
+      <script src="{{asset('assets/js/core/libs.min.js')}}"></script>
       <!-- Plugin Scripts -->
       <!-- Slider-tab Script -->
-      <script src="../../assets/js/plugins/slider-tabs.js"></script>
+      <script src="{{asset('assets/js/plugins/slider-tabs.js')}}"></script>
       <!-- Lodash Utility -->
-      <script src="../../assets/vendor/lodash/lodash.min.js"></script>
+      <script src="{{asset('assets/vendor/lodash/lodash.min.js')}}"></script>
       <!-- Utilities Functions -->
-      <script src="../../assets/js/iqonic-script/utility.min.js"></script>
+      <script src="{{asset('assets/js/iqonic-script/utility.min.js')}}"></script>
       <!-- Settings Script -->
-      <script src="../../assets/js/iqonic-script/setting.min.js"></script>
+      <script src="{{asset('assets/js/iqonic-script/setting.min.js')}}"></script>
       <!-- Settings Init Script -->
-      <script src="../../assets/js/setting-init.js"></script>
+      <script src="{{asset('assets/js/setting-init.js')}}"></script>
       <!-- External Library Bundle Script -->
-      <script src="../../assets/js/core/external.min.js"></script>
+      <script src="{{asset('assets/js/core/external.min.js')}}"></script>
       <!-- Widgetchart Script -->
-      <script src="../../assets/js/charts/widgetcharts.js?v=3.0.0" defer></script>
+      <script src="{{asset('assets/js/charts/widgetcharts.js?v=3.0.0')}}" defer></script>
       <!-- Dashboard Script -->
-      <script src="../../assets/js/charts/dashboard.js?v=3.0.0" defer></script>
-      <script src="../../assets/js/charts/alternate-dashboard.js?v=3.0.0" defer></script>
+      <script src="{{asset('assets/js/charts/dashboard.js?v=3.0.0')}}" defer></script>
+      <script src="{{asset('assets/js/charts/alternate-dashboard.js?v=3.0.0')}}" defer></script>
       <!-- Hopeui Script -->
-      <script src="../../assets/js/hope-ui.js?v=3.0.0" defer></script>
-      <script src="../../assets/js/hope-uipro.js?v=3.0.0" defer></script>
-      <script src="../../assets/js/sidebar.js?v=3.0.0" defer></script>  
+      <script src="{{asset('assets/js/hope-ui.js?v=3.0.0')}}" defer></script>
+      <script src="{{asset('assets/js/hope-uipro.js?v=3.0.0')}}" defer></script>
+      <script src="{{asset('assets/js/sidebar.js?v=3.0.0')}}" defer></script>  
    </body>
 </html>

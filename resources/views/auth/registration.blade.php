@@ -3,14 +3,14 @@
    <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title data-setting="app_name" data-rightJoin=" Pro | Responsive Bootstrap 5 Admin Dashboard Template">Hope UI Pro | Responsive Bootstrap 5 Admin Dashboard Template</title>
-      <meta name="description" content="Hope UI Pro is a revolutionary Bootstrap Admin Dashboard Template and UI Components Library. The Admin Dashboard Template and UI Component features 8 modules.">
-      <meta name="keywords" content="premium, admin, dashboard, template, bootstrap 5, clean ui, hope ui, admin dashboard,responsive dashboard, optimized dashboard, simple auth">
-      <meta name="author" content="Iqonic Design">
-      <meta name="DC.title" content="Hope UI Pro Simple | Responsive Bootstrap 5 Admin Dashboard Template">
+      <title data-setting="app_name" data-rightJoin=" Pro | Responsive Bootstrap 5 Admin Dashboard Template">Registeration</title>
+      <meta name="description" content="">
+      <meta name="keywords" content="BCC CRM">
+      <meta name="author" content="Carpe Diem">
+      <meta name="DC.title" content="">
       <!-- Library / Plugin Css Build -->
       <link rel="stylesheet" href="{{asset('assets/css/core/libs.min.css')}}" />
-      <!-- Hope Ui Design System Css -->
+      <!-- BCC CRM Design System Css -->
       <link rel="stylesheet" href="{{asset('assets/css/hope-ui.min.css?v=3.0.0')}}" />
       <link rel="stylesheet" href="{{asset('assets/css/pro.min.css?v=3.0.0')}}" />
       <!-- Custom Css -->
@@ -68,10 +68,10 @@
                                     </div>
                                  </div>
                                  <!--logo End-->                              
-                                 <h4 class="logo-title ms-3 mb-0" data-setting="app_name">Hope UI</h4>
+                                 <h4 class="logo-title ms-3 mb-0" data-setting="app_name">BCC CRM</h4>
                               </a>
                               <h2 class="mb-2 text-center">Sign Up</h2>
-                              <p class="text-center">Create your Hope UI account.</p>
+                              <p class="text-center">Create your BCC CRM account.</p>
                               <form action="{{ route('register.post') }}" method="POST">
                                  @csrf
                                  <div class="row">
@@ -612,8 +612,6 @@
       </div>
       
       <!-- Live Customizer end -->
-      <!-- Library Bundle Script -->
-    
       <!-- Library Bundle Script -->
 <script src="{{asset('assets/js/core/libs.min.js')}}"></script>
 <!-- Plugin Scripts -->

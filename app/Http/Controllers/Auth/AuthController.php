@@ -97,14 +97,16 @@ class AuthController extends Controller
      *
      * @return response()
      */
-    public function dashboard()
-    {
+    public function dashboard(){
+        $this->data['current_slug'] = 'Dashboard';
+        $this->data['slug']         = 'dashboard';
+
         if(Auth::check()){
             $this->data['slug'] = 'dashboard';
             return view('dashboard', $this->data);
         }
   
-        return redirect("login")->withError('Opps! session is timeout plz login again.');
+        return redirect("login", $this->data)->withError('Opps! session is timeout plz login again.');
     }
     
     /**

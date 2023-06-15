@@ -94,7 +94,7 @@
 
                      <div class="row">
                         <div class="col">
-                           <button type="submit" class="btn btn-primary">Submit</button>
+                           <button type="submit" class="btn btn-primary">Update</button>
                            <a href="{{ route('customfield.list') }}" class="btn btn-danger">Cancel</a>
                         </div>
                      </div>

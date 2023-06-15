@@ -73,18 +73,39 @@
     public function userList(Request $request){
         $this->data['current_slug'] = 'Contacts';
         $this->data['slug']         = 'user_list';
+
         $this->data['users'] = User::where('role', 'user')->orderBy('id', 'DESC')->paginate(10);
+        if($request->ajax()){
+            $this->data['users'] = User::where('role', 'user')
+                                       ->when($request->seach_term, function($q)use($request){
+                                          $q->where('first_name', 'like', '%'.$request->seach_term.'%')
+                                          ->orWhere('last_name', 'like', '%'.$request->seach_term.'%')
+                                          ->orWhere('email', 'like', '%'.$request->seach_term.'%')
+                                          ->orWhere('phone_number', 'like', '%'.$request->seach_term.'%');
+                                    })
+                                    ->when($request->status, function($q)use($request){
+                                          $q->where('status',$request->status);
+                                    })
+                                    ->when($request->start_date, function($q)use($request){
+                                          $q->whereBetween('created_at', [$request->start_date, $request->end_date]);
+                                    })
+                                    ->orderBy('id', 'DESC')->paginate(10);
+
+         return view('user.user_pagination', $this->data)->render();
+        }
         return view("user.list", $this->data);
     } // addUser
 
     public function editUser(Request $request, $id){
         $this->data['current_slug'] = 'Edit Contact';
         $this->data['slug']         = 'edit_user';
+        $this->data['all_status']   = ['inactive', 'active', 'deleted', 'banned'];
         if ($request->isMethod('put')) {
             $update_data = [
                 'first_name'   => $request->first_name,
                 'last_name'    => $request->last_name,
-                'phone_number' => $request->phone_number
+                'phone_number' => $request->phone_number,
+                'status'       => $request->status
             ];
 
             if ($request->password && strlen($request->password) < 6) {

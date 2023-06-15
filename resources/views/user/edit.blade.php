@@ -108,13 +108,23 @@
                               <input type="password" class="form-control" id="password" placeholder="Password" name="password">
                            </div>
                         </div>
+                        <div class="col">
+                           <div class="form-group">
+                              <label class="form-label" for="status">Status:</label>
+                              <select class="form-select" id="status" name="status">
+                                 @foreach($all_status as $rec_status)
+                                    <option value="{{$rec_status}}" <?php if($rec_status == $user->status){echo 'selected';}?>>{{ucfirst($rec_status)}}</option>
+                                 @endforeach
+                              </select>
+                           </div>
+                        </div>
                      </div>
 
                      <div class="row"><div class="col"><br /></div></div>
 
                      <div class="row">
                         <div class="col">
-                           <button type="submit" class="btn btn-primary">Submit</button>
+                           <button type="submit" class="btn btn-primary">Update</button>
                            <a href="{{ route('user.list') }}" class="btn btn-danger">Cancel</a>
                         </div>
                      </div>

@@ -10,7 +10,7 @@
          BCC CRM
       </title>
       <!-- Favicon -->
-      <!-- <link rel="shortcut icon" href="../assets/images/favicon.ico" /> -->
+      <link rel="shortcut icon" href="{{asset('assets/images/bcc-logo.png')}}" />
       <!-- Library / Plugin Css Build -->
       <link rel="stylesheet" href="{{asset('assets/css/core/libs.min.css')}}" />
       <!-- Flatpickr css -->

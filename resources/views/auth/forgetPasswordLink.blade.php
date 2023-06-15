@@ -10,7 +10,7 @@
       <meta name="DC.title" content="">
       <!-- Google Font Api KEY-->
       
-      <link rel="shortcut icon" href="../../assets/images/favicon.ico" />
+      <link rel="shortcut icon" href="{{asset('assets/images/bcc-logo.png')}}" />
       <!-- Library / Plugin Css Build -->
       <link rel="stylesheet" href="{{asset('assets/css/core/libs.min.css')}}" />
       <!-- BCC Design System Css -->
@@ -51,25 +51,9 @@
                         <a href="#" class="navbar-brand d-flex align-items-center mb-3">
                            <!--Logo start-->
                            <div class="logo-main">
-                              <div class="logo-normal">
-                                 <svg class="text-primary icon-30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor"/>
-                                    <rect x="7.72803" y="27.728" width="28" height="4" rx="2" transform="rotate(-45 7.72803 27.728)" fill="currentColor"/>
-                                    <rect x="10.5366" y="16.3945" width="16" height="4" rx="2" transform="rotate(45 10.5366 16.3945)" fill="currentColor"/>
-                                    <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2" transform="rotate(45 10.5562 -0.556152)" fill="currentColor"/>
-                                 </svg>
-                              </div>
-                              <div class="logo-mini">
-                                 <svg class="text-primary icon-30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor"/>
-                                    <rect x="7.72803" y="27.728" width="28" height="4" rx="2" transform="rotate(-45 7.72803 27.728)" fill="currentColor"/>
-                                    <rect x="10.5366" y="16.3945" width="16" height="4" rx="2" transform="rotate(45 10.5366 16.3945)" fill="currentColor"/>
-                                    <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2" transform="rotate(45 10.5562 -0.556152)" fill="currentColor"/>
-                                 </svg>
-                              </div>
+                              <img src="{{asset('assets/images/bcc-logo.png')}}" alt="" style="width:150px">
                            </div>
                            <!--logo End-->                        
-                           <h4 class="logo-title ms-3 mb-0" data-setting="app_name">BCC CRM</h4>
                         </a>
                         <h2 class="mb-2">Reset Password</h2>
                         <!-- <p>Enter your email address and we'll send you an email with instructions to reset your password.</p> -->
@@ -116,16 +100,6 @@
                            <button type="submit" class="btn btn-primary">Reset</button>
                         </form>
                      </div>
-                  </div>
-                  <div class="sign-bg sign-bg-right">
-                     <svg width="280" height="230" viewBox="0 0 431 398" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g opacity="0.05">
-                           <rect x="-157.085" y="193.773" width="543" height="77.5714" rx="38.7857" transform="rotate(-45 -157.085 193.773)" fill="#3B8AFF"/>
-                           <rect x="7.46875" y="358.327" width="543" height="77.5714" rx="38.7857" transform="rotate(-45 7.46875 358.327)" fill="#3B8AFF"/>
-                           <rect x="61.9355" y="138.545" width="310.286" height="77.5714" rx="38.7857" transform="rotate(45 61.9355 138.545)" fill="#3B8AFF"/>
-                           <rect x="62.3154" y="-190.173" width="543" height="77.5714" rx="38.7857" transform="rotate(45 62.3154 -190.173)" fill="#3B8AFF"/>
-                        </g>
-                     </svg>
                   </div>
                </div>
             </div>

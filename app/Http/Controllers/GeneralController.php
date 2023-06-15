@@ -34,6 +34,10 @@
    public function userTable(){
       return view('general.usertable');
    }
+
+   public function contactDetails(){
+      return view('general.contactdetails');
+   }
    
    public function outlinedIcon(){
       return view('general.outlinedicon');

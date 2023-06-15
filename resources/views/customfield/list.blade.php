@@ -34,6 +34,29 @@
 </div>
 <div class="content-inner pb-0 container-fluid" id="page_layout">
    <div>
+      <div class="all_type_alert_boxes">
+         @if (session('success'))
+         <div class="row">
+            <div class="col-md-12">
+               <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <strong>Congratulations!</strong> {{ session('success') }}
+                  <button type="button" class="btn-close" id="alert-box-close" data-bs-dismiss="alert" aria-label="Close"></button>
+               </div>
+            </div>
+         </div>
+         @endif
+
+         @if (session('error'))
+         <div class="row">
+            <div class="col-md-12">
+               <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong>Oops!</strong> {{ session('error') }}
+                  <button type="button" class="btn-close" id="alert-box-close" data-bs-dismiss="alert" aria-label="Close"></button>
+               </div>
+            </div>
+         </div>
+         @endif
+      </div>
       <div class="row">
          <div class="col-sm-12">
             <div class="card">
@@ -45,8 +68,9 @@
                <div class="card-body px-0">
                   <div class="table-responsive">
                      <div id="user-list-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                        <div class="table-responsive my-3">
-                           <form>
+                        <form id="frmExample" action="{{route('customfield.list')}}" method="POST" enctype="multipart/form-data">
+                           @csrf
+                           <div class="table-responsive my-3">
                               <table id="user-list-table" class="table table-striped dataTable no-footer" role="grid" aria-describedby="user-list-table_info">
                                  <thead>
                                     <tr class="ligth">
@@ -62,6 +86,7 @@
                                           <td>{{$rec_field->title}}</td>
                                           <td>{{$rec_field->type}}</td>
                                           <td>
+                                             <input type="hidden" name="sorting[]" value="{{$rec_field->id}}">
                                              <div class="flex align-items-center list-user-action">
                                                 <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-original-title="Edit" href="{{route('customfield.edit', $rec_field->id)}}" aria-label="Edit" data-bs-original-title="Edit">
                                                    <span class="btn-inner">
@@ -78,21 +103,16 @@
                                        @endforeach
                                     @else 
                                        <tr><td colspan="3">No records found</td></tr>
-                                    @endif
-                                 </tbody>
+                                    @endif                                    
                               </table>
-                           </form>
-                        </div>
-                        <div class="row align-items-center">
-                           <div class="col-md-6">
-                              <!-- nothing happend -->
                            </div>
-                           <div class="col-md-6">
-                              <div class="dataTables_paginate paging_simple_numbers" id="user-list-table_paginate">
-                                 {{ $rs_field->links('vendor.pagination.custom')}}
-                              </div>
-                           </div>
-                        </div>
+                           
+                           <div style="padding-left:15px;">    
+                              <a href="{{route('customfield.list')}}" class="btn btn-primary">Cancel</a>  
+                              <button class="btn btn-primary" type="submit">Update</button>
+                           </div>      
+                              
+                        </form>
                      </div>
                   </div>
                </div>
@@ -104,30 +124,20 @@
 
 <script>
    $(document).ready(function() {
-   
-    $("#user-list-table tbody").sortable({
-      
-      cursor: "move",
-      
-      placeholder: "sortable-placeholder",
-      
-      helper: function(e, tr)
-      
-      {
-        
-        var $originals = tr.children();
-        var $helper = tr.clone();
-        $helper.children().each(function(index)
-        {
-        // Set helper cell sizes to match the original sizes
-        $(this).width($originals.eq(index).width());
-        
-      });
-        return $helper;
-        
-      }
-    }).disableSelection();
-    alert ("file dropped");
+      $("#user-list-table tbody").sortable({
+         cursor: "move",
+         placeholder: "sortable-placeholder",
+         
+         helper: function(e, tr){
+         var $originals = tr.children();
+         var $helper = tr.clone();
+         $helper.children().each(function(index){
+               // Set helper cell sizes to match the original sizes
+               $(this).width($originals.eq(index).width());
+         });
+         return $helper;
+         }
+      }).disableSelection();
   });
 </script>
 

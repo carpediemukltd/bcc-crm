@@ -1,13 +1,5 @@
 @extends('layout.appTheme')
 @section('content')
-
-<style>
-   /* .pager {padding-left: 0; margin: 20px 0; text-align: center; list-style: none;}
-   .pager li {display: inline;}
-   .pager li>a, .pager li>span {display: inline-block; padding: 5px 14px; background-color: #fff; border: 1px solid #ddd; border-radius: 15px;}
-   .pager .disabled>a, .pager .disabled>a:focus, .pager .disabled>a:hover, .pager .disabled>span {color: #777; cursor: not-allowed; background-color: #fff;} */
-</style>
-
 <div class="position-relative iq-banner default">
    <div class="iq-navbar-header" style="height: 215px;">
       <div class="container-fluid iq-container">

@@ -673,3 +673,19 @@ body.uikit .btn-download {
 .user-list-table-move tbody>tr:hover{
   cursor: move;
 }
+.nav-item-wrapper {
+  padding: 10px;
+}
+.nav-item-wrapper .align-items-center {
+  justify-content: space-between;
+}
+.nav-item-wrapper .card-title{
+  margin-bottom: 0;
+  font-size: 14px;
+}
+.nav-item-wrapper .nav-link .private-icon-caret{
+  rotate: 90deg;
+}
+.nav-item-wrapper .nav-link.collapsed .private-icon-caret{
+  rotate: 0deg;
+}

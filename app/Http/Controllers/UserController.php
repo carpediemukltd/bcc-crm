@@ -131,9 +131,15 @@
             ]);
             $data = $request->all();
             if($data){
+                $sort = 0;
+                $last_sort = CustomFields::select('sort')->where('type', $data['type'])->orderBy('sort', 'desc')->first();
+                if($last_sort){
+                    $sort = $last_sort['sort']+1;
+                }
                 CustomFields::create([
                     'title' => $data['title'],
-                    'type'  => $data['type']
+                    'type'  => $data['type'],
+                    'sort'  => $sort
                 ]);
                 return redirect(url('customfield'))->withSuccess('Custom Field Created Successfully.')->withInput();
             }
@@ -163,8 +169,16 @@
     public function fieldList(Request $request){
         $this->data['current_slug'] = 'Custom Field';
         $this->data['slug']         = 'field_list';
-        $this->data['rs_field']     = CustomFields::orderBy('id', 'DESC')->paginate(10);
-        return view("customfield.list", $this->data);
+
+        if ($request->isMethod('post')) {
+            foreach($request->sorting as $index => $id){
+                CustomFields::whereId($id)->update(['sort' => $index]);
+            }
+            return redirect(url('customfield'))->withSuccess('Sorted Successfully.')->withInput();
+        }else if ($request->isMethod('get')) {
+            $this->data['rs_field']     = CustomFields::orderBy('sort', 'asc')->get();
+            return view("customfield.list", $this->data);
+        }
     } // fieldList
 
  }

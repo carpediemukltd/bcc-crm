@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class CustomFields extends Model
 {
     use HasFactory;
-    protected $fillable = ['id', 'title', 'type'];
+    protected $fillable = ['id', 'title', 'type', 'sort'];
     
 }

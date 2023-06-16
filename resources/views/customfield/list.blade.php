@@ -108,7 +108,7 @@
                            </div>
                            
                            <div style="padding-left:15px;">    
-                              <a href="{{route('customfield.list')}}" class="btn btn-primary">Cancel</a>  
+                              <a href="{{route('customfield.list')}}" class="btn btn-danger">Cancel</a>  
                               <button class="btn btn-primary" type="submit">Update</button>
                            </div>      
                               

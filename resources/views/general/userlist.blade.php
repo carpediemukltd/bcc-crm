@@ -46,7 +46,6 @@
                <div class="card-body px-0">
                   <div class="table-responsive">
                      <div id="user-list-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                        
                         <div class="table-responsive my-3">
                            <table id="user-list-table" class="table table-striped dataTable no-footer" role="grid" data-toggle="data-table" aria-describedby="user-list-table_info">
                               <thead>

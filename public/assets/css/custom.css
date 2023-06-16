@@ -689,3 +689,4 @@ body.uikit .btn-download {
 .nav-item-wrapper .nav-link.collapsed .private-icon-caret{
   rotate: 0deg;
 }
+table.customfield-list-table tbody tr:hover{cursor: pointer;}

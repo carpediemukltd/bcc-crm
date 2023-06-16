@@ -1,6 +1,5 @@
 @extends('layout.appTheme')
 @section('content')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" defer></script>
 <div class="position-relative iq-banner default">
    <div class="iq-navbar-header" style="height: 215px;">
@@ -10,7 +9,7 @@
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
                      <h1>Custom Fields List</h1>
-                     <p>All Custom Field. dddd</p>
+                     <p>All Custom Fields.</p>
                   </div>
                   <div>
                      <a href="{{route('customfield.add')}}" class="btn btn-link btn-soft-light">
@@ -71,20 +70,23 @@
                         <form id="frmExample" action="{{route('customfield.list')}}" method="POST" enctype="multipart/form-data">
                            @csrf
                            <div class="table-responsive my-3">
-                              <table id="user-list-table" class="table table-striped dataTable no-footer" role="grid" aria-describedby="user-list-table_info">
+                              <table id="user-list-table" class="table table-striped dataTable no-footer customfield-list-table" data-toggle="data-table" role="grid" aria-describedby="user-list-table_info">
                                  <thead>
                                     <tr class="ligth">
-                                       <th class="sorting" tabindex="0" aria-controls="user-list-table" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Title</th>
-                                       <th class="sorting" tabindex="0" aria-controls="user-list-table" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Type</th>
-                                       <th style="min-width: 100px" class="sorting" tabindex="0" aria-controls="user-list-table" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending">Action</th>
+                                       <th class="sorting" tabindex="0" aria-controls="user-list-table">Sr</th>
+                                       <th class="sorting" tabindex="0" aria-controls="user-list-table">Title</th>
+                                       <th class="sorting" tabindex="0" aria-controls="user-list-table">Type</th>
+                                       <th style="min-width: 100px" class="sorting" tabindex="0" aria-controls="user-list-table">Action</th>
                                     </tr>
                                  </thead>
                                  <tbody>
                                     @if(isset($rs_field) && !empty($rs_field))
+                                       <?php $sr=1; ?>
                                        @foreach($rs_field as $rec_field)
                                        <tr class="odd">
+                                          <td>{{$sr}}</td>
                                           <td>{{$rec_field->title}}</td>
-                                          <td>{{$rec_field->type}}</td>
+                                          <td>{{ucfirst($rec_field->type)}}</td>
                                           <td>
                                              <input type="hidden" name="sorting[]" value="{{$rec_field->id}}">
                                              <div class="flex align-items-center list-user-action">
@@ -100,6 +102,7 @@
                                              </div>
                                           </td>
                                        </tr>
+                                          <?php $sr++; ?>
                                        @endforeach
                                     @else 
                                        <tr><td colspan="3">No records found</td></tr>

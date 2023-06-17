@@ -690,3 +690,9 @@ body.uikit .btn-download {
   rotate: 0deg;
 }
 table.customfield-list-table tbody tr:hover{cursor: pointer;}
+.iq-banner .iq-navbar-header .iq-header-img{
+  border-radius: 0;
+}
+i.right-icon .icon-18 {
+  rotate: 90deg;
+}

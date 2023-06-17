@@ -69,6 +69,8 @@ Route::middleware([CheckStatus::class])->group(function(){
         Route::get('userprofile', [GeneralController::class, 'userProfile'])->name('userprofile');
 
         Route::get('contactdetails', [GeneralController::class, 'contactDetails'])->name('contactdetails');
+        Route::get('stagescard', [GeneralController::class, 'stagesCard'])->name('stagescard');
+        Route::get('dealslisting', [GeneralController::class, 'dealsListing'])->name('dealslisting');
         Route::get('userform', [GeneralController::class, 'userForm'])->name('userform');
         Route::get('usertable', [GeneralController::class, 'userTable'])->name('usertable');
         Route::get('outlinedicon', [GeneralController::class, 'outlinedIcon'])->name('outlinedicon');

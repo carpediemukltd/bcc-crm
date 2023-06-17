@@ -77,8 +77,6 @@
                               <input type="text" class="form-control" id="title" placeholder="Title" name="title" required>
                            </div>
                         </div>
-                     </div>
-                     <div class="row">
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="last_name">Type:</label>
@@ -94,8 +92,9 @@
 
                      <div class="row">
                         <div class="col">
-                           <button type="submit" class="btn btn-primary">Submit</button>
+                           
                            <a href="{{ route('dashboard') }}" class="btn btn-danger">Cancel</a>
+                           <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                      </div>
                   </form>

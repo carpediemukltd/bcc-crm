@@ -7,7 +7,7 @@
             <div class="col-md-12">
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
-                     <h1>BCC Provacy</h1>
+                     <h1>BCC Privacy</h1>
                      <p>Experience a simple yet powerful way to build Dashboards.</p>
                   </div>
                   <!-- <div>

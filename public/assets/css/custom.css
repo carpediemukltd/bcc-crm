@@ -696,3 +696,6 @@ table.customfield-list-table tbody tr:hover{cursor: pointer;}
 i.right-icon .icon-18 {
   rotate: 90deg;
 }
+.navbar-nav .nav-link.active{
+  color:#3a57e8;
+}

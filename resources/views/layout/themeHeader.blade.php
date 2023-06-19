@@ -112,8 +112,8 @@
                   </li>
                   
                   @if (Auth::user()->role == 'superadmin')
-                     <li class="nav-item dropdown iq-responsive-menu border-end d-block <?php if(isset($slug) && in_array($slug, ['add_user', 'user_list', 'edit_user'])){echo 'active';}?>">
-                        <a class="nav-link <?php if(isset($slug) && $slug == 'edit_user'){echo 'active';}?>" data-bs-toggle="dropdown" href="#sidebar-user" role="button" aria-expanded="false"
+                     <li class="nav-item dropdown iq-responsive-menu border-end d-block">
+                        <a class="nav-link <?php if(isset($slug) && in_array($slug, ['add_user', 'user_list', 'edit_user', 'user_details'])){echo 'active';}?>" data-bs-toggle="dropdown" href="#sidebar-user" role="button" aria-expanded="false"
                            aria-controls="sidebar-special">
                            <i class="icon">
                               <svg width="20" class="icon-20" viewBox="0 0 24 24" fill="none" xmlns="">
@@ -192,8 +192,8 @@
                         </ul>
                      </li>
 
-                     <li class="nav-item dropdown iq-responsive-menu border-end d-block <?php if(isset($slug) && in_array($slug, ['add_field', 'field_list', 'edit_field'])){echo 'active';}?>">
-                        <a class="nav-link <?php if(isset($slug) && $slug == 'edit_field'){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
+                     <li class="nav-item dropdown iq-responsive-menu border-end d-block">
+                        <a class="nav-link <?php if(isset($slug) && in_array($slug, ['add_field', 'field_list', 'edit_field'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false" href="#sidebar-custon-fields">
                            <i class="icon" >
                            <svg width="20" class="icon-20" viewBox="0 0 24 24" fill="currentColor"

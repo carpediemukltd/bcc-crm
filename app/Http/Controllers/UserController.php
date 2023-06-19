@@ -96,6 +96,12 @@
         return view("user.list", $this->data);
     } // addUser
 
+    public function userDetails($id){
+        $this->data['current_slug'] = 'Contact Details';
+        $this->data['slug']         = 'user_details';
+        return view("user.details", $this->data);
+    } // userDetails
+
     public function editUser(Request $request, $id){
         $this->data['current_slug'] = 'Edit Contact';
         $this->data['slug']         = 'edit_user';

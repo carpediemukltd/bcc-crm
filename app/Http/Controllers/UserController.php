@@ -105,7 +105,8 @@
 
     public function userDeals($id){
         $this->data['current_slug'] = 'Deals';
-        $this->data['slug']         = 'user_deals';
+        $this->data['slug']         = 'user_deals_add';
+        $this->data['current_user_id'] = $id;
         return view("user.deals.list", $this->data);
     } // userDeals
 

@@ -51,8 +51,8 @@
                </div>
                <div class="col">
                   <div class="d-flex align-items-center">
-                     <div class="search-box me-3">
-                        <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
+                     <div class="search-box me-3" style="width:100%">
+                        <form class="d-flex align-items-center position-relative" data-bs-toggle="search" data-bs-display="static">
                            <input class="form-control search-input search" type="search" placeholder="Search projects" aria-label="Search">
                            <svg class="svg-inline--fa fa-magnifying-glass search-box-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="magnifying-glass" role="img" xmlns="" viewBox="0 0 512 512" data-fa-i2svg="">
                               <path fill="currentColor" d="M500.3 443.7l-119.7-119.7c27.22-40.41 40.65-90.9 33.46-144.7C401.8 87.79 326.8 13.32 235.2 1.723C99.01-15.51-15.51 99.01 1.724 235.2c11.6 91.64 86.08 166.7 177.6 178.9c53.8 7.189 104.3-6.236 144.7-33.46l119.7 119.7c15.62 15.62 40.95 15.62 56.57 0C515.9 484.7 515.9 459.3 500.3 443.7zM79.1 208c0-70.58 57.42-128 128-128s128 57.42 128 128c0 70.58-57.42 128-128 128S79.1 278.6 79.1 208z"></path>
@@ -60,7 +60,7 @@
                         </form>
                      </div>
                      <a class="btn btn-phoenix-primary px-3 me-1" href="#" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="List view">
-                        <svg class="svg-inline--fa fa-list fs--2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="list" role="img" xmlns="" viewBox="0 0 512 512" data-fa-i2svg="">
+                        <svg class="svg-inline--fa fa-list fs--2" width="12px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="list" role="img" xmlns="" viewBox="0 0 512 512" data-fa-i2svg="">
                            <path fill="currentColor" d="M88 48C101.3 48 112 58.75 112 72V120C112 133.3 101.3 144 88 144H40C26.75 144 16 133.3 16 120V72C16 58.75 26.75 48 40 48H88zM480 64C497.7 64 512 78.33 512 96C512 113.7 497.7 128 480 128H192C174.3 128 160 113.7 160 96C160 78.33 174.3 64 192 64H480zM480 224C497.7 224 512 238.3 512 256C512 273.7 497.7 288 480 288H192C174.3 288 160 273.7 160 256C160 238.3 174.3 224 192 224H480zM480 384C497.7 384 512 398.3 512 416C512 433.7 497.7 448 480 448H192C174.3 448 160 433.7 160 416C160 398.3 174.3 384 192 384H480zM16 232C16 218.7 26.75 208 40 208H88C101.3 208 112 218.7 112 232V280C112 293.3 101.3 304 88 304H40C26.75 304 16 293.3 16 280V232zM88 368C101.3 368 112 378.7 112 392V440C112 453.3 101.3 464 88 464H40C26.75 464 16 453.3 16 440V392C16 378.7 26.75 368 40 368H88z"></path>
                         </svg>
                      </a>
@@ -92,7 +92,7 @@
                <!-- box title start row -->
                <div class="col-lg-4">
                   <div class="todo_list">
-                     <div class="desc_view d-flex">
+                     <div class="desc_view d-flex align-items-center">
                         <span>Todo List</span>
                         <span class="task_count_number">0</span>
                      </div>
@@ -100,7 +100,7 @@
                </div>
                <div class="col-lg-4">
                   <div class="inprogress_list">
-                     <div class="desc_view d-flex">
+                     <div class="desc_view d-flex align-items-center">
                         <span>In Progress</span>
                         <span class="task_count_number">0</span>
                      </div>
@@ -108,7 +108,7 @@
                </div>
                <div class="col-lg-4">
                   <div class="complete_list">
-                     <div class="desc_view d-flex">
+                     <div class="desc_view d-flex align-items-center">
                         <span>Complete</span>
                         <span class="task_count_number">0</span>
                      </div>
@@ -116,7 +116,7 @@
                </div>
                <!-- box title end row -->
                <div class="col-lg-4 box" id="box-1">
-                  <div class="card drop-item hover-actions-trigger" draggable="true">
+                  <div class="card shadow-sm drop-item hover-actions-trigger" draggable="true">
                      <div class="card-body">
                         <div class="d-flex align-items-center">
                            <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
@@ -139,7 +139,7 @@
                   </div>
                </div>
                <div class="col-lg-4 box" id="box-2">
-                  <div class="card drop-item hover-actions-trigger" draggable="true">
+                  <div class="card shadow-sm drop-item hover-actions-trigger" draggable="false">
                      <div class="card-body">
                         <div class="d-flex align-items-center">
                            <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Saddam Hussain</h4>
@@ -160,6 +160,9 @@
                         </div>
                      </div>
                   </div>
+               </div>
+               <div class="col-lg-4 box" id="box-3">
+
                </div>
             </div>
             <div class="offcanvas offcanvas-bottom share-offcanvas" tabindex="-1" id="share-btn" aria-labelledby="shareBottomLabel">
@@ -239,4 +242,48 @@
       </div>
    </div>
 </div>
+<script>
+      const $boxes = document.querySelectorAll(".box");
+const $dragItem = document.querySelector(".drop-item");
+let dragSrc;
+
+window.addEventListener("DOMContentLoaded", () => {
+  $dragItem.ondragstart = function (e) {
+    this.style.opacity = "40%";
+    dragSrc = this;
+
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", this.parentElement.id);
+  };
+
+  $dragItem.ondragend = function () {
+    this.style.opacity = "100%";
+  };
+
+  $boxes.forEach((box) => {
+    box.addEventListener("dragenter", function () {
+      //this.style.borderStyle = "dashed";
+    });
+
+    box.addEventListener("dragleave", function () {
+      //this.style.borderStyle = "solid";
+    });
+
+    box.addEventListener("dragover", function (e) {
+      e.preventDefault();
+    });
+
+    box.addEventListener("drop", function (e) {
+      e.stopPropagation();
+      const itemBoxId = e.dataTransfer.getData("text/plain");
+
+      if (itemBoxId !== this.id) {
+        this.appendChild(dragSrc);
+       // this.style.borderStyle = "solid";
+      }
+    });
+  });
+});
+
+   </script>
 @endsection

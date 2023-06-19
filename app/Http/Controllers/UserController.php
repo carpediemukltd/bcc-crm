@@ -10,6 +10,7 @@
  use App\Models\Deals;
 
  use App\Models\CustomFields;
+ use App\Models\UserDetails;
 
  class UserController extends Controller
  {
@@ -50,6 +51,7 @@
     public function addUser(Request $request){
         $this->data['current_slug'] = 'Add Contact';
         $this->data['slug']         = 'add_user';
+        $this->data['custom_fields'] = CustomFields::all();
         if ($request->isMethod('post')) {
             $request->validate([
                 'first_name'   => 'required',
@@ -59,14 +61,26 @@
                 'password'     => 'required|min:6'
             ]);
             $data = $request->all();
+            
             if($data){
-                User::create([
+                $new_user = User::create([
                     'first_name'    => $data['first_name'],
                     'last_name'     => $data['last_name'],
                     'email'         => $data['email'],
                     'phone_number'  => $data['phone_number'],
                     'password'      => Hash::make($data['password'])
                 ]);
+                
+
+                if($request->custom_fields_count>0){
+                    foreach($request->custom_fields as $key => $value){
+                       UserDetails::create([
+                            'user_id'    => $new_user->id,
+                            'custom_field_id'     => $key,
+                            'data'         => $value
+                        ]);
+                    }
+                }
                 return redirect(url('contacts'))->withSuccess('Contact Created Successfully.')->withInput();
             }
         }else if ($request->isMethod('get')) {
@@ -166,6 +180,9 @@
         $this->data['current_slug'] = 'Edit Contact';
         $this->data['slug']         = 'edit_user';
         $this->data['all_status']   = ['inactive', 'active', 'deleted', 'banned'];
+        
+        $this->data['custom_fields'] = CustomFields::all();
+        $this->data['user_details'] = UserDetails::where('user_id', '=', $id)->get();
         if ($request->isMethod('put')) {
             $update_data = [
                 'first_name'   => $request->first_name,
@@ -180,6 +197,14 @@
                 $update_data['password'] = Hash::make($request->password);
             }
             User::whereId($id)->update($update_data);
+            if($request->custom_fields_count>0){
+                foreach($request->custom_fields as $key => $value){
+
+                   UserDetails::updateOrCreate(['user_id'=>$id ,'custom_field_id' => $key],
+                   ['data'   => $value]);
+
+                }
+            }
             return redirect(url('contacts'))->withSuccess('Contact Update Successfully.')->withInput();
         }else if ($request->isMethod('get')) {
             $this->data['user'] = User::where('id', $id)->first();

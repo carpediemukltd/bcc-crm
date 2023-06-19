@@ -162,7 +162,7 @@
                   </div>
                </div>
                <div class="col-lg-4 box" id="box-3">
-
+                  
                </div>
             </div>
             <div class="offcanvas offcanvas-bottom share-offcanvas" tabindex="-1" id="share-btn" aria-labelledby="shareBottomLabel">

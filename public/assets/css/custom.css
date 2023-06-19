@@ -710,3 +710,6 @@ span.item-name {
   position: relative;
   top: 1.3px;
 }
+.navbar-nav .nav-link.active{
+  color:#3a57e8;
+}

@@ -8,8 +8,8 @@
             <div class="col-md-12">
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
-                     <h1>Add New Deal</h1>
-                     <p>Add new deal.</p>
+                     <h1>Edit Deal</h1>
+                     <p>Edit deal.</p>
                   </div>
                </div>
             </div>
@@ -56,23 +56,23 @@
             <div class="card">
                <div class="card-header d-flex justify-content-between">
                   <div class="header-title">
-                     <h4 class="card-title">Add Form</h4>
+                     <h4 class="card-title">Edit Form</h4>
                   </div>
                </div>
                <div class="card-body">
-                  <form action="{{route('user.deals.add', $current_user_id)}}" method="POST">
+                  <form action="<?= url('contact/'.$current_user_id.'/deals/edit/'.$rs_deal->id);?>" method="POST">
                      @csrf
                      <div class="row">
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="title">Title:</label>
-                              <input type="text" class="form-control" id="title" placeholder="Title" name="title" required>
+                              <input type="text" class="form-control" id="title" placeholder="Title" value="{{$rs_deal->title}}" name="title" required>
                            </div>
                         </div>
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="deal_owner">Deal Owner:</label>
-                              <input type="text" class="form-control" id="deal_owner" placeholder="Deal Owner" name="deal_owner" required>
+                              <input type="text" class="form-control" id="deal_owner" value="{{$rs_deal->deal_owner}}" placeholder="Deal Owner" name="deal_owner" required>
                            </div>
                         </div>
                      </div>
@@ -80,15 +80,15 @@
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="amount">Amount:</label>
-                              <input type="number" class="form-control" id="amount" placeholder="Amount" name="amount" required>
+                              <input type="number" class="form-control" id="amount" value="{{$rs_deal->amount}}" placeholder="Amount" name="amount" required>
                            </div>
                         </div>
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="lead_source">Lead Source:</label>
                               <select class="form-select" id="lead_source" name="lead_source">
-                                 <option value="contact">Contact</option>
-                                 <option value="lead">Lead</option>
+                                 <option value="contact" <?php if($rs_deal->lead_source == 'contact'){echo 'selected';}?>>Contact</option>
+                                 <option value="lead" <?php if($rs_deal->lead_source == 'lead'){echo 'selected';}?>>Lead</option>
                               </select>
                            </div>
                         </div>
@@ -101,7 +101,7 @@
                               <select class="form-select" id="pipeline_id" name="pipeline_id">
                                  @if(isset($rs_pipelines))
                                     @foreach($rs_pipelines as $rec_pipeline)
-                                       <option value="{{$rec_pipeline->id}}">{{ucfirst($rec_pipeline->title)}}</option>
+                                       <option value="{{$rec_pipeline->id}}" <?php if($rec_pipeline->id == $rs_deal->pipeline_id){echo 'selected';}?>>{{ucfirst($rec_pipeline->title)}}</option>
                                     @endforeach
                                  @endif
                               </select>
@@ -113,7 +113,7 @@
                               <select class="form-select" id="stage_id" name="stage_id">
                                  @if(isset($rs_stages))
                                     @foreach($rs_stages as $rec_stages)
-                                       <option value="{{$rec_stages->id}}">{{ucfirst($rec_stages->title)}}</option>
+                                       <option value="{{$rec_stages->id}}" <?php if($rec_stages->id == $rs_deal->stage_id){echo 'selected';}?>>{{ucfirst($rec_stages->title)}}</option>
                                     @endforeach
                                  @endif
                               </select>
@@ -125,7 +125,7 @@
 
                      <div class="row">
                         <div class="col">
-                           <button type="submit" class="btn btn-primary">Submit</button>
+                           <button type="submit" class="btn btn-primary">Update</button>
                            <a href="{{ route('user.deals', $current_user_id) }}" class="btn btn-danger">Cancel</a>
                         </div>
                      </div>

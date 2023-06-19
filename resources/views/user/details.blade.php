@@ -442,7 +442,7 @@
                   <div class="nav-item-wrapper">
                      <a class="nav-link dropdown-indicator label-1" href="#CRM" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="CRM">
                         <div class="d-flex align-items-center">
-                           <h4 class="card-title">Deals (01)</h4>
+                           <h4 class="card-title">Deals ({{$total_details}})</h4>
                            <div class="dropdown-indicator-icon">
                               <svg height="12" class="private-icon-caret" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11.5 21.1" width="5">
                                  <path class="private-icon-caret__inner" d="M2 2l7.5 8.5-7.4 8.6" fill="none" stroke="#00a4bd" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"></path>
@@ -454,7 +454,12 @@
                         <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="CRM">
                            <li class="nav-item">
                               <a class="nav-link" href="{{route('user.deals', $rs_user->id)}}" data-bs-toggle="" aria-expanded="false">
-                                 <div class="d-flex align-items-center"><span class="nav-link-text">Deals Listing</span></div>
+                                 <div class="d-flex align-items-center"><span class="nav-link-text"> All Deals</span></div>
+                              </a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link" href="{{route('user.deals.add', $rs_user->id)}}" data-bs-toggle="" aria-expanded="false">
+                                 <div class="d-flex align-items-center"><span class="nav-link-text">Add New Deal</span></div>
                               </a>
                            </li>
                         </ul>

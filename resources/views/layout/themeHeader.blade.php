@@ -113,7 +113,7 @@
                   
                   @if (Auth::user()->role == 'superadmin')
                      <li class="nav-item dropdown iq-responsive-menu border-end d-block">
-                        <a class="nav-link <?php if(isset($slug) && in_array($slug, ['add_user', 'user_list', 'edit_user', 'user_details', 'user_deals', 'user_add_deal'])){echo 'active';}?>" data-bs-toggle="dropdown" href="#sidebar-user" role="button" aria-expanded="false"
+                        <a class="nav-link <?php if(isset($slug) && in_array($slug, ['add_user', 'user_list', 'edit_user', 'user_details', 'user_deals', 'user_add_deal', 'user_edit_deal'])){echo 'active';}?>" data-bs-toggle="dropdown" href="#sidebar-user" role="button" aria-expanded="false"
                            aria-controls="sidebar-special">
                            <i class="icon">
                               <svg width="20" class="icon-20" viewBox="0 0 24 24" fill="none" xmlns="">

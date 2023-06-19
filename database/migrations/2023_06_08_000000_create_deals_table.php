@@ -16,6 +16,7 @@ class CreateDealsTable extends Migration
         Schema::create('deals', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('pipeline_id');
             $table->unsignedBigInteger('stage_id');
             $table->string('amount')->nullable();

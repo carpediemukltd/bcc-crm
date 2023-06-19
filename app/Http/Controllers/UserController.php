@@ -5,6 +5,10 @@
  use Illuminate\Support\Facades\Auth;
  use Illuminate\Support\Facades\Hash;
  use App\Models\User;
+ use App\Models\Stages;
+ use App\Models\Pipelines;
+ use App\Models\Deals;
+
  use App\Models\CustomFields;
 
  class UserController extends Controller
@@ -107,6 +111,8 @@
         $this->data['current_slug'] = 'Deals';
         $this->data['slug']         = 'user_deals_add';
         $this->data['current_user_id'] = $id;
+
+        //Deals
         return view("user.deals.list", $this->data);
     } // userDeals
 

@@ -12,7 +12,9 @@
                   </div>
                   <div>
                      <a href="" class="btn btn-link btn-soft-light" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-stage">
-                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-28"><path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-28">
+                           <path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
                         Add Stage
                      </a>
                   </div>
@@ -88,113 +90,136 @@
                   </div>
                </div>
             </div>
-            <div class="card-body row  row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-3 mb-9">
-               <!-- box title start row -->
-               <div class="col-lg-4">
+            
+            <div class="row justify-content-center vh-100" style="padding:20px">
+               <!-- To do tasks -->
+               <div class="col-lg-4 " id="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
                   <div class="todo_list">
                      <div class="desc_view d-flex align-items-center">
                         <span>Todo List</span>
                         <span class="task_count_number">0</span>
                      </div>
                   </div>
-               </div>
-               <div class="col-lg-4">
-                  <div class="inprogress_list">
-                     <div class="desc_view d-flex align-items-center">
-                        <span>In Progress</span>
-                        <span class="task_count_number">0</span>
+                  <div class="d-flex flex-column align-items-center justify-content-center mt-3">
+                     <!-- card -->
+                     <div id="todotarget1" ondragstart="dragStart(event)" draggable="true"
+                        class="card rounded-0 w-100 mb-3 border-0 border-start border-primary border-3 shadow-sm">
+                        <div class="card-body px-3 py-3">
+                           <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
+                           <div class="bg-primary mb-4 d-inline p-1 fw-semibold small text-white project-name">
+                              Project Name
+                           </div>
+                           <div class="d-flex mt-4 align-items-center mb-2">
+                              <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
+                                 <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
+                              </svg>
+                              <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- card -->
+                     <div id="todotarget2" ondragstart="dragStart(event)" draggable="true"
+                        class="card rounded-0 w-100 mb-3 border-0 border-start border-primary border-3 shadow-sm">
+                        <div class="card-body px-3 py-3">
+                           <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
+                           <div class="bg-primary d-inline p-1 fw-semibold small text-white project-name">
+                              Project Name
+                           </div>
+                           <div class="d-flex mt-4 align-items-center mb-2">
+                              <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
+                                 <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
+                              </svg>
+                              <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- card -->
+                     <div id="todotarget3" ondragstart="dragStart(event)" draggable="true"
+                        class="card rounded-0 w-100 mb-3 border-0 border-start border-primary border-3 shadow-sm">
+                        <div class="card-body px-3 py-3">
+                           <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
+                           <div class="bg-primary d-inline p-1 fw-semibold small text-white project-name">
+                              Project Name
+                           </div>
+                           <div class="d-flex mt-4 align-items-center mb-2">
+                              <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
+                                 <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
+                              </svg>
+                              <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
+                           </div>
+                        </div>
                      </div>
                   </div>
                </div>
-               <div class="col-lg-4">
+               <!-- To do tasks -->
+               <div class="col-lg-4 " id="progress" ondrop="drop(event)"
+                  ondragover="allowDrop(event)">
+                     <div class="inprogress_list">
+                        <div class="desc_view d-flex align-items-center">
+                           <span>In Progress</span>
+                           <span class="task_count_number">0</span>
+                        </div>
+                     </div>
+                  <div class="d-flex flex-column align-items-center justify-content-center mt-3">
+                     <!-- card -->
+                     <div id="inprogresstarget1" ondragstart="dragStart(event)" draggable="true"
+                        class="card rounded-0 w-100 mb-3 border-0 border-start border-warning border-3 shadow-sm">
+                        <div class="card-body px-3 py-3">
+                           <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
+                           <div class="bg-warning d-inline p-1 fw-semibold small text-white project-name">
+                              Project Name
+                           </div>
+                           <div class="d-flex mt-4 align-items-center mb-2">
+                              <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
+                                 <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
+                              </svg>
+                              <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- card -->
+                     <div id="inprogresstarget2" ondragstart="dragStart(event)" draggable="true"
+                        class="card rounded-0 w-100 mb-3 border-0 border-start border-warning border-3 shadow-sm">
+                        <div class="card-body px-3 py-3">
+                           <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
+                           <div class="bg-warning d-inline p-1 fw-semibold small text-white project-name">
+                              Project Name
+                           </div>
+                           <div class="d-flex mt-4 align-items-center mb-2">
+                              <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
+                                 <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
+                              </svg>
+                              <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- tasks completed -->
+               <div class="col-lg-4 " id="completed" ondrop="drop(event)"
+                  ondragover="allowDrop(event)">
                   <div class="complete_list">
                      <div class="desc_view d-flex align-items-center">
                         <span>Complete</span>
                         <span class="task_count_number">0</span>
                      </div>
                   </div>
-               </div>
-               <!-- box title end row -->
-               <div class="col-lg-4 box" id="box-1">
-                  <div class="card shadow-sm drop-item hover-actions-trigger" draggable="true">
-                     <div class="card-body">
-                        <div class="d-flex align-items-center">
+                  <div class="d-flex flex-column align-items-center justify-content-center mt-3">
+                     <!-- card -->
+                     <div id="completedtarget1" ondragstart="dragStart(event)" draggable="true"
+                        class="card rounded-0 w-100 mb-3 border-0 border-start border-success border-3 shadow-sm">
+                        <div class="card-body px-3 py-3">
                            <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
-                           <div class="hover-actions top-0 end-0 mt-4 me-4">
-                              <button class="btn btn-primary btn-icon flex-shrink-0" data-bs-toggle="modal" data-bs-target="#projectsCardViewModal">
-                                 <svg class="svg-inline--fa fa-chevron-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="" viewBox="0 0 320 512" data-fa-i2svg="">
-                                    <path fill="currentColor" d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path>
-                                 </svg>
-                              </button>
+                           <div class="bg-success d-inline p-1 fw-semibold small text-white project-name">
+                              Project Name
+                           </div>
+                           <div class="d-flex mt-4 align-items-center mb-2">
+                              <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
+                                 <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
+                              </svg>
+                              <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
                            </div>
                         </div>
-                        <span class="badge badge-phoenix fs--2 mb-4 badge-phoenix-success"><span class="badge-label">completed</span></span>
-                        <div class="d-flex align-items-center mb-2">
-                           <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
-                              <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
-                           </svg>
-                           <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-lg-4 box" id="box-2">
-                  <div class="card shadow-sm drop-item hover-actions-trigger" draggable="true">
-                     <div class="card-body">
-                        <div class="d-flex align-items-center">
-                           <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Saddam Hussain</h4>
-                           <div class="hover-actions top-0 end-0 mt-4 me-4">
-                              <button class="btn btn-primary btn-icon flex-shrink-0" data-bs-toggle="modal" data-bs-target="#projectsCardViewModal">
-                                 <svg class="svg-inline--fa fa-chevron-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="" viewBox="0 0 320 512" data-fa-i2svg="">
-                                    <path fill="currentColor" d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path>
-                                 </svg>
-                              </button>
-                           </div>
-                        </div>
-                        <span class="badge badge-phoenix fs--2 mb-4 badge-phoenix-success"><span class="badge-label">completed</span></span>
-                        <div class="d-flex align-items-center mb-2">
-                           <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
-                              <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
-                           </svg>
-                           <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-lg-4 box" id="box-3">
-
-               </div>
-            </div>
-            <div class="offcanvas offcanvas-bottom share-offcanvas" tabindex="-1" id="share-btn" aria-labelledby="shareBottomLabel">
-               <div class="offcanvas-header">
-                  <h5 class="offcanvas-title" id="shareBottomLabel">Share</h5>
-                  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-               </div>
-               <div class="offcanvas-body small">
-                  <div class="d-flex flex-wrap align-items-center">
-                     <div class="text-center me-3 mb-3">
-                        <img src="{{asset('assets/images/brands/08.png')}}" class="img-fluid rounded mb-2" alt="" loading="lazy">
-                        <h6>Facebook</h6>
-                     </div>
-                     <div class="text-center me-3 mb-3">
-                        <img src="{{asset('assets/images/brands/09.png')}}" class="img-fluid rounded mb-2" alt="" loading="lazy">
-                        <h6>Twitter</h6>
-                     </div>
-                     <div class="text-center me-3 mb-3">
-                        <img src="{{asset('assets/images/brands/10.png')}}" class="img-fluid rounded mb-2" alt="" loading="lazy">
-                        <h6>Instagram</h6>
-                     </div>
-                     <div class="text-center me-3 mb-3">
-                        <img src="{{asset('assets/images/brands/11.png')}}" class="img-fluid rounded mb-2" alt="" loading="lazy">
-                        <h6>Google Plus</h6>
-                     </div>
-                     <div class="text-center me-3 mb-3">
-                        <img src="{{asset('assets/images/brands/13.png')}}" class="img-fluid rounded mb-2" alt="" loading="lazy">
-                        <h6>In</h6>
-                     </div>
-                     <div class="text-center me-3 mb-3">
-                        <img src="{{asset('assets/images/brands/12.png')}}" class="img-fluid rounded mb-2" alt="" loading="lazy">
-                        <h6>YouTube</h6>
                      </div>
                   </div>
                </div>
@@ -243,47 +268,39 @@
    </div>
 </div>
 <script>
-      const $boxes = document.querySelectorAll(".box");
-const $dragItem = document.querySelector(".drop-item");
-let dragSrc;
-
-window.addEventListener("DOMContentLoaded", () => {
-  $dragItem.ondragstart = function (e) {
-    this.style.opacity = "40%";
-    dragSrc = this;
-
-    e.dataTransfer.effectAllowed = "move";
-    e.dataTransfer.setData("text/plain", this.parentElement.id);
-  };
-
-  $dragItem.ondragend = function () {
-    this.style.opacity = "100%";
-  };
-
-  $boxes.forEach((box) => {
-    box.addEventListener("dragenter", function () {
-      //this.style.borderStyle = "dashed";
-    });
-
-    box.addEventListener("dragleave", function () {
-      //this.style.borderStyle = "solid";
-    });
-
-    box.addEventListener("dragover", function (e) {
-      e.preventDefault();
-    });
-
-    box.addEventListener("drop", function (e) {
-      e.stopPropagation();
-      const itemBoxId = e.dataTransfer.getData("text/plain");
-
-      if (itemBoxId !== this.id) {
-        this.appendChild(dragSrc);
-       // this.style.borderStyle = "solid";
-      }
-    });
-  });
-});
-
-   </script>
+   function dragStart(event) {
+       event.dataTransfer.setData("Text", event.target.id);
+   }
+   function allowDrop(event) {
+       event.preventDefault();
+   }
+   function drop(event) {
+       if (event.target.id != "") {
+           event.preventDefault();
+           const data = event.dataTransfer.getData("Text");
+           event.target.appendChild(document.getElementById(data));
+           // todo list
+           if (event.target.id == "todo") {
+               document.getElementById(data).classList.remove("border-warning", "border-success");
+               document.getElementById(data).classList.add("border-primary");
+               document.getElementById(data).getElementsByClassName("project-name")[0].classList.remove("bg-warning", "bg-success");
+               document.getElementById(data).getElementsByClassName("project-name")[0].classList.add("bg-primary")
+           }
+           // progress list
+           if (event.target.id == "progress") {
+               document.getElementById(data).classList.remove("border-primary", "border-success");
+               document.getElementById(data).classList.add("border-warning");
+               document.getElementById(data).getElementsByClassName("project-name")[0].classList.remove("bg-primary", "bg-success");
+               document.getElementById(data).getElementsByClassName("project-name")[0].classList.add("bg-warning")
+           }
+           // completed list
+           if (event.target.id == "completed") {
+               document.getElementById(data).classList.remove("border-warning", "border-success");
+               document.getElementById(data).classList.add("border-success");
+               document.getElementById(data).getElementsByClassName("project-name")[0].classList.remove("bg-warning", "bg-success");
+               document.getElementById(data).getElementsByClassName("project-name")[0].classList.add("bg-success")
+           }
+       }
+   }
+</script>
 @endsection

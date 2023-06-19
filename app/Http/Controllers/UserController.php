@@ -99,8 +99,21 @@
     public function userDetails($id){
         $this->data['current_slug'] = 'Contact Details';
         $this->data['slug']         = 'user_details';
+        $this->data['rs_user']      = User::where(['role' => 'user', 'id' => $id])->first();
         return view("user.details", $this->data);
     } // userDetails
+
+    public function userDeals($id){
+        $this->data['current_slug'] = 'Deals';
+        $this->data['slug']         = 'user_deals';
+        return view("user.deals.list", $this->data);
+    } // userDeals
+
+    public function dealsAdd(Request $request, $id){
+        $this->data['current_slug'] = 'Add Deal';
+        $this->data['slug']         = 'user_add_deal';
+        return view("user.deals.add", $this->data);
+    } // dealsAdd
 
     public function editUser(Request $request, $id){
         $this->data['current_slug'] = 'Edit Contact';

@@ -49,8 +49,8 @@
                         <img src="{{asset('assets/images/avatars/avtar_3.png')}}" alt="User-Profile" class="theme-color-pink-img img-fluid rounded-pill avatar-100" loading="lazy" />
                      </div>
                      <div class="d-flex flex-wrap align-items-center mb-3 mb-sm-0">
-                        <h4 class="me-2 mb-0 h4">Austin Robertson</h4>
-                        <span> - Web Developer</span>
+                        <h4 class="me-2 mb-0 h4">{{ucwords($rs_user->first_name. ' '. $rs_user->last_name)}}</h4>
+                        <!-- <span> - Web Developer</span> -->
                      </div>
                   </div>
                   <ul class="d-flex nav nav-pills mb-0 text-center profile-tab" data-toggle="slider-tab" id="profile-pills-tab" role="tablist">
@@ -84,15 +84,23 @@
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" class="form-control" id="first_name" placeholder="Name" name="first_name" required="">
-                              <label for="floatingInputGrid">Name</label>
+                              <input type="text" class="form-control" id="first_name" placeholder="Name" name="first_name" value="{{$rs_user->first_name}}" required>
+                              <label for="floatingInputGrid">First Name</label>
                            </div>
                         </div>
                      </div>
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" class="form-control" id="email" placeholder="Email" name="last_name" required="">
+                              <input type="text" class="form-control" id="last_name" placeholder="Name" name="last_name" value="{{$rs_user->last_name}}" required>
+                              <label for="floatingInputGrid">Last Name</label>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col">
+                           <div class="form-group form-floating">
+                              <input type="text" class="form-control" id="email" value="{{$rs_user->email}}" disabled>
                               <label for="floatingInputGrid">Email</label>
                            </div>
                         </div>
@@ -445,7 +453,7 @@
                      <div class="parent-wrapper label-1">
                         <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="CRM">
                            <li class="nav-item">
-                              <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                              <a class="nav-link" href="{{route('user.deals', $rs_user->id)}}" data-bs-toggle="" aria-expanded="false">
                                  <div class="d-flex align-items-center"><span class="nav-link-text">Deals Listing</span></div>
                               </a>
                            </li>

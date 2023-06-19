@@ -48,7 +48,11 @@ Route::middleware([CheckStatus::class])->group(function(){
         Route::any('contact/add', [UserController::class, 'addUser'])->name('user.add');
         Route::get('contacts', [UserController::class, 'userList'])->name('user.list');
         Route::any('contact/edit/{id}', [UserController::class, 'editUser'])->name('user.edit');
+
         Route::get('contact/{id}/details', [UserController::class, 'userDetails'])->name('user.details');
+        
+        Route::get('contact/{id}/deals', [UserController::class, 'userDeals'])->name('user.deals');
+        Route::any('contact/{id}/deals/add', [UserController::class, 'dealsAdd'])->name('user.deals.add');
 
         Route::any('customfield/add', [UserController::class, 'addField'])->name('customfield.add');
         Route::any('customfield', [UserController::class, 'fieldList'])->name('customfield.list');

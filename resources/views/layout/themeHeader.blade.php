@@ -54,7 +54,7 @@
          <!--Nav Start-->
          <nav class="nav navbar navbar-expand-lg fixed-top shadow-sm navbar-light iq-navbar header-hover-menu left-border">
             <div class="container-fluid navbar-inner">
-               <a href="#" class="navbar-brand">
+               <a href="{{route('dashboard')}}" class="navbar-brand">
                   <!--Logo start-->
                   <div class="logo-main">
                      <div class="logo-normal">

@@ -139,7 +139,7 @@
                   </div>
                </div>
                <div class="col-lg-4 box" id="box-2">
-                  <div class="card shadow-sm drop-item hover-actions-trigger" draggable="false">
+                  <div class="card shadow-sm drop-item hover-actions-trigger" draggable="true">
                      <div class="card-body">
                         <div class="d-flex align-items-center">
                            <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Saddam Hussain</h4>
@@ -162,7 +162,7 @@
                   </div>
                </div>
                <div class="col-lg-4 box" id="box-3">
-                  
+
                </div>
             </div>
             <div class="offcanvas offcanvas-bottom share-offcanvas" tabindex="-1" id="share-btn" aria-labelledby="shareBottomLabel">

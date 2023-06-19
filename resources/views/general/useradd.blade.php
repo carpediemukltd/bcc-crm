@@ -63,7 +63,7 @@
                         <div class="img-extension mt-3">
                            <div class="d-inline-block align-items-center">
                               <span>Only</span>
-                              <a href="javascript:void(0);">.jpg</a>
+                              <a href="#">.jpg</a>
                               <a href="javascript:void(0);">.png</a>
                               <a href="javascript:void(0);">.jpeg</a>
                               <span>allowed</span>

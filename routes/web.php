@@ -49,6 +49,12 @@ Route::middleware([CheckStatus::class])->group(function(){
         Route::get('contacts', [UserController::class, 'userList'])->name('user.list');
         Route::any('contact/edit/{id}', [UserController::class, 'editUser'])->name('user.edit');
 
+        Route::get('contact/{id}/details', [UserController::class, 'userDetails'])->name('user.details');
+        
+        Route::get('contact/{id}/deals', [UserController::class, 'userDeals'])->name('user.deals');
+        Route::any('contact/{id}/deals/add', [UserController::class, 'dealsAdd'])->name('user.deals.add');
+        Route::any('contact/{user_id}/deals/edit/{id}', [UserController::class, 'dealsEdit'])->name('user.deals.edit');
+
         Route::any('customfield/add', [UserController::class, 'addField'])->name('customfield.add');
         Route::any('customfield', [UserController::class, 'fieldList'])->name('customfield.list');
         Route::any('customfield/edit/{id}', [UserController::class, 'editField'])->name('customfield.edit');
@@ -69,6 +75,8 @@ Route::middleware([CheckStatus::class])->group(function(){
         Route::get('userprofile', [GeneralController::class, 'userProfile'])->name('userprofile');
 
         Route::get('contactdetails', [GeneralController::class, 'contactDetails'])->name('contactdetails');
+        Route::get('stagescard', [GeneralController::class, 'stagesCard'])->name('stagescard');
+        Route::get('dealslisting', [GeneralController::class, 'dealsListing'])->name('dealslisting');
         Route::get('userform', [GeneralController::class, 'userForm'])->name('userform');
         Route::get('usertable', [GeneralController::class, 'userTable'])->name('usertable');
         Route::get('outlinedicon', [GeneralController::class, 'outlinedIcon'])->name('outlinedicon');

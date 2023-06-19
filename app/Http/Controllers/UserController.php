@@ -5,6 +5,10 @@
  use Illuminate\Support\Facades\Auth;
  use Illuminate\Support\Facades\Hash;
  use App\Models\User;
+ use App\Models\Stages;
+ use App\Models\Pipelines;
+ use App\Models\Deals;
+
  use App\Models\CustomFields;
  use App\Models\UserDetails;
 
@@ -109,6 +113,68 @@
         }
         return view("user.list", $this->data);
     } // addUser
+
+    public function userDetails($id){
+        $this->data['current_slug']  = 'Contact Details';
+        $this->data['slug']          = 'user_details';
+        $this->data['rs_user']       = User::where(['role' => 'user', 'id' => $id])->first();
+        $this->data['total_details'] = Deals::where('user_id', $id)->get()->count();
+        return view("user.details", $this->data);
+    } // userDetails
+
+    public function userDeals($id){
+        $this->data['current_slug'] = 'Deals';
+        $this->data['slug']         = 'user_deals';
+        $this->data['current_user_id'] = $id;
+        $this->data['rs_deals'] = Deals::where('user_id', $id)->orderBy('id', 'DESC')->paginate(10);
+        return view("user.deals.list", $this->data);
+    } // userDeals
+
+    public function dealsAdd(Request $request, $id){
+        if ($request->isMethod('post')) {
+            Deals::create([
+                'title'       => $request->title,
+                'user_id'     => $id,
+                'pipeline_id' => $request->pipeline_id,
+                'stage_id'    => $request->stage_id,
+                'amount'      => $request->amount,
+                'deal_owner'  => $request->deal_owner,
+                'lead_source' => $request->lead_source
+            ]);
+            return redirect(route('user.deals', $id))->withSuccess('Deal Created Successfully.')->withInput();
+        }else if ($request->isMethod('get')) {
+            $this->data['current_slug']    = 'Add Deal';
+            $this->data['slug']            = 'user_add_deal';
+            $this->data['current_user_id'] = $id; 
+
+            $this->data['rs_pipelines'] = Pipelines::orderBy('title', 'ASC')->get();
+            $this->data['rs_stages']    = Stages::orderBy('title', 'ASC')->get();
+            return view("user.deals.add", $this->data);
+        }
+    } // dealsAdd
+
+    public function dealsEdit(Request $request, $user_id, $id){
+        if ($request->isMethod('post')) {
+            Deals::where('id', $id)->update([
+                'title'       => $request->title,
+                'pipeline_id' => $request->pipeline_id,
+                'stage_id'    => $request->stage_id,
+                'amount'      => $request->amount,
+                'deal_owner'  => $request->deal_owner,
+                'lead_source' => $request->lead_source
+            ]);
+            return redirect(route('user.deals', $user_id))->withSuccess('Deal Update Successfully.')->withInput();
+        }else if ($request->isMethod('get')) {
+            $this->data['current_slug']    = 'Edit Deal';
+            $this->data['slug']            = 'user_edit_deal';
+            $this->data['current_user_id'] = $user_id; 
+
+            $this->data['rs_pipelines'] = Pipelines::orderBy('title', 'ASC')->get();
+            $this->data['rs_stages']    = Stages::orderBy('title', 'ASC')->get();
+            $this->data['rs_deal']      = Deals::where('id', $id)->first();
+            return view("user.deals.edit", $this->data);
+        }
+    } // dealsEdit
 
     public function editUser(Request $request, $id){
         $this->data['current_slug'] = 'Edit Contact';

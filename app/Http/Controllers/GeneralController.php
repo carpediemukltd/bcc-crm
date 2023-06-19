@@ -42,4 +42,10 @@
    public function outlinedIcon(){
       return view('general.outlinedicon');
    }
+   public function stagesCard(){
+      return view('general.stagescard');
+   }
+   public function dealsListing(){
+      return view('general.dealslisting');
+   }
  }

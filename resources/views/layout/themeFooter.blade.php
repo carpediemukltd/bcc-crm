@@ -972,7 +972,10 @@
 
 <script>
    setTimeout(function() { 
-      document.getElementById("alert-box-close").click();
+      var myBox = document.getElementById("alert-box-close");
+      if(myBox!=null){
+         document.getElementById("alert-box-close").click();
+      }
    }, 5000);
 </script>
 

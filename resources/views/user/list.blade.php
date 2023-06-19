@@ -108,6 +108,7 @@
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Email</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Status</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Created at</th>
+                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">Details</th>
                                     <th style="min-width: 100px" class="sorting" tabindex="0" aria-controls="user-list-table">Action</th>
                                  </tr>
                               </thead>

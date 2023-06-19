@@ -49,8 +49,8 @@
                         <img src="{{asset('assets/images/avatars/avtar_3.png')}}" alt="User-Profile" class="theme-color-pink-img img-fluid rounded-pill avatar-100" loading="lazy" />
                      </div>
                      <div class="d-flex flex-wrap align-items-center mb-3 mb-sm-0">
-                        <h4 class="me-2 mb-0 h4">Austin Robertson</h4>
-                        <span> - Web Developer</span>
+                        <h4 class="me-2 mb-0 h4">{{ucwords($rs_user->first_name. ' '. $rs_user->last_name)}}</h4>
+                        <!-- <span> - Web Developer</span> -->
                      </div>
                   </div>
                   <ul class="d-flex nav nav-pills mb-0 text-center profile-tab" data-toggle="slider-tab" id="profile-pills-tab" role="tablist">
@@ -84,15 +84,23 @@
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" class="form-control border_none" id="first_name" placeholder="Name" name="first_name" required="">
-                              <label for="floatingInputGrid">Name</label>
+                              <input type="text" class="form-control" id="first_name" placeholder="Name" name="first_name" value="{{$rs_user->first_name}}" required>
+                              <label for="floatingInputGrid">First Name</label>
                            </div>
                         </div>
                      </div>
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" class="form-control border_none" id="email" placeholder="Email" name="last_name" required="">
+                              <input type="text" class="form-control" id="last_name" placeholder="Name" name="last_name" value="{{$rs_user->last_name}}" required>
+                              <label for="floatingInputGrid">Last Name</label>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col">
+                           <div class="form-group form-floating">
+                              <input type="text" class="form-control" id="email" value="{{$rs_user->email}}" disabled>
                               <label for="floatingInputGrid">Email</label>
                            </div>
                         </div>
@@ -100,7 +108,7 @@
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="email" class="form-control border_none" id="contact_owner" placeholder="Contact Owner" name="email" required="">
+                              <input type="email" class="form-control" id="contact_owner" placeholder="Contact Owner" name="email" required="">
                               <label for="floatingInputGrid">Contact Owner</label>
                            </div>
                         </div>
@@ -108,7 +116,7 @@
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" id="lead_status" class="form-control border_none" name="lead_status" placeholder="Lead Status" required="">
+                              <input type="text" id="lead_status" class="form-control" name="lead_status" placeholder="Lead Status" required="">
                               <label for="floatingInputGrid">Lead Status</label>
                            </div>
                         </div>
@@ -434,7 +442,7 @@
                   <div class="nav-item-wrapper">
                      <a class="nav-link dropdown-indicator label-1" href="#CRM" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="CRM">
                         <div class="d-flex align-items-center">
-                           <h4 class="card-title">Deals (01)</h4>
+                           <h4 class="card-title">Deals ({{$total_details}})</h4>
                            <div class="dropdown-indicator-icon">
                               <svg height="12" class="private-icon-caret" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11.5 21.1" width="5">
                                  <path class="private-icon-caret__inner" d="M2 2l7.5 8.5-7.4 8.6" fill="none" stroke="#00a4bd" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"></path>
@@ -445,8 +453,13 @@
                      <div class="parent-wrapper label-1">
                         <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="CRM">
                            <li class="nav-item">
-                              <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
-                                 <div class="d-flex align-items-center"><span class="nav-link-text">Deals Listing</span></div>
+                              <a class="nav-link" href="{{route('user.deals', $rs_user->id)}}" data-bs-toggle="" aria-expanded="false">
+                                 <div class="d-flex align-items-center"><span class="nav-link-text"> All Deals</span></div>
+                              </a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link" href="{{route('user.deals.add', $rs_user->id)}}" data-bs-toggle="" aria-expanded="false">
+                                 <div class="d-flex align-items-center"><span class="nav-link-text">Add New Deal</span></div>
                               </a>
                            </li>
                         </ul>

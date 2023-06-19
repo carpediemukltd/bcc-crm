@@ -7,7 +7,7 @@
             <div class="col-md-12">
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
-                     <h1>Hello Hope</h1>
+                     <h1>User Add</h1>
                      <p>Experience a simple yet powerful way to build Dashboards.</p>
                   </div>
                   <!-- <div>
@@ -63,7 +63,7 @@
                         <div class="img-extension mt-3">
                            <div class="d-inline-block align-items-center">
                               <span>Only</span>
-                              <a href="javascript:void(0);">.jpg</a>
+                              <a href="#">.jpg</a>
                               <a href="javascript:void(0);">.png</a>
                               <a href="javascript:void(0);">.jpeg</a>
                               <span>allowed</span>

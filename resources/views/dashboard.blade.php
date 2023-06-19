@@ -54,7 +54,7 @@
             <div class="card-body">
                <div class="d-flex align-items-start justify-content-between mb-2">
                   <p class="mb-0 text-dark">Gross Volume</p>
-                  <a class="badge rounded-pill bg-soft-primary" href="javascript:void(0);">
+                  <a class="badge rounded-pill bg-soft-primary" href="#">
                   View
                   </a>
                </div>
@@ -75,7 +75,7 @@
                   <div class="card-body">
                      <div class="mb-2 d-flex justify-content-between align-items-center">
                         <span class="text-dark ">USD Balance</span>
-                        <a class="badge rounded-pill bg-soft-primary" href="javascript:void(0);">
+                        <a class="badge rounded-pill bg-soft-primary" href="#">
                         Request Payout
                         </a>
                      </div>
@@ -89,7 +89,7 @@
                   <div class="card-body">
                      <div class="mb-2 d-flex justify-content-between align-items-center">
                         <span class="text-dark">No Of Payments</span>
-                        <a class="badge rounded-pill bg-soft-primary" href="javascript:void(0);">
+                        <a class="badge rounded-pill bg-soft-primary" href="#">
                         View
                         </a>
                      </div>
@@ -108,8 +108,8 @@
                      <div class="mb-5">
                         <div class="mb-2 d-flex justify-content-between align-items-center">
                            <span class="text-dark">Last Transaction</span>
-                           <a class="badge rounded-pill bg-soft-primary" href="javascript:void(0);">
-                           View Report
+                           <a class="badge rounded-pill bg-soft-primary" href="#">
+                              View Report
                            </a>
                         </div>
                         <div class="mb-2">
@@ -131,7 +131,7 @@
                                  <h6 class="text-body">$5,674</h6>
                               </div>
                               <div class="progress bg-soft-primary shadow-none w-100" style="height: 6px">
-                                 <div class="progress-bar bg-primary" data-toggle="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                 <div class="progress-bar bg-primary" data-bs-toggle="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                               </div>
                            </div>
                         </div>
@@ -149,7 +149,7 @@
                                  <h6 class="text-body">$1,624</h6>
                               </div>
                               <div class="progress bg-soft-info shadow-none w-100" style="height: 6px">
-                                 <div class="progress-bar bg-info" data-toggle="progress-bar" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                                 <div class="progress-bar bg-info" data-bs-toggle="progress-bar" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
                               </div>
                            </div>
                         </div>
@@ -159,7 +159,7 @@
                      <div class="iq-scroller-effect">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                            <span class="text-dark">Send Money To</span>
-                           <a href="../dashboard/table/border-table.html" class="badge rounded-pill bg-soft-primary">
+                           <a href="#" class="badge rounded-pill bg-soft-primary">
                            All Contacts
                            </a>
                         </div>
@@ -515,7 +515,7 @@
                </div>
             </div>
             <div class="card-footer text-end">
-               <a href="javascript:void(0);">
+               <a href="#">
                   <span class="me-2">
                   View all Settlements
                   </span>

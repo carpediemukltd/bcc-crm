@@ -9,7 +9,7 @@
       <meta name="author" content="Carpe Diem">
       <meta name="DC.title" content="">
      
-      <link rel="shortcut icon" href="{{asset('assets/images/bcc-logo.png')}}" />
+      <link rel="shortcut icon" href="{{asset('assets/images/bcc-favicon.png')}}" />
       <!-- Library / Plugin Css Build -->
       <link rel="stylesheet" href="{{asset('assets/css/core/libs.min.css')}}" />
       <!-- BCC Design System Css -->

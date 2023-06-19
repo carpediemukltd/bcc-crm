@@ -7,7 +7,7 @@
             <div class="col-md-12">
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
-                     <h1>Hello Hope</h1>
+                     <h1>User List</h1>
                      <p>Experience a simple yet powerful way to build Dashboards.</p>
                   </div>
                   <!-- <div>
@@ -46,7 +46,6 @@
                <div class="card-body px-0">
                   <div class="table-responsive">
                      <div id="user-list-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                        
                         <div class="table-responsive my-3">
                            <table id="user-list-table" class="table table-striped dataTable no-footer" role="grid" data-toggle="data-table" aria-describedby="user-list-table_info">
                               <thead>

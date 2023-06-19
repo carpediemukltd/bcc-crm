@@ -11,7 +11,7 @@
                      <p>Experience a simple yet powerful way to build Dashboard</p>
                   </div>
                   <div>
-                     <a href="" class="btn btn-link btn-soft-light">
+                     <a href="" class="btn btn-link btn-soft-light" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-stage">
                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-28"><path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                         Add Stage
                      </a>
@@ -39,7 +39,7 @@
                   <h4 class="card-title">Stages Card</h4>
                </div>
             </div>
-            <div class="card-body justify-content-between align-items-end mb-4 g-3">
+            <div class="card-body row justify-content-between align-items-end mb-4 g-3">
                <div class="col">
                   <ul class="nav nav-links mx-n2">
                      <li class="nav-item"><a class="nav-link px-2 py-1 active" aria-current="page" href="#">All<span class="text-700 fw-semi-bold">(32)</span></a></li>
@@ -88,9 +88,9 @@
                   </div>
                </div>
             </div>
-            <div class="card-body  row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-3 mb-9">
+            <div class="card-body row  row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-3 mb-9">
                <!-- box title start row -->
-               <div class="col">
+               <div class="col-lg-4">
                   <div class="todo_list">
                      <div class="desc_view d-flex">
                         <span>Todo List</span>
@@ -98,7 +98,7 @@
                      </div>
                   </div>
                </div>
-               <div class="col">
+               <div class="col-lg-4">
                   <div class="inprogress_list">
                      <div class="desc_view d-flex">
                         <span>In Progress</span>
@@ -106,7 +106,7 @@
                      </div>
                   </div>
                </div>
-               <div class="col">
+               <div class="col-lg-4">
                   <div class="complete_list">
                      <div class="desc_view d-flex">
                         <span>Complete</span>
@@ -115,7 +115,7 @@
                   </div>
                </div>
                <!-- box title end row -->
-               <div class="col box" id="box-1">
+               <div class="col-lg-4 box" id="box-1">
                   <div class="card drop-item hover-actions-trigger" draggable="true">
                      <div class="card-body">
                         <div class="d-flex align-items-center">
@@ -138,7 +138,7 @@
                      </div>
                   </div>
                </div>
-               <div class="col box" id="box-2">
+               <div class="col-lg-4 box" id="box-2">
                   <div class="card drop-item hover-actions-trigger" draggable="true">
                      <div class="card-body">
                         <div class="d-flex align-items-center">
@@ -200,21 +200,43 @@
       </div>
    </div>
 </div>
-<script>
-   function myFunction() {
-   var x = document.getElementById("user_edit_view");
-   if (x.style.display === "none") {
-    x.style.display = "block";
-   } else {
-    x.style.display = "none";
-   }
-   var y = document.getElementById("user_details_view");
-   if (y.style.display === "block") {
-   y.style.display = "none";
-   } else {
-   y.style.display = "none";
-   }
-   }
-   
-</script>
+<!-- Modal -->
+<div class="modal fade" id="add-stage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+         <div class="modal-body">
+            <form action="#" autocomplete="off">
+               <h3 class="text-center">Add Stage</h3>
+               <p class="text-center">Stay connected to create Stages</p>
+               <div class="row mt-4">
+                  <div class="form-group col-lg-6">
+                     <label class="form-label">Email address</label>
+                     <input type="email" class="form-control mb-0"  placeholder="Enter email" autocomplete="off">
+                  </div>
+                  <div class="form-group col-lg-6">
+                     <label class="form-label">Pipelines</label>
+                     <input type="text" class="form-control mb-0" placeholder="Enter Pipeline" autocomplete="off">
+                  </div>
+                  <div class="form-group col-lg-12">
+                     <label class="form-label">Pipelines</label>
+                     <input type="text" class="form-control mb-0" placeholder="Enter Pipeline" autocomplete="off">
+                  </div>
+                  <div class="form-group col-lg-6">
+                     <label class="form-label">Email address</label>
+                     <input type="email" class="form-control mb-0"  placeholder="Enter email" autocomplete="off">
+                  </div>
+                  <div class="form-group col-lg-6">
+                     <label class="form-label">Pipelines</label>
+                     <input type="text" class="form-control mb-0" placeholder="Enter Pipeline" autocomplete="off">
+                  </div>
+                  <div class="text-center pt-3 pb-3">
+                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Create</button>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
 @endsection

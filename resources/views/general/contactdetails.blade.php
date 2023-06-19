@@ -84,7 +84,7 @@
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" class="form-control" id="first_name" placeholder="Name" name="first_name" required="">
+                              <input type="text" class="form-control border_none" id="first_name" placeholder="Name" name="first_name" required="">
                               <label for="floatingInputGrid">Name</label>
                            </div>
                         </div>
@@ -92,7 +92,7 @@
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" class="form-control" id="email" placeholder="Email" name="last_name" required="">
+                              <input type="text" class="form-control border_none" id="email" placeholder="Email" name="last_name" required="">
                               <label for="floatingInputGrid">Email</label>
                            </div>
                         </div>
@@ -100,7 +100,7 @@
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="email" class="form-control" id="contact_owner" placeholder="Contact Owner" name="email" required="">
+                              <input type="email" class="form-control border_none" id="contact_owner" placeholder="Contact Owner" name="email" required="">
                               <label for="floatingInputGrid">Contact Owner</label>
                            </div>
                         </div>
@@ -108,7 +108,7 @@
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" id="lead_status" class="form-control" name="lead_status" placeholder="Lead Status" required="">
+                              <input type="text" id="lead_status" class="form-control border_none" name="lead_status" placeholder="Lead Status" required="">
                               <label for="floatingInputGrid">Lead Status</label>
                            </div>
                         </div>

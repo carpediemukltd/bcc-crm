@@ -76,9 +76,9 @@
                 if($request->custom_fields_count>0){
                     foreach($request->custom_fields as $key => $value){
                        UserDetails::create([
-                            'user_id'    => $new_user->id,
-                            'custom_field_id'     => $key,
-                            'data'         => $value
+                            'user_id' => $new_user->id,
+                            'custom_field_id' => $key,
+                            'data' => $value
                         ]);
                     }
                 }
@@ -133,6 +133,21 @@
         })->select('custom_fields.*', 'user_details.data')->get();
 
         if ($request->isMethod('put')) {
+
+            $update_data = [
+                'first_name'   => $request->first_name,
+                'last_name'    => $request->last_name,
+                'phone_number' => $request->phone_number
+            ];
+
+            User::whereId($id)->update($update_data);
+            if($request->custom_fields_count>0){
+                foreach($request->custom_fields as $key => $value){
+                   UserDetails::updateOrCreate(['user_id'=>$id ,'custom_field_id' => $key],
+                   ['data' => $value]);
+                }
+            }
+            return redirect(url('contacts'))->withSuccess('Contact Update Successfully.')->withInput();
         }
         else if ($request->isMethod('get')){
         return view("user.details", $this->data);
@@ -223,10 +238,8 @@
             User::whereId($id)->update($update_data);
             if($request->custom_fields_count>0){
                 foreach($request->custom_fields as $key => $value){
-
                    UserDetails::updateOrCreate(['user_id'=>$id ,'custom_field_id' => $key],
-                   ['data'   => $value]);
-
+                   ['data' => $value]);
                 }
             }
             return redirect(url('contacts'))->withSuccess('Contact Update Successfully.')->withInput();

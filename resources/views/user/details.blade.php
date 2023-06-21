@@ -80,11 +80,11 @@
             </div>
             <div class="card-body">
                <div class="user_details_view" id="user_details_view">
-                  <form action="" method="POST">
+                  <form>
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" class="form-control" id="first_name" placeholder="Name" name="first_name" value="{{$rs_user->first_name}}" required>
+                              <input type="text" class="form-control" id="first_name" placeholder="First Name" value="{{$rs_user->first_name}}">
                               <label for="floatingInputGrid">First Name</label>
                            </div>
                         </div>
@@ -92,7 +92,7 @@
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" class="form-control" id="last_name" placeholder="Name" name="last_name" value="{{$rs_user->last_name}}" required>
+                              <input type="text" class="form-control" id="last_name" placeholder="Last Name" value="{{$rs_user->last_name}}">
                               <label for="floatingInputGrid">Last Name</label>
                            </div>
                         </div>
@@ -108,23 +108,15 @@
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="email" class="form-control" id="contact_owner" placeholder="Contact Owner" name="email" required="">
-                              <label for="floatingInputGrid">Contact Owner</label>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="row">
-                        <div class="col">
-                           <div class="form-group form-floating">
-                              <input type="text" id="lead_status" class="form-control" name="lead_status" placeholder="Lead Status" required="">
-                              <label for="floatingInputGrid">Lead Status</label>
+                              <input type="text" class="form-control" id="phone_number" placeholder="Phone number" value="{{$rs_user->phone_number}}">
+                              <label for="floatingInputGrid">Phone number</label>
                            </div>
                         </div>
                      </div>
                      @include('user.partial._custom_fields')
                      <div class="row">
                         <div class="col">
-                           <button type="submit" class="btn btn-primary contact_view_btn" onclick="myFunction()">Edit</button>
+                           <button type="button" class="btn btn-primary contact_view_btn" onclick="myFunction()">Edit</button>
                         </div>
                      </div>
                   </form>
@@ -135,44 +127,34 @@
                      @method('PUT')
                      @csrf
                      <div class="col-sm-6 col-md-12">
-                        <label class="form-label" for="customFile">File input example</label>
-                        <input class="form-control" id="customFile" type="file" />
-                     </div>
-                     <div class="col-sm-6 col-md-12">
                         <div class="form-floating">
-                           <input class="form-control" id="floatingInputGrid" type="text" placeholder="Name" name="name">
-                           <label for="floatingInputGrid">Name</label>
+                           <input type="text" class="form-control" id="first_name" placeholder="First Name" name="first_name" value="{{$rs_user->first_name}}" required>
+                           <label for="first_name">First Name</label>
                         </div>
                      </div>
                      <div class="col-sm-6 col-md-12">
                         <div class="form-floating">
-                           <input class="form-control" id="floatingInputGrid" type="text" placeholder="Designation" name="designation">
-                           <label for="floatingInputGrid">Designation</label>
+                           <input type="text" class="form-control" id="last_name" placeholder="Last Name" name="last_name" value="{{$rs_user->last_name}}" required>
+                           <label for="last_name">Last Name</label>
                         </div>
                      </div>
                      <div class="col-sm-6 col-md-12">
                         <div class="form-floating">
-                           <input class="form-control" id="floatingInputGrid" type="text" placeholder="Email" name="email">
+                           <input class="form-control" id="floatingInputGrid" type="text" placeholder="Email" name="email" value="{{$rs_user->email}}" disabled>
                            <label for="floatingInputGrid">Email</label>
                         </div>
                      </div>
                      <div class="col-md-12 ">
                         <div class="form-floating">
-                           <input class="form-control" id="floatingInputBudget" type="text" placeholder="Contact Owner" name="contact_owner">
-                           <label for="floatingInputBudget">Contact Owner</label>
+                           <input type="text" class="form-control" id="phone_number" placeholder="Phone number" name="phone_number" value="{{$rs_user->phone_number}}">
+                              <label for="floatingInputGrid">Phone number</label>
                         </div>
-                     </div>
-                     <div class="col-md-12 ">
-                        <div class="form-floating">
-                           <input class="form-control" id="floatingInputBudget" type="text" placeholder="Lead Status" name="lead_status">
-                           <label for="floatingInputBudget">Lead Status</label>
-                        </div>
-                     </div>       
-                     @unless (count($custom_fields)==0)   
+                     </div>     
+                     @unless (count($custom_fields)==0)
                      <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
                      @foreach($custom_fields as $field)
                      <div class="col-md-12">
-                        <div class="form-group form-floating">
+                        <div class="form-floating">
                            <input type="text" class="form-control" id="custom_fields[{{$field->id}}]" value="{{$field->data}}" placeholder="{{$field->title}}" name="custom_fields[{{$field->id}}]" required="">
                            <label for="floatingInputGrid">{{$field->title}}</label>
                         </div>

@@ -768,3 +768,14 @@ span.item-name {
 	-ms-transform: translateY(-48%);
 	transform: translateY(-48%)
 }
+.custom_col {
+    width: 100%;
+    margin: 0 5px;
+}
+.scrolable_view_card.justify-content-center.vh-100{
+  overflow: auto;
+  margin: 0 20px;
+}
+.scrolable_view_card.justify-content-center.vh-100 .horizantol_scroll_section{
+  min-width: 2000px;
+}

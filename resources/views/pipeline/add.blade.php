@@ -68,15 +68,13 @@
                   <form action="{{ route('pipeline', ['action' => 'add']) }}" method="POST" enctype="multipart/form-data">
                      @csrf
                      <div class="row">
-                        <div class="col">
+                        <div class="col-lg-6">
                            <div class="form-group">
                               <label class="form-label" for="title">Name:</label>
                               <input type="text" class="form-control" id="title" placeholder="Name" name="title" required>
                            </div>
                         </div>
                      </div>
-
-                     <div class="row"><div class="col"><br /><br /></div></div>
                      
                      <div class="row">
                         <div class="col text-center">
@@ -112,8 +110,12 @@
                            </table>
                         </div>
                      </div>
-                     
+
                      <div class="row">
+                        <div class="col">
+                           <button type="submit" class="btn btn-primary">Submit</button>
+                           <a href="{{ route('pipeline', ['action' => 'list']) }}" class="btn btn-danger">Cancel</a>
+                        </div>
                         <div class="col">
                            <button type="button" class="btn btn-success btn-sm btn-info addClickrBtn" style="float:right;">
                               <span class="btn-inner">
@@ -121,16 +123,6 @@
                               </span>   
                               Add Row 
                            </button>
-                        </div>
-                     </div>
-
-
-                     <div class="row"><div class="col"><br /></div></div>
-
-                     <div class="row">
-                        <div class="col">
-                           <button type="submit" class="btn btn-primary">Submit</button>
-                           <a href="{{ route('pipeline', ['action' => 'list']) }}" class="btn btn-danger">Cancel</a>
                         </div>
                      </div>
                   </form>

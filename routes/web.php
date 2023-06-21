@@ -49,7 +49,7 @@ Route::middleware([CheckStatus::class])->group(function(){
         Route::get('contacts', [UserController::class, 'userList'])->name('user.list');
         Route::any('contact/edit/{id}', [UserController::class, 'editUser'])->name('user.edit');
 
-        Route::get('contact/{id}/details', [UserController::class, 'userDetails'])->name('user.details');
+        Route::any('contact/{id}/details', [UserController::class, 'userDetails'])->name('user.details');
         
         Route::get('contact/{id}/deals', [UserController::class, 'userDeals'])->name('user.deals');
         Route::any('contact/{id}/deals/add', [UserController::class, 'dealsAdd'])->name('user.deals.add');

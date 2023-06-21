@@ -1,9 +1,11 @@
 <?php
+
  namespace App\Http\Controllers;
 
  use Illuminate\Http\Request;
  use Illuminate\Support\Facades\Auth;
  use Illuminate\Support\Facades\Hash;
+ use Illuminate\Support\Facades\DB;
  use App\Models\User;
  use App\Models\Stages;
  use App\Models\Pipelines;
@@ -114,12 +116,28 @@
         return view("user.list", $this->data);
     } // addUser
 
-    public function userDetails($id){
+    public function userDetails(Request $request, $id){
         $this->data['current_slug']  = 'Contact Details';
         $this->data['slug']          = 'user_details';
         $this->data['rs_user']       = User::where(['role' => 'user', 'id' => $id])->first();
-        $this->data['total_details'] = Deals::where('user_id', $id)->get()->count();
+       // $this->data['total_details'] = Deals::where('user_id', $id)->get()->count();
+        $this->data['deals'] = Deals::leftJoin('pipelines', function ($join) {
+            $join->on('deals.pipeline_id', '=', 'pipelines.id');
+        })->leftJoin('stages', function ($join) {
+            $join->on('deals.stage_id', '=', 'stages.id');
+        })->select('deals.*', 'pipelines.title as pipeline', 'stages.title as stage')->where('user_id', $id)->get();
+        
+        $this->data['id']=$id;
+        $this->data['custom_fields'] =  CustomFields::leftJoin('user_details', function ($join) {
+            $join->on('custom_fields.id', '=', 'user_details.custom_field_id');
+            $join->on('user_details.user_id', '=', DB::raw($this->data['id']));
+        })->select('custom_fields.*', 'user_details.data')->get();
+
+        if ($request->isMethod('put')) {
+        }
+        else if ($request->isMethod('get')){
         return view("user.details", $this->data);
+        }
     } // userDetails
 
     public function userDeals($id){
@@ -180,9 +198,13 @@
         $this->data['current_slug'] = 'Edit Contact';
         $this->data['slug']         = 'edit_user';
         $this->data['all_status']   = ['inactive', 'active', 'deleted', 'banned'];
-        
-        $this->data['custom_fields'] = CustomFields::all();
-        $this->data['user_details'] = UserDetails::where('user_id', '=', $id)->get();
+
+        $this->data['id']=$id;
+        $this->data['custom_fields'] =  CustomFields::leftJoin('user_details', function ($join) {
+            $join->on('custom_fields.id', '=', 'user_details.custom_field_id');
+            $join->on('user_details.user_id', '=', DB::raw($this->data['id']));
+        })->select('custom_fields.*', 'user_details.data')->get();
+
         if ($request->isMethod('put')) {
             $update_data = [
                 'first_name'   => $request->first_name,

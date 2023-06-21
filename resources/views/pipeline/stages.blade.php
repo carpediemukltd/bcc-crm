@@ -10,14 +10,6 @@
                      <h1>Stages</h1>
                      <p>Experience a simple yet powerful way to build Dashboard</p>
                   </div>
-                  <div>
-                     <a href="" class="btn btn-link btn-soft-light" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-stage">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-28">
-                           <path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg>
-                        Add Stage
-                     </a>
-                  </div>
                </div>
             </div>
          </div>
@@ -288,52 +280,10 @@
       </div>
    </div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="add-stage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">
-   <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-         <div class="modal-body">
-            <form action="#" autocomplete="off">
-               <h3 class="text-center">Add Stage</h3>
-               <p class="text-center">Stay connected to create Stages</p>
-               <div class="row mt-4">
-                  <div class="form-group col-lg-6">
-                     <label class="form-label">Email address</label>
-                     <input type="email" class="form-control mb-0"  placeholder="Enter email" autocomplete="off">
-                  </div>
-                  <div class="form-group col-lg-6">
-                     <label class="form-label">Pipelines</label>
-                     <input type="text" class="form-control mb-0" placeholder="Enter Pipeline" autocomplete="off">
-                  </div>
-                  <div class="form-group col-lg-12">
-                     <label class="form-label">Pipelines</label>
-                     <input type="text" class="form-control mb-0" placeholder="Enter Pipeline" autocomplete="off">
-                  </div>
-                  <div class="form-group col-lg-6">
-                     <label class="form-label">Email address</label>
-                     <input type="email" class="form-control mb-0"  placeholder="Enter email" autocomplete="off">
-                  </div>
-                  <div class="form-group col-lg-6">
-                     <label class="form-label">Pipelines</label>
-                     <input type="text" class="form-control mb-0" placeholder="Enter Pipeline" autocomplete="off">
-                  </div>
-                  <div class="text-center pt-3 pb-3">
-                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Create</button>
-                  </div>
-               </div>
-            </form>
-         </div>
-      </div>
-   </div>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js" defer></script>
-
 
 <script>
    function dragStart(event) {
        event.dataTransfer.setData("Text", event.target.id);
-       
    }
    function allowDrop(event) {
        event.preventDefault();
@@ -349,7 +299,6 @@
                document.getElementById(data).classList.add("border-primary");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.remove("bg-warning", "bg-success");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.add("bg-primary")
-               //$( ".custom_col .card" ).sortable();
            }
            // progress list
            if (event.target.id == "progress") {
@@ -357,7 +306,6 @@
                document.getElementById(data).classList.add("border-warning");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.remove("bg-primary", "bg-success");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.add("bg-warning")
-               //$( ".custom_col .card" ).sortable();
            }
            // completed list
            if (event.target.id == "completed") {
@@ -365,7 +313,6 @@
                document.getElementById(data).classList.add("border-success");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.remove("bg-warning", "bg-success");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.add("bg-success")
-               //$( ".custom_col .card" ).sortable();
            }
            // manager review list
            if (event.target.id == "managerreview") {
@@ -373,7 +320,6 @@
                document.getElementById(data).classList.add("border-success");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.remove("bg-warning", "bg-success");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.add("bg-success")
-               //$( ".custom_col .card" ).sortable();
            }
            // client review list
            if (event.target.id == "clientreview") {
@@ -381,17 +327,8 @@
                document.getElementById(data).classList.add("border-success");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.remove("bg-warning", "bg-success");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.add("bg-success")
-               //$( ".custom_col .card" ).sortable();
            }
        }
    }
-
-// $( init );
-// function init() {
-//   $( ".card" ).sortable({
-//       connectWith: ".connected-sortable",
-//       stack: '.connected-sortable'
-//     }).disableSelection();
-// }
 </script>
 @endsection

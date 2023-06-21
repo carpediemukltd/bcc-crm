@@ -14900,8 +14900,8 @@ thead, tbody, tfoot, tr, td, th {
   padding: 0 calc(var(--bs-gutter-x, 1rem) * 2);
 }
 .nav .search-input {
-  width: -webkit-calc(5.5rem + 5vw);
-  width: calc(5.5rem + 5vw);
+  /* width: -webkit-calc(5.5rem + 5vw); */
+  width: 300px;
 }
 .nav .search-input.input-group .input-group-text {
   padding-left: 0;

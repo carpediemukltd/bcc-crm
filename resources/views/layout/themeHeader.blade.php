@@ -9,6 +9,10 @@
          @endif 
          BCC CRM
       </title>
+      <meta name="description" content="">
+      <meta name="keywords" content="BCC CRM">
+      <meta name="author" content="Carpe Diem">
+      <meta name="DC.title" content="">
       <!-- Favicon -->
       <link rel="shortcut icon" href="{{asset('assets/images/bcc-favicon.png')}}" />
       <!-- Library / Plugin Css Build -->
@@ -54,7 +58,7 @@
          <!--Nav Start-->
          <nav class="nav navbar navbar-expand-lg fixed-top shadow-sm navbar-light iq-navbar header-hover-menu left-border">
             <div class="container-fluid navbar-inner">
-               <a href="#" class="navbar-brand">
+               <a href="{{route('dashboard')}}" class="navbar-brand">
                   <!--Logo start-->
                   <div class="logo-main">
                      <div class="logo-normal">
@@ -257,6 +261,67 @@
                                  </i>
                                 
                                  <span class="item-name">List of Custom Fields</span>
+                              </a>
+                           </li>
+                        </ul>
+                     </li>
+
+                     <li class="nav-item dropdown iq-responsive-menu border-end d-block">
+                        <a class="nav-link <?php if(isset($slug) && in_array($slug, ['pipelines', 'edit_pipeline', 'add_pipeline'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false" href="#sidebar-pipelines">
+                           <i class="icon" >
+                           <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path opacity="0.4" d="M18.8088 9.021C18.3573 9.021 17.7592 9.011 17.0146 9.011C15.1987 9.011 13.7055 7.508 13.7055 5.675V2.459C13.7055 2.206 13.5036 2 13.253 2H7.96363C5.49517 2 3.5 4.026 3.5 6.509V17.284C3.5 19.889 5.59022 22 8.16958 22H16.0463C18.5058 22 20.5 19.987 20.5 17.502V9.471C20.5 9.217 20.299 9.012 20.0475 9.013C19.6247 9.016 19.1177 9.021 18.8088 9.021Z" fill="currentColor"></path>
+    <path opacity="0.4" d="M16.0842 2.56737C15.7852 2.25637 15.2632 2.47037 15.2632 2.90137V5.53837C15.2632 6.64437 16.1742 7.55437 17.2802 7.55437C17.9772 7.56237 18.9452 7.56437 19.7672 7.56237C20.1882 7.56137 20.4022 7.05837 20.1102 6.75437C19.0552 5.65737 17.1662 3.69137 16.0842 2.56737Z" fill="currentColor"></path>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.97398 11.3877H12.359C12.77 11.3877 13.104 11.0547 13.104 10.6437C13.104 10.2327 12.77 9.89868 12.359 9.89868H8.97398C8.56298 9.89868 8.22998 10.2327 8.22998 10.6437C8.22998 11.0547 8.56298 11.3877 8.97398 11.3877ZM8.97408 16.3819H14.4181C14.8291 16.3819 15.1631 16.0489 15.1631 15.6379C15.1631 15.2269 14.8291 14.8929 14.4181 14.8929H8.97408C8.56308 14.8929 8.23008 15.2269 8.23008 15.6379C8.23008 16.0489 8.56308 16.3819 8.97408 16.3819Z" fill="currentColor"></path>
+  </svg>
+                        </i>
+                           <span class="item-name">Pipelines</span>
+                           <i class="right-icon">
+                              <svg xmlns="" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                              </svg>
+                           </i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-search-11"
+                           style="width: 15rem;">
+                           <li class="nav-item">
+                              <a class="nav-link <?php if(isset($slug) && $slug == 'add_pipeline'){echo 'active';}?>"
+                                 href="{{ route('pipeline', ['action' => 'add'])}}">
+                                 <i class="icon" >
+                                 <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path opacity="0.4" d="M18.8088 9.021C18.3573 9.021 17.7592 9.011 17.0146 9.011C15.1987 9.011 13.7055 7.508 13.7055 5.675V2.459C13.7055 2.206 13.5036 2 13.253 2H7.96363C5.49517 2 3.5 4.026 3.5 6.509V17.284C3.5 19.889 5.59022 22 8.16958 22H16.0463C18.5058 22 20.5 19.987 20.5 17.502V9.471C20.5 9.217 20.299 9.012 20.0475 9.013C19.6247 9.016 19.1177 9.021 18.8088 9.021Z" fill="currentColor"></path>
+    <path opacity="0.4" d="M16.0842 2.56737C15.7852 2.25637 15.2632 2.47037 15.2632 2.90137V5.53837C15.2632 6.64437 16.1742 7.55437 17.2802 7.55437C17.9772 7.56237 18.9452 7.56437 19.7672 7.56237C20.1882 7.56137 20.4022 7.05837 20.1102 6.75437C19.0552 5.65737 17.1662 3.69137 16.0842 2.56737Z" fill="currentColor"></path>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.97398 11.3877H12.359C12.77 11.3877 13.104 11.0547 13.104 10.6437C13.104 10.2327 12.77 9.89868 12.359 9.89868H8.97398C8.56298 9.89868 8.22998 10.2327 8.22998 10.6437C8.22998 11.0547 8.56298 11.3877 8.97398 11.3877ZM8.97408 16.3819H14.4181C14.8291 16.3819 15.1631 16.0489 15.1631 15.6379C15.1631 15.2269 14.8291 14.8929 14.4181 14.8929H8.97408C8.56308 14.8929 8.23008 15.2269 8.23008 15.6379C8.23008 16.0489 8.56308 16.3819 8.97408 16.3819Z" fill="currentColor"></path>
+  </svg>
+                                 </i>
+                              
+                                 <span class="item-name"> Add Pipeline</span>
+                              </a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link <?php if(isset($slug) && $slug == 'pipelines'){echo 'active';}?>"
+                                 href="{{ route('pipeline', ['action' => 'list'])}}">
+                                 <i class="icon">
+                                    <svg width="20" class="icon-20" height="20" viewBox="0 0 24 24" fill="none"
+                                       xmlns="">
+                                       <path opacity="0.4"
+                                          d="M16.6756 2H7.33333C3.92889 2 2 3.92889 2 7.33333V16.6667C2 20.0711 3.92889 22 7.33333 22H16.6756C20.08 22 22 20.0711 22 16.6667V7.33333C22 3.92889 20.08 2 16.6756 2Z"
+                                          fill="currentColor"></path>
+                                       <path
+                                          d="M7.36866 9.3689C6.91533 9.3689 6.54199 9.74223 6.54199 10.2045V17.0756C6.54199 17.5289 6.91533 17.9022 7.36866 17.9022C7.83088 17.9022 8.20421 17.5289 8.20421 17.0756V10.2045C8.20421 9.74223 7.83088 9.3689 7.36866 9.3689Z"
+                                          fill="currentColor"></path>
+                                       <path
+                                          d="M12.0352 6.08887C11.5818 6.08887 11.2085 6.4622 11.2085 6.92442V17.0755C11.2085 17.5289 11.5818 17.9022 12.0352 17.9022C12.4974 17.9022 12.8707 17.5289 12.8707 17.0755V6.92442C12.8707 6.4622 12.4974 6.08887 12.0352 6.08887Z"
+                                          fill="currentColor"></path>
+                                       <path
+                                          d="M16.6398 12.9956C16.1775 12.9956 15.8042 13.3689 15.8042 13.8312V17.0756C15.8042 17.5289 16.1775 17.9023 16.6309 17.9023C17.0931 17.9023 17.4664 17.5289 17.4664 17.0756V13.8312C17.4664 13.3689 17.0931 12.9956 16.6398 12.9956Z"
+                                          fill="currentColor"></path>
+                                    </svg>
+                                 </i>
+                                
+                                 <span class="item-name">List Pipelines</span>
                               </a>
                            </li>
                         </ul>

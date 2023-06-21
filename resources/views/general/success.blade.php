@@ -3,7 +3,7 @@
    <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title data-setting="app_name" data-rightJoin=" Pro | Responsive Bootstrap 5 Admin Dashboard Template">Success</title>
+      <title data-setting="app_name" data-rightJoin=" BCC CRM">Success</title>
       <meta name="description" content="">
       <meta name="keywords" content="BCC CRM">
       <meta name="author" content="Carpe Diem">

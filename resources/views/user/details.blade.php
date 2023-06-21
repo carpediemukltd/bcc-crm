@@ -80,20 +80,20 @@
             </div>
             <div class="card-body">
                <div class="user_details_view" id="user_details_view">
-                  <form action="" method="POST">
+                  <form>
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" class="form-control" id="first_name" placeholder="Name" name="first_name" value="{{$rs_user->first_name}}" required>
-                              <label for="floatingInputGrid">First Name</label>
+                              <input type="text" class="form-control" id="first_name" placeholder="First Name" value="{{$rs_user->first_name}}">
+                              <label for="first_name">First Name</label>
                            </div>
                         </div>
                      </div>
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" class="form-control" id="last_name" placeholder="Name" name="last_name" value="{{$rs_user->last_name}}" required>
-                              <label for="floatingInputGrid">Last Name</label>
+                              <input type="text" class="form-control" id="last_name" placeholder="Last Name" value="{{$rs_user->last_name}}">
+                              <label for="last_name">Last Name</label>
                            </div>
                         </div>
                      </div>
@@ -101,76 +101,66 @@
                         <div class="col">
                            <div class="form-group form-floating">
                               <input type="text" class="form-control" id="email" value="{{$rs_user->email}}" disabled>
-                              <label for="floatingInputGrid">Email</label>
+                              <label for="email">Email</label>
                            </div>
                         </div>
                      </div>
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="email" class="form-control" id="contact_owner" placeholder="Contact Owner" name="email" required="">
-                              <label for="floatingInputGrid">Contact Owner</label>
+                              <input type="text" class="form-control" id="phone_number" placeholder="Phone number" value="{{$rs_user->phone_number}}">
+                              <label for="phone_number">Phone number</label>
                            </div>
                         </div>
                      </div>
+                     @include('user.partial._custom_fields')
                      <div class="row">
                         <div class="col">
-                           <div class="form-group form-floating">
-                              <input type="text" id="lead_status" class="form-control" name="lead_status" placeholder="Lead Status" required="">
-                              <label for="floatingInputGrid">Lead Status</label>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="row">
-                        <div class="col">
-                           <button type="submit" class="btn btn-primary contact_view_btn" onclick="myFunction()">Edit</button>
+                           <button type="button" class="btn btn-primary contact_view_btn" onclick="myFunction()">Edit</button>
                         </div>
                      </div>
                   </form>
                </div>
                <!-- user edit view start -->
                <div class="user_edit_view" id="user_edit_view" style="display: none;">
-                  <form class="row g-3 mb-6">
-                     <div class="col-sm-6 col-md-12">
-                        <label class="form-label" for="customFile">File input example</label>
-                        <input class="form-control" id="customFile" type="file" />
-                     </div>
+                  <form class="row g-3 mb-6" method="POST" action="{{route('user.details', $id)}}">
+                     @method('PUT')
+                     @csrf
                      <div class="col-sm-6 col-md-12">
                         <div class="form-floating">
-                           <input class="form-control" id="floatingInputGrid" type="text" placeholder="Name">
-                           <label for="floatingInputGrid">Name</label>
+                           <input type="text" class="form-control" id="first_name" placeholder="First Name" name="first_name" value="{{$rs_user->first_name}}" required>
+                           <label for="first_name">First Name</label>
                         </div>
                      </div>
                      <div class="col-sm-6 col-md-12">
                         <div class="form-floating">
-                           <input class="form-control" id="floatingInputGrid" type="text" placeholder="Designation">
-                           <label for="floatingInputGrid">Designation</label>
+                           <input type="text" class="form-control" id="last_name" placeholder="Last Name" name="last_name" value="{{$rs_user->last_name}}" required>
+                           <label for="last_name">Last Name</label>
                         </div>
                      </div>
                      <div class="col-sm-6 col-md-12">
                         <div class="form-floating">
-                           <input class="form-control" id="floatingInputGrid" type="text" placeholder="Email">
-                           <label for="floatingInputGrid">Email</label>
+                           <input class="form-control" id="email" type="text" placeholder="Email" name="email" value="{{$rs_user->email}}" disabled>
+                           <label for="email">Email</label>
                         </div>
                      </div>
                      <div class="col-md-12 ">
                         <div class="form-floating">
-                           <input class="form-control" id="floatingInputBudget" type="text" placeholder="saddamh4477@gmail.com">
-                           <label for="floatingInputBudget">saddamh4477@gmail.com</label>
+                           <input type="text" class="form-control" id="phone_number" placeholder="Phone number" name="phone_number" value="{{$rs_user->phone_number}}">
+                              <label for="phone_number">Phone number</label>
                         </div>
-                     </div>
-                     <div class="col-md-12 ">
+                     </div>     
+                     @unless (count($custom_fields)==0)
+                     <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
+                     @foreach($custom_fields as $field)
+                     <div class="col-md-12">
                         <div class="form-floating">
-                           <input class="form-control" id="floatingInputBudget" type="text" placeholder="Contact Owner">
-                           <label for="floatingInputBudget">Contact Owner</label>
+                           <input type="text" class="form-control" id="custom_fields[{{$field->id}}]" value="{{$field->data}}" placeholder="{{$field->title}}" name="custom_fields[{{$field->id}}]" required="">
+                           <label for="custom_fields[{{$field->id}}]">{{$field->title}}</label>
                         </div>
                      </div>
-                     <div class="col-md-12 ">
-                        <div class="form-floating">
-                           <input class="form-control" id="floatingInputBudget" type="text" placeholder="Lead Status">
-                           <label for="floatingInputBudget">Lead Status</label>
-                        </div>
-                     </div>
+                     @endforeach
+                     @endif
                      <div class="col-12 ">
                         <div class="text-right">
                            <button class="btn btn-primary contact_view_btn">Submit</button>
@@ -442,7 +432,7 @@
                   <div class="nav-item-wrapper">
                      <a class="nav-link dropdown-indicator label-1" href="#CRM" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="CRM">
                         <div class="d-flex align-items-center">
-                           <h4 class="card-title">Deals ({{$total_details}})</h4>
+                           <h4 class="card-title">Deals ({{@count($deals)}})</h4>
                            <div class="dropdown-indicator-icon">
                               <svg height="12" class="private-icon-caret" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11.5 21.1" width="5">
                                  <path class="private-icon-caret__inner" d="M2 2l7.5 8.5-7.4 8.6" fill="none" stroke="#00a4bd" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"></path>
@@ -452,6 +442,17 @@
                      </a>
                      <div class="parent-wrapper label-1">
                         <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="CRM">
+                           <div id="deals_list">
+                              @unless (count($deals)==0)
+                              @foreach($deals as $deal)
+                              <div class="nav-item">
+                              <span>{{$deal->title}} ({{$deal->deal_owner}})</span>
+                              <span>{{$deal->pipeline}} ({{$deal->stage}})</span><br />
+                              </div>
+                              @endforeach
+                              @endif
+                           </div>
+                           <br style="clear: both" />
                            <li class="nav-item">
                               <a class="nav-link" href="{{route('user.deals', $rs_user->id)}}" data-bs-toggle="" aria-expanded="false">
                                  <div class="d-flex align-items-center"><span class="nav-link-text"> All Deals</span></div>

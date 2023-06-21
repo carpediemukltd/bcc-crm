@@ -121,31 +121,17 @@
                      </div>
 
                      @unless (count($custom_fields)==0)
-                     
                      <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
-                     @php
-                     $i=0;
-                     @endphp
                      @foreach($custom_fields as $field)
-                     @php
-                     $user_detail='';
-                     if($user_details[$i]->data && $field->id==$user_details[$i]->id) $user_detail = $user_details[$i]->data;
-                     @endphp
-                     
                      <div class="row">
                         <div class="col">
                            <div class="form-group">
-                              <label class="form-label" for="password">{{$field->title}}</label>
-                              <input type="text" class="form-control" id="custom_fields[{{$field->id}}]" value="{{$user_detail}}" placeholder="{{$field->title}}" name="custom_fields[{{$field->id}}]">
+                              <label class="form-label">{{$field->title}}</label>
+                              <input type="text" class="form-control" id="custom_fields[{{$field->id}}]" value="{{$field->data}}" placeholder="{{$field->title}}" name="custom_fields[{{$field->id}}]">
                            </div>
-                          
                         </div>
                      </div>
-                     @php
-                     $i++;
-                     @endphp
                      @endforeach
-                    
                      @endif
 
                      <div class="row"><div class="col"><br /></div></div>

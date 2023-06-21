@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Stages extends Model
 {
     use HasFactory;
-    protected $fillable = ['id', 'title'];
+    protected $fillable = ['id', 'pipeline_id', 'title', 'sort'];
     
 }

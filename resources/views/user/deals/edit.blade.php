@@ -98,7 +98,8 @@
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="pipeline_id">Pipeline:</label>
-                              <select class="form-select" id="pipeline_id" name="pipeline_id">
+                              <select class="form-select" id="pipeline_id" name="pipeline_id" onchange="changePiepeline(this);" required>
+                                 <option selected="true" value="" disabled="disabled">Select</option>
                                  @if(isset($rs_pipelines))
                                     @foreach($rs_pipelines as $rec_pipeline)
                                        <option value="{{$rec_pipeline->id}}" <?php if($rec_pipeline->id == $rs_deal->pipeline_id){echo 'selected';}?>>{{ucfirst($rec_pipeline->title)}}</option>
@@ -110,12 +111,8 @@
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="stage_id">Stage:</label>
-                              <select class="form-select" id="stage_id" name="stage_id">
-                                 @if(isset($rs_stages))
-                                    @foreach($rs_stages as $rec_stages)
-                                       <option value="{{$rec_stages->id}}" <?php if($rec_stages->id == $rs_deal->stage_id){echo 'selected';}?>>{{ucfirst($rec_stages->title)}}</option>
-                                    @endforeach
-                                 @endif
+                              <select class="form-select" id="stage_id" name="stage_id" required>
+                                 <option selected="true" value="" disabled="disabled">Select</option>
                               </select>
                            </div>
                         </div>
@@ -137,6 +134,30 @@
    </div>
 </div>
 
+<script>
+   $(document).ready(function(){
+      var pipeline_id  = $('#pipeline_id').find(":selected").val();
+      var stage_id     = "{{$rs_deal->stage_id}}";
+      var pipeline_url = "{{ url('pipelineStages') }}/"+pipeline_id+"/"+stage_id;
+      $.ajax({ 
+         url: pipeline_url,
+         success:function(data){
+            $('#stage_id').html(data);
+         }
+      });
+   });
 
+   function changePiepeline(selected){
+      var pipeline_id  = $(selected).find(":selected").val();
+      var stage_id     = "{{$rs_deal->stage_id}}";
+      var pipeline_url = "{{ url('pipelineStages') }}/"+pipeline_id+"/"+stage_id;
+      $.ajax({ 
+         url: pipeline_url,
+         success:function(data){
+            $('#stage_id').html(data);
+         }
+      });
+   }
+</script>
 
 @endsection

@@ -58,6 +58,8 @@ Route::middleware([CheckStatus::class])->group(function(){
         Route::get('pipelineStages/{id}/{stage_id?}', [UserController::class, 'getPipelineStages']);
         Route::any('pipeline/{action}/{id?}', [UserController::class, 'pipelines'])->name('pipeline');
 
+        Route::get('stages/{id}', [UserController::class, 'stages'])->name('stages');
+
 
         Route::any('customfield/add', [UserController::class, 'addField'])->name('customfield.add');
         Route::any('customfield', [UserController::class, 'fieldList'])->name('customfield.list');

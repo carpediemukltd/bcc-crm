@@ -286,6 +286,15 @@
         }
     } // pipelines
 
+    public function stages($id){
+        $this->data['current_slug']  = 'Stages';
+        $this->data['slug']          = 'pipeline_stages';
+        // $this->data['rs_user']       = User::where(['role' => 'user', 'id' => $id])->first();
+        // $this->data['total_details'] = Deals::where('user_id', $id)->get()->count();
+
+        return view("pipeline.stages", $this->data);
+    } // userDetails
+
 
     public function addField(Request $request){
         $this->data['current_slug'] = 'Add Custom Field';

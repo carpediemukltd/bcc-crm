@@ -91,133 +91,193 @@
                </div>
             </div>
             
-            <div class="row justify-content-center vh-100" style="padding:20px">
-               <!-- To do tasks -->
-               <div class="col-lg-4 " id="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
-                  <div class="todo_list">
-                     <div class="desc_view d-flex align-items-center">
-                        <span>Todo List</span>
-                        <span class="task_count_number">0</span>
-                     </div>
-                  </div>
-                  <div class="d-flex flex-column align-items-center justify-content-center mt-3">
-                     <!-- card -->
-                     <div id="todotarget1" ondragstart="dragStart(event)" draggable="true"
-                        class="card rounded-0 w-100 mb-3 border-0 border-start border-primary border-3 shadow-sm">
-                        <div class="card-body px-3 py-3">
-                           <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
-                           <div class="bg-primary mb-4 d-inline p-1 fw-semibold small text-white project-name">
-                              Project Name
+            <div class="scrolable_view_card justify-content-center vh-100">
+               <div class="horizantol_scroll_section">
+                  <div class="d-flex">
+                     <!-- To do tasks -->
+                     <div class="custom_col" id="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <div class="todo_list">
+                           <div class="desc_view d-flex align-items-center">
+                              <span>Todo List</span>
+                              <span class="task_count_number">0</span>
                            </div>
-                           <div class="d-flex mt-4 align-items-center mb-2">
-                              <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
-                                 <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
-                              </svg>
-                              <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
+                        </div>
+                        <div class="d-flex flex-column align-items-center justify-content-center mt-3">
+                           <!-- card -->
+                           <div id="todotarget1" ondragstart="dragStart(event)" draggable="true"
+                              class="card rounded-0 w-100 mb-3 border-0 border-start border-primary border-3 shadow-sm">
+                              <div class="card-body px-3 py-3">
+                                 <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
+                                 <div class="bg-primary mb-4 d-inline p-1 fw-semibold small text-white project-name">
+                                    Project Name
+                                 </div>
+                                 <div class="d-flex mt-4 align-items-center mb-2">
+                                    <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
+                                       <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
+                                    </svg>
+                                    <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- card -->
+                           <div id="todotarget2" ondragstart="dragStart(event)" draggable="true"
+                              class="card rounded-0 w-100 mb-3 border-0 border-start border-primary border-3 shadow-sm">
+                              <div class="card-body px-3 py-3">
+                                 <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
+                                 <div class="bg-primary d-inline p-1 fw-semibold small text-white project-name">
+                                    Project Name
+                                 </div>
+                                 <div class="d-flex mt-4 align-items-center mb-2">
+                                    <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
+                                       <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
+                                    </svg>
+                                    <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- card -->
+                           <div id="todotarget3" ondragstart="dragStart(event)" draggable="true"
+                              class="card rounded-0 w-100 mb-3 border-0 border-start border-primary border-3 shadow-sm">
+                              <div class="card-body px-3 py-3">
+                                 <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
+                                 <div class="bg-primary d-inline p-1 fw-semibold small text-white project-name">
+                                    Project Name
+                                 </div>
+                                 <div class="d-flex mt-4 align-items-center mb-2">
+                                    <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
+                                       <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
+                                    </svg>
+                                    <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
+                                 </div>
+                              </div>
                            </div>
                         </div>
                      </div>
-                     <!-- card -->
-                     <div id="todotarget2" ondragstart="dragStart(event)" draggable="true"
-                        class="card rounded-0 w-100 mb-3 border-0 border-start border-primary border-3 shadow-sm">
-                        <div class="card-body px-3 py-3">
-                           <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
-                           <div class="bg-primary d-inline p-1 fw-semibold small text-white project-name">
-                              Project Name
+                     <!-- To do tasks -->
+                     <div class="custom_col" id="progress" ondrop="drop(event)"
+                        ondragover="allowDrop(event)">
+                           <div class="inprogress_list">
+                              <div class="desc_view d-flex align-items-center">
+                                 <span>In Progress</span>
+                                 <span class="task_count_number">0</span>
+                              </div>
                            </div>
-                           <div class="d-flex mt-4 align-items-center mb-2">
-                              <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
-                                 <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
-                              </svg>
-                              <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
+                        <div class="d-flex flex-column align-items-center justify-content-center mt-3">
+                           <!-- card -->
+                           <div id="inprogresstarget1" ondragstart="dragStart(event)" draggable="true"
+                              class="card rounded-0 w-100 mb-3 border-0 border-start border-warning border-3 shadow-sm">
+                              <div class="card-body px-3 py-3">
+                                 <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
+                                 <div class="bg-warning d-inline p-1 fw-semibold small text-white project-name">
+                                    Project Name
+                                 </div>
+                                 <div class="d-flex mt-4 align-items-center mb-2">
+                                    <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
+                                       <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
+                                    </svg>
+                                    <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
+                                 </div>
+                              </div>
                            </div>
-                        </div>
-                     </div>
-                     <!-- card -->
-                     <div id="todotarget3" ondragstart="dragStart(event)" draggable="true"
-                        class="card rounded-0 w-100 mb-3 border-0 border-start border-primary border-3 shadow-sm">
-                        <div class="card-body px-3 py-3">
-                           <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
-                           <div class="bg-primary d-inline p-1 fw-semibold small text-white project-name">
-                              Project Name
-                           </div>
-                           <div class="d-flex mt-4 align-items-center mb-2">
-                              <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
-                                 <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
-                              </svg>
-                              <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <!-- To do tasks -->
-               <div class="col-lg-4 " id="progress" ondrop="drop(event)"
-                  ondragover="allowDrop(event)">
-                     <div class="inprogress_list">
-                        <div class="desc_view d-flex align-items-center">
-                           <span>In Progress</span>
-                           <span class="task_count_number">0</span>
-                        </div>
-                     </div>
-                  <div class="d-flex flex-column align-items-center justify-content-center mt-3">
-                     <!-- card -->
-                     <div id="inprogresstarget1" ondragstart="dragStart(event)" draggable="true"
-                        class="card rounded-0 w-100 mb-3 border-0 border-start border-warning border-3 shadow-sm">
-                        <div class="card-body px-3 py-3">
-                           <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
-                           <div class="bg-warning d-inline p-1 fw-semibold small text-white project-name">
-                              Project Name
-                           </div>
-                           <div class="d-flex mt-4 align-items-center mb-2">
-                              <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
-                                 <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
-                              </svg>
-                              <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
+                           <!-- card -->
+                           <div id="inprogresstarget2" ondragstart="dragStart(event)" draggable="true"
+                              class="card rounded-0 w-100 mb-3 border-0 border-start border-warning border-3 shadow-sm">
+                              <div class="card-body px-3 py-3">
+                                 <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
+                                 <div class="bg-warning d-inline p-1 fw-semibold small text-white project-name">
+                                    Project Name
+                                 </div>
+                                 <div class="d-flex mt-4 align-items-center mb-2">
+                                    <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
+                                       <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
+                                    </svg>
+                                    <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
+                                 </div>
+                              </div>
                            </div>
                         </div>
                      </div>
-                     <!-- card -->
-                     <div id="inprogresstarget2" ondragstart="dragStart(event)" draggable="true"
-                        class="card rounded-0 w-100 mb-3 border-0 border-start border-warning border-3 shadow-sm">
-                        <div class="card-body px-3 py-3">
-                           <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
-                           <div class="bg-warning d-inline p-1 fw-semibold small text-white project-name">
-                              Project Name
+                     <!-- tasks completed -->
+                     <div class="custom_col" id="completed" ondrop="drop(event)"
+                        ondragover="allowDrop(event)">
+                        <div class="complete_list">
+                           <div class="desc_view d-flex align-items-center">
+                              <span>Complete</span>
+                              <span class="task_count_number">0</span>
                            </div>
-                           <div class="d-flex mt-4 align-items-center mb-2">
-                              <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
-                                 <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
-                              </svg>
-                              <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
+                        </div>
+                        <div class="d-flex flex-column align-items-center justify-content-center mt-3">
+                           <!-- card -->
+                           <div id="completedtarget1" ondragstart="dragStart(event)" draggable="true"
+                              class="card rounded-0 w-100 mb-3 border-0 border-start border-success border-3 shadow-sm">
+                              <div class="card-body px-3 py-3">
+                                 <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
+                                 <div class="bg-success d-inline p-1 fw-semibold small text-white project-name">
+                                    Project Name
+                                 </div>
+                                 <div class="d-flex mt-4 align-items-center mb-2">
+                                    <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
+                                       <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
+                                    </svg>
+                                    <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
+                                 </div>
+                              </div>
                            </div>
                         </div>
                      </div>
-                  </div>
-               </div>
-               <!-- tasks completed -->
-               <div class="col-lg-4 " id="completed" ondrop="drop(event)"
-                  ondragover="allowDrop(event)">
-                  <div class="complete_list">
-                     <div class="desc_view d-flex align-items-center">
-                        <span>Complete</span>
-                        <span class="task_count_number">0</span>
-                     </div>
-                  </div>
-                  <div class="d-flex flex-column align-items-center justify-content-center mt-3">
-                     <!-- card -->
-                     <div id="completedtarget1" ondragstart="dragStart(event)" draggable="true"
-                        class="card rounded-0 w-100 mb-3 border-0 border-start border-success border-3 shadow-sm">
-                        <div class="card-body px-3 py-3">
-                           <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
-                           <div class="bg-success d-inline p-1 fw-semibold small text-white project-name">
-                              Project Name
+                     <!-- manager review -->
+                     <div class="custom_col" id="managerreview" ondrop="drop(event)"
+                        ondragover="allowDrop(event)">
+                        <div class="complete_list">
+                           <div class="desc_view d-flex align-items-center">
+                              <span>Manager Review</span>
+                              <span class="task_count_number">0</span>
                            </div>
-                           <div class="d-flex mt-4 align-items-center mb-2">
-                              <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
-                                 <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
-                              </svg>
-                              <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
+                        </div>
+                        <div class="d-flex flex-column align-items-center justify-content-center mt-3">
+                           <!-- card -->
+                           <div id="reviewtarget1" ondragstart="dragStart(event)" draggable="true"
+                              class="card rounded-0 w-100 mb-3 border-0 border-start border-success border-3 shadow-sm">
+                              <div class="card-body px-3 py-3">
+                                 <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
+                                 <div class="bg-success d-inline p-1 fw-semibold small text-white project-name">
+                                    Manager Review
+                                 </div>
+                                 <div class="d-flex mt-4 align-items-center mb-2">
+                                    <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
+                                       <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
+                                    </svg>
+                                    <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- client review -->
+                     <div class="custom_col" id="clientreview" ondrop="drop(event)"
+                        ondragover="allowDrop(event)">
+                        <div class="complete_list">
+                           <div class="desc_view d-flex align-items-center">
+                              <span>Client Review</span>
+                              <span class="task_count_number">0</span>
+                           </div>
+                        </div>
+                        <div class="d-flex flex-column align-items-center justify-content-center mt-3">
+                           <!-- card -->
+                           <div id="reviewclienttarget1" ondragstart="dragStart(event)" draggable="true"
+                              class="card rounded-0 w-100 mb-3 border-0 border-start border-success border-3 shadow-sm">
+                              <div class="card-body px-3 py-3">
+                                 <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">Project Doughnut Dungeon</h4>
+                                 <div class="bg-success d-inline p-1 fw-semibold small text-white project-name">
+                                    Review Client
+                                 </div>
+                                 <div class="d-flex mt-4 align-items-center mb-2">
+                                    <svg class="svg-inline--fa fa-user me-2 text-700 fs--1 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" role="img" xmlns="" viewBox="0 0 448 512" data-fa-i2svg="">
+                                       <path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
+                                    </svg>
+                                    <p class="fw-bold mb-0 text-truncate lh-1">Client : <span class="fw-semi-bold text-primary ms-1"> Gusteau’s Restaurant</span></p>
+                                 </div>
+                              </div>
                            </div>
                         </div>
                      </div>
@@ -295,6 +355,20 @@
            }
            // completed list
            if (event.target.id == "completed") {
+               document.getElementById(data).classList.remove("border-warning", "border-success");
+               document.getElementById(data).classList.add("border-success");
+               document.getElementById(data).getElementsByClassName("project-name")[0].classList.remove("bg-warning", "bg-success");
+               document.getElementById(data).getElementsByClassName("project-name")[0].classList.add("bg-success")
+           }
+           // manager review list
+           if (event.target.id == "managerreview") {
+               document.getElementById(data).classList.remove("border-warning", "border-success");
+               document.getElementById(data).classList.add("border-success");
+               document.getElementById(data).getElementsByClassName("project-name")[0].classList.remove("bg-warning", "bg-success");
+               document.getElementById(data).getElementsByClassName("project-name")[0].classList.add("bg-success")
+           }
+           // client review list
+           if (event.target.id == "clientreview") {
                document.getElementById(data).classList.remove("border-warning", "border-success");
                document.getElementById(data).classList.add("border-success");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.remove("bg-warning", "bg-success");

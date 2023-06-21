@@ -73,7 +73,6 @@
                     'password'      => Hash::make($data['password'])
                 ]);
                 
-
                 if($request->custom_fields_count>0){
                     foreach($request->custom_fields as $key => $value){
                        UserDetails::create([

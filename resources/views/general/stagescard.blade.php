@@ -327,9 +327,13 @@
       </div>
    </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js" defer></script>
+
+
 <script>
    function dragStart(event) {
        event.dataTransfer.setData("Text", event.target.id);
+       
    }
    function allowDrop(event) {
        event.preventDefault();
@@ -345,6 +349,7 @@
                document.getElementById(data).classList.add("border-primary");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.remove("bg-warning", "bg-success");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.add("bg-primary")
+               //$( ".custom_col .card" ).sortable();
            }
            // progress list
            if (event.target.id == "progress") {
@@ -352,6 +357,7 @@
                document.getElementById(data).classList.add("border-warning");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.remove("bg-primary", "bg-success");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.add("bg-warning")
+               //$( ".custom_col .card" ).sortable();
            }
            // completed list
            if (event.target.id == "completed") {
@@ -359,6 +365,7 @@
                document.getElementById(data).classList.add("border-success");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.remove("bg-warning", "bg-success");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.add("bg-success")
+               //$( ".custom_col .card" ).sortable();
            }
            // manager review list
            if (event.target.id == "managerreview") {
@@ -366,6 +373,7 @@
                document.getElementById(data).classList.add("border-success");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.remove("bg-warning", "bg-success");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.add("bg-success")
+               //$( ".custom_col .card" ).sortable();
            }
            // client review list
            if (event.target.id == "clientreview") {
@@ -373,8 +381,17 @@
                document.getElementById(data).classList.add("border-success");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.remove("bg-warning", "bg-success");
                document.getElementById(data).getElementsByClassName("project-name")[0].classList.add("bg-success")
+               //$( ".custom_col .card" ).sortable();
            }
        }
    }
+
+// $( init );
+// function init() {
+//   $( ".card" ).sortable({
+//       connectWith: ".connected-sortable",
+//       stack: '.connected-sortable'
+//     }).disableSelection();
+// }
 </script>
 @endsection

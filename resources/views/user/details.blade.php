@@ -85,7 +85,7 @@
                         <div class="col">
                            <div class="form-group form-floating">
                               <input type="text" class="form-control" id="first_name" placeholder="First Name" value="{{$rs_user->first_name}}">
-                              <label for="floatingInputGrid">First Name</label>
+                              <label for="first_name">First Name</label>
                            </div>
                         </div>
                      </div>
@@ -93,7 +93,7 @@
                         <div class="col">
                            <div class="form-group form-floating">
                               <input type="text" class="form-control" id="last_name" placeholder="Last Name" value="{{$rs_user->last_name}}">
-                              <label for="floatingInputGrid">Last Name</label>
+                              <label for="last_name">Last Name</label>
                            </div>
                         </div>
                      </div>
@@ -101,7 +101,7 @@
                         <div class="col">
                            <div class="form-group form-floating">
                               <input type="text" class="form-control" id="email" value="{{$rs_user->email}}" disabled>
-                              <label for="floatingInputGrid">Email</label>
+                              <label for="email">Email</label>
                            </div>
                         </div>
                      </div>
@@ -109,7 +109,7 @@
                         <div class="col">
                            <div class="form-group form-floating">
                               <input type="text" class="form-control" id="phone_number" placeholder="Phone number" value="{{$rs_user->phone_number}}">
-                              <label for="floatingInputGrid">Phone number</label>
+                              <label for="phone_number">Phone number</label>
                            </div>
                         </div>
                      </div>
@@ -140,14 +140,14 @@
                      </div>
                      <div class="col-sm-6 col-md-12">
                         <div class="form-floating">
-                           <input class="form-control" id="floatingInputGrid" type="text" placeholder="Email" name="email" value="{{$rs_user->email}}" disabled>
-                           <label for="floatingInputGrid">Email</label>
+                           <input class="form-control" id="email" type="text" placeholder="Email" name="email" value="{{$rs_user->email}}" disabled>
+                           <label for="email">Email</label>
                         </div>
                      </div>
                      <div class="col-md-12 ">
                         <div class="form-floating">
                            <input type="text" class="form-control" id="phone_number" placeholder="Phone number" name="phone_number" value="{{$rs_user->phone_number}}">
-                              <label for="floatingInputGrid">Phone number</label>
+                              <label for="phone_number">Phone number</label>
                         </div>
                      </div>     
                      @unless (count($custom_fields)==0)
@@ -156,7 +156,7 @@
                      <div class="col-md-12">
                         <div class="form-floating">
                            <input type="text" class="form-control" id="custom_fields[{{$field->id}}]" value="{{$field->data}}" placeholder="{{$field->title}}" name="custom_fields[{{$field->id}}]" required="">
-                           <label for="floatingInputGrid">{{$field->title}}</label>
+                           <label for="custom_fields[{{$field->id}}]">{{$field->title}}</label>
                         </div>
                      </div>
                      @endforeach

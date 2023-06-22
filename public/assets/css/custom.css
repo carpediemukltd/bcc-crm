@@ -698,6 +698,10 @@ i.right-icon .icon-18 {
 }
 .border_none{
   border:none;
+  border-bottom: 1px transparent;
+  border-radius: 0;
+}
+.border_none:focus{
   border-bottom: 1px solid;
 }
 svg.svg-inline--fa.fa-user.me-2.text-700.fs--1.fw-extra-bold {
@@ -819,4 +823,7 @@ span.item-name {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
+}
+.border_bottom{
+  border-bottom: 1px solid rgb(203, 214, 226);
 }

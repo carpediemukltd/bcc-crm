@@ -280,7 +280,10 @@
       </div>
    </div>
 </div>
-
+<!-- <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+<script>
+    $(".custom_col .card").sortable();
+</script> -->
 <script>
    function dragStart(event) {
        event.dataTransfer.setData("Text", event.target.id);

@@ -966,7 +966,7 @@
 <!-- Hopeui Script -->
 <script src="{{asset('assets/js/hope-ui.js?v=3.0.0')}}" defer></script>
 <script src="{{asset('assets/js/hope-uipro.js?v=3.0.0')}}" defer></script>
-<script src="{{asset('assets/js/sidebar.js?v=3.0.0')}}" defer></script>  
+<!-- <script src="{{asset('assets/js/sidebar.js?v=3.0.0')}}" defer></script>   -->
 <script src="{{asset('assets/js/solid-icon-search-filter.js')}}"></script>  
 
 

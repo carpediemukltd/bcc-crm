@@ -122,8 +122,9 @@
                      @unless (count($custom_fields)==0)
                      
                      <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
-                     @foreach($custom_fields as $field)
+                     
                      <div class="row">
+                     @foreach($custom_fields as $field)
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="password">{{$field->title}}</label>
@@ -131,8 +132,9 @@
                            </div>
                           
                         </div>
+                        @endforeach
                      </div>
-                     @endforeach
+                     
                     
                      @endif
 

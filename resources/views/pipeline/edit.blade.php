@@ -1,7 +1,7 @@
 @extends('layout.appTheme')
 @section('content')
 <style>
-   h3.stages{border: 1px solid #eeeeee; padding: 10px; border-radius: 4px; background: #fbfbfb;}
+   /* h3.stages{border: 1px solid #eeeeee; padding: 10px; border-radius: 4px; background: #fbfbfb;} */
    table.stage td {width:100%; height: 100%;}
    table.stage tr:hover{cursor:pointer;}
 </style>
@@ -59,26 +59,26 @@
       <div class="row">
          <div class="col-lg-12">
             <div class="card">
-               <div class="card-header d-flex justify-content-between">
+               <!-- <div class="card-header d-flex justify-content-between">
                   <div class="header-title">
-                     <h4 class="card-title">Edit Form</h4>
+                     <h4 class="card-title"></h4>
                   </div>
-               </div>
+               </div> -->
                <div class="card-body">
                   <form action="{{ route('pipeline', ['action' => 'edit', 'id' => $rs_pipeline->id]) }}" method="POST" enctype="multipart/form-data">
                      @csrf
-                     <div class="row">
-                        <div class="col-lg-6">
-                           <div class="form-group">
-                              <label class="form-label" for="title">Name:</label>
-                              <input type="text" class="form-control" id="title" placeholder="Name" value="{{$rs_pipeline->title}}" name="title" required>
-                           </div>
-                        </div>
-                     </div>
                      
                      <div class="row">
-                        <div class="col text-center">
-                           <h3 class="stages">Stages</h3>
+                        <div class="col">
+                           <h3 class="mb-0">Stages</h3>
+                        </div>
+                        <div class="col">
+                           <div class="form-group">
+                              <div class="d-flex justify-content-between align-items-center">
+                                 <label class="form-label mb-0" for="title" style="width: 16%;">Edit Form:</label>
+                                 <input type="text" class="form-control" id="title" placeholder="Name" value="{{$rs_pipeline->title}}" name="title" required>
+                              </div>
+                           </div>
                         </div>
                      </div>
 
@@ -125,8 +125,8 @@
                            <button type="submit" class="btn btn-primary">Update</button>
                            <a href="{{ route('pipeline', ['action' => 'list']) }}" class="btn btn-danger">Cancel</a>
                         </div>
-                        <div class="col">
-                           <button type="button" class="btn btn-success btn-sm btn-info addClickrBtn" style="float:right;">
+                        <div class="col text-right">
+                           <button type="button" class="btn text-right btn-success btn-sm btn-info addClickrBtn">
                               <span class="btn-inner">
                                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-28"><path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                               </span>   

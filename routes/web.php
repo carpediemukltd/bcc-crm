@@ -46,6 +46,8 @@ Route::middleware([CheckStatus::class])->group(function(){
 
     Route::middleware([CheckSuperAdmin::class])->group(function(){ // SuperAdmin specific methods
         Route::any('contact/add', [UserController::class, 'addUser'])->name('user.add');
+        Route::get('contact/exportcsv', [UserController::class, 'exportCSV'])->name('user.export.csv');
+        Route::get('contact/exportxls', [UserController::class, 'exportXLS'])->name('user.export.xls');
         Route::get('contacts', [UserController::class, 'userList'])->name('user.list');
         Route::any('contact/edit/{id}', [UserController::class, 'editUser'])->name('user.edit');
 

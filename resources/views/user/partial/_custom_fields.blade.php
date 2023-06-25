@@ -6,7 +6,7 @@
 <div class="col">
     <div class="form-group form-floating">
         <input type="text" class="form-control" id="custom_fields[{{$field->id}}]" value="{{$field->data}}" placeholder="{{$field->title}}">
-        <label for="floatingInputGrid">{{$field->title}}</label>
+        <label for="custom_fields[{{$field->id}}]">{{$field->title}}</label>
     </div>
 </div>
 </div>

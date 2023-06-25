@@ -7,7 +7,6 @@ use App\Models\Deals;
 use App\Models\Stages;
 use App\Models\Pipelines;
 use App\Models\UserDetails;
-//use App\Exports\ExportUsers;
 use App\Models\CustomFields;
 use Illuminate\Http\Request;
 
@@ -15,7 +14,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-//use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {

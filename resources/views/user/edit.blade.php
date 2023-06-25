@@ -122,19 +122,19 @@
 
                      @unless (count($custom_fields)==0)
                      <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
-                     @foreach($custom_fields as $field)
+                     
                      <div class="row">
+                     @foreach($custom_fields as $field)
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label">{{$field->title}}</label>
                               <input type="text" class="form-control" id="custom_fields[{{$field->id}}]" value="{{$field->data}}" placeholder="{{$field->title}}" name="custom_fields[{{$field->id}}]">
                            </div>
                         </div>
+                        @endforeach
                      </div>
-                     @endforeach
+                     
                      @endif
-
-                     <div class="row"><div class="col"><br /></div></div>
 
                      <div class="row">
                         <div class="col">

@@ -139,7 +139,7 @@
                               <label for="phone_number">Phone number</label>
                         </div>
                      </div>     
-                     @unless (count($custom_fields)==0)
+                     @unless (!$custom_fields->isEmpty())
                      <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
                      @foreach($custom_fields as $field)
                      <div class="col-md-12">
@@ -441,7 +441,7 @@
                      <div class="parent-wrapper label-1">
                         <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="CRM">
                            <div id="deals_list">
-                              @unless (count($deals)==0)
+                              @unless (!$deals->isEmpty())
                               @foreach($deals as $deal)
                               <div class="nav-item">
                               <span>{{$deal->title}} ({{$deal->deal_owner}})</span>

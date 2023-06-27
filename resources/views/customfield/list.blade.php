@@ -69,7 +69,7 @@
                      <div id="user-list-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                         <form id="frmExample" action="{{route('customfield.list')}}" method="POST" enctype="multipart/form-data">
                            @csrf
-                           <div class="table-responsive my-3">
+                           <div class="table-responsive">
                               <table id="user-list-table" class="table table-striped dataTable no-footer customfield-list-table" data-toggle="data-table" role="grid" aria-describedby="user-list-table_info">
                                  <thead>
                                     <tr class="ligth">
@@ -109,12 +109,10 @@
                                     @endif                                    
                               </table>
                            </div>
-                           
-                           <div style="padding-left:15px;">    
-                              <a href="{{route('customfield.list')}}" class="btn btn-danger">Cancel</a>  
-                              <button class="btn btn-primary" type="submit">Update</button>
-                           </div>      
-                              
+                              <div class="card-body px-y">    
+                                 <a href="{{route('customfield.list')}}" class="btn btn-danger">Cancel</a>  
+                                 <button class="btn btn-primary" type="submit">Update</button>
+                              </div>  
                         </form>
                      </div>
                   </div>

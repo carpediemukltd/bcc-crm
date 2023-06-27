@@ -40,11 +40,27 @@
 
          <div class="card">
             <div class="card-body border_bottom">
-               
-                  <div class="mb-3 mb-sm-0">
-                  <h4 class="me-2 mb-0 h4">{{ucwords($rs_user->first_name. ' '. $rs_user->last_name)}}</h4>
-                     <!-- <span> - Web Developer</span> -->
-                  </div>
+               <div class="mb-3 mb-sm-0">
+                  <h4 class="me-2 mb-3 h4">{{ucwords($rs_user->first_name. ' '. $rs_user->last_name)}}</h4>
+                  <!-- <span> - Web Developer</span> -->
+                  <a class="user_icon" href="#">
+                     <i class="icon" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Email" data-bs-original-title="Email">
+                        <svg width="24" class="icon-24" viewBox="0 0 24 24" fill="currentColor" xmlns="">
+                           <path opacity="0.4" d="M21.9999 15.9402C21.9999 18.7302 19.7599 20.9902 16.9699 21.0002H16.9599H7.04991C4.26991 21.0002 1.99991 18.7502 1.99991 15.9602V15.9502C1.99991 15.9502 2.00591 11.5242 2.01391 9.29821C2.01491 8.88021 2.49491 8.64621 2.82191 8.90621C5.19791 10.7912 9.44691 14.2282 9.49991 14.2732C10.2099 14.8422 11.1099 15.1632 12.0299 15.1632C12.9499 15.1632 13.8499 14.8422 14.5599 14.2622C14.6129 14.2272 18.7669 10.8932 21.1789 8.97721C21.5069 8.71621 21.9889 8.95021 21.9899 9.36721C21.9999 11.5762 21.9999 15.9402 21.9999 15.9402Z" fill="currentColor"></path>
+                           <path d="M21.476 5.6736C20.61 4.0416 18.906 2.9996 17.03 2.9996H7.05001C5.17401 2.9996 3.47001 4.0416 2.60401 5.6736C2.41001 6.0386 2.50201 6.4936 2.82501 6.7516L10.25 12.6906C10.77 13.1106 11.4 13.3196 12.03 13.3196C12.034 13.3196 12.037 13.3196 12.04 13.3196C12.043 13.3196 12.047 13.3196 12.05 13.3196C12.68 13.3196 13.31 13.1106 13.83 12.6906L21.255 6.7516C21.578 6.4936 21.67 6.0386 21.476 5.6736Z" fill="currentColor"></path>
+                        </svg>
+                     </i>
+                  </a>
+                  <a class="user_icon " href="#">
+                     <i class="icon" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Phone" data-bs-original-title="Phone">
+                        <svg fill="none" xmlns="http://www.w3.org/2000/svg" width="24" class="icon-24" height="24" viewBox="0 0 24 24">
+                           <path d="M14.4183 5.49C13.9422 5.40206 13.505 5.70586 13.4144 6.17054C13.3238 6.63522 13.6285 7.08891 14.0916 7.17984C15.4859 7.45166 16.5624 8.53092 16.8353 9.92995V9.93095C16.913 10.3337 17.2675 10.6265 17.6759 10.6265C17.7306 10.6265 17.7854 10.6215 17.8412 10.6115C18.3043 10.5186 18.609 10.0659 18.5184 9.60018C18.1111 7.51062 16.5027 5.89672 14.4183 5.49Z" fill="currentColor"></path>
+                           <path d="M14.3558 2.00793C14.1328 1.97595 13.9087 2.04191 13.7304 2.18381C13.5472 2.32771 13.4326 2.53557 13.4078 2.76841C13.355 3.23908 13.6946 3.66479 14.1646 3.71776C17.4063 4.07951 19.9259 6.60477 20.2904 9.85654C20.3392 10.2922 20.7047 10.621 21.1409 10.621C21.1738 10.621 21.2057 10.619 21.2385 10.615C21.4666 10.59 21.6698 10.4771 21.8132 10.2972C21.9556 10.1174 22.0203 9.89351 21.9944 9.66467C21.5403 5.60746 18.4002 2.45862 14.3558 2.00793Z" fill="currentColor"></path>
+                           <path fill-rule="evenodd" clip-rule="evenodd" d="M11.0317 12.9724C15.0208 16.9604 15.9258 12.3467 18.4656 14.8848C20.9143 17.3328 22.3216 17.8232 19.2192 20.9247C18.8306 21.237 16.3616 24.9943 7.6846 16.3197C-0.993478 7.644 2.76158 5.17244 3.07397 4.78395C6.18387 1.67385 6.66586 3.08938 9.11449 5.53733C11.6544 8.0765 7.04266 8.98441 11.0317 12.9724Z" fill="currentColor"></path>
+                        </svg>
+                     </i>
+                  </a>
+               </div>
             </div>
             <div class="card-header">
                <div class="header-title">
@@ -54,10 +70,10 @@
             <div class="card-body">
                <div class="user_details_view" id="user_details_view">
                   <form>
-                     <div class="row">
+                     <!-- <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" class="form-control" id="first_name" placeholder="First Name" value="{{$rs_user->first_name}}">
+                              <input type="text" class="form-control border_none" id="first_name" placeholder="First Name" value="{{$rs_user->first_name}}">
                               <label for="first_name">First Name</label>
                            </div>
                         </div>
@@ -65,7 +81,7 @@
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" class="form-control" id="last_name" placeholder="Last Name" value="{{$rs_user->last_name}}">
+                              <input type="text" class="form-control border_none" id="last_name" placeholder="Last Name" value="{{$rs_user->last_name}}">
                               <label for="last_name">Last Name</label>
                            </div>
                         </div>
@@ -73,7 +89,7 @@
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" class="form-control" id="email" value="{{$rs_user->email}}" disabled>
+                              <input type="text" class="form-control border_none" id="email" value="{{$rs_user->email}}" disabled>
                               <label for="email">Email</label>
                            </div>
                         </div>
@@ -81,14 +97,14 @@
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" class="form-control" id="phone_number" placeholder="Phone number" value="{{$rs_user->phone_number}}">
+                              <input type="text" class="form-control border_none" id="phone_number" placeholder="Phone number" value="{{$rs_user->phone_number}}">
                               <label for="phone_number">Phone number</label>
                            </div>
                         </div>
-                     </div>
+                     </div> -->
                      @include('user.partial._custom_fields')
                      <div class="row">
-                        <div class="col">
+                        <div class="col text-right">
                            <button type="button" class="btn btn-primary contact_view_btn" onclick="myFunction()">Edit</button>
                         </div>
                      </div>
@@ -101,25 +117,25 @@
                      @csrf
                      <div class="col-sm-6 col-md-12">
                         <div class="form-floating">
-                           <input type="text" class="form-control" id="first_name" placeholder="First Name" name="first_name" value="{{$rs_user->first_name}}" required>
+                           <input type="text" class="form-control border_none" id="first_name" placeholder="First Name" name="first_name" value="{{$rs_user->first_name}}" required>
                            <label for="first_name">First Name</label>
                         </div>
                      </div>
                      <div class="col-sm-6 col-md-12">
                         <div class="form-floating">
-                           <input type="text" class="form-control" id="last_name" placeholder="Last Name" name="last_name" value="{{$rs_user->last_name}}" required>
+                           <input type="text" class="form-control border_none" id="last_name" placeholder="Last Name" name="last_name" value="{{$rs_user->last_name}}" required>
                            <label for="last_name">Last Name</label>
                         </div>
                      </div>
                      <div class="col-sm-6 col-md-12">
                         <div class="form-floating">
-                           <input class="form-control" id="email" type="text" placeholder="Email" name="email" value="{{$rs_user->email}}" disabled>
+                           <input class="form-control border_none" id="email" type="text" placeholder="Email" name="email" value="{{$rs_user->email}}" disabled>
                            <label for="email">Email</label>
                         </div>
                      </div>
                      <div class="col-md-12 ">
                         <div class="form-floating">
-                           <input type="text" class="form-control" id="phone_number" placeholder="Phone number" name="phone_number" value="{{$rs_user->phone_number}}">
+                           <input type="text" class="form-control border_none" id="phone_number" placeholder="Phone number" name="phone_number" value="{{$rs_user->phone_number}}">
                               <label for="phone_number">Phone number</label>
                         </div>
                      </div>     
@@ -128,7 +144,7 @@
                      @foreach($custom_fields as $field)
                      <div class="col-md-12">
                         <div class="form-floating">
-                           <input type="text" class="form-control" id="custom_fields[{{$field->id}}]" value="{{$field->data}}" placeholder="{{$field->title}}" name="custom_fields[{{$field->id}}]" required="">
+                           <input type="text" class="form-control border_none" id="custom_fields[{{$field->id}}]" value="{{$field->data}}" placeholder="{{$field->title}}" name="custom_fields[{{$field->id}}]" required="">
                            <label for="custom_fields[{{$field->id}}]">{{$field->title}}</label>
                         </div>
                      </div>
@@ -146,7 +162,7 @@
       </div>
       <div class="col-lg-5 p-0">
          <div class="card">
-            <div class="card-body">
+            <div class="card-body border_bottom">
                <ul class="d-flex nav nav-pills mb-0 text-center profile-tab" data-toggle="slider-tab" id="profile-pills-tab" role="tablist">
                   <li class="nav-item">
                      <a class="nav-link active show" data-bs-toggle="tab" href="#profile-feed" role="tab" aria-selected="false">Meetings</a>
@@ -162,19 +178,14 @@
                   </li>
                </ul>
             </div>
-         </div>
-         <div class="profile-content tab-content iq-tab-fade-up">
-            <div id="profile-feed" class="tab-pane fade active show">
-               <div class="card">
-                  
+            <div class="profile-content tab-content iq-tab-fade-up">
+               <div id="profile-feed" class="tab-pane fade active show">
                   <div class="card-body p-0">
                      <p class="p-3 mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus</p>
                      
                   </div>
                </div>
-            </div>
-            <div id="profile-activity" class="tab-pane fade">
-               <div class="card">
+               <div id="profile-activity" class="tab-pane fade">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
                         <h4 class="card-title">Activity</h4>
@@ -238,9 +249,7 @@
                      </div>
                   </div>
                </div>
-            </div>
-            <div id="profile-friends" class="tab-pane fade">
-               <div class="card">
+               <div id="profile-friends" class="tab-pane fade">
                   <div class="card-header">
                      <div class="header-title">
                         <h4 class="card-title">Emails</h4>
@@ -379,9 +388,7 @@
                      </ul>
                   </div>
                </div>
-            </div>
-            <div id="profile-profile" class="tab-pane fade">
-               <div class="card">
+               <div id="profile-profile" class="tab-pane fade">
                   <div class="card-header">
                      <div class="header-title">
                         <h4 class="card-title">Tasks</h4>
@@ -503,40 +510,6 @@
                      </div>
                   </div>
                </div>
-            </div>
-         </div>
-      </div>
-   </div>
-   <div class="offcanvas offcanvas-bottom share-offcanvas" tabindex="-1" id="share-btn" aria-labelledby="shareBottomLabel">
-      <div class="offcanvas-header">
-         <h5 class="offcanvas-title" id="shareBottomLabel">Share</h5>
-         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body small">
-         <div class="d-flex flex-wrap align-items-center">
-            <div class="text-center me-3 mb-3">
-               <img src="{{asset('assets/images/brands/08.png')}}" class="img-fluid rounded mb-2" alt="" loading="lazy">
-               <h6>Facebook</h6>
-            </div>
-            <div class="text-center me-3 mb-3">
-               <img src="{{asset('assets/images/brands/09.png')}}" class="img-fluid rounded mb-2" alt="" loading="lazy">
-               <h6>Twitter</h6>
-            </div>
-            <div class="text-center me-3 mb-3">
-               <img src="{{asset('assets/images/brands/10.png')}}" class="img-fluid rounded mb-2" alt="" loading="lazy">
-               <h6>Instagram</h6>
-            </div>
-            <div class="text-center me-3 mb-3">
-               <img src="{{asset('assets/images/brands/11.png')}}" class="img-fluid rounded mb-2" alt="" loading="lazy">
-               <h6>Google Plus</h6>
-            </div>
-            <div class="text-center me-3 mb-3">
-               <img src="{{asset('assets/images/brands/13.png')}}" class="img-fluid rounded mb-2" alt="" loading="lazy">
-               <h6>In</h6>
-            </div>
-            <div class="text-center me-3 mb-3">
-               <img src="{{asset('assets/images/brands/12.png')}}" class="img-fluid rounded mb-2" alt="" loading="lazy">
-               <h6>YouTube</h6>
             </div>
          </div>
       </div>

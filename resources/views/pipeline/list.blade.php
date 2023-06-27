@@ -66,7 +66,7 @@
                      <h4 class="card-title">List of Pipelines</h4>
                   </div>
                </div>
-               <div class="card-body px-0">
+               <div class="card-body">
                   <div class="table-responsive">
                      <div id="user-list-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                         <div class="table-responsive my-3">
@@ -74,8 +74,8 @@
                               <thead>
                                  <tr class="ligth">
                                     <th width="100%" class="sorting" tabindex="0" aria-controls="user-list-table">Tile</th>
-                                    <th width="100%" class="sorting" tabindex="0" aria-controls="user-list-table">Stages</th>
-                                    <th style="min-width: 100px" class="sorting" tabindex="0" aria-controls="user-list-table">Action</th>
+                                    <th width="100%" class="sorting text-center" tabindex="0" aria-controls="user-list-table">Stages</th>
+                                    <th class="sorting text-center" tabindex="0" aria-controls="user-list-table">Action</th>
                                  </tr>
                               </thead>
                               <tbody>
@@ -83,7 +83,7 @@
                                     @foreach($rs_pipeline as $rec)
                                        <tr class="odd">
                                           <td>{{$rec->title}}</td>
-                                          <td>
+                                          <td class="text-center">
                                              <div class="flex align-items-center list-user-action">
                                                 <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-original-title="View Stages" href="{{ route('stages', $rec->id) }}" aria-label="View Stages" data-bs-original-title="View Stages">
                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -94,7 +94,7 @@
                                                 </a>
                                              </div>
                                           </td>
-                                          <td>
+                                          <td class="text-center">
                                              <div class="flex align-items-center list-user-action">
                                                 <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-original-title="Edit" href="{{ route('pipeline', ['action' => 'edit', 'id' => $rec->id]) }}" aria-label="Edit" data-bs-original-title="Edit">
                                                    <span class="btn-inner">

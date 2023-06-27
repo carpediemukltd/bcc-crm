@@ -67,13 +67,13 @@
                   </div>
                   <!--logo End-->         
                </a>
-               <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
+               <!-- <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
                   <i class="icon d-flex">
                      <svg class="icon-20" width="20" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" />
                      </svg>
                   </i>
-               </div>
+               </div> -->
                <div class="d-flex align-items-center justify-content-between product-offcanvas">
                   <!-- <div class="breadcrumb-title border-end me-3 pe-3 d-none d-xl-block">
                      <small class="mb-0 text-capitalize">
@@ -214,14 +214,13 @@
                                              <svg width="20" class="icon-20" viewBox="0 0 24 24" fill="currentColor"
                                                 xmlns="">
                                                 <path opacity="0.4"
-                                                   d="M12.02 2C6.21 2 2 6.74 2 12C2 13.68 2.49 15.41 3.35 16.99C3.51 17.25 3.53 17.58 3.42 17.89L2.75 20.13C2.6 20.67 3.06 21.07 3.57 20.91L5.59 20.31C6.14 20.13 6.57 20.36 7.081 20.67C8.541 21.53 10.36 21.97 12 21.97C16.96 21.97 22 18.14 22 11.97C22 6.65 17.7 2 12.02 2Z"
+                                                   d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2"
                                                    fill="currentColor" />
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
-                                                   d="M11.9805 13.2901C11.2705 13.2801 10.7005 12.7101 10.7005 12.0001C10.7005 11.3001 11.2805 10.7201 11.9805 10.7301C12.6905 10.7301 13.2605 11.3001 13.2605 12.0101C13.2605 12.7101 12.6905 13.2901 11.9805 13.2901ZM7.3701 13.2901C6.6701 13.2901 6.0901 12.7101 6.0901 12.0101C6.0901 11.3001 6.6601 10.7301 7.3701 10.7301C8.0801 10.7301 8.6501 11.3001 8.6501 12.0101C8.6501 12.7101 8.0801 13.2801 7.3701 13.2901ZM15.3103 12.0101C15.3103 12.7101 15.8803 13.2901 16.5903 13.2901C17.3003 13.2901 17.8703 12.7101 17.8703 12.0101C17.8703 11.3001 17.3003 10.7301 16.5903 10.7301C15.8803 10.7301 15.3103 11.3001 15.3103 12.0101Z"
+                                                   d="M8.07999 6.64999V6.65999C7.64899 6.65999 7.29999 7.00999 7.29999 7.43999C7.29999 7.86999 7.64899 8.21999 8.07999 8.21999H11.069C11.5 8.21999 11.85 7.86999 11.85 7.42899C11.85 6.99999 11.5 6.64999 11.069 6.64999H8.07999ZM15.92 12.74H8.07999C7.64899 12.74 7.29999 12.39 7.29999 11.96C7.29999 11.53 7.64899 11.179 8.07999 11.179H15.92C16.35 11.179 16.7 11.53 16.7 11.96C16.7 12.39 16.35 12.74 15.92 12.74ZM15.92 17.31H8.07999C7.77999 17.35 7.48999 17.2 7.32999 16.95C7.16999 16.69 7.16999 16.36 7.32999 16.11C7.48999 15.85 7.77999 15.71 8.07999 15.74H15.92C16.319 15.78 16.62 16.12 16.62 16.53C16.62 16.929 16.319 17.27 15.92 17.31Z"
                                                    fill="currentColor" />
                                              </svg>
                                           </i>
-                                       
                                           <span class="item-name"> Add Custom Field</span>
                                        </a>
                                     </li>
@@ -332,7 +331,7 @@
                   
                   <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
                      
-                     <li class="nav-item dropdown border-end pe-3 d-none d-xl-block">
+                     <!-- <li class="nav-item dropdown border-end pe-3 d-none d-xl-block">
                         <div class="form-group input-group mb-0 search-input">
                            <input type="text" class="form-control" placeholder="Search...">
                            <span class="input-group-text">
@@ -345,8 +344,8 @@
                               </svg>
                            </span>
                         </div>
-                     </li>
-                     <li class="nav-item dropdown iq-responsive-menu border-end d-block d-xl-none">
+                     </li> -->
+                     <!-- <li class="nav-item dropdown iq-responsive-menu border-end d-block d-xl-none">
                         <div class="btn btn-sm bg-body" id="navbarDropdown-search-11" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">
                            <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="">
@@ -373,7 +372,7 @@
                               </div>
                            </li>
                         </ul>
-                     </li>
+                     </li> -->
                      <li class="nav-item dropdown" id="itemdropdown1">
                         <a class="py-0 nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">

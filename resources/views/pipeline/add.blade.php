@@ -22,11 +22,11 @@
       </div>
       <div class="iq-header-img">
          <img src="{{asset('assets/images/dashboard/top-header.png')}}" alt="header" class="theme-color-default-img img-fluid w-100 h-100 animated-scaleX" loading="lazy">
-         <img src="{{asset('assets/images/dashboard/top-header1.png')}}" alt="header" class="theme-color-purple-img img-fluid w-100 h-100 animated-scaleX" loading="lazy">
+         <!-- <img src="{{asset('assets/images/dashboard/top-header1.png')}}" alt="header" class="theme-color-purple-img img-fluid w-100 h-100 animated-scaleX" loading="lazy">
          <img src="{{asset('assets/images/dashboard/top-header2.png')}}" alt="header" class="theme-color-blue-img img-fluid w-100 h-100 animated-scaleX" loading="lazy">
          <img src="{{asset('assets/images/dashboard/top-header3.png')}}" alt="header" class="theme-color-green-img img-fluid w-100 h-100 animated-scaleX" loading="lazy">
          <img src="{{asset('assets/images/dashboard/top-header4.png')}}" alt="header" class="theme-color-yellow-img img-fluid w-100 h-100 animated-scaleX" loading="lazy">
-         <img src="{{asset('assets/images/dashboard/top-header5.png')}}" alt="header" class="theme-color-pink-img img-fluid w-100 h-100 animated-scaleX" loading="lazy">
+         <img src="{{asset('assets/images/dashboard/top-header5.png')}}" alt="header" class="theme-color-pink-img img-fluid w-100 h-100 animated-scaleX" loading="lazy"> -->
       </div>
    </div>
 </div>
@@ -59,26 +59,27 @@
       <div class="row">
          <div class="col-lg-12">
             <div class="card">
-               <div class="card-header d-flex justify-content-between">
+               <!-- <div class="card-header d-flex justify-content-between">
                   <div class="header-title">
                      <h4 class="card-title">Add Form</h4>
                   </div>
-               </div>
+               </div> -->
                <div class="card-body">
                   <form action="{{ route('pipeline', ['action' => 'add']) }}" method="POST" enctype="multipart/form-data">
                      @csrf
-                     <div class="row">
-                        <div class="col-lg-6">
-                           <div class="form-group">
-                              <label class="form-label" for="title">Name:</label>
-                              <input type="text" class="form-control" id="title" placeholder="Name" name="title" required>
-                           </div>
-                        </div>
-                     </div>
+                     
                      
                      <div class="row">
-                        <div class="col text-center">
-                           <h3 class="stages">Stages</h3>
+                        <div class="col">
+                           <h3 class="mb-0">Stages</h3>
+                        </div>
+                        <div class="col">
+                           <div class="form-group">
+                              <div class="d-flex justify-content-between align-items-center">
+                                 <label class="form-label mb-0" for="title" style="margin-right: 10px;">Name:</label>
+                                 <input type="text" class="form-control" id="title" placeholder="Name" name="title" required>
+                              </div>
+                           </div>
                         </div>
                      </div>
 

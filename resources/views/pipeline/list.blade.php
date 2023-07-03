@@ -1,8 +1,6 @@
 @extends('layout.appTheme')
 @section('content')
-<style>
-   .pagination nav{margin-right: 10px;}
-</style>
+
 <div class="position-relative iq-banner default">
    <div class="iq-navbar-header" style="height: 215px;">
       <div class="container-fluid iq-container">

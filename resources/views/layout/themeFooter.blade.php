@@ -6,9 +6,10 @@
          <li class="list-inline-item"><a href="{{ route('privacy') }}">Terms of Use</a></li>
       </ul>
       <div class="right-panel">
-         ©2023 <span>BCC, CRM</span>, Developed
+         ©2023 <span>BCC, CRM</span>
+         <!-- , Developed
          
-         by <a href="https://carpediem.team/" target="_blank">Carpediem</a>.
+         by <a href="https://carpediem.team/" target="_blank">Carpediem</a>. -->
       </div>
    </div>
 </footer>

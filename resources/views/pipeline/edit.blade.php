@@ -1,10 +1,6 @@
 @extends('layout.appTheme')
 @section('content')
-<style>
-   /* h3.stages{border: 1px solid #eeeeee; padding: 10px; border-radius: 4px; background: #fbfbfb;} */
-   table.stage td {width:100%; height: 100%;}
-   table.stage tr:hover{cursor:pointer;}
-</style>
+
 
 <div class="position-relative  iq-banner ">
    <div class="iq-navbar-header" style="height: 215px;">

@@ -844,3 +844,14 @@ span.item-name {
   top: auto;
   left: auto;
 }
+.pagination nav{
+  margin-right: 10px;
+
+}
+table.stage td {
+  width:100%; 
+  height: 100%;
+}
+table.stage tr:hover{
+  cursor:pointer;
+}

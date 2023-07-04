@@ -104,7 +104,7 @@
                            <div class="col-md-3">
                               <div class="form-group">
                                  <!-- <label class="form-label" for="password">Empty Field</label> -->
-                                 <input type="text" name="serach" id="serach" placeholder="Serach.." class="form-control" />
+                                 <input type="text" name="serach" id="serach" placeholder="Search..." class="form-control" />
                               </div>
                            </div>
                         </div>
@@ -123,6 +123,7 @@
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Name</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Phone</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Email</th>
+                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">Role</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Status</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Created at</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Details</th>

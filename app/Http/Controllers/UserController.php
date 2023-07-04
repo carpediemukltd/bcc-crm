@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class UserController extends Controller
@@ -96,37 +97,51 @@ class UserController extends Controller
 
     public function userList(Request $request)
     {
+        $company_id = 0;
+        $roles = array('admin', 'owner', 'user');
+        if (auth()->user()->role != 'superadmin') {
+            //$company_id = $this->user->company_id; //temporarily disabled.
+            if (auth()->user()->role == 'admin') {
+                $roles = array('owner', 'user');
+            } else if (auth()->user()->role == 'owner') {
+                $roles = array('user');
+            }
+        }
         $this->data['current_slug'] = 'Contacts';
         $this->data['slug']         = 'user_list';
 
-        $this->data['users'] = User::where('role', 'user')->orderBy('id', 'DESC')->paginate(10);
-        if ($request->ajax()) {
-            $this->data['users'] = User::where('role', 'user')
-                ->when($request->seach_term, function ($q) use ($request) {
-                    $q->where('first_name', 'like', '%' . $request->seach_term . '%')
-                        ->orWhere('last_name', 'like', '%' . $request->seach_term . '%')
-                        ->orWhere('email', 'like', '%' . $request->seach_term . '%')
-                        ->orWhere('phone_number', 'like', '%' . $request->seach_term . '%');
-                })
-                ->when($request->status, function ($q) use ($request) {
-                    $q->where('status', $request->status);
-                })
-                ->when($request->start_date, function ($q) use ($request) {
-                    $q->whereBetween('created_at', [$request->start_date, $request->end_date]);
-                })
-                ->orderBy('id', 'DESC')->paginate(10);
+        $this->data['users'] = User::whereIn('role', $roles)
+            ->when(($company_id > 0), function ($q) use ($company_id) {
+                $q->where('company_id', '=', $company_id);
+            })
+            ->when($request->seach_term, function ($q) use ($request) {
+                $q->where(function ($query) use ($request) {
+                    $query->where('first_name', 'like', '%' . $request->seach_term . '%');
+                    $query->orWhere('last_name', 'like', '%' . $request->seach_term . '%');
+                    $query->orWhere('email', 'like', '%' . $request->seach_term . '%');
+                    $query->orWhere('phone_number', 'like', '%' . $request->seach_term . '%');
+                });
+            })
+            ->when($request->status, function ($q) use ($request) {
+                $q->where('status', $request->status);
+            })
+            ->when($request->start_date, function ($q) use ($request) {
+                $q->whereBetween('created_at', [$request->start_date, $request->end_date]);
+            })
+            ->orderBy('id', 'DESC')->paginate(10);
 
+        if ($request->ajax())
             return view('user.user_pagination', $this->data)->render();
-        }
-        return view("user.list", $this->data);
+        else
+            return view("user.list", $this->data);
     } // addUser
 
     public function userDetails(Request $request, $id)
     {
         $this->data['current_slug']  = 'Contact Details';
         $this->data['slug']          = 'user_details';
-        $this->data['rs_user']       = User::where(['role' => 'user', 'id' => $id])->first();
-        // $this->data['total_details'] = Deals::where('user_id', $id)->get()->count();
+        $this->data['rs_user']       = User::where(['id' => $id])->first();
+
         $this->data['deals'] = Deals::leftJoin('pipelines', function ($join) {
             $join->on('deals.pipeline_id', '=', 'pipelines.id');
         })->leftJoin('stages', function ($join) {
@@ -156,7 +171,7 @@ class UserController extends Controller
                     );
                 }
             }
-            return redirect(url('contacts'))->withSuccess('Contact Update Successfully.')->withInput();
+            return redirect(route('user.details', $id))->withSuccess('Contact Update Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
             return view("user.details", $this->data);
         }

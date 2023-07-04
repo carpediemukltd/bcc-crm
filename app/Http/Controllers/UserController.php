@@ -100,7 +100,7 @@ class UserController extends Controller
         $company_id = 0;
         $roles = array('admin', 'owner', 'user');
         if (auth()->user()->role != 'superadmin') {
-            $company_id = $this->user->company_id;
+            //$company_id = $this->user->company_id; //temporarily disabled.
             if (auth()->user()->role == 'admin') {
                 $roles = array('owner', 'user');
             } else if (auth()->user()->role == 'owner') {

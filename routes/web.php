@@ -44,7 +44,8 @@ Route::middleware([CheckStatus::class])->group(function(){
     Route::any('profile', [UserController::class, 'editProfile'])->name('profile');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::middleware([CheckSuperAdmin::class])->group(function(){ // SuperAdmin specific methods
+   // Route::middleware([CheckSuperAdmin::class])->group(function(){ // SuperAdmin specific methods
+    Route::middleware([CheckStatus::class])->group(function(){ // User specific methods
         Route::any('contact/add', [UserController::class, 'addUser'])->name('user.add');
         Route::get('contact/exportcsv', [UserController::class, 'exportCSV'])->name('user.export.csv');
         Route::get('contact/exportxls', [UserController::class, 'exportXLS'])->name('user.export.xls');

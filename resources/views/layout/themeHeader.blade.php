@@ -102,7 +102,7 @@
                               </a>
                            </li>
                            
-                           @if (Auth::user()->role == 'superadmin')
+                           @if (Auth::user()->role == 'superadmin' || Auth::user()->role == 'admin' || Auth::user()->role == 'owner')
                               <li class="nav-item dropdown iq-responsive-menu border-end d-block">
                                  <a class="nav-link <?php if(isset($slug) && in_array($slug, ['add_user', 'user_list', 'edit_user', 'user_details', 'user_deals', 'user_add_deal', 'user_edit_deal'])){echo 'active';}?>" data-bs-toggle="dropdown" href="#sidebar-user" role="button" aria-expanded="false"
                                     aria-controls="sidebar-special">

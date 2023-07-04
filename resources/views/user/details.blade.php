@@ -139,7 +139,7 @@
                               <label for="phone_number">Phone number</label>
                         </div>
                      </div>     
-                     @unless (!$custom_fields->isEmpty())
+                     @unless (count($custom_fields)==0)
                      <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
                      @foreach($custom_fields as $field)
                      <div class="col-md-12">

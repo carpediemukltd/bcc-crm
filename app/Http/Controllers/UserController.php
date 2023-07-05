@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class UserController extends Controller
@@ -98,6 +99,12 @@ class UserController extends Controller
     public function userList(Request $request)
     {
         $company_id = 0;
+        $user = auth()->user();
+        if(!$user->hasPermissionTo('list user')){
+            return redirect(url("dashboard"))->with("error","No permission to view user list.");
+        }
+        
+        $user_id = $user->id;
         $roles = array('admin', 'owner', 'user');
         if (auth()->user()->role != 'superadmin') {
             //$company_id = $this->user->company_id; //temporarily disabled.
@@ -105,6 +112,8 @@ class UserController extends Controller
                 $roles = array('owner', 'user');
             } else if (auth()->user()->role == 'owner') {
                 $roles = array('user');
+            } else if (auth()->user()->role == 'user') {
+                $roles = array('no-permission');
             }
         }
         $this->data['current_slug'] = 'Contacts';
@@ -114,21 +123,30 @@ class UserController extends Controller
             ->when(($company_id > 0), function ($q) use ($company_id) {
                 $q->where('company_id', '=', $company_id);
             })
-            ->when($request->seach_term, function ($q) use ($request) {
+            ->when($request->search_term, function ($q) use ($request) {
                 $q->where(function ($query) use ($request) {
-                    $query->where('first_name', 'like', '%' . $request->seach_term . '%');
-                    $query->orWhere('last_name', 'like', '%' . $request->seach_term . '%');
-                    $query->orWhere('email', 'like', '%' . $request->seach_term . '%');
-                    $query->orWhere('phone_number', 'like', '%' . $request->seach_term . '%');
+                    $query->where('first_name', 'like', '%' . $request->search_term . '%');
+                    $query->orWhere('last_name', 'like', '%' . $request->search_term . '%');
+                    $query->orWhere('email', 'like', '%' . $request->search_term . '%');
+                    $query->orWhere('phone_number', 'like', '%' . $request->search_term . '%');
                 });
             })
             ->when($request->status, function ($q) use ($request) {
                 $q->where('status', $request->status);
             })
+            ->when($request->role, function ($q) use ($request) {
+                $q->where('role', $request->role);
+            })
             ->when($request->start_date, function ($q) use ($request) {
                 $q->whereBetween('created_at', [$request->start_date, $request->end_date]);
             })
-            ->orderBy('id', 'DESC')->paginate(10);
+            ->when((auth()->user()->role == 'owner'), function ($q) use ($user_id) {
+                $q->join('user_owner', function ($join) use ($user_id){
+                    $join->on('users.id', '=', 'user_owner.user_id');
+                    $join->on('user_owner.owner_id', '=', DB::raw($user_id));
+                });
+            })
+            ->orderBy('users.id', 'DESC')->paginate(10);
 
         if ($request->ajax())
             return view('user.user_pagination', $this->data)->render();

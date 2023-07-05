@@ -78,7 +78,7 @@
                      <div id="user-list-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                         <!-- date range start -->
                         <div class="row date_range_fields">
-                           <div class="col-md-6">
+                           <div class="col-md-4">
                               <div class="form-group">
                                  <!-- <label class="form-label" for="password">Date Range</label> -->
                                  <div id="reportrange" class="form-control" >
@@ -93,7 +93,7 @@
                               <div class="form-group">
                                  <!-- <label class="form-label" for="password">Empty Field</label> -->
                                  <select name="status" id="status" class="form-select">
-                                    <option value="">Filter</option>
+                                    <option value="">Select Status</option>
                                     <option value="active">Active</option>
                                     <option value="inactive">Inactive</option>
                                     <option value="deleted">Deleted</option>
@@ -101,10 +101,21 @@
                                  </select>
                               </div>
                            </div>
+                           <div class="col-md-2">
+                              <div class="form-group">
+                                 <select name="role" id="role" class="form-select">
+                                    <option value="">Select Role</option>
+                                    <option value="superadmin">Super Admin</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="owner">Owner</option>
+                                    <option value="user">User</option>
+                                 </select>
+                              </div>
+                           </div>
                            <div class="col-md-3">
                               <div class="form-group">
                                  <!-- <label class="form-label" for="password">Empty Field</label> -->
-                                 <input type="text" name="serach" id="serach" placeholder="Search..." class="form-control" />
+                                 <input type="text" name="search" id="search" placeholder="Search..." class="form-control" />
                               </div>
                            </div>
                         </div>
@@ -148,10 +159,12 @@
 
 <script>
    function get_data_with_date(){
-      var ENDPOINT = "{{ url('contacts') }}";
+      fetch_data();
+      /* var ENDPOINT = "{{ url('contacts') }}";
 
       var status = $('#status').val();
-      var seach_term = $('#serach').val();
+      var role = $('#role').val();
+      var search_term = $('#search').val();
       var page = $('#hidden_page').val();
 
       var start_date = $('#start_date').val();
@@ -159,63 +172,66 @@
 
       $('table').addClass('loading');
       $.ajax({ 
-         url: ENDPOINT+ "/?page="+page+"&status="+status+"&seach_term="+seach_term+"&start_date="+start_date+"&end_date="+end_date,
+         url: ENDPOINT+ "/?page="+page+"&status="+status+"&role="+role+"&search_term="+search_term+"&start_date="+start_date+"&end_date="+end_date,
          success:function(data){
             $('tbody').html('');
             $('tbody').html(data);
 
             $('table').removeClass('loading');
          }
-      });
+      }); */
    } // get_data_with_date
 </script>
 
 <script>
    var ENDPOINT = "{{ url('contacts') }}";
    $(document).ready(function(){
-      const fetch_data = (page, status, seach_term) => {
+      const fetch_data = () => {
+
+         var status = $('#status').val();
+         var role = $('#role').val();
+         var search_term = $('#search').val();
+         var page = $('#hidden_page').val();
          var start_date = $('#start_date').val();
-         var end_date   = $('#end_date').val();
+         var end_date = $('#end_date').val();
 
          $('table').addClass('loading');
          if(status === undefined){
                status = "";
          }
-         if(seach_term === undefined){
-               seach_term = "";
+         if(role === undefined){
+            role = "";
+         }
+         if(search_term === undefined){
+            search_term = "";
          }
          $.ajax({
-               url: ENDPOINT+ "/?page="+page+"&status="+status+"&seach_term="+seach_term+"&start_date="+start_date+"&end_date="+end_date,
+               url: ENDPOINT+ "/?page="+page+"&status="+status+"&role="+role+"&search_term="+search_term+"&start_date="+start_date+"&end_date="+end_date,
                success:function(data){
                   $('tbody').html('');
                   $('tbody').html(data);
-
                   $('table').removeClass('loading');
                }
          });
       }
 
-      $('body').on('keyup', '#serach', function(){
-         var status = $('#status').val();
-         var seach_term = $('#serach').val();
-         var page = $('#hidden_page').val();
-         fetch_data(page, status, seach_term);
+      $('body').on('keyup', '#search', function(){
+         fetch_data();
       });
 
       $('body').on('change', '#status', function(){
-         var status = $('#status').val();
-         var seach_term = $('#serach').val();
-         var page = $('#hidden_page').val();
-         fetch_data(page, status, seach_term);
+         fetch_data();
+      });
+
+      $('body').on('change', '#role', function(){
+         fetch_data();
       });
 
       $('body').on('click', '.pager a', function(event){
          event.preventDefault();
          var page = $(this).attr('href').split('page=')[1];
          $('#hidden_page').val(page);
-         var serach = $('#serach').val();
-         var seach_term = $('#status').val();
-         fetch_data(page,status, seach_term);
+         fetch_data();
       });
    });
 </script>

@@ -39,5 +39,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $role = Role::create(['name' => 'owner']);
         $role->givePermissionTo(['create user','edit user','delete user','list user']);
+
+        $role = Role::create(['name' => 'user']);
     }
 }

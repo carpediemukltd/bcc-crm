@@ -48,4 +48,7 @@
    public function dealsListing(){
       return view('general.dealslisting');
    }
+   public function companyOnboarding(){
+      return view('general.companyOnboarding');
+   }
  }

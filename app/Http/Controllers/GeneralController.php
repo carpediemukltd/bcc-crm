@@ -51,4 +51,7 @@
    public function companyOnboarding(){
       return view('general.companyOnboarding');
    }
+   public function dynamicBanner(){
+      return view('general.dynamicbanner');
+   }
  }

@@ -89,6 +89,7 @@ Route::middleware([CheckStatus::class])->group(function(){
         Route::get('userform', [GeneralController::class, 'userForm'])->name('userform');
         Route::get('usertable', [GeneralController::class, 'userTable'])->name('usertable');
         Route::get('outlinedicon', [GeneralController::class, 'outlinedIcon'])->name('outlinedicon');
-        Route::get('companyonboarding', [GeneralController::class, 'companyonboarding'])->name('companyonboarding');
+        Route::get('companyonboarding', [GeneralController::class, 'companyonbOarding'])->name('companyonboarding');
+        Route::get('dynamicbanner', [GeneralController::class, 'dynamicBanner'])->name('dynamicbanner');
     });
 });

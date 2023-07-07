@@ -43,7 +43,7 @@
          <section class="login-content">
             <div class="row m-0 align-items-center bg-white vh-100">
                <div class="col-md-6 d-md-block d-none bg-primary p-0 vh-100 overflow-hidden">
-                  <img src="../../assets/images/auth/02.png" class="img-fluid gradient-main animated-scaleX" alt="images" loading="lazy">
+                  <img src="{{asset('assets/images/images/auth/02.png')}}" class="img-fluid gradient-main animated-scaleX" alt="images" loading="lazy">
                </div>
                <div class="col-md-6 p-0">
                   <div class="card card-transparent auth-card shadow-none d-flex justify-content-center mb-0">
@@ -187,9 +187,9 @@
                                  <input type="radio" value="ltr" class="btn-check" name="theme_scheme_direction"
                                     data-prop="dir" id="theme-scheme-direction-ltr" checked>
                                  <label class="btn btn-border d-block p-0" for="theme-scheme-direction-ltr">
-                                 <img src="../../assets/images/settings/dark/01.png" alt="ltr"
+                                 <img src="{{asset('assets/images/settings/dark/01.png')}}" alt="ltr"
                                     class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                                 <img src="../../assets/images/settings/light/01.png" alt="ltr"
+                                 <img src="{{asset('assets/images/settings/light/01.png')}}" alt="ltr"
                                     class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                                  </label>
                                  <span class=" mt-2"> LTR </span>
@@ -198,9 +198,9 @@
                                  <input type="radio" value="rtl" class="btn-check" name="theme_scheme_direction"
                                     data-prop="dir" id="theme-scheme-direction-rtl">
                                  <label class="btn btn-border d-block p-0" for="theme-scheme-direction-rtl">
-                                 <img src="../../assets/images/settings/dark/02.png" alt="ltr"
+                                 <img src="{{asset('assets/images/settings/dark/02.png')}}" alt="ltr"
                                     class="mode dark-img img-fluid" width="200" height="200" loading="lazy">
-                                 <img src="../../assets/images/settings/light/02.png" alt="ltr"
+                                 <img src="{{asset('assets/images/settings/light/02.png')}}" alt="ltr"
                                     class="mode light-img img-fluid" width="200" height="200" loading="lazy">
                                  </label>
                                  <span class=" mt-2"> RTL </span>

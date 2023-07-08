@@ -105,7 +105,6 @@
                               <div class="form-group">
                                  <select name="role" id="role" class="form-select">
                                     <option value="">Select Role</option>
-                                    <option value="superadmin">Super Admin</option>
                                     <option value="admin">Admin</option>
                                     <option value="owner">Owner</option>
                                     <option value="user">User</option>
@@ -145,7 +144,7 @@
                                  @include('user.user_pagination')
                               </tbody>
                            </table>
-                           <button type="button" style="display:none;" id="click_me" class="btn btn-primary" onclick="get_data_with_date();">Click Me</button>
+                           <button type="button" style="display:none;" id="click_me" class="btn btn-primary" onclick="get_users_data();">Click Me</button>
                            <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
                         </div>
                      </div>
@@ -157,81 +156,62 @@
    </div>
 </div>
 
-<script>
-   function get_data_with_date(){
-      fetch_data();
-      /* var ENDPOINT = "{{ url('contacts') }}";
-
+<script type="text/javascript">
+   var ENDPOINT = "{{ url('contacts') }}";
+   function get_users_data(){
+      
       var status = $('#status').val();
       var role = $('#role').val();
       var search_term = $('#search').val();
       var page = $('#hidden_page').val();
-
       var start_date = $('#start_date').val();
-      var end_date   = $('#end_date').val();
+      var end_date = $('#end_date').val();
 
       $('table').addClass('loading');
-      $.ajax({ 
-         url: ENDPOINT+ "/?page="+page+"&status="+status+"&role="+role+"&search_term="+search_term+"&start_date="+start_date+"&end_date="+end_date,
-         success:function(data){
-            $('tbody').html('');
-            $('tbody').html(data);
-
-            $('table').removeClass('loading');
-         }
-      }); */
-   } // get_data_with_date
-</script>
-
-<script>
-   var ENDPOINT = "{{ url('contacts') }}";
-   $(document).ready(function(){
-      const fetch_data = () => {
-
-         var status = $('#status').val();
-         var role = $('#role').val();
-         var search_term = $('#search').val();
-         var page = $('#hidden_page').val();
-         var start_date = $('#start_date').val();
-         var end_date = $('#end_date').val();
-
-         $('table').addClass('loading');
-         if(status === undefined){
-               status = "";
-         }
-         if(role === undefined){
-            role = "";
-         }
-         if(search_term === undefined){
-            search_term = "";
-         }
-         $.ajax({
-               url: ENDPOINT+ "/?page="+page+"&status="+status+"&role="+role+"&search_term="+search_term+"&start_date="+start_date+"&end_date="+end_date,
-               success:function(data){
-                  $('tbody').html('');
-                  $('tbody').html(data);
-                  $('table').removeClass('loading');
-               }
-         });
+      if(status === undefined){
+            status = "";
       }
+      if(role === undefined){
+         role = "";
+      }
+      if(search_term === undefined){
+         search_term = "";
+      }
+      $.ajax({
+            url: ENDPOINT+ "/?page="+page+"&status="+status+"&role="+role+"&search_term="+search_term+"&start_date="+start_date+"&end_date="+end_date,
+            success:function(data){
+               $('tbody').html('');
+               $('tbody').html(data);
+               $('table').removeClass('loading');
+            }
+      });
+   } // get_users_data
 
+   function ExportCSV(){
+         window.location.href = '/contact/exportcsv';
+   }
+   function ExportXLS(){
+         window.location.href = '/contact/exportxls';
+   }
+   
+   $(document).ready(function(){
       $('body').on('keyup', '#search', function(){
-         fetch_data();
+         get_users_data();
       });
 
       $('body').on('change', '#status', function(){
-         fetch_data();
+         get_users_data();
       });
 
       $('body').on('change', '#role', function(){
-         fetch_data();
+         get_users_data();
       });
 
       $('body').on('click', '.pager a', function(event){
          event.preventDefault();
          var page = $(this).attr('href').split('page=')[1];
          $('#hidden_page').val(page);
-         fetch_data();
+         get_users_data();
       });
    });
 </script>
@@ -264,13 +244,4 @@
       //  cb(start, end);
     });
  </script>
-
 @endsection
-<script type="text/javascript">
-function ExportCSV(){
-      window.location.href = '/contact/exportcsv';
-}
-function ExportXLS(){
-      window.location.href = '/contact/exportxls';
-}
-</script>

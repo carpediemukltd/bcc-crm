@@ -6,14 +6,15 @@ use App\Models\User;
 use App\Models\Deals;
 use App\Models\Stages;
 use App\Models\Pipelines;
+use App\Models\UserOwner;
 use App\Models\UserDetails;
 use App\Models\CustomFields;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
@@ -61,23 +62,46 @@ class UserController extends Controller
         $this->data['current_slug'] = 'Add Contact';
         $this->data['slug']         = 'add_user';
         $this->data['custom_fields'] = CustomFields::all();
+        $user = auth()->user();
+        $company_id = $user->company_id;
+        $this->data['owners'] = User::where('role', '=', 'owner')->where('company_id', '=', $company_id)
+        ->when(($user->role =='owner'), function ($q) use ($user) {
+            $q->where('id', '=', $user->id);
+        })->get();
+        $this->data['admins'] = User::where('role', '=', 'admin')->where('company_id', '=', $company_id)->get();
+
+        $roles = array('');
+        if ($user->role == 'superadmin') {
+            $roles = array('admin', 'owner', 'user');
+        } else if ($user->role == 'admin') {
+            $roles = array('admin','owner', 'user');
+        } else if ($user->role == 'owner') {
+            $roles = array('user');
+        } else if ($user->role == 'user') {
+            $roles = array('');
+        }
+        $this->data['roles'] = $roles;
         if ($request->isMethod('post')) {
             $request->validate([
-                'first_name'   => 'required',
-                'last_name'    => 'required',
+                'first_name' => 'required',
+                'last_name' => 'required',
                 'phone_number' => 'required',
-                'email'        => 'required|email|unique:users',
-                'password'     => 'required|min:6'
+                'role' => 'required',
+                'owner' => ($request->role=='user') ? 'required' : '',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|min:6'
             ]);
             $data = $request->all();
 
             if ($data) {
                 $new_user = User::create([
-                    'first_name'    => $data['first_name'],
-                    'last_name'     => $data['last_name'],
-                    'email'         => $data['email'],
+                    'first_name' => $data['first_name'],
+                    'last_name' => $data['last_name'],
+                    'email' => $data['email'],
                     'phone_number'  => $data['phone_number'],
-                    'password'      => Hash::make($data['password'])
+                    'role' => $data['role'],
+                    'company_id' => $company_id,
+                    'password' => Hash::make($data['password'])
                 ]);
 
                 if ($request->custom_fields_count > 0) {
@@ -88,6 +112,13 @@ class UserController extends Controller
                             'data' => $value
                         ]);
                     }
+                }
+                if ($data['role'] == 'user') {
+                    UserOwner::create([
+                        'user_id' => $new_user->id,
+                        'owner_id' => $data['owner'],
+                        'data' => $value
+                    ]);
                 }
                 return redirect(url('contacts'))->withSuccess('Contact Created Successfully.')->withInput();
             }
@@ -100,26 +131,26 @@ class UserController extends Controller
     {
         $company_id = 0;
         $user = auth()->user();
-        if(!$user->hasPermissionTo('list user')){
-            return redirect(url("dashboard"))->with("error","No permission to view user list.");
+        if (!$user->hasPermissionTo('list user')) {
+            return redirect(url("dashboard"))->with("error", "No permission to view user list.");
         }
-        
+
         $user_id = $user->id;
-        $roles = array('admin', 'owner', 'user');
-        if (auth()->user()->role != 'superadmin') {
-            //$company_id = $this->user->company_id; //temporarily disabled.
-            if (auth()->user()->role == 'admin') {
-                $roles = array('owner', 'user');
-            } else if (auth()->user()->role == 'owner') {
-                $roles = array('user');
-            } else if (auth()->user()->role == 'user') {
-                $roles = array('no-permission');
-            }
+        $roles = array('');
+        if ($user->role == 'superadmin'|| $user->role == 'admin') {
+            $roles = array('admin', 'owner', 'user');
+        } else if ($user->role == 'owner') {
+            $roles = array('user');
+        } else if ($user->role == 'user') {
+            $roles = array('no-permission');
+        }
+        if ($user->role != 'superadmin') {
+            $company_id = $this->user->company_id;
         }
         $this->data['current_slug'] = 'Contacts';
         $this->data['slug']         = 'user_list';
 
-        $this->data['users'] = User::whereIn('role', $roles)
+        $this->data['users'] = User::whereIn('role', $roles)->where('id','!=',$user_id)
             ->when(($company_id > 0), function ($q) use ($company_id) {
                 $q->where('company_id', '=', $company_id);
             })
@@ -141,9 +172,9 @@ class UserController extends Controller
                 $q->whereBetween('created_at', [$request->start_date, $request->end_date]);
             })
             ->when((auth()->user()->role == 'owner'), function ($q) use ($user_id) {
-                $q->join('user_owner', function ($join) use ($user_id){
-                    $join->on('users.id', '=', 'user_owner.user_id');
-                    $join->on('user_owner.owner_id', '=', DB::raw($user_id));
+                $q->join('user_owners', function ($join) use ($user_id) {
+                    $join->on('users.id', '=', 'user_owners.user_id');
+                    $join->on('user_owners.owner_id', '=', DB::raw($user_id));
                 });
             })
             ->orderBy('users.id', 'DESC')->paginate(10);
@@ -152,7 +183,7 @@ class UserController extends Controller
             return view('user.user_pagination', $this->data)->render();
         else
             return view("user.list", $this->data);
-    } // addUser
+    }
 
     public function userDetails(Request $request, $id)
     {

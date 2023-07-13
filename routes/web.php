@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\GeneralController;
 
 
@@ -46,6 +47,9 @@ Route::middleware([CheckStatus::class])->group(function(){
 
    // Route::middleware([CheckSuperAdmin::class])->group(function(){ // SuperAdmin specific methods
     Route::middleware([CheckStatus::class])->group(function(){ // User specific methods
+        Route::any('company/add', [CompanyController::class, 'addCompany'])->name('company.add');
+        Route::get('companies', [CompanyController::class, 'listCompany'])->name('company.list');
+
         Route::any('contact/add', [UserController::class, 'addUser'])->name('user.add');
         Route::get('contact/exportcsv', [UserController::class, 'exportCSV'])->name('user.export.csv');
         Route::get('contact/exportxls', [UserController::class, 'exportXLS'])->name('user.export.xls');

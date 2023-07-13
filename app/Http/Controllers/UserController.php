@@ -65,16 +65,20 @@ class UserController extends Controller
         $user = auth()->user();
         $company_id = $user->company_id;
         $this->data['owners'] = User::where('role', '=', 'owner')->where('company_id', '=', $company_id)
-        ->when(($user->role =='owner'), function ($q) use ($user) {
-            $q->where('id', '=', $user->id);
-        })->get();
+            ->when(($user->role == 'owner'), function ($q) use ($user) {
+                $q->where('id', '=', $user->id);
+            })->get();
+        $owners = array();
+        foreach ($this->data['owners'] as $owner) {
+            array_push($owners, $owner->id);
+        }
         $this->data['admins'] = User::where('role', '=', 'admin')->where('company_id', '=', $company_id)->get();
 
         $roles = array('');
         if ($user->role == 'superadmin') {
             $roles = array('admin', 'owner', 'user');
         } else if ($user->role == 'admin') {
-            $roles = array('admin','owner', 'user');
+            $roles = array('owner', 'user');
         } else if ($user->role == 'owner') {
             $roles = array('user');
         } else if ($user->role == 'user') {
@@ -82,12 +86,19 @@ class UserController extends Controller
         }
         $this->data['roles'] = $roles;
         if ($request->isMethod('post')) {
+            if (!in_array($request->role, $roles)) {
+                return redirect()->back()->with('error','You\'ve selected an invalid role.')->withInput();
+            }
+            if (!in_array($request->owner, $owners)) {
+                return redirect()->back()->with('error','You\'ve selected an invalid owner.')->withInput();
+            }
+
             $request->validate([
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'phone_number' => 'required',
                 'role' => 'required',
-                'owner' => ($request->role=='user') ? 'required' : '',
+                'owner' => ($request->role == 'user') ? 'required' : '',
                 'email' => 'required|email|unique:users',
                 'password' => 'required|min:6'
             ]);
@@ -113,6 +124,7 @@ class UserController extends Controller
                         ]);
                     }
                 }
+
                 if ($data['role'] == 'user') {
                     UserOwner::create([
                         'user_id' => $new_user->id,
@@ -120,6 +132,7 @@ class UserController extends Controller
                         'data' => $value
                     ]);
                 }
+
                 return redirect(url('contacts'))->withSuccess('Contact Created Successfully.')->withInput();
             }
         } else if ($request->isMethod('get')) {
@@ -137,7 +150,9 @@ class UserController extends Controller
 
         $user_id = $user->id;
         $roles = array('');
-        if ($user->role == 'superadmin'|| $user->role == 'admin') {
+        if ($user->role == 'superadmin') {
+            $roles = array('admin', 'owner', 'user');
+        } else if ($user->role == 'admin') {
             $roles = array('admin', 'owner', 'user');
         } else if ($user->role == 'owner') {
             $roles = array('user');
@@ -150,7 +165,7 @@ class UserController extends Controller
         $this->data['current_slug'] = 'Contacts';
         $this->data['slug']         = 'user_list';
 
-        $this->data['users'] = User::whereIn('role', $roles)->where('id','!=',$user_id)
+        $this->data['users'] = User::whereIn('role', $roles)->where('users.id', '!=', $user_id)
             ->when(($company_id > 0), function ($q) use ($company_id) {
                 $q->where('company_id', '=', $company_id);
             })

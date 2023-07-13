@@ -1,18 +1,18 @@
 <?php
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Middleware\CheckStatus;
-
-use App\Http\Middleware\CheckSuperAdmin;
-use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckUser;
 
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Middleware\CheckAdmin;
+
+use App\Http\Middleware\CheckStatus;
+use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\CheckSuperAdmin;
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 
 
 
@@ -61,6 +61,8 @@ Route::middleware([CheckStatus::class])->group(function(){
         Route::get('contact/{id}/deals', [UserController::class, 'userDeals'])->name('user.deals');
         Route::any('contact/{id}/deals/add', [UserController::class, 'dealsAdd'])->name('user.deals.add');
         Route::any('contact/{user_id}/deals/edit/{id}', [UserController::class, 'dealsEdit'])->name('user.deals.edit');
+
+        Route::any('note/add', [NoteController::class, 'noteAdd'])->name('note.add');
 
         Route::get('pipelineStages/{id}/{stage_id?}', [UserController::class, 'getPipelineStages']);
         Route::any('pipeline/{action}/{id?}', [UserController::class, 'pipelines'])->name('pipeline');

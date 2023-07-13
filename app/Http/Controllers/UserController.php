@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Note;
 use App\Models\User;
 use App\Models\Deals;
 use App\Models\Stages;
 use App\Models\Pipelines;
 use App\Models\UserOwner;
 use App\Models\UserDetails;
-use App\Models\CustomFields;
 
+use App\Models\CustomFields;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -205,6 +206,11 @@ class UserController extends Controller
         $this->data['current_slug']  = 'Contact Details';
         $this->data['slug']          = 'user_details';
         $this->data['rs_user']       = User::where(['id' => $id])->first();
+        $this->data['notes'] = Note::where(['contact_id' => $id])->join('users', function ($join) {
+            $join->on('users.id', '=', 'notes.user_id');
+        })
+        ->select('notes.*', 'users.id as user_id', 'users.first_name', 'users.last_name', 'users.role')
+        ->orderBy('notes.id', 'DESC')->get();
 
         $this->data['deals'] = Deals::leftJoin('pipelines', function ($join) {
             $join->on('deals.pipeline_id', '=', 'pipelines.id');

@@ -170,7 +170,7 @@
                      <a class="nav-link" data-bs-toggle="tab" href="#profile-friends" role="tab" aria-selected="false">Emails</a>
                   </li>
                   <li class="nav-item">
-                     <a class="nav-link" data-bs-toggle="tab" href="#profile-profile" role="tab" aria-selected="false">Tasks</a>
+                     <a class="nav-link" data-bs-toggle="tab" href="#profile-notes" role="tab" aria-selected="false">Notes</a>
                   </li>
                </ul>
             </div>
@@ -384,35 +384,50 @@
                      </ul>
                   </div>
                </div>
-               <div id="profile-profile" class="tab-pane fade">
+               <div id="profile-notes" class="tab-pane fade">
                   <div class="card-header">
                      <div class="header-title">
-                        <h4 class="card-title">Tasks</h4>
+                        <h4 class="card-title">Notes</h4>
                      </div>
                   </div>
                   <div class="card-body">
-                     <div class="user-bio">
-                        <p>Tart I love sugar plum I love oat cake. Sweet roll caramels I love jujubes. Topping cake wafer.</p>
-                     </div>
                      <div class="mt-2">
-                        <h6 class="mb-1">Joined:</h6>
-                        <p>Feb 15, 2021</p>
+                        <h6 class="mb-1">Add Note</h6>
+                        <form action="{{ route('note.add') }}" method="POST" >
+                           @csrf
+                           <div class="row">
+                              <div class="col">
+                                 <div class="form-group">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                       <input type="hidden" id="contact_id" name="contact_id" value="{{$rs_user->id}}">
+                                       <textarea type="text" class="form-control" id="note" name="note" placeholder="Note" required></textarea>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div class="col">
+                                 <button type="submit" class="btn btn-primary">Save</button>
+                              </div>
+                           </div>
+                        </form>
                      </div>
+                     <br />
                      <div class="mt-2">
-                        <h6 class="mb-1">Lives:</h6>
-                        <p>United States of America</p>
-                     </div>
-                     <div class="mt-2">
-                        <h6 class="mb-1">Email:</h6>
-                        <p><a href="#" class="text-body"> austin@gmail.com</a></p>
-                     </div>
-                     <div class="mt-2">
-                        <h6 class="mb-1">Url:</h6>
-                        <p><a href="#" class="text-body" target="_blank"> www.bootstrap.com </a></p>
-                     </div>
-                     <div class="mt-2">
-                        <h6 class="mb-1">Contact:</h6>
-                        <p><a href="#" class="text-body">(001) 4544 565 456</a></p>
+                        <h6 class="mb-1">History:</h6>
+                        <div id="notes">
+                           @unless (count($notes)==0)
+                           @foreach($notes as $note)
+                           <div class="nav-item mb-3 p-3" style="border: 1px solid #ccc; ">
+                           <p>{{$note->note}}</p>
+                           <b>By:</b> <span>{{$note->first_name}} {{$note->last_name}}</span> (<span>{{$note->role}}</span>)
+                           <b>at:</b> <span>{{$note->created_at}}</span>
+                           
+                           <br />
+                           </div>
+                           @endforeach
+                           @endif
+                        </div>
                      </div>
                   </div>
                </div>

@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Session;
 use App\Models\User;
 use Hash;
+
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
   
 class AuthController extends Controller
 {
@@ -103,6 +106,11 @@ class AuthController extends Controller
 
         if(Auth::check()){
             $this->data['slug'] = 'dashboard';
+            
+        $user = auth()->user();
+        if(!$user->hasAnyRole(['admin','owner', 'user'])){
+            $user->assignRole($user->role);
+        }
             return view('dashboard', $this->data);
         }
   

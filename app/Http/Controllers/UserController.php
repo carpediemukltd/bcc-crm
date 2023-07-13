@@ -6,14 +6,16 @@ use App\Models\User;
 use App\Models\Deals;
 use App\Models\Stages;
 use App\Models\Pipelines;
+use App\Models\UserOwner;
 use App\Models\UserDetails;
 use App\Models\CustomFields;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class UserController extends Controller
@@ -60,23 +62,57 @@ class UserController extends Controller
         $this->data['current_slug'] = 'Add Contact';
         $this->data['slug']         = 'add_user';
         $this->data['custom_fields'] = CustomFields::all();
+        $user = auth()->user();
+        $company_id = $user->company_id;
+        $this->data['owners'] = User::where('role', '=', 'owner')->where('company_id', '=', $company_id)
+            ->when(($user->role == 'owner'), function ($q) use ($user) {
+                $q->where('id', '=', $user->id);
+            })->get();
+        $owners = array();
+        foreach ($this->data['owners'] as $owner) {
+            array_push($owners, $owner->id);
+        }
+        $this->data['admins'] = User::where('role', '=', 'admin')->where('company_id', '=', $company_id)->get();
+
+        $roles = array('');
+        if ($user->role == 'superadmin') {
+            $roles = array('admin', 'owner', 'user');
+        } else if ($user->role == 'admin') {
+            $roles = array('owner', 'user');
+        } else if ($user->role == 'owner') {
+            $roles = array('user');
+        } else if ($user->role == 'user') {
+            $roles = array('');
+        }
+        $this->data['roles'] = $roles;
         if ($request->isMethod('post')) {
+            if (!in_array($request->role, $roles)) {
+                return redirect()->back()->with('error','You\'ve selected an invalid role.')->withInput();
+            }
+            if (!in_array($request->owner, $owners)) {
+                return redirect()->back()->with('error','You\'ve selected an invalid owner.')->withInput();
+            }
+
             $request->validate([
-                'first_name'   => 'required',
-                'last_name'    => 'required',
+                'first_name' => 'required',
+                'last_name' => 'required',
                 'phone_number' => 'required',
-                'email'        => 'required|email|unique:users',
-                'password'     => 'required|min:6'
+                'role' => 'required',
+                'owner' => ($request->role == 'user') ? 'required' : '',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|min:6'
             ]);
             $data = $request->all();
 
             if ($data) {
                 $new_user = User::create([
-                    'first_name'    => $data['first_name'],
-                    'last_name'     => $data['last_name'],
-                    'email'         => $data['email'],
+                    'first_name' => $data['first_name'],
+                    'last_name' => $data['last_name'],
+                    'email' => $data['email'],
                     'phone_number'  => $data['phone_number'],
-                    'password'      => Hash::make($data['password'])
+                    'role' => $data['role'],
+                    'company_id' => $company_id,
+                    'password' => Hash::make($data['password'])
                 ]);
 
                 if ($request->custom_fields_count > 0) {
@@ -88,6 +124,15 @@ class UserController extends Controller
                         ]);
                     }
                 }
+
+                if ($data['role'] == 'user') {
+                    UserOwner::create([
+                        'user_id' => $new_user->id,
+                        'owner_id' => $data['owner'],
+                        'data' => $value
+                    ]);
+                }
+
                 return redirect(url('contacts'))->withSuccess('Contact Created Successfully.')->withInput();
             }
         } else if ($request->isMethod('get')) {
@@ -98,43 +143,62 @@ class UserController extends Controller
     public function userList(Request $request)
     {
         $company_id = 0;
-        $roles = array('admin', 'owner', 'user');
-        if (auth()->user()->role != 'superadmin') {
-            //$company_id = $this->user->company_id; //temporarily disabled.
-            if (auth()->user()->role == 'admin') {
-                $roles = array('owner', 'user');
-            } else if (auth()->user()->role == 'owner') {
-                $roles = array('user');
-            }
+        $user = auth()->user();
+        if (!$user->hasPermissionTo('list user')) {
+            return redirect(url("dashboard"))->with("error", "No permission to view user list.");
+        }
+
+        $user_id = $user->id;
+        $roles = array('');
+        if ($user->role == 'superadmin') {
+            $roles = array('admin', 'owner', 'user');
+        } else if ($user->role == 'admin') {
+            $roles = array('admin', 'owner', 'user');
+        } else if ($user->role == 'owner') {
+            $roles = array('user');
+        } else if ($user->role == 'user') {
+            $roles = array('no-permission');
+        }
+        if ($user->role != 'superadmin') {
+            $company_id = $this->user->company_id;
         }
         $this->data['current_slug'] = 'Contacts';
         $this->data['slug']         = 'user_list';
 
-        $this->data['users'] = User::whereIn('role', $roles)
+        $this->data['users'] = User::whereIn('role', $roles)->where('users.id', '!=', $user_id)
             ->when(($company_id > 0), function ($q) use ($company_id) {
                 $q->where('company_id', '=', $company_id);
             })
-            ->when($request->seach_term, function ($q) use ($request) {
+            ->when($request->search_term, function ($q) use ($request) {
                 $q->where(function ($query) use ($request) {
-                    $query->where('first_name', 'like', '%' . $request->seach_term . '%');
-                    $query->orWhere('last_name', 'like', '%' . $request->seach_term . '%');
-                    $query->orWhere('email', 'like', '%' . $request->seach_term . '%');
-                    $query->orWhere('phone_number', 'like', '%' . $request->seach_term . '%');
+                    $query->where('first_name', 'like', '%' . $request->search_term . '%');
+                    $query->orWhere('last_name', 'like', '%' . $request->search_term . '%');
+                    $query->orWhere('email', 'like', '%' . $request->search_term . '%');
+                    $query->orWhere('phone_number', 'like', '%' . $request->search_term . '%');
                 });
             })
             ->when($request->status, function ($q) use ($request) {
                 $q->where('status', $request->status);
             })
+            ->when($request->role, function ($q) use ($request) {
+                $q->where('role', $request->role);
+            })
             ->when($request->start_date, function ($q) use ($request) {
                 $q->whereBetween('created_at', [$request->start_date, $request->end_date]);
             })
-            ->orderBy('id', 'DESC')->paginate(10);
+            ->when((auth()->user()->role == 'owner'), function ($q) use ($user_id) {
+                $q->join('user_owners', function ($join) use ($user_id) {
+                    $join->on('users.id', '=', 'user_owners.user_id');
+                    $join->on('user_owners.owner_id', '=', DB::raw($user_id));
+                });
+            })
+            ->orderBy('users.id', 'DESC')->paginate(10);
 
         if ($request->ajax())
             return view('user.user_pagination', $this->data)->render();
         else
             return view("user.list", $this->data);
-    } // addUser
+    }
 
     public function userDetails(Request $request, $id)
     {

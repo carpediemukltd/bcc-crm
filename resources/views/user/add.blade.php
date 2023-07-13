@@ -71,13 +71,13 @@
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="first_name">First name:</label>
-                              <input type="text" class="form-control" id="first_name" placeholder="First name" name="first_name" required>
+                              <input type="text" class="form-control" id="first_name" placeholder="First name" name="first_name" value="{{old('first_name')}}" required>
                            </div>
                         </div>
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="last_name">Last name:</label>
-                              <input type="text" class="form-control" id="last_name" placeholder="Last name" name="last_name" required>
+                              <input type="text" class="form-control" id="last_name" placeholder="Last name" name="last_name" value="{{old('last_name')}}" required>
                            </div>
                         </div>
                      </div>
@@ -86,7 +86,7 @@
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="email">Email address:</label>
-                              <input type="email" class="form-control" id="email" placeholder="Email address" name="email" required>
+                              <input type="email" class="form-control" id="email" placeholder="Email address" name="email" value="{{old('email')}}" required>
                               @if ($errors->has('email'))
                                  <span class="text-danger">{{ $errors->first('email') }}</span>
                               @endif
@@ -95,7 +95,7 @@
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="phone_number">Phone number:</label>
-                              <input type="number" id="phone_number" class="form-control" name="phone_number" placeholder="123456789" required>
+                              <input type="number" id="phone_number" class="form-control" name="phone_number" placeholder="123456789" value="{{old('phone_number')}}" required>
                               @if ($errors->has('phone_number'))
                                  <span class="text-danger">{{ $errors->first('phone_number') }}</span>
                               @endif
@@ -104,7 +104,7 @@
                      </div>
 
                      <div class="row">
-                        <div class="col">
+                        <div class="col-6">
                            <div class="form-group">
                               <label class="form-label" for="password">Password:</label>
                               <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
@@ -112,26 +112,50 @@
                                  <span class="text-danger">{{ $errors->first('password') }}</span>
                               @endif
                            </div>
-                          
                         </div>
                      </div>
-                     @unless (count($custom_fields)==0)
-                     
-                     <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
-                     
+
                      <div class="row">
-                     @foreach($custom_fields as $field)
-                        <div class="col">
+                        @unless (count($roles)==0)
+                     <input type="hidden" id="roles_count"  name="roles_count" value="{{count($roles)}}">
+                        <div class="col-6">
                            <div class="form-group">
-                              <label class="form-label" for="password">{{$field->title}}</label>
+                              <label class="form-label" for="role">Roles</label>
+                              <select class="form-select" id="role" name="role" onchange="toggleRoles()" required>
+                                 <option value="">Select</option>
+                              @foreach($roles as $role)
+                                 <option value="{{$role}}" <?=(count($roles)==1)? 'selected="selected"':'' ?>>{{ucfirst($role)}}</option>
+                              @endforeach
+                           </select>
+                           </div>
+                        </div>
+                        
+                        <div class="col-6" id="owners_list" style="display: <?=(count($owners)==1)? 'block':'none' ?>;">
+                           <div class="form-group">
+                              <label class="form-label" for="role">Owners</label>
+                              <select class="form-select" id="owner" name="owner">
+                                 <option value="">Select</option>
+                              @foreach($owners as $owner)
+                                 <option value="{{$owner->id}}" <?=(count($owners)==1)? 'selected="selected"':'' ?>>{{$owner->first_name}} {{$owner->last_name}}</option>
+                              @endforeach
+                           </select>
+                           </div>
+                        </div>
+                     @endif
+                     </div>
+                     
+                     @unless (count($custom_fields)==0)
+                     <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
+                     <div class="row">
+                         @foreach($custom_fields as $field)        
+                        <div class="col-6">
+                           <div class="form-group">
+                              <label class="form-label" for="custom_fields[{{$field->id}}]">{{$field->title}}</label>
                               <input type="text" class="form-control" id="custom_fields[{{$field->id}}]" placeholder="{{$field->title}}" name="custom_fields[{{$field->id}}]">
                            </div>
-                          
                         </div>
                         @endforeach
                      </div>
-                     
-                    
                      @endif
 
                      <div class="row"><div class="col"><br /></div></div>
@@ -149,7 +173,20 @@
       </div>
    </div>
 </div>
-
-
+<script type="text/javascript">
+  function toggleRoles(){
+   var roles = $('#role :selected').val();
+   console.log(roles);
+   if(roles=='user'){
+      $('#owner').attr('required','required');
+      console.log('added');
+      $('#owners_list').show();
+   }else {
+      $('#owner').removeAttr('required');
+      $('#owners_list').hide();
+      console.log('removed');
+   }
+  }
+   </script>
 
 @endsection

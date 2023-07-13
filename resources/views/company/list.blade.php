@@ -7,14 +7,8 @@
             <div class="col-md-12">
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
-                     <h1>Contacts List</h1>
-                     <p>All Contacts.</p>
-                  </div>
-                  <div>
-                     <a href="{{route('user.add')}}" class="btn btn-link btn-soft-light">
-                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-28"><path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                        Add New Contact
-                     </a>
+                     <h1>Company List</h1>
+                     <p>All Companies.</p>
                   </div>
                </div>
             </div>
@@ -101,16 +95,6 @@
                                  </select>
                               </div>
                            </div>
-                           <div class="col-md-2">
-                              <div class="form-group">
-                                 <select name="role" id="role" class="form-select">
-                                    <option value="">Select Role</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="owner">Owner</option>
-                                    <option value="user">User</option>
-                                 </select>
-                              </div>
-                           </div>
                            <div class="col-md-3">
                               <div class="form-group">
                                  <!-- <label class="form-label" for="password">Empty Field</label> -->
@@ -136,12 +120,11 @@
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Role</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Status</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Created at</th>
-                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">Details</th>
                                     <th style="min-width: 100px" class="sorting" tabindex="0" aria-controls="user-list-table">Action</th>
                                  </tr>
                               </thead>
                               <tbody>
-                                 @include('user.user_pagination')
+                                 @include('company.pagination')
                               </tbody>
                            </table>
                            <button type="button" style="display:none;" id="click_me" class="btn btn-primary" onclick="get_users_data();">Click Me</button>
@@ -157,7 +140,7 @@
 </div>
 
 <script type="text/javascript">
-   var ENDPOINT = "{{ url('contacts') }}";
+   var ENDPOINT = "{{ url('companies') }}";
    function get_users_data(){
       
       var status = $('#status').val();

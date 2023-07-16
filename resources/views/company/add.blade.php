@@ -52,11 +52,10 @@
                      </div>
                   </div>
                </div>
-               <div class="card-header d-flex justify-content-between">
-                <div class="header-title">
+               
+                <div class="header-title mt-3 mb-4">
                    <h4 class="card-title">Admin Details</h4>
                 </div>
-             </div>
                <div class="row">
                   <div class="col">
                      <div class="form-group">

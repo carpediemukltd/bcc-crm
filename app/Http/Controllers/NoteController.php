@@ -20,12 +20,18 @@ class NoteController extends Controller
                 'note' => 'required'
             ]);
 
-            Note::create([
+            $note = Note::create([
                 'user_id' => $user->id,
                 'contact_id' => $request->contact_id,
                 'note' => $request->note
             ]);
-            return redirect()->back()->withSuccess('Note Created Successfully.');
+            $note = Note::where(['notes.id' => $note->id])->join('users', function ($join) {
+                $join->on('users.id', '=', 'notes.user_id');
+            })
+                ->select('notes.*', 'users.id as user_id', 'users.first_name', 'users.last_name', 'users.role')
+                ->orderBy('notes.id', 'DESC')->first();
+                
+            return response()->json($note);
         } else {
             return "Invalid Request";
         }

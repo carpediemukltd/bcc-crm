@@ -85,7 +85,7 @@
                   <div class="offcanvas offcanvas-end shadow-none iq-product-menu-responsive" tabindex="-1" id="offcanvasBottom">
                      <div class="offcanvas-body">
                         <ul class="iq-nav-menu list-unstyled">
-                           <li class="nav-item">
+                           <li class="nav-item iq-responsive-menu border-end d-block">
                               <a class="nav-link <?php if(isset($slug) && $slug == 'dashboard'){echo 'active';}?>" aria-current="page"
                                  href="{{route('dashboard')}}">
                                  <i class="icon">
@@ -152,7 +152,6 @@
                                                 fill="currentColor"></path>
                                           </svg>
                                        </i>
-                                       
                                           <span class="item-name"> Add Contact</span>
                                        </a>
                                     </li>
@@ -183,6 +182,7 @@
                                  </ul>
                               </li>
 
+                              @if (Auth::user()->role == 'superadmin')
                               <li class="nav-item dropdown iq-responsive-menu border-end d-block">
                                  <a class="nav-link <?php if(isset($slug) && in_array($slug, ['add_field', 'field_list', 'edit_field'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" href="#sidebar-custon-fields">
@@ -244,12 +244,12 @@
                                                    fill="currentColor"></path>
                                              </svg>
                                           </i>
-                                       
                                           <span class="item-name">List of Custom Fields</span>
                                        </a>
                                     </li>
                                  </ul>
                               </li>
+                              @endif
 
                               <li class="nav-item dropdown iq-responsive-menu border-end d-block">
                                  <a class="nav-link <?php if(isset($slug) && in_array($slug, ['pipelines', 'edit_pipeline', 'add_pipeline'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
@@ -281,7 +281,6 @@
                                              <path fill-rule="evenodd" clip-rule="evenodd" d="M8.97398 11.3877H12.359C12.77 11.3877 13.104 11.0547 13.104 10.6437C13.104 10.2327 12.77 9.89868 12.359 9.89868H8.97398C8.56298 9.89868 8.22998 10.2327 8.22998 10.6437C8.22998 11.0547 8.56298 11.3877 8.97398 11.3877ZM8.97408 16.3819H14.4181C14.8291 16.3819 15.1631 16.0489 15.1631 15.6379C15.1631 15.2269 14.8291 14.8929 14.4181 14.8929H8.97408C8.56308 14.8929 8.23008 15.2269 8.23008 15.6379C8.23008 16.0489 8.56308 16.3819 8.97408 16.3819Z" fill="currentColor"></path>
                                           </svg>
                                           </i>
-                                       
                                           <span class="item-name"> Add Pipeline</span>
                                        </a>
                                     </li>
@@ -305,13 +304,13 @@
                                                    fill="currentColor"></path>
                                              </svg>
                                           </i>
-                                       
                                           <span class="item-name">List Pipelines</span>
                                        </a>
                                     </li>
                                  </ul>
                               </li>
 
+                              @if (Auth::user()->role == 'superadmin')
                               <li class="nav-item dropdown iq-responsive-menu border-end d-block">
                                  <a class="nav-link <?php if(isset($slug) && in_array($slug, ['companies', 'list_company', 'edit_company', 'add_company'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" href="#sidebar-companies">
@@ -342,7 +341,6 @@
                                              <path fill-rule="evenodd" clip-rule="evenodd" d="M8.97398 11.3877H12.359C12.77 11.3877 13.104 11.0547 13.104 10.6437C13.104 10.2327 12.77 9.89868 12.359 9.89868H8.97398C8.56298 9.89868 8.22998 10.2327 8.22998 10.6437C8.22998 11.0547 8.56298 11.3877 8.97398 11.3877ZM8.97408 16.3819H14.4181C14.8291 16.3819 15.1631 16.0489 15.1631 15.6379C15.1631 15.2269 14.8291 14.8929 14.4181 14.8929H8.97408C8.56308 14.8929 8.23008 15.2269 8.23008 15.6379C8.23008 16.0489 8.56308 16.3819 8.97408 16.3819Z" fill="currentColor"></path>
                                           </svg>
                                           </i>
-                                       
                                           <span class="item-name"> Add Company</span>
                                        </a>
                                     </li>
@@ -366,11 +364,11 @@
                                                    fill="currentColor"></path>
                                              </svg>
                                           </i>
-                                       
                                           <span class="item-name">List Companies</span>
                                        </a>
                                     </li>
                                  </ul>
+                                 @endif
                               </li>
                            @endif
                         </ul>

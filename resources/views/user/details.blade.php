@@ -3901,7 +3901,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                        <input type="hidden" id="contact_id" name="contact_id" value="{{$rs_user->id}}">
                                        <input type="hidden" id="previous_notes" name="previous_notes" value="{{count($notes)}}">
-                                       <textarea type="text" class="form-control" id="note" name="note" placeholder="Note" required></textarea>
+                                       <textarea type="text" class="form-control notes_field" id="note" name="note" placeholder="Note" required></textarea>
                                     </div>
                                  </div>
                               </div>
@@ -3930,7 +3930,7 @@
                               <p>No notes found.</p>
                            @else
                            @foreach($notes as $note)
-                              <div class="nav-item mb-3 p-3" style="border: 1px solid #ccc; ">
+                              <div class="nav-item mb-3 p-3" style="border: 1px solid #eee; border-radius:3px; ">
                               <p>{{$note->note}}</p>
                               <b>By:</b> <span>{{$note->first_name}} {{$note->last_name}}</span> (<span>{{$note->role}}</span>)
                               <b>at:</b> <span>{{date("m/d/Y, H:i:s",strtotime($note->created_at))}}</span>   

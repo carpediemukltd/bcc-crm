@@ -453,6 +453,12 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                            <li>
+                              <span class="user_list_detail">Wasiq Carpe Diem</span>
+                           </li>
+                           <li>
+                              <span class="user_list_detail">Company </span>
+                           </li>
+                           <li>
                               <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
                            </li>
                            <li>

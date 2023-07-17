@@ -400,7 +400,7 @@
                                  <div class="form-group">
                                     <div class="d-flex justify-content-between align-items-center">
                                        <input type="hidden" id="contact_id" name="contact_id" value="{{$rs_user->id}}">
-                                       <textarea type="text" class="form-control" id="note" name="note" placeholder="Note" required></textarea>
+                                       <textarea type="text" class="form-control notes_field" id="note" name="note" placeholder="Note" required></textarea>
                                     </div>
                                  </div>
                               </div>
@@ -415,10 +415,10 @@
                      <br />
                      <div class="mt-2">
                         <h6 class="mb-1">History:</h6>
-                        <div id="notes">
+                        <div id="notes" class="notes_scroll_view">
                            @unless (count($notes)==0)
                            @foreach($notes as $note)
-                           <div class="nav-item mb-3 p-3" style="border: 1px solid #ccc; ">
+                           <div class="nav-item mb-3 p-3" style="border: 1px solid #eee; border-radius:3px; ">
                            <p>{{$note->note}}</p>
                            <b>By:</b> <span>{{$note->first_name}} {{$note->last_name}}</span> (<span>{{$note->role}}</span>)
                            <b>at:</b> <span>{{$note->created_at}}</span>

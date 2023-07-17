@@ -1,8 +1,7 @@
 <?php
+
 use App\Http\Middleware\CheckUser;
-
 use App\Http\Middleware\CheckAdmin;
-
 use App\Http\Middleware\CheckStatus;
 use Illuminate\Support\Facades\Route;
 
@@ -29,35 +28,40 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 
 Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::get('login', [AuthController::class, 'index'])->name('login');
-Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post'); 
+Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
-Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post'); 
+Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');
 Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
-Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post'); 
+Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
 Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
 
-Route::middleware([CheckStatus::class])->group(function(){
+Route::middleware([CheckStatus::class])->group(function () {
     Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
     Route::get('privacy', [GeneralController::class, 'privacySetting'])->name('privacy');
 
     Route::any('profile', [UserController::class, 'editProfile'])->name('profile');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-   // Route::middleware([CheckSuperAdmin::class])->group(function(){ // SuperAdmin specific methods
-    Route::middleware([CheckStatus::class])->group(function(){ // User specific methods
+    Route::middleware([CheckSuperAdmin::class])->group(function () { // SuperAdmin specific methods
         Route::any('company/add', [CompanyController::class, 'addCompany'])->name('company.add');
         Route::get('companies', [CompanyController::class, 'listCompany'])->name('company.list');
+        Route::any('company/edit/{id}', [CompanyController::class, 'editCompany'])->name('company.edit');
+        
+        Route::any('customfield/add', [UserController::class, 'addField'])->name('customfield.add');
+        Route::any('customfield', [UserController::class, 'fieldList'])->name('customfield.list');
+        Route::any('customfield/edit/{id}', [UserController::class, 'editField'])->name('customfield.edit');
+    });
 
+    Route::middleware([CheckStatus::class])->group(function () { // User specific methods
         Route::any('contact/add', [UserController::class, 'addUser'])->name('user.add');
         Route::get('contact/exportcsv', [UserController::class, 'exportCSV'])->name('user.export.csv');
         Route::get('contact/exportxls', [UserController::class, 'exportXLS'])->name('user.export.xls');
         Route::get('contacts', [UserController::class, 'userList'])->name('user.list');
         Route::any('contact/edit/{id}', [UserController::class, 'editUser'])->name('user.edit');
-
         Route::any('contact/{id}/details', [UserController::class, 'userDetails'])->name('user.details');
-        
+
         Route::get('contact/{id}/deals', [UserController::class, 'userDeals'])->name('user.deals');
         Route::any('contact/{id}/deals/add', [UserController::class, 'dealsAdd'])->name('user.deals.add');
         Route::any('contact/{user_id}/deals/edit/{id}', [UserController::class, 'dealsEdit'])->name('user.deals.edit');
@@ -68,18 +72,13 @@ Route::middleware([CheckStatus::class])->group(function(){
         Route::any('pipeline/{action}/{id?}', [UserController::class, 'pipelines'])->name('pipeline');
 
         Route::get('stages/{id}', [UserController::class, 'stages'])->name('stages');
-
-
-        Route::any('customfield/add', [UserController::class, 'addField'])->name('customfield.add');
-        Route::any('customfield', [UserController::class, 'fieldList'])->name('customfield.list');
-        Route::any('customfield/edit/{id}', [UserController::class, 'editField'])->name('customfield.edit');
     });
 
-    Route::middleware([CheckAdmin::class])->group(function(){
+    Route::middleware([CheckAdmin::class])->group(function () {
         // admin specific methods
     });
 
-    Route::middleware([CheckUser::class])->group(function(){
+    Route::middleware([CheckUser::class])->group(function () {
         // user specific methods
     });
 

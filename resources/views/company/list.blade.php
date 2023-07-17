@@ -114,20 +114,21 @@
                            <table id="user-list-table" class="table table-striped dataTable no-footer" role="grid" aria-describedby="user-list-table_info">
                               <thead>
                                  <tr class="ligth">
-                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">Name</th>
+                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">Company</th>
+                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">Admin</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Phone</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Email</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Role</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Status</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Created at</th>
-                                    <th style="min-width: 100px" class="sorting" tabindex="0" aria-controls="user-list-table">Action</th>
+                                    <th style="min-width: 100px" class="sorting" tabindex="0" aria-controls="user-list-table">Actions</th>
                                  </tr>
                               </thead>
                               <tbody>
                                  @include('company.pagination')
                               </tbody>
                            </table>
-                           <button type="button" style="display:none;" id="click_me" class="btn btn-primary" onclick="get_users_data();">Click Me</button>
+                           <button type="button" style="display:none;" id="click_me" class="btn btn-primary" onclick="get_data();">Click Me</button>
                            <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
                         </div>
                      </div>
@@ -141,7 +142,7 @@
 
 <script type="text/javascript">
    var ENDPOINT = "{{ url('companies') }}";
-   function get_users_data(){
+   function get_data(){
       
       var status = $('#status').val();
       var role = $('#role').val();
@@ -168,7 +169,7 @@
                $('table').removeClass('loading');
             }
       });
-   } // get_users_data
+   } // get_data
 
    function ExportCSV(){
          window.location.href = '/contact/exportcsv';
@@ -179,22 +180,22 @@
    
    $(document).ready(function(){
       $('body').on('keyup', '#search', function(){
-         get_users_data();
+         get_data();
       });
 
       $('body').on('change', '#status', function(){
-         get_users_data();
+         get_data();
       });
 
       $('body').on('change', '#role', function(){
-         get_users_data();
+         get_data();
       });
 
       $('body').on('click', '.pager a', function(event){
          event.preventDefault();
          var page = $(this).attr('href').split('page=')[1];
          $('#hidden_page').val(page);
-         get_users_data();
+         get_data();
       });
    });
 </script>

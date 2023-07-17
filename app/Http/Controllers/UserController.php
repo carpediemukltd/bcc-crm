@@ -341,7 +341,7 @@ class UserController extends Controller
                     );
                 }
             }
-            return redirect(url('contacts'))->withSuccess('Contact Update Successfully.')->withInput();
+            return redirect(url('contacts'))->withSuccess('Contact Updated Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
             $this->data['user'] = User::where('id', $id)->first();
             return view("user.edit", $this->data);

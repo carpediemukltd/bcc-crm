@@ -68,7 +68,7 @@
                                     <div class="col-lg-12">
                                        <div class="form-group">
                                           <label for="email" class="form-label">Email</label>
-                                          <input type="email" class="form-control" id="email" aria-describedby="email" placeholder="example@example.com" name="email" required autofocus>
+                                          <input type="email" class="form-control" id="email" aria-describedby="email" placeholder="example@example.com" name="email" value="{{old('email')}}" required autofocus>
                                        </div>
                                     </div>
                                     <div class="col-lg-12">

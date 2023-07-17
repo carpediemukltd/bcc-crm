@@ -871,3 +871,78 @@ table.stage tr:hover{
   width: 200px;
   box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.1) !important;
 }
+/* preloader css start */
+.preloader-dot-loading {
+  display: block;
+  margin: 0px auto;
+  width: 97px;
+}
+.preloader-dot-loading .cssload-loading i {
+  width: 19px;
+  height: 19px;
+  display: inline-block;
+  border-radius: 50%;
+  background: #2a2b26;
+}
+.preloader-dot-loading .cssload-loading i:first-child {
+  opacity: 0;
+  animation: cssload-loading-ani2 0.58s linear infinite;
+  -o-animation: cssload-loading-ani2 0.58s linear infinite;
+  -ms-animation: cssload-loading-ani2 0.58s linear infinite;
+  -webkit-animation: cssload-loading-ani2 0.58s linear infinite;
+  -moz-animation: cssload-loading-ani2 0.58s linear infinite;
+  transform: translate(-19px);
+  -o-transform: translate(-19px);
+  -ms-transform: translate(-19px);
+  -webkit-transform: translate(-19px);
+  -moz-transform: translate(-19px);
+}
+.preloader-dot-loading .cssload-loading i:nth-child(2), .preloader-dot-loading .cssload-loading i:nth-child(3) {
+  animation: cssload-loading-ani3 0.58s linear infinite;
+  -o-animation: cssload-loading-ani3 0.58s linear infinite;
+  -ms-animation: cssload-loading-ani3 0.58s linear infinite;
+  -webkit-animation: cssload-loading-ani3 0.58s linear infinite;
+  -moz-animation: cssload-loading-ani3 0.58s linear infinite;
+}
+.preloader-dot-loading .cssload-loading i:last-child {
+  animation: cssload-loading-ani1 0.58s linear infinite;
+  -o-animation: cssload-loading-ani1 0.58s linear infinite;
+  -ms-animation: cssload-loading-ani1 0.58s linear infinite;
+  -webkit-animation: cssload-loading-ani1 0.58s linear infinite;
+  -moz-animation: cssload-loading-ani1 0.58s linear infinite;
+}
+
+@keyframes cssload-loading-ani1 {
+  100% {
+    transform: translate(39px);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes cssload-loading-ani1 {
+  100% {
+    -webkit-transform: translate(39px);
+    opacity: 0;
+  }
+}
+@keyframes cssload-loading-ani2 {
+  100% {
+    transform: translate(19px);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes cssload-loading-ani2 {
+  100% {
+    -webkit-transform: translate(19px);
+    opacity: 1;
+  }
+}
+@keyframes cssload-loading-ani3 {
+  100% {
+    transform: translate(19px);
+  }
+}
+@-webkit-keyframes cssload-loading-ani3 {
+  100% {
+    -webkit-transform: translate(19px);
+  }
+}

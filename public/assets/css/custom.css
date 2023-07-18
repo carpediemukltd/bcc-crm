@@ -825,6 +825,7 @@ span.item-name {
     text-align: center;
     line-height: 24px;
     border: 1px solid;
+    margin-right: 5px;
 }
 .form-floating>label{
   opacity: .65;
@@ -945,4 +946,12 @@ table.stage tr:hover{
   100% {
     -webkit-transform: translate(19px);
   }
+}
+.contact_user_details a{
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+}
+.form-control:disabled {
+  background-color: #fff;
 }

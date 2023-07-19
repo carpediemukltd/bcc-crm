@@ -1,5 +1,5 @@
 
-@unless (count($custom_fields)==0)   
+@if (count($custom_fields)>0)   
 <input type="hidden" id="custom_fields_count" value="{{count($custom_fields)}}">
 @foreach($custom_fields as $field)
 <div class="row">

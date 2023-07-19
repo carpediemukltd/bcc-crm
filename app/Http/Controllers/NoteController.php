@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class NoteController extends Controller
 {
     protected $data;
-    public function listNote(Request $request, $contact_id)
+    public function listNote($contact_id)
     {
         $this->data['notes'] = Note::where(['contact_id' => $contact_id])->join('users', function ($join) {
             $join->on('users.id', '=', 'notes.user_id');
@@ -48,7 +48,7 @@ class NoteController extends Controller
                 return "Unknown Error occurred.";
             }
         } else {
-            return "Invalid Request";
+            return response(['error_msg' => 'Invalid Request'], 403);
         }
     }
 
@@ -65,7 +65,7 @@ class NoteController extends Controller
             $this_note = Note::whereId($id)->first();
 
             if ($this_note->user_id != $user->id || $this_note->contact_id != $request->contact_id) {
-                return response(['error' => 'Invalid Request'], 403);
+                return response(['error_msg' => 'Invalid Request'], 403);
             }
 
             $update_data = [
@@ -98,7 +98,7 @@ class NoteController extends Controller
             $this_note = Note::whereId($id)->first();
 
             if ($this_note->user_id != $user->id || $this_note->contact_id != $request->contact_id) {
-                return response(['error' => 'Invalid Request'], 403);
+                return response(['error_msg' => 'Invalid Request'], 403);
             }
             Note::whereId($id)->delete();
 

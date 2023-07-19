@@ -66,7 +66,10 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::any('contact/{id}/deals/add', [UserController::class, 'dealsAdd'])->name('user.deals.add');
         Route::any('contact/{user_id}/deals/edit/{id}', [UserController::class, 'dealsEdit'])->name('user.deals.edit');
 
-        Route::any('note/add', [NoteController::class, 'noteAdd'])->name('note.add');
+        Route::get('notes/{contact_id}', [NoteController::class, 'listNote'])->name('note.list');
+        Route::any('note/add', [NoteController::class, 'addNote'])->name('note.add');
+        Route::post('note/edit/{id}', [NoteController::class, 'editNote'])->name('note.edit');
+        Route::post('note/delete/{id}', [NoteController::class, 'deleteNote'])->name('note.delete');
 
         Route::get('pipelineStages/{id}/{stage_id?}', [UserController::class, 'getPipelineStages']);
         Route::any('pipeline/{action}/{id?}', [UserController::class, 'pipelines'])->name('pipeline');

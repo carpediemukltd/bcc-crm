@@ -425,20 +425,8 @@
                      </div>
                      <br />
                      <div class="mt-2">
-                        <h6 class="mb-1">Previous Notes: (<span id="show_previous_notes">0</span>)</h6>
                         <div id="notes">
-                           @if (count($notes)==0)
-                              <p>No notes found.</p>
-                           @else
-                           @foreach($notes as $note)
-                              <div class="nav-item mb-3 p-3" style="border: 1px solid #eee; border-radius:3px; ">
-                              <p>{{$note->note}}</p>
-                              <b>By:</b> <span>{{$note->first_name}} {{$note->last_name}}</span> (<span>{{$note->role}}</span>)
-                              <b>at:</b> <span>{{date("m/d/Y, H:i:s",strtotime($note->created_at))}}</span>   
-                              <br />
-                              </div>
-                           @endforeach
-                           @endif
+                           @include('note.list')
                         </div>
                      </div>
                   </div>
@@ -542,29 +530,101 @@
 $(document).ready(function(){
   $('#show_previous_notes').html($('#previous_notes').val());
 });
+   function listNotes(){
+      $('#notes').html('Loading...');
+      $.get({
+          url: "{{ route('note.list', $id) }}",
+          success: function(res){
+            $('#no_notes_found').hide();
+              $('#notes').html(res);
+          }
+        });
+   }
    function saveNote(){
-      var ENDPOINT = "{{ route('note.add') }}";
       var contact_id = $('#contact_id').val();
       var note = $('#note').val();
       if(note!==''){
         $('#show_loading').show();
         $.post({
-          url: ENDPOINT,
+          url: "{{ route('note.add') }}",
           type: 'POST',
           data: {_token:"{{ csrf_token() }}", contact_id:contact_id, note:note},
           success: function(res){
+            $('#no_notes_found').hide();
             $('#show_loading').hide();
             $('#previous_notes').val(parseInt($('#previous_notes').val())+1);
             $('#show_previous_notes').html($('#previous_notes').val());
             $('#note').val('');
-            var date_submitted = new Date(res.created_at).toLocaleString("en-US", {timeZone: "America/New_York"});
-            var data = "<div class='nav-item mb-3 p-3' style='border: 1px solid #ccc;'><p>"+res.note+"</p><b>By:</b> <span>"+res.first_name+ " " +res.last_name + "</span> (<span>"+res.role+"</span>) <b>at:</b> <span>"+date_submitted+"</span><br /></div>";
-              $('#notes').prepend(data);
+            $('#notes').html(res);
           }
         });
       }
     }
 
+  function showEditNote(id,user_id) {
+   $('#show_note_'+id).hide();
+   $('#show_edit_note_'+id).show();
+   
+   $('#note_rights_'+id).hide();
+   $('#note_save_rights_'+id).show();
+   $('#l_'+id).hide();
+   console.log('showEditNote',id,user_id);
+  }
+
+  function cancelEdit(id,user_id) {
+   $('#show_note_'+id).show();
+   $('#show_edit_note_'+id).hide();
+   
+   $('#note_rights_'+id).show();
+   $('#note_save_rights_'+id).hide();
+   $('#l_'+id).hide();
+   console.log('cancelEdit',id,user_id);
+  }
+
+  function saveEditNote(id,user_id) {
+   var contact_id = $('#contact_id').val();
+      var note = $('#note_'+id).val();
+      if(note!==''){
+        $('#l_'+id).html($('#show_loading').html());
+        $('#l_'+id).show();
+        var url ="{{ route('note.edit',':note_id') }}";
+        url = url.replace(':note_id', id);
+        $.post({
+          url: url,
+          type: 'POST',
+          data: {_token:"{{ csrf_token() }}", id:id, contact_id:contact_id, user_id:user_id, note:note},
+          success: function(res){
+            $('#notes').html(res);
+          }
+        });
+      }
+   console.log('saveEditNote',id,user_id);
+  }
+
+  function deleteNote(id,user_id) {
+   var contact_id = $('#contact_id').val();
+      var r=confirm('Are you sure you want to delete this note?');
+      
+      if(r){
+         
+        $('#l_'+id).html($('#show_loading').html());
+        $('#l_'+id).show();
+        
+      var url ="{{ route('note.delete',':note_id') }}";
+        url = url.replace(':note_id', id);
+
+        $.post({
+          url: url,
+          type: 'POST',
+          data: {_token:"{{ csrf_token() }}", id:id, contact_id:contact_id, user_id:user_id},
+          success: function(res){
+            $('#notes').html(res);
+          }
+        });
+      }
+      
+   console.log('deleteNote',id,user_id);
+  }
   function myFunction() {
     var x = document.getElementById("user_edit_view");
     if (x.style.display === "none") {

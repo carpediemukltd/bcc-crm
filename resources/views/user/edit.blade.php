@@ -116,7 +116,7 @@
                         </div>
                      </div>
 
-                     @unless (count($custom_fields)==0)
+                     @if (count($custom_fields)>0)
                      <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
                      
                      <div class="row">

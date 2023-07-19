@@ -138,7 +138,7 @@
                             <label for="phone_number">Phone number</label>
                         </div>
                      </div>     
-                     @unless (count($custom_fields)==0)
+                     @if (count($custom_fields)>0)
                      <input type="hidden" id="show_custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
                      @foreach($custom_fields as $field)
                      <div class="col-md-12">
@@ -403,7 +403,6 @@
                                  <div class="form-group">
                                     <div class="d-flex justify-content-between align-items-center">
                                        <input type="hidden" id="contact_id" name="contact_id" value="{{$rs_user->id}}">
-                                       <input type="hidden" id="previous_notes" name="previous_notes" value="{{count($notes)}}">
                                        <textarea type="text" class="form-control notes_field" id="note" name="note" placeholder="Note" required></textarea>
                                     </div>
                                  </div>
@@ -454,7 +453,7 @@
                      <div class="parent-wrapper label-1">
                         <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="CRM">
                            <div id="deals_list">
-                              @unless (!$deals->isEmpty())
+                              @if (count($deals) > 0)
                               @foreach($deals as $deal)
                               <div class="nav-item">
                               <span>{{$deal->title}} ({{$deal->deal_owner}})</span>
@@ -529,19 +528,15 @@
    </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){
-  $('#show_previous_notes').html($('#previous_notes').val());
-});
-   function listNotes(){
+   /* function listNotes(){
       $('#notes').html('Loading...');
       $.get({
           url: "{{ route('note.list', $id) }}",
           success: function(res){
-            $('#no_notes_found').hide();
               $('#notes').html(res);
           }
         });
-   }
+   } */
    function saveNote(){
       var contact_id = $('#contact_id').val();
       var note = $('#note').val();
@@ -552,10 +547,7 @@ $(document).ready(function(){
           type: 'POST',
           data: {_token:"{{ csrf_token() }}", contact_id:contact_id, note:note},
           success: function(res){
-            $('#no_notes_found').hide();
             $('#show_loading').hide();
-            $('#previous_notes').val(parseInt($('#previous_notes').val())+1);
-            $('#show_previous_notes').html($('#previous_notes').val());
             $('#note').val('');
             $('#notes').html(res);
           }
@@ -566,21 +558,17 @@ $(document).ready(function(){
   function showEditNote(id,user_id) {
    $('#show_note_'+id).hide();
    $('#show_edit_note_'+id).show();
-   
    $('#note_rights_'+id).hide();
    $('#note_save_rights_'+id).show();
    $('#l_'+id).hide();
-   console.log('showEditNote',id,user_id);
   }
 
   function cancelEdit(id,user_id) {
    $('#show_note_'+id).show();
    $('#show_edit_note_'+id).hide();
-   
    $('#note_rights_'+id).show();
    $('#note_save_rights_'+id).hide();
    $('#l_'+id).hide();
-   console.log('cancelEdit',id,user_id);
   }
 
   function saveEditNote(id,user_id) {
@@ -597,24 +585,25 @@ $(document).ready(function(){
           data: {_token:"{{ csrf_token() }}", id:id, contact_id:contact_id, user_id:user_id, note:note},
           success: function(res){
             $('#notes').html(res);
+          },
+          error: function(res){
+            if(res.responseJSON.error_msg){
+               $('#l_'+id).hide();
+               alert(res.responseJSON.error_msg);
+            }
           }
         });
       }
-   console.log('saveEditNote',id,user_id);
   }
 
   function deleteNote(id,user_id) {
    var contact_id = $('#contact_id').val();
       var r=confirm('Are you sure you want to delete this note?');
-      
       if(r){
-         
         $('#l_'+id).html($('#show_loading').html());
         $('#l_'+id).show();
-        
-      var url ="{{ route('note.delete',':note_id') }}";
+        var url ="{{ route('note.delete',':note_id') }}";
         url = url.replace(':note_id', id);
-
         $.post({
           url: url,
           type: 'POST',
@@ -624,8 +613,6 @@ $(document).ready(function(){
           }
         });
       }
-      
-   console.log('deleteNote',id,user_id);
   }
   function myFunction() {
     var x = document.getElementById("user_edit_view");

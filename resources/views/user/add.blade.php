@@ -116,7 +116,7 @@
                      </div>
 
                      <div class="row">
-                        @unless (count($roles)==0)
+                        @if (count($roles)>0)
                      <input type="hidden" id="roles_count"  name="roles_count" value="{{count($roles)}}">
                         <div class="col-6">
                            <div class="form-group">

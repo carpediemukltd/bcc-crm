@@ -193,8 +193,9 @@ class UserController extends Controller
                     $join->on('user_owners.owner_id', '=', DB::raw($user_id));
                 });
             })
+            ->select('users.*')
             ->orderBy('users.id', 'DESC')->paginate(10);
-
+            
         if ($request->ajax())
             return view('user.user_pagination', $this->data)->render();
         else

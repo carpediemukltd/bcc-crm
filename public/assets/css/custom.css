@@ -949,7 +949,7 @@ table.stage tr:hover{
 }
 .contact_user_details a{
   display: flex;
-  margin-bottom: 10px;
+  margin-right: 10px;
   align-items: center;
 }
 .form-control:disabled {

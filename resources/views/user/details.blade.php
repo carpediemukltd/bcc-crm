@@ -32,14 +32,14 @@
 </div>
 <div class="content-inner container-fluid pb-0" id="page_layout">
    <div class="row">
-      
-      <div class="col-lg-4">
-
+      <div class="col-lg-12">
          <div class="card">
-            <div class="card-body border_bottom">
+            <div class="card-body">
+               <div class="d-flex flex-wrap align-items-center justify-content-between">
                <div class="mb-3 mb-sm-0 contact_user_details">
                   <h4 class="me-2 mb-3 h4">{{ucwords($rs_user->first_name. ' '. $rs_user->last_name)}}</h4>
                   <!-- <span> - Web Developer</span> -->
+                  <div class="d-flex flex-wrap align-items-center justify-content-between">
                   <a class="" href="mailto:someone@something.com">
                      <i class="user_icon icon">
                         <svg width="22" class="icon-22" viewBox="0 0 22 22" fill="currentColor" xmlns="">
@@ -59,8 +59,31 @@
                      </i>
                      <span>+8334448877</span>
                   </a>
+                  </div>
+               </div>
+               
+               <ul class="d-flex nav nav-pills mb-0 text-center profile-tab" data-toggle="slider-tab" id="profile-pills-tab" role="tablist">
+                  <li class="nav-item">
+                     <a class="nav-link active show" data-bs-toggle="tab" href="#profile-feed" role="tab" aria-selected="false">Meetings</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" data-bs-toggle="tab" href="#profile-activity" role="tab" aria-selected="false">Activity</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" data-bs-toggle="tab" href="#profile-friends" role="tab" aria-selected="false">Emails</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" data-bs-toggle="tab" href="#profile-notes" role="tab" aria-selected="false">Notes</a>
+                  </li>
+               </ul>
+            
                </div>
             </div>
+         </div>
+      </div>
+      <div class="col-lg-4">
+
+         <div class="card">
             <div class="card-header">
                <div class="header-title">
                   <h4 class="card-title">Contact Forms</h4>
@@ -161,22 +184,7 @@
       </div>
       <div class="col-lg-5 p-0">
          <div class="card">
-            <div class="card-body border_bottom">
-               <ul class="d-flex nav nav-pills mb-0 text-center profile-tab" data-toggle="slider-tab" id="profile-pills-tab" role="tablist">
-                  <li class="nav-item">
-                     <a class="nav-link active show" data-bs-toggle="tab" href="#profile-feed" role="tab" aria-selected="false">Meetings</a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" data-bs-toggle="tab" href="#profile-activity" role="tab" aria-selected="false">Activity</a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" data-bs-toggle="tab" href="#profile-friends" role="tab" aria-selected="false">Emails</a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" data-bs-toggle="tab" href="#profile-notes" role="tab" aria-selected="false">Notes</a>
-                  </li>
-               </ul>
-            </div>
+            
             <div class="profile-content tab-content iq-tab-fade-up">
                <div id="profile-feed" class="tab-pane fade active show">
                   <div class="card-body p-0">

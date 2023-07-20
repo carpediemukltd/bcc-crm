@@ -35,13 +35,42 @@
 </div>
 <div class="content-inner container-fluid pb-0" id="page_layout">
    <div class="row">
-      <!-- <div class="col-lg-12">
+      <div class="col-lg-12">
          <div class="card">
             <div class="card-body">
-               
+            <div class="d-flex flex-wrap align-items-center justify-content-between">
+                           <div class="d-flex flex-wrap align-items-center">
+                              <div class="profile-img position-relative me-3 mb-3 mb-lg-0 profile-logo profile-logo1">
+                                 <img src="../../assets/images/avatars/01.png" alt="User-Profile" class="theme-color-default-img img-fluid rounded-pill avatar-100" loading="lazy">
+                                 <img src="../../assets/images/avatars/avtar_1.png" alt="User-Profile" class="theme-color-purple-img img-fluid rounded-pill avatar-100" loading="lazy">
+                                 <img src="../../assets/images/avatars/avtar_2.png" alt="User-Profile" class="theme-color-blue-img img-fluid rounded-pill avatar-100" loading="lazy">
+                                 <img src="../../assets/images/avatars/avtar_4.png" alt="User-Profile" class="theme-color-green-img img-fluid rounded-pill avatar-100" loading="lazy">
+                                 <img src="../../assets/images/avatars/avtar_5.png" alt="User-Profile" class="theme-color-yellow-img img-fluid rounded-pill avatar-100" loading="lazy">
+                                 <img src="../../assets/images/avatars/avtar_3.png" alt="User-Profile" class="theme-color-pink-img img-fluid rounded-pill avatar-100" loading="lazy">
+                              </div>
+                              <div class="d-flex flex-wrap align-items-center mb-3 mb-sm-0">
+                                 <h4 class="me-2 h4">Austin Robertson</h4>
+                                 <span> - Web Developer</span>
+                              </div>
+                           </div>
+                           <ul class="d-flex nav nav-pills mb-0 text-center profile-tab nav-slider" data-toggle="slider-tab" id="profile-pills-tab" role="tablist">
+                              <li class="nav-item" role="presentation">
+                                 <a class="nav-link active show" data-bs-toggle="tab" href="#profile-feed" role="tab" aria-selected="true">Feed</a>
+                              </li>
+                              <li class="nav-item" role="presentation">
+                                 <a class="nav-link" data-bs-toggle="tab" href="#profile-activity" role="tab" aria-selected="false" tabindex="-1">Activity</a>
+                              </li>
+                              <li class="nav-item" role="presentation">
+                                 <a class="nav-link" data-bs-toggle="tab" href="#profile-friends" role="tab" aria-selected="false" tabindex="-1">Friends</a>
+                              </li>
+                              <li class="nav-item" role="presentation">
+                                 <a class="nav-link" data-bs-toggle="tab" href="#profile-profile" role="tab" aria-selected="false" tabindex="-1">Profile</a>
+                              </li>
+                           <div class="nav-slider-thumb position-absolute nav-link" style="padding: 0px; width: 61px; height: 35px; transform: translate3d(0px, 0px, 0px); transition: all 300ms ease-in-out 0s;" aria-selected="false" tabindex="-1" role="tab"><a class="nav-link active show" data-bs-toggle="tab" href="#profile-feed" role="tab" aria-selected="true"></a></div></ul>
+                        </div>
             </div>
          </div>
-      </div> -->
+      </div>
       <div class="col-lg-4">
          <div class="card">
             <div class="card-body border_bottom">

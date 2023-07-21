@@ -69,7 +69,7 @@ class NoteController extends Controller
             }
 
             $update_data = [
-                'note'   => $request->note,
+                'note' => $request->note,
             ];
 
             Note::whereId($id)->update($update_data);

@@ -5,9 +5,11 @@ use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckStatus;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\DealController;
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckSuperAdmin;
-use App\Http\Controllers\NoteController;
+use App\Http\Middleware\CheckSameCompany;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\Auth\AuthController;
@@ -62,9 +64,11 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::any('contact/edit/{id}', [UserController::class, 'editUser'])->name('user.edit');
         Route::any('contact/{id}/details', [UserController::class, 'userDetails'])->name('user.details');
 
-        Route::get('contact/{id}/deals', [UserController::class, 'userDeals'])->name('user.deals');
-        Route::any('contact/{id}/deals/add', [UserController::class, 'dealsAdd'])->name('user.deals.add');
-        Route::any('contact/{user_id}/deals/edit/{id}', [UserController::class, 'dealsEdit'])->name('user.deals.edit');
+        Route::get('contact/{id}/deals', [DealController::class, 'userDeals'])->name('user.deals');
+        Route::any('contact/{id}/deals/add', [DealController::class, 'dealsAdd'])->name('user.deals.add');
+        Route::any('contact/{user_id}/deals/edit/{id}', [DealController::class, 'dealsEdit'])->name('user.deals.edit');
+        Route::get('deal/{id}/exportcsv', [DealController::class, 'exportCSV'])->name('deal.export.csv');
+        Route::get('deal/{id}/exportxls', [DealController::class, 'exportXLS'])->name('deal.export.xls');
 
         Route::get('notes/{contact_id}', [NoteController::class, 'listNote'])->name('note.list');
         Route::any('note/add', [NoteController::class, 'addNote'])->name('note.add');

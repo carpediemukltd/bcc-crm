@@ -37,7 +37,7 @@
             <div class="card-body">
                <div class="d-flex flex-wrap align-items-center justify-content-between">
                <div class="mb-3 mb-sm-0 contact_user_details">
-                  <h4 class="me-2 mb-3 h4">{{ucwords($rs_user->first_name. ' '. $rs_user->last_name)}}</h4>
+                  <h4 class="me-2 mb-3 h4">{{ucwords($user->first_name. ' '. $user->last_name)}}</h4>
                   <!-- <span> - Web Developer</span> -->
                   <div class="d-flex flex-wrap align-items-center justify-content-between">
                   <a class="" href="mailto:someone@something.com">
@@ -95,7 +95,7 @@
                      <!-- <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" class="form-control border_none" id="first_name" placeholder="First Name" value="{{$rs_user->first_name}}">
+                              <input type="text" class="form-control border_none" id="first_name" placeholder="First Name" value="{{$user->first_name}}">
                               <label for="first_name">First Name</label>
                            </div>
                         </div>
@@ -103,7 +103,7 @@
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" class="form-control border_none" id="last_name" placeholder="Last Name" value="{{$rs_user->last_name}}">
+                              <input type="text" class="form-control border_none" id="last_name" placeholder="Last Name" value="{{$user->last_name}}">
                               <label for="last_name">Last Name</label>
                            </div>
                         </div>
@@ -111,7 +111,7 @@
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" class="form-control border_none" id="email" value="{{$rs_user->email}}" disabled>
+                              <input type="text" class="form-control border_none" id="email" value="{{$user->email}}" disabled>
                               <label for="email">Email</label>
                            </div>
                         </div>
@@ -119,7 +119,7 @@
                      <div class="row">
                         <div class="col">
                            <div class="form-group form-floating">
-                              <input type="text" class="form-control border_none" id="phone_number" placeholder="Phone number" value="{{$rs_user->phone_number}}">
+                              <input type="text" class="form-control border_none" id="phone_number" placeholder="Phone number" value="{{$user->phone_number}}">
                               <label for="phone_number">Phone number</label>
                            </div>
                         </div>
@@ -139,25 +139,25 @@
                      @csrf
                      <div class="col-sm-6 col-md-12">
                         <div class="form-floating">
-                           <input type="text" class="form-control border_none" id="first_name" placeholder="First Name" name="first_name" value="{{$rs_user->first_name}}" required>
+                           <input type="text" class="form-control border_none" id="first_name" placeholder="First Name" name="first_name" value="{{$user->first_name}}" required>
                            <label for="first_name">First Name</label>
                         </div>
                      </div>
                      <div class="col-sm-6 col-md-12">
                         <div class="form-floating">
-                           <input type="text" class="form-control border_none" id="last_name" placeholder="Last Name" name="last_name" value="{{$rs_user->last_name}}" required>
+                           <input type="text" class="form-control border_none" id="last_name" placeholder="Last Name" name="last_name" value="{{$user->last_name}}" required>
                            <label for="last_name">Last Name</label>
                         </div>
                      </div>
                      <div class="col-sm-6 col-md-12">
                         <div class="form-floating">
-                           <input class="form-control border_none" id="email" type="text" placeholder="Email" name="email" value="{{$rs_user->email}}" disabled>
+                           <input class="form-control border_none" id="email" type="text" placeholder="Email" name="email" value="{{$user->email}}" disabled>
                            <label for="email">Email</label>
                         </div>
                      </div>
                      <div class="col-md-12 ">
                         <div class="form-floating">
-                           <input type="text" class="form-control border_none" id="phone_number" placeholder="Phone number" name="phone_number" value="{{$rs_user->phone_number}}">
+                           <input type="text" class="form-control border_none" id="phone_number" placeholder="Phone number" name="phone_number" value="{{$user->phone_number}}">
                             <label for="phone_number">Phone number</label>
                         </div>
                      </div>     
@@ -410,7 +410,7 @@
                               <div class="col">
                                  <div class="form-group">
                                     <div class="d-flex justify-content-between align-items-center">
-                                       <input type="hidden" id="contact_id" name="contact_id" value="{{$rs_user->id}}">
+                                       <input type="hidden" id="contact_id" name="contact_id" value="{{$user->id}}">
                                        <textarea type="text" class="form-control notes_field" id="note" name="note" placeholder="Note" required></textarea>
                                     </div>
                                  </div>
@@ -472,12 +472,12 @@
                            </div>
                            <br style="clear: both" />
                            <li class="nav-item">
-                              <a class="nav-link" href="{{route('user.deals', $rs_user->id)}}" data-bs-toggle="" aria-expanded="false">
+                              <a class="nav-link" href="{{route('user.deals', $user->id)}}" data-bs-toggle="" aria-expanded="false">
                                  <div class="d-flex align-items-center"><span class="nav-link-text"> All Deals</span></div>
                               </a>
                            </li>
                            <li class="nav-item">
-                              <a class="nav-link" href="{{route('user.deals.add', $rs_user->id)}}" data-bs-toggle="" aria-expanded="false">
+                              <a class="nav-link" href="{{route('user.deals.add', $user->id)}}" data-bs-toggle="" aria-expanded="false">
                                  <div class="d-flex align-items-center"><span class="nav-link-text">Add New Deal</span></div>
                               </a>
                            </li>

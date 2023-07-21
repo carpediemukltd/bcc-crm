@@ -206,7 +206,22 @@ class UserController extends Controller
     {
         $this->data['current_slug']  = 'Contact Details';
         $this->data['slug']          = 'user_details';
-        $this->data['rs_user']       = User::where(['id' => $id])->first();
+        
+        $company_id = 0;
+        $user = auth()->user();
+        if ($user->role != 'superadmin') {
+            $company_id = $this->user->company_id;
+        }
+        $this->data['user']       = User::where(['id' => $id])
+        ->when(($company_id > 0), function ($q) use ($company_id) {
+            $q->where('company_id', '=', $company_id);
+        })->first();
+        if(!$this->data['user']){
+            return redirect(route('dashboard'))->with('error','Access Denied.');
+        }elseif(($this->data['user'])->role != 'user'){
+            return redirect(route('dashboard'))->with('error','Access Denied.');
+        }
+
         $this->data['notes'] = Note::where(['contact_id' => $id])->join('users', function ($join) {
             $join->on('users.id', '=', 'notes.user_id');
         })
@@ -248,70 +263,26 @@ class UserController extends Controller
         }
     } // userDetails
 
-    public function userDeals($id)
-    {
-        $this->data['current_slug'] = 'Deals';
-        $this->data['slug']         = 'user_deals';
-        $this->data['current_user_id'] = $id;
-        $this->data['rs_deals'] = Deals::where('user_id', $id)->orderBy('id', 'DESC')->paginate(10);
-        return view("user.deals.list", $this->data);
-    } // userDeals
-
-    public function dealsAdd(Request $request, $id)
-    {
-        if ($request->isMethod('post')) {
-            Deals::create([
-                'title'       => $request->title,
-                'user_id'     => $id,
-                'pipeline_id' => $request->pipeline_id,
-                'stage_id'    => $request->stage_id,
-                'amount'      => $request->amount,
-                'deal_owner'  => $request->deal_owner,
-                'lead_source' => $request->lead_source
-            ]);
-            return redirect(route('user.deals', $id))->withSuccess('Deal Created Successfully.')->withInput();
-        } else if ($request->isMethod('get')) {
-            $this->data['current_slug']    = 'Add Deal';
-            $this->data['slug']            = 'user_add_deal';
-            $this->data['current_user_id'] = $id;
-
-            $this->data['rs_pipelines'] = Pipelines::orderBy('title', 'ASC')->get();
-            $this->data['rs_stages']    = Stages::orderBy('title', 'ASC')->get();
-            return view("user.deals.add", $this->data);
-        }
-    } // dealsAdd
-
-    public function dealsEdit(Request $request, $user_id, $id)
-    {
-        if ($request->isMethod('post')) {
-            Deals::where('id', $id)->update([
-                'title'       => $request->title,
-                'pipeline_id' => $request->pipeline_id,
-                'stage_id'    => $request->stage_id,
-                'amount'      => $request->amount,
-                'deal_owner'  => $request->deal_owner,
-                'lead_source' => $request->lead_source
-            ]);
-            return redirect(route('user.deals', $user_id))->withSuccess('Deal Update Successfully.')->withInput();
-        } else if ($request->isMethod('get')) {
-            $this->data['current_slug']    = 'Edit Deal';
-            $this->data['slug']            = 'user_edit_deal';
-            $this->data['current_user_id'] = $user_id;
-
-            $this->data['rs_pipelines'] = Pipelines::orderBy('title', 'ASC')->get();
-            $this->data['rs_stages']    = Stages::orderBy('title', 'ASC')->get();
-            $this->data['rs_deal']      = Deals::where('id', $id)->first();
-            return view("user.deals.edit", $this->data);
-        }
-    } // dealsEdit
-
     public function editUser(Request $request, $id)
     {
         $this->data['current_slug'] = 'Edit Contact';
         $this->data['slug']         = 'edit_user';
-        $this->data['all_status']   = ['inactive', 'active', 'deleted', 'banned'];
+        $this->data['all_status']   = ['inactive', 'active', 'archived', 'deleted', 'banned'];
 
+        $company_id = 0;
+        $user = auth()->user();
+        if ($user->role != 'superadmin') {
+            $company_id = $this->user->company_id;
+        }
+        $this->data['user']       = User::where(['id' => $id])
+        ->when(($company_id > 0), function ($q) use ($company_id) {
+            $q->where('company_id', '=', $company_id);
+        })->first();
+        if(!$this->data['user']){
+            return redirect(route('dashboard'))->with('error','Access Denied.');
+        }
         $this->data['custom_fields'] = CustomFields::all();
+
         $this->data['user_details']  = UserDetails::where('user_id', '=', $id)->get();
 
         $this->data['id'] = $id;
@@ -344,7 +315,6 @@ class UserController extends Controller
             }
             return redirect(url('contacts'))->withSuccess('Contact Updated Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
-            $this->data['user'] = User::where('id', $id)->first();
             return view("user.edit", $this->data);
         }
     } // editUser
@@ -523,7 +493,36 @@ class UserController extends Controller
     public function exportXLS()
     {
         $file_name = 'contacts.xls';
-        $users = User::where('role', '=', 'user')->get();
+        $company_id = 0;
+        $user = auth()->user();
+
+        $user_id = $user->id;
+        $roles = array('');
+        if ($user->role == 'superadmin') {
+            $roles = array('admin', 'owner', 'user');
+        } else if ($user->role == 'admin') {
+            $roles = array('admin', 'owner', 'user');
+        } else if ($user->role == 'owner') {
+            $roles = array('user');
+        } else if ($user->role == 'user') {
+            $roles = array('no-permission');
+        }
+        if ($user->role != 'superadmin') {
+            $company_id = $this->user->company_id;
+        }
+
+        $users = User::whereIn('role', $roles)->where('users.id', '!=', $user_id)
+            ->when(($company_id > 0), function ($q) use ($company_id) {
+                $q->where('company_id', '=', $company_id);
+            })
+            ->when((auth()->user()->role == 'owner'), function ($q) use ($user_id) {
+                $q->join('user_owners', function ($join) use ($user_id) {
+                    $join->on('users.id', '=', 'user_owners.user_id');
+                    $join->on('user_owners.owner_id', '=', DB::raw($user_id));
+                });
+            })
+            ->select('users.*')
+            ->orderBy('users.id', 'DESC')->get();
 
         $file = new Spreadsheet();
         $active_sheet = $file->getActiveSheet();
@@ -579,7 +578,38 @@ class UserController extends Controller
     public function exportCSV()
     {
         $file_name = 'contacts.csv';
-        $users = User::where('role', '=', 'user')->get();
+        $company_id = 0;
+        $user = auth()->user();
+
+        $user_id = $user->id;
+        $roles = array('');
+        if ($user->role == 'superadmin') {
+            $roles = array('admin', 'owner', 'user');
+        } else if ($user->role == 'admin') {
+            $roles = array('admin', 'owner', 'user');
+        } else if ($user->role == 'owner') {
+            $roles = array('user');
+        } else if ($user->role == 'user') {
+            $roles = array('no-permission');
+        }
+        if ($user->role != 'superadmin') {
+            $company_id = $this->user->company_id;
+        }
+
+        $users = User::whereIn('role', $roles)->where('users.id', '!=', $user_id)
+            ->when(($company_id > 0), function ($q) use ($company_id) {
+                $q->where('company_id', '=', $company_id);
+            })
+            ->when((auth()->user()->role == 'owner'), function ($q) use ($user_id) {
+                $q->join('user_owners', function ($join) use ($user_id) {
+                    $join->on('users.id', '=', 'user_owners.user_id');
+                    $join->on('user_owners.owner_id', '=', DB::raw($user_id));
+                });
+            })
+            ->select('users.*')
+            ->orderBy('users.id', 'DESC')->get();
+
+
         $columns = array('First Name', 'Last Name', 'Email', 'Phone Number', 'Status', 'Created At');
 
         $file = fopen($path = storage_path($file_name), 'w');

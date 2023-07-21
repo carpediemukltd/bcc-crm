@@ -451,10 +451,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                            <li>
-                              <span class="user_list_detail">Wasiq Carpe Diem</span>
-                           </li>
-                           <li>
-                              <span class="user_list_detail">Company </span>
+                              <span class="user_list_detail">{{Auth()->user()->first_name}} {{Auth()->user()->last_name}}</span>
                            </li>
                            <li>
                               <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>

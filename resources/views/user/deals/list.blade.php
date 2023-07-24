@@ -81,7 +81,9 @@
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Amount</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Deal Owner</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Source</th>
-                                    <th style="min-width: 100px" class="sorting" tabindex="0" aria-controls="user-list-table">Action</th>
+                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">Pipeline</th>
+                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">Stage</th>
+                                    <th style="min-width: 100px" class="sorting" tabindex="0" aria-controls="user-list-table">Actions</th>
                                  </tr>
                               </thead>
                               <tbody>
@@ -92,6 +94,8 @@
                                           <td>{{$rec->amount}}</td>
                                           <td>{{$rec->deal_owner}}</td>
                                           <td>{{$rec->lead_source}}</td>
+                                          <td>{{$rec->pipeline}}</td>
+                                          <td>{{$rec->stage}}</td>
                                           <td>
                                              <div class="flex align-items-center list-user-action">
                                                 <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-original-title="Edit" href="<?= url('contact/'.$current_user_id.'/deals/edit/'.$rec->id);?>" aria-label="Edit" data-bs-original-title="Edit">

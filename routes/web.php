@@ -12,7 +12,9 @@ use App\Http\Middleware\CheckSuperAdmin;
 use App\Http\Middleware\CheckSameCompany;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\PipelineController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CustomFieldController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 
 
@@ -51,9 +53,14 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::get('companies', [CompanyController::class, 'listCompany'])->name('company.list');
         Route::any('company/edit/{id}', [CompanyController::class, 'editCompany'])->name('company.edit');
         
-        Route::any('customfield/add', [UserController::class, 'addField'])->name('customfield.add');
-        Route::any('customfield', [UserController::class, 'fieldList'])->name('customfield.list');
-        Route::any('customfield/edit/{id}', [UserController::class, 'editField'])->name('customfield.edit');
+        Route::any('customfield/add', [CustomFieldController::class, 'addField'])->name('customfield.add');
+        Route::any('customfield', [CustomFieldController::class, 'fieldList'])->name('customfield.list');
+        Route::any('customfield/edit/{id}', [CustomFieldController::class, 'editField'])->name('customfield.edit');
+        
+        Route::get('pipelineStages/{id}/{stage_id?}', [PipelineController::class, 'getPipelineStages']);
+        Route::any('pipeline/{action}/{id?}', [PipelineController::class, 'pipelines'])->name('pipeline');
+
+        Route::get('stages/{id}', [PipelineController::class, 'stages'])->name('stages');
     });
 
     Route::middleware([CheckStatus::class])->group(function () { // User specific methods
@@ -75,10 +82,6 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::post('note/edit/{id}', [NoteController::class, 'editNote'])->name('note.edit');
         Route::post('note/delete/{id}', [NoteController::class, 'deleteNote'])->name('note.delete');
 
-        Route::get('pipelineStages/{id}/{stage_id?}', [UserController::class, 'getPipelineStages']);
-        Route::any('pipeline/{action}/{id?}', [UserController::class, 'pipelines'])->name('pipeline');
-
-        Route::get('stages/{id}', [UserController::class, 'stages'])->name('stages');
     });
 
     Route::middleware([CheckAdmin::class])->group(function () {

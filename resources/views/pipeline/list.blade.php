@@ -67,9 +67,8 @@
                            <table id="user-list-table" class="table table-striped dataTable no-footer" role="grid" data-toggle="" aria-describedby="user-list-table_info">
                               <thead>
                                  <tr class="ligth">
-                                    <th width="100%" class="sorting" tabindex="0" aria-controls="user-list-table">Tile</th>
-                                    <th width="100%" class="sorting text-center" tabindex="0" aria-controls="user-list-table">Stages</th>
-                                    <th class="sorting text-center" tabindex="0" aria-controls="user-list-table">Action</th>
+                                    <th width="100%" class="sorting" tabindex="0" aria-controls="user-list-table">Title</th>
+                                    <th class="sorting text-center" tabindex="0" aria-controls="user-list-table">Actions</th>
                                  </tr>
                               </thead>
                               <tbody>
@@ -77,17 +76,6 @@
                                     @foreach($rs_pipeline as $rec)
                                        <tr class="odd">
                                           <td>{{$rec->title}}</td>
-                                          <td class="text-center">
-                                             <div class="flex align-items-center list-user-action">
-                                                <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-original-title="View Stages" href="{{ route('stages', $rec->id) }}" aria-label="View Stages" data-bs-original-title="View Stages">
-                                                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                      <path d="M2 4C2 2.89543 2.89543 2 4 2H9C10.1046 2 11 2.89543 11 4V20C11 21.1046 10.1046 22 9 22H4C2.89543 22 2 21.1046 2 20V4Z" fill="currentColor"></path>
-                                                      <path d="M13 4C13 2.89543 13.8954 2 15 2H20C21.1046 2 22 2.89543 22 4V9C22 10.1046 21.1046 11 20 11H15C13.8954 11 13 10.1046 13 9V4Z" fill="currentColor"></path>
-                                                      <path d="M13 15C13 13.8954 13.8954 13 15 13H20C21.1046 13 22 13.8954 22 15V20C22 21.1046 21.1046 22 20 22H15C13.8954 22 13 21.1046 13 20V15Z" fill="currentColor"></path>
-                                                   </svg>
-                                                </a>
-                                             </div>
-                                          </td>
                                           <td class="text-center">
                                              <div class="flex align-items-center list-user-action">
                                                 <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-original-title="Edit" href="{{ route('pipeline', ['action' => 'edit', 'id' => $rec->id]) }}" aria-label="Edit" data-bs-original-title="Edit">

@@ -50,9 +50,16 @@ class DealController extends Controller
             return redirect(route('dashboard'))->with('error','Access Denied.');
         }
 
-
         $this->data['current_user_id'] = $id;
-        $this->data['rs_deals'] = Deals::where('user_id', $id)->orderBy('id', 'DESC')->paginate(10);
+        $this->data['rs_deals'] = Deals::where('user_id', $id)
+        ->join('pipelines', function ($join) {
+            $join->on('pipelines.id', '=', 'deals.pipeline_id');
+        })
+        ->join('stages', function ($join) {
+            $join->on('stages.id', '=', 'deals.stage_id');
+        })
+        ->select('deals.*', 'pipelines.title as pipeline', 'stages.title as stage')
+        ->orderBy('id', 'DESC')->paginate(10);
         return view("user.deals.list", $this->data);
     } // userDeals
 
@@ -146,8 +153,15 @@ class DealController extends Controller
         }
         
         $file_name = "deals_{$id}.xls";
-        $deals = Deals::where('user_id', $id)->orderBy('id', 'DESC')->get();
-        $columns = array('Title', 'Amount', 'Deal Owner', 'Source', 'Created At');
+        $deals = Deals::where('user_id', $id)
+        ->join('pipelines', function ($join) {
+            $join->on('pipelines.id', '=', 'deals.pipeline_id');
+        })
+        ->join('stages', function ($join) {
+            $join->on('stages.id', '=', 'deals.stage_id');
+        })
+        ->select('deals.*', 'pipelines.title as pipeline', 'stages.title as stage')
+        ->orderBy('id', 'DESC')->get();
         
         $file = new Spreadsheet();
         $active_sheet = $file->getActiveSheet();
@@ -156,14 +170,18 @@ class DealController extends Controller
         $active_sheet->setCellValue('B1', 'Amount');
         $active_sheet->setCellValue('C1', 'Deal Owner');
         $active_sheet->setCellValue('D1', 'Source');
-        $active_sheet->setCellValue('E1', 'Created At');
+        $active_sheet->setCellValue('E1', 'Pipeline');
+        $active_sheet->setCellValue('F1', 'Stage');
+        $active_sheet->setCellValue('G1', 'Created At');
         $count=2;
         foreach ($deals as $deal) {
             $active_sheet->setCellValue('A' . $count, $deal->title);
             $active_sheet->setCellValue('B' . $count, $deal->amount);
             $active_sheet->setCellValue('C' . $count, $deal->deal_owner);
             $active_sheet->setCellValue('D' . $count, $deal->lead_source);
-            $active_sheet->setCellValue('E' . $count, $deal->created_at);
+            $active_sheet->setCellValue('E' . $count, $deal->pipeline);
+            $active_sheet->setCellValue('F' . $count, $deal->stage);
+            $active_sheet->setCellValue('G' . $count, $deal->created_at);
             $count++;
         }
 
@@ -189,8 +207,17 @@ class DealController extends Controller
         }
         
         $file_name = "deals_{$id}.csv";
-        $deals = Deals::where('user_id', $id)->orderBy('id', 'DESC')->get();
-        $columns = array('Title', 'Amount', 'Deal Owner', 'Source', 'Created At');
+        $deals = Deals::where('user_id', $id)
+        ->join('pipelines', function ($join) {
+            $join->on('pipelines.id', '=', 'deals.pipeline_id');
+        })
+        ->join('stages', function ($join) {
+            $join->on('stages.id', '=', 'deals.stage_id');
+        })
+        ->select('deals.*', 'pipelines.title as pipeline', 'stages.title as stage')
+        ->orderBy('id', 'DESC')->get();
+        
+        $columns = array('Title', 'Amount', 'Deal Owner', 'Source', 'Pipeline', 'Stage', 'Created At');
         $file = fopen($path = storage_path($file_name), 'w');
         fputcsv($file, $columns);
 
@@ -200,6 +227,8 @@ class DealController extends Controller
             $row['Amount'] = $deal->amount;
             $row['Deal Owner'] = $deal->deal_owner;
             $row['Source'] = $deal->lead_source;
+            $row['Pipeline'] = $deal->pipeline;
+            $row['Stage'] = $deal->stage;
             $row['Created At']  = $user->created_at;
             fputcsv($file, $row);
         }

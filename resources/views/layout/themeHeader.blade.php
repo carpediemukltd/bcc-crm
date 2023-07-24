@@ -251,6 +251,8 @@
                               </li>
                               @endif
 
+                              
+                              @if (Auth::user()->role == 'superadmin')
                               <li class="nav-item dropdown iq-responsive-menu border-end d-block">
                                  <a class="nav-link <?php if(isset($slug) && in_array($slug, ['pipelines', 'edit_pipeline', 'add_pipeline'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" href="#sidebar-pipelines">
@@ -310,7 +312,6 @@
                                  </ul>
                               </li>
 
-                              @if (Auth::user()->role == 'superadmin')
                               <li class="nav-item dropdown iq-responsive-menu border-end d-block">
                                  <a class="nav-link <?php if(isset($slug) && in_array($slug, ['companies', 'list_company', 'edit_company', 'add_company'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" href="#sidebar-companies">

@@ -54,4 +54,13 @@
    public function dynamicBanner(){
       return view('general.dynamicbanner');
    }
+   public function help(){
+      return view('help');
+   }
+   public function contact(){
+      return view('contact');
+   }
+   public function about(){
+      return view('about');
+   }
  }

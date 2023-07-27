@@ -44,7 +44,9 @@ Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPass
 Route::middleware([CheckStatus::class])->group(function () {
     Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
     Route::get('privacy', [GeneralController::class, 'privacySetting'])->name('privacy');
-
+    Route::get('help', [GeneralController::class, 'help'])->name('help');
+    Route::get('about', [GeneralController::class, 'about'])->name('about');
+    Route::get('contact', [GeneralController::class, 'contact'])->name('contact');
     Route::any('profile', [UserController::class, 'editProfile'])->name('profile');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 

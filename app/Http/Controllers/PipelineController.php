@@ -121,7 +121,6 @@ class PipelineController extends Controller
     {
         $stages = Stages::where('pipeline_id', $id)->orderBy('title', 'ASC')->get();
         $stages_data = "";
-
         if ($stage_id) {
             foreach ($stages as $rec) {
                 $stages_data .= "<option value='$rec->id'";

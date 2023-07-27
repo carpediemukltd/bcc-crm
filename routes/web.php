@@ -57,10 +57,9 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::any('customfield', [CustomFieldController::class, 'fieldList'])->name('customfield.list');
         Route::any('customfield/edit/{id}', [CustomFieldController::class, 'editField'])->name('customfield.edit');
         
-        Route::get('pipelineStages/{id}/{stage_id?}', [PipelineController::class, 'getPipelineStages']);
         Route::any('pipeline/{action}/{id?}', [PipelineController::class, 'pipelines'])->name('pipeline');
+        
 
-        Route::get('stages/{id}', [PipelineController::class, 'stages'])->name('stages');
     });
 
     Route::middleware([CheckStatus::class])->group(function () { // User specific methods
@@ -81,6 +80,9 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::any('note/add', [NoteController::class, 'addNote'])->name('note.add');
         Route::post('note/edit/{id}', [NoteController::class, 'editNote'])->name('note.edit');
         Route::post('note/delete/{id}', [NoteController::class, 'deleteNote'])->name('note.delete');
+
+        Route::get('pipelineStages/{id}/{stage_id?}', [PipelineController::class, 'getPipelineStages']);
+        Route::get('stages/{id}', [PipelineController::class, 'stages'])->name('stages');
 
     });
 

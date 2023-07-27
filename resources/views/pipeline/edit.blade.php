@@ -67,7 +67,7 @@
                         <div class="col">
                            <div class="form-group">
                               <div class="d-flex justify-content-between align-items-center">
-                                 <label class="form-label mb-0" for="title" style="width: 16%;">Edit Form:</label>
+                                 <label class="form-label mb-0" for="title" style="width: 16%;">Pipeline:</label>
                                  <input type="text" class="form-control" id="title" placeholder="Name" value="{{$rs_pipeline->title}}" name="title" required>
                               </div>
                            </div>
@@ -122,7 +122,7 @@
                               <span class="btn-inner">
                                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-28"><path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                               </span>   
-                              Add Row 
+                              Add Stage 
                            </button>
                         </div>
                      </div>
@@ -143,6 +143,8 @@
       var stage_id   = $(selected).attr("data-stage-id");
       var error_id   = $(selected).attr("data-custom-error-id");
       var delete_url = "{{ url('pipeline/delete_stage') }}/"+stage_id;
+      r=confirm('Are you sure you want to delete this stage?');
+      if(r){
       $('.custom-error').html('');
       $.ajax({ 
          url: delete_url,
@@ -152,9 +154,11 @@
             $(error_id).html(data.error);
            }else if(data.status == 2){
                $(selected).closest("tr").remove();
+               alert("Stage deleted successfully.");
            }
          }
       });
+   }
    } // delete_row
 
    $('.addClickrBtn').click(function(){

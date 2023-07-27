@@ -114,6 +114,19 @@
                         </div>
                      </div>
 
+                     @if (count($custom_fields)>0)   
+                     <div class="row">
+                     <input type="hidden" id="custom_fields_count" name="custom_fields_count" value="{{count($custom_fields)}}">
+                     @foreach($custom_fields as $field)
+                     <div class="col-6">
+                        <div class="form-group">
+                           <label class="form-label" for="custom_fields[{{$field->id}}]">{{$field->title}}</label>
+                           <input type="text" class="form-control" id="custom_fields[{{$field->id}}]" name="custom_fields[{{$field->id}}]" value="{{$field->data}}" placeholder="{{$field->title}}">
+                        </div>
+                     </div>
+                     @endforeach
+                  </div>
+                     @endif
                      <div class="row"><div class="col"><br /></div></div>
 
                      <div class="row">

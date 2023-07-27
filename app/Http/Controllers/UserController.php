@@ -62,8 +62,8 @@ class UserController extends Controller
     {
         $this->data['current_slug'] = 'Add Contact';
         $this->data['slug']         = 'add_user';
-        $this->data['custom_fields'] = CustomFields::all();
         $user = auth()->user();
+        $this->data['custom_fields'] =  CustomFields::getDataByUser($user->id);
         $company_id = $user->company_id;
         $this->data['owners'] = User::where('role', '=', 'owner')->where('company_id', '=', $company_id)
             ->when(($user->role == 'owner'), function ($q) use ($user) {
@@ -178,7 +178,10 @@ class UserController extends Controller
                     $query->orWhere('phone_number', 'like', '%' . $request->search_term . '%');
                 });
             })
-            ->when($request->status, function ($q) use ($request) {
+            ->when((!$request->status), function ($q) use ($request) {
+                $q->where('status','=', "active");
+            })
+            ->when(($request->status), function ($q) use ($request) {
                 $q->where('status', $request->status);
             })
             ->when($request->role, function ($q) use ($request) {
@@ -227,18 +230,10 @@ class UserController extends Controller
         })
         ->select('notes.*', 'users.id as user_id', 'users.first_name', 'users.last_name', 'users.role')
         ->orderBy('notes.id', 'DESC')->get();
-
-        $this->data['deals'] = Deals::leftJoin('pipelines', function ($join) {
-            $join->on('deals.pipeline_id', '=', 'pipelines.id');
-        })->leftJoin('stages', function ($join) {
-            $join->on('deals.stage_id', '=', 'stages.id');
-        })->select('deals.*', 'pipelines.title as pipeline', 'stages.title as stage')->where('user_id', $id)->get();
-
+        
         $this->data['id'] = $id;
-        $this->data['custom_fields'] =  CustomFields::leftJoin('user_details', function ($join) {
-            $join->on('custom_fields.id', '=', 'user_details.custom_field_id');
-            $join->on('user_details.user_id', '=', DB::raw($this->data['id']));
-        })->select('custom_fields.*', 'user_details.data')->get();
+        $this->data['deals'] = Deals::getDealsByUser($id);;
+        $this->data['custom_fields'] =  CustomFields::getDataByUser($id);
 
         if ($request->isMethod('put')) {
 
@@ -252,7 +247,7 @@ class UserController extends Controller
             if ($request->custom_fields_count > 0) {
                 foreach ($request->custom_fields as $key => $value) {
                     UserDetails::updateOrCreate(
-                        ['user_id' => $id, 'custom_field_id' => $key],
+                        ['user_id' => $id, 'deal_id' => 0, 'custom_field_id' => $key],
                         ['data' => $value]
                     );
                 }
@@ -281,16 +276,10 @@ class UserController extends Controller
         if(!$this->data['user']){
             return redirect(route('dashboard'))->with('error','Access Denied.');
         }
-        $this->data['custom_fields'] = CustomFields::all();
-
-        $this->data['user_details']  = UserDetails::where('user_id', '=', $id)->get();
 
         $this->data['id'] = $id;
-        $this->data['custom_fields'] =  CustomFields::leftJoin('user_details', function ($join) {
-            $join->on('custom_fields.id', '=', 'user_details.custom_field_id');
-            $join->on('user_details.user_id', '=', DB::raw($this->data['id']));
-        })->select('custom_fields.*', 'user_details.data')->get();
-
+        $this->data['custom_fields'] =  CustomFields::getDataByUser($id);
+   
         if ($request->isMethod('put')) {
             $update_data = [
                 'first_name'   => $request->first_name,
@@ -376,11 +365,7 @@ class UserController extends Controller
         foreach ($users as $user) {
             $column = $startColumn;
             $this->data['user_id'] = $user->id;
-
-            $custom_fields =  CustomFields::leftJoin('user_details', function ($join) {
-                $join->on('custom_fields.id', '=', 'user_details.custom_field_id');
-                $join->on('user_details.user_id', '=', DB::raw($this->data['user_id']));
-            })->select('custom_fields.*', 'user_details.data')->get();
+            $custom_fields =  CustomFields::getDataByUser($this->data['user_id']);
 
             $active_sheet->setCellValue('A' . $count, $user->first_name);
             $active_sheet->setCellValue('B' . $count, $user->last_name);
@@ -453,11 +438,7 @@ class UserController extends Controller
 
         foreach ($users as $user) {
             $this->data['user_id'] = $user->id;
-
-            $custom_fields =  CustomFields::leftJoin('user_details', function ($join) {
-                $join->on('custom_fields.id', '=', 'user_details.custom_field_id');
-                $join->on('user_details.user_id', '=', DB::raw($this->data['user_id']));
-            })->select('custom_fields.*', 'user_details.data')->get();
+            $custom_fields =  CustomFields::getDataByUser($this->data['user_id']);
 
             $row['First Name'] = $user->first_name;
             $row['Last Name'] = $user->last_name;

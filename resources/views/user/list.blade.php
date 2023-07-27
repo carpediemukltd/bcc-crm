@@ -94,7 +94,7 @@
                                  <!-- <label class="form-label" for="password">Empty Field</label> -->
                                  <select name="status" id="status" class="form-select">
                                     <option value="">Select Status</option>
-                                    <option class="bg-success1" value="active">Active</option>
+                                    <option class="bg-success1" value="active" selected>Active</option>
                                     <option class="bg-primary1" value="inactive">Inactive</option>
                                     <option class="bg-secondary1" value="archived">Archived</option>
                                     <option class="bg-danger1" value="deleted">Deleted</option>

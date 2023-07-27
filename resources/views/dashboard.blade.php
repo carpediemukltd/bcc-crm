@@ -160,7 +160,7 @@
                         <div class="d-flex justify-content-between align-items-center mb-3">
                            <span class="text-dark">Send Money To</span>
                            <a href="#" class="badge rounded-pill bg-soft-primary">
-                           All Contacts
+                              All Contacts
                            </a>
                         </div>
                         <div class="d-flex align-items-center iq-slider mb-5 gap-2">

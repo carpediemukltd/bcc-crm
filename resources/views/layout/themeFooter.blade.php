@@ -2,8 +2,11 @@
 <footer class="footer">
    <div class="footer-body">
       <ul class="left-panel list-inline mb-0 p-0">
+         <li class="list-inline-item"><a href="{{ route('about') }}">About</a></li>
+         <li class="list-inline-item"><a href="{{ route('contact') }}">Contact</a></li>
+         <li class="list-inline-item"><a href="{{ route('help') }}">Help</a></li>
          <li class="list-inline-item"><a href="{{ route('privacy') }}">Privacy Policy</a></li>
-         <li class="list-inline-item"><a href="{{ route('privacy') }}">Terms of Use</a></li>
+         <!-- <li class="list-inline-item"><a href="{{ route('privacy') }}">Terms of Use</a></li> -->
       </ul>
       <div class="right-panel">
          ©2023 <span>BCC, CRM</span>

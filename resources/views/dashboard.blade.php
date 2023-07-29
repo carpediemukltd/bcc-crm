@@ -1,26 +1,7 @@
 @extends('layout.appTheme')
 @section('content')
 <div class="content-inner container-fluid pb-0" id="page_layout">
-   @if (session('success'))
-      <div class="row">
-         <div class="col-md-12">
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-               <strong>Congratulations!</strong> {{ session('success') }}
-               <button type="button" class="btn-close" id="alert-box-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-         </div>
-      </div>
-   @endif
-   @if (session('error'))
-   <div class="row">
-      <div class="col-md-12">
-         <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>Oops!</strong> {{ session('error') }}
-            <button type="button" class="btn-close" id="alert-box-close" data-bs-dismiss="alert" aria-label="Close"></button>
-         </div>
-      </div>
-   </div>
-   @endif
+   @include('alert_message')
    <div class="d-flex justify-content-between align-items-center flex-wrap mb-4 gap-3">
       <div class="d-flex flex-column">
          <h3>Quick Insights</h3>

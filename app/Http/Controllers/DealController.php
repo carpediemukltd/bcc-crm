@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Permissions;
 use App\Models\Note;
 use App\Models\User;
 use App\Models\Deals;
@@ -38,16 +39,8 @@ class DealController extends Controller
         $this->data['current_slug'] = 'Deals';
         $this->data['slug']         = 'user_deals';
 
-        $company_id = 0;
-        $user = auth()->user();
-        if ($user->role != 'superadmin') {
-            $company_id = $this->user->company_id;
-        }
-        $this->data['user']       = User::where(['id' => $id])
-            ->when(($company_id > 0), function ($q) use ($company_id) {
-                $q->where('company_id', '=', $company_id);
-            })->first();
-        if (!$this->data['user']) {
+        $access = Permissions::checkUserAccess($this->user, $id);
+        if (!$access) {
             return redirect(route('dashboard'))->with('error', 'Access Denied.');
         }
 
@@ -58,27 +51,19 @@ class DealController extends Controller
 
     public function dealsAdd(Request $request, $id)
     {
-        $company_id = 0;
-        $user = auth()->user();
-        if ($user->role != 'superadmin') {
-            $company_id = $this->user->company_id;
-        }
-        $this->data['user']       = User::where(['id' => $id])
-            ->when(($company_id > 0), function ($q) use ($company_id) {
-                $q->where('company_id', '=', $company_id);
-            })->first();
-        if (!$this->data['user']) {
+        $access = Permissions::checkUserAccess($this->user, $id);
+        if (!$access) {
             return redirect(route('dashboard'))->with('error', 'Access Denied.');
         }
 
         if ($request->isMethod('post')) {
             $deal = Deals::create([
-                'title'       => $request->title,
-                'user_id'     => $id,
+                'title' => $request->title,
+                'user_id' => $id,
                 'pipeline_id' => $request->pipeline_id,
-                'stage_id'    => $request->stage_id,
-                'amount'      => $request->amount,
-                'deal_owner'  => $request->deal_owner,
+                'stage_id' => $request->stage_id,
+                'amount' => $request->amount,
+                'deal_owner' => $request->deal_owner,
                 'lead_source' => $request->lead_source
             ]);
 
@@ -93,39 +78,36 @@ class DealController extends Controller
 
             return redirect(route('user.deals', $id))->withSuccess('Deal Created Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
-            $this->data['current_slug']    = 'Add Deal';
-            $this->data['slug']            = 'user_add_deal';
+            $this->data['current_slug'] = 'Add Deal';
+            $this->data['slug'] = 'user_add_deal';
             $this->data['current_user_id'] = $id;
             $this->data['custom_fields'] =  CustomFields::getDataByDeal($id);
 
             $this->data['rs_pipelines'] = Pipelines::orderBy('title', 'ASC')->get();
-            $this->data['rs_stages']    = Stages::orderBy('title', 'ASC')->get();
+            $this->data['rs_stages'] = Stages::orderBy('title', 'ASC')->get();
             return view("user.deals.add", $this->data);
         }
     } // dealsAdd
 
     public function dealsEdit(Request $request, $user_id, $id)
     {
-        $company_id = 0;
-        $user = auth()->user();
-        if ($user->role != 'superadmin') {
-            $company_id = $this->user->company_id;
-        }
-        $this->data['user']       = User::where(['id' => $user_id])
-            ->when(($company_id > 0), function ($q) use ($company_id) {
-                $q->where('company_id', '=', $company_id);
-            })->first();
-        if (!$this->data['user']) {
+        $access = Permissions::checkUserAccess($this->user, $user_id);
+        if (!$access) {
             return redirect(route('dashboard'))->with('error', 'Access Denied.');
+        }
+ 
+        $this->data['rs_deal'] = Deals::getDeals($user_id, $id);
+        if (!$this->data['rs_deal']) {
+            return redirect(route('dashboard'))->with('error', 'Access Denied to Deal.');
         }
 
         if ($request->isMethod('post')) {
             Deals::where('id', $id)->update([
-                'title'       => $request->title,
+                'title' => $request->title,
                 'pipeline_id' => $request->pipeline_id,
-                'stage_id'    => $request->stage_id,
-                'amount'      => $request->amount,
-                'deal_owner'  => $request->deal_owner,
+                'stage_id' => $request->stage_id,
+                'amount' => $request->amount,
+                'deal_owner' => $request->deal_owner,
                 'lead_source' => $request->lead_source
             ]);
 
@@ -140,33 +122,24 @@ class DealController extends Controller
 
             return redirect(route('user.deals', $user_id))->withSuccess('Deal Update Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
-            $this->data['current_slug']    = 'Edit Deal';
-            $this->data['slug']            = 'user_edit_deal';
+            $this->data['current_slug'] = 'Edit Deal';
+            $this->data['slug'] = 'user_edit_deal';
             $this->data['current_user_id'] = $user_id;
 
             $this->data['rs_pipelines'] = Pipelines::orderBy('title', 'ASC')->get();
-            $this->data['rs_stages']    = Stages::orderBy('title', 'ASC')->get();
-            $this->data['rs_deal']      = Deals::where('id', $id)->first();
-            $this->data['custom_fields'] =  CustomFields::getDataByDeal($id);
+            $this->data['rs_stages'] = Stages::orderBy('title', 'ASC')->get();
+            $this->data['custom_fields'] = CustomFields::getDataByDeal($id);
             return view("user.deals.edit", $this->data);
         }
     } // dealsEdit
 
     public function exportXLS($id)
     {
-        $company_id = 0;
-        $user = auth()->user();
-        if ($user->role != 'superadmin') {
-            $company_id = $this->user->company_id;
-        }
-        $this->data['user']       = User::where(['id' => $id])
-            ->when(($company_id > 0), function ($q) use ($company_id) {
-                $q->where('company_id', '=', $company_id);
-            })->first();
-        if (!$this->data['user']) {
+        $access = Permissions::checkUserAccess($this->user, $id);
+        if (!$access) {
             return redirect(route('dashboard'))->with('error', 'Access Denied.');
         }
-
+        $this->data['user']       = User::where(['id' => $id])->first();
         $file_name = "deals_{$id}.xls";
         $deals = Deals::getDealsByUser($id);
 
@@ -180,8 +153,20 @@ class DealController extends Controller
         $active_sheet->setCellValue('E1', 'Pipeline');
         $active_sheet->setCellValue('F1', 'Stage');
         $active_sheet->setCellValue('G1', 'Created At');
+        $cfields = CustomFields::where('type', '=', 'contact')->get();
+
+        $startColumn = 'H';
+        $column = $startColumn;
+        if (!$cfields->isEmpty()) {
+            foreach ($cfields as $cfield) {
+                $active_sheet->setCellValue($column . '1', $cfield->title);
+                $column++;
+            }
+        }
         $count = 2;
         foreach ($deals as $deal) {
+            $column = $startColumn;
+            $custom_fields =  CustomFields::getDataByDeal($deal->id);
             $active_sheet->setCellValue('A' . $count, $deal->title);
             $active_sheet->setCellValue('B' . $count, $deal->amount);
             $active_sheet->setCellValue('C' . $count, $deal->deal_owner);
@@ -189,6 +174,14 @@ class DealController extends Controller
             $active_sheet->setCellValue('E' . $count, $deal->pipeline);
             $active_sheet->setCellValue('F' . $count, $deal->stage);
             $active_sheet->setCellValue('G' . $count, $deal->created_at);
+
+            if (!$custom_fields->isEmpty()) {
+                foreach ($custom_fields as $custom_field) {
+                    $active_sheet->setCellValue($column . $count, $custom_field->data);
+                    $column++;
+                }
+            }
+
             $count++;
         }
 
@@ -200,35 +193,42 @@ class DealController extends Controller
 
     public function exportCSV($id)
     {
-        $company_id = 0;
-        $user = auth()->user();
-        if ($user->role != 'superadmin') {
-            $company_id = $this->user->company_id;
-        }
-        $this->data['user']       = User::where(['id' => $id])
-            ->when(($company_id > 0), function ($q) use ($company_id) {
-                $q->where('company_id', '=', $company_id);
-            })->first();
-        if (!$this->data['user']) {
+        $access = Permissions::checkUserAccess($this->user, $id);
+        if (!$access) {
             return redirect(route('dashboard'))->with('error', 'Access Denied.');
         }
 
+        $this->data['user']       = User::where(['id' => $id])->first();
         $file_name = "deals_{$id}.csv";
-        $deals = Deals::getDealsByUser($id);;
+        $deals = Deals::getDealsByUser($id);
 
         $columns = array('Title', 'Amount', 'Deal Owner', 'Source', 'Pipeline', 'Stage', 'Created At');
         $file = fopen($path = storage_path($file_name), 'w');
+        $cfields = CustomFields::where('type', '=', 'deals')->get();
+
+        if (!$cfields->isEmpty()) {
+            foreach ($cfields as $cfield) {
+                array_push($columns, "'" . $cfield->title . "'");
+            }
+        }
         fputcsv($file, $columns);
 
         foreach ($deals as $deal) {
 
+            $custom_fields =  CustomFields::getDataByDeal($deal->id);
             $row['Title'] = $deal->title;
             $row['Amount'] = $deal->amount;
             $row['Deal Owner'] = $deal->deal_owner;
             $row['Source'] = $deal->lead_source;
             $row['Pipeline'] = $deal->pipeline;
             $row['Stage'] = $deal->stage;
-            $row['Created At']  = $user->created_at;
+            $row['Created At']  = $deal->created_at;
+            
+            if (!$custom_fields->isEmpty()) {
+                foreach ($custom_fields as $custom_field) {
+                    $row[$custom_field->title]  = $custom_field->data;
+                }
+            }
             fputcsv($file, $row);
         }
         fclose($file);

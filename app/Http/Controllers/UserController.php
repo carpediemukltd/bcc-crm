@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Permissions;
 use App\Models\Note;
 use App\Models\User;
 use App\Models\Deals;
@@ -88,10 +89,10 @@ class UserController extends Controller
         $this->data['roles'] = $roles;
         if ($request->isMethod('post')) {
             if (!in_array($request->role, $roles)) {
-                return redirect()->back()->with('error','You\'ve selected an invalid role.')->withInput();
+                return redirect()->back()->with('error', 'You\'ve selected an invalid role.')->withInput();
             }
             if (!in_array($request->owner, $owners)) {
-                return redirect()->back()->with('error','You\'ve selected an invalid owner.')->withInput();
+                return redirect()->back()->with('error', 'You\'ve selected an invalid owner.')->withInput();
             }
 
             $request->validate([
@@ -165,40 +166,17 @@ class UserController extends Controller
         }
         $this->data['current_slug'] = 'Contacts';
         $this->data['slug']         = 'user_list';
+        $filters['roles'] = $roles;
+        $filters['user_id'] = $user_id;
+        $filters['company_id'] = $company_id;
+        $filters['search_term'] = $request->search_term;
+        $filters['status'] = $request->status;
+        $filters['role'] = $request->role;
+        $filters['start_date'] = $request->start_date;
+        $filters['end_date'] = $request->end_date;
+        $filters['paginate'] = 10;
+        $this->data['users'] = User::getUsers($filters);
 
-        $this->data['users'] = User::whereIn('role', $roles)->where('users.id', '!=', $user_id)
-            ->when(($company_id > 0), function ($q) use ($company_id) {
-                $q->where('company_id', '=', $company_id);
-            })
-            ->when($request->search_term, function ($q) use ($request) {
-                $q->where(function ($query) use ($request) {
-                    $query->where('first_name', 'like', '%' . $request->search_term . '%');
-                    $query->orWhere('last_name', 'like', '%' . $request->search_term . '%');
-                    $query->orWhere('email', 'like', '%' . $request->search_term . '%');
-                    $query->orWhere('phone_number', 'like', '%' . $request->search_term . '%');
-                });
-            })
-            ->when((!$request->status), function ($q) use ($request) {
-                $q->where('status','=', "active");
-            })
-            ->when(($request->status), function ($q) use ($request) {
-                $q->where('status', $request->status);
-            })
-            ->when($request->role, function ($q) use ($request) {
-                $q->where('role', $request->role);
-            })
-            ->when($request->start_date, function ($q) use ($request) {
-                $q->whereBetween('created_at', [$request->start_date, $request->end_date]);
-            })
-            ->when((auth()->user()->role == 'owner'), function ($q) use ($user_id) {
-                $q->join('user_owners', function ($join) use ($user_id) {
-                    $join->on('users.id', '=', 'user_owners.user_id');
-                    $join->on('user_owners.owner_id', '=', DB::raw($user_id));
-                });
-            })
-            ->select('users.*')
-            ->orderBy('users.id', 'DESC')->paginate(10);
-            
         if ($request->ajax())
             return view('user.user_pagination', $this->data)->render();
         else
@@ -209,28 +187,21 @@ class UserController extends Controller
     {
         $this->data['current_slug']  = 'Contact Details';
         $this->data['slug']          = 'user_details';
-        
-        $company_id = 0;
-        $user = auth()->user();
-        if ($user->role != 'superadmin') {
-            $company_id = $this->user->company_id;
-        }
-        $this->data['user']       = User::where(['id' => $id])
-        ->when(($company_id > 0), function ($q) use ($company_id) {
-            $q->where('company_id', '=', $company_id);
-        })->first();
-        if(!$this->data['user']){
-            return redirect(route('dashboard'))->with('error','Access Denied.');
-        }elseif(($this->data['user'])->role != 'user'){
-            return redirect(route('dashboard'))->with('error','Access Denied.');
+
+        $access = Permissions::checkUserAccess($this->user, $id);
+        if (!$access) {
+            return redirect(route('dashboard'))->with('error', 'Access Denied.');
+        }elseif ($access->role != 'user') {
+            return redirect(route('dashboard'))->with('error', 'Access Denied to User.');
         }
 
+        $this->data['user']       = User::where('id' , $id)->first();
         $this->data['notes'] = Note::where(['contact_id' => $id])->join('users', function ($join) {
             $join->on('users.id', '=', 'notes.user_id');
         })
-        ->select('notes.*', 'users.id as user_id', 'users.first_name', 'users.last_name', 'users.role')
-        ->orderBy('notes.id', 'DESC')->get();
-        
+            ->select('notes.*', 'users.id as user_id', 'users.first_name', 'users.last_name', 'users.role')
+            ->orderBy('notes.id', 'DESC')->get();
+
         $this->data['id'] = $id;
         $this->data['deals'] = Deals::getDealsByUser($id);;
         $this->data['custom_fields'] =  CustomFields::getDataByUser($id);
@@ -264,22 +235,14 @@ class UserController extends Controller
         $this->data['slug']         = 'edit_user';
         $this->data['all_status']   = ['inactive', 'active', 'archived', 'deleted', 'banned'];
 
-        $company_id = 0;
-        $user = auth()->user();
-        if ($user->role != 'superadmin') {
-            $company_id = $this->user->company_id;
+        $access = Permissions::checkUserAccess($this->user, $id);
+        if (!$access) {
+            return redirect(route('dashboard'))->with('error', 'Access Denied.');
         }
-        $this->data['user']       = User::where(['id' => $id])
-        ->when(($company_id > 0), function ($q) use ($company_id) {
-            $q->where('company_id', '=', $company_id);
-        })->first();
-        if(!$this->data['user']){
-            return redirect(route('dashboard'))->with('error','Access Denied.');
-        }
-
+        $this->data['user'] = User::where(['id' => $id])->first();
         $this->data['id'] = $id;
         $this->data['custom_fields'] =  CustomFields::getDataByUser($id);
-   
+
         if ($request->isMethod('put')) {
             $update_data = [
                 'first_name'   => $request->first_name,
@@ -308,7 +271,7 @@ class UserController extends Controller
         }
     } // editUser
 
-    public function exportXLS()
+    public function exportXLS(Request $request)
     {
         $file_name = 'contacts.xls';
         $company_id = 0;
@@ -329,18 +292,16 @@ class UserController extends Controller
             $company_id = $this->user->company_id;
         }
 
-        $users = User::whereIn('role', $roles)->where('users.id', '!=', $user_id)
-            ->when(($company_id > 0), function ($q) use ($company_id) {
-                $q->where('company_id', '=', $company_id);
-            })
-            ->when((auth()->user()->role == 'owner'), function ($q) use ($user_id) {
-                $q->join('user_owners', function ($join) use ($user_id) {
-                    $join->on('users.id', '=', 'user_owners.user_id');
-                    $join->on('user_owners.owner_id', '=', DB::raw($user_id));
-                });
-            })
-            ->select('users.*')
-            ->orderBy('users.id', 'DESC')->get();
+        $filters['roles'] = $roles;
+        $filters['user_id'] = $user_id;
+        $filters['company_id'] = $company_id;
+        $filters['search_term'] = $request->search_term;
+        $filters['status'] = $request->status;
+        $filters['role'] = $request->role;
+        $filters['start_date'] = $request->start_date;
+        $filters['end_date'] = $request->end_date;
+        $filters['paginate'] = 0;
+        $users = User::getUsers($filters);
 
         $file = new Spreadsheet();
         $active_sheet = $file->getActiveSheet();
@@ -351,7 +312,7 @@ class UserController extends Controller
         $active_sheet->setCellValue('D1', 'Phone Number');
         $active_sheet->setCellValue('E1', 'Status');
         $active_sheet->setCellValue('F1', 'Created At');
-        $cfields = CustomFields::all();
+        $cfields = CustomFields::where('type', '=', 'contact')->get();
 
         $startColumn = 'G';
         $column = $startColumn;
@@ -389,7 +350,7 @@ class UserController extends Controller
         return response()->download($path)->deleteFileAfterSend();
     }
 
-    public function exportCSV()
+    public function exportCSV(Request $request)
     {
         $file_name = 'contacts.csv';
         $company_id = 0;
@@ -410,24 +371,21 @@ class UserController extends Controller
             $company_id = $this->user->company_id;
         }
 
-        $users = User::whereIn('role', $roles)->where('users.id', '!=', $user_id)
-            ->when(($company_id > 0), function ($q) use ($company_id) {
-                $q->where('company_id', '=', $company_id);
-            })
-            ->when((auth()->user()->role == 'owner'), function ($q) use ($user_id) {
-                $q->join('user_owners', function ($join) use ($user_id) {
-                    $join->on('users.id', '=', 'user_owners.user_id');
-                    $join->on('user_owners.owner_id', '=', DB::raw($user_id));
-                });
-            })
-            ->select('users.*')
-            ->orderBy('users.id', 'DESC')->get();
-
+        $filters['roles'] = $roles;
+        $filters['user_id'] = $user_id;
+        $filters['company_id'] = $company_id;
+        $filters['search_term'] = $request->search_term;
+        $filters['status'] = $request->status;
+        $filters['role'] = $request->role;
+        $filters['start_date'] = $request->start_date;
+        $filters['end_date'] = $request->end_date;
+        $filters['paginate'] = 0;
+        $users = User::getUsers($filters);
 
         $columns = array('First Name', 'Last Name', 'Email', 'Phone Number', 'Status', 'Created At');
 
         $file = fopen($path = storage_path($file_name), 'w');
-        $cfields = CustomFields::all();
+        $cfields = CustomFields::where('type', '=', 'contact')->get();
 
         if (!$cfields->isEmpty()) {
             foreach ($cfields as $cfield) {
@@ -446,6 +404,7 @@ class UserController extends Controller
             $row['Phone Number'] = $user->phone_number;
             $row['Status']  = $user->status;
             $row['Created At']  = $user->created_at;
+
             if (!$custom_fields->isEmpty()) {
                 foreach ($custom_fields as $custom_field) {
                     $row[$custom_field->title]  = $custom_field->data;

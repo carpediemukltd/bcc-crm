@@ -61,7 +61,6 @@ Route::middleware([CheckStatus::class])->group(function () {
         
         Route::any('pipeline/{action}/{id?}', [PipelineController::class, 'pipelines'])->name('pipeline');
         
-
     });
 
     Route::middleware([CheckStatus::class])->group(function () { // User specific methods

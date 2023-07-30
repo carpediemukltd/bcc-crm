@@ -20,7 +20,7 @@ class CheckStatus
         if(Auth::check()){
             return $next($request);
         }
-        return redirect("login")->withSuccess('Session timeout please login again.');
+        return redirect("login")->withError('Session timeout please login again.');
 
         // if (isset(auth()->user()->id)) {
         //     return $next($request);

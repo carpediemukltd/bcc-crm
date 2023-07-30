@@ -42,25 +42,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    /* public static function checkCompany($user, $user_id)
-    {
-        $company_id = 0;
-        if ($user->role != 'superadmin') {
-            $company_id = $user->company_id;
-        }
-        $data = User::where(['users.id' => $user_id])
-            ->when(($company_id > 0), function ($q) use ($company_id) {
-                $q->where('company_id', '=', $company_id);
-            })->when(($user->role == 'owner'), function ($q) use ($user) {
-                $q->join('user_owners', function ($join) use ($user) {
-                    $join->on('users.id', '=', 'user_owners.user_id');
-                    $join->on('user_owners.owner_id', '=', DB::raw($user->id));
-                });
-            })->first();
-
-        return $data;
-    } */
-
     public static function getUsers($data)
     {
         $users = User::whereIn('role', $data['roles'])->where('users.id', '!=', $data['user_id'])
@@ -79,10 +60,10 @@ class User extends Authenticatable
                 $q->where('status', '=', "active");
             })
             ->when(($data['status']), function ($q) use ($data) {
-                $q->where('status', $data['status']);
+                $q->where('status', '=', $data['status']);
             })
             ->when($data['role'], function ($q) use ($data) {
-                $q->where('role', $data['role']);
+                $q->where('role', '=', $data['role']);
             })
             ->when($data['start_date'], function ($q) use ($data) {
                 $q->whereBetween('created_at', [$data['start_date'], $data['end_date']]);
@@ -95,7 +76,7 @@ class User extends Authenticatable
             })
             ->select('users.*')
             ->orderBy('users.id', 'DESC');
-        if ($data['paginate']>0)
+        if ($data['paginate'] > 0)
             $users = $users->paginate($data['paginate']);
         else
             $users = $users->get();

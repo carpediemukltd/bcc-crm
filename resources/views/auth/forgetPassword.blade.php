@@ -57,12 +57,8 @@
                         </a>
                         <h2 class="mb-2">Reset Password</h2>
                         <p>Enter your email address and we'll send you an email with instructions to reset your password.</p>
-                        @if (Session::has('message'))
-                           <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                 <strong>Msg!</strong> {{ Session::get('message') }}
-                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                           </div>
-                        @endif
+                        @include('alert_message')
+                        
                         <form action="{{ route('forget.password.post') }}" method="POST">
                            @csrf
                            <div class="row">

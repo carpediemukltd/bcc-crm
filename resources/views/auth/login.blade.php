@@ -55,12 +55,7 @@
                               </a>
                               <h2 class="mb-2 text-center">Sign In</h2>
                               <p class="text-center">Login to stay connected.</p>
-                                @if (session('error'))
-                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                        <strong>Oppes!</strong> {{ session('error') }}
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    </div>
-                                @endif
+                              @include('alert_message')
 
                               <form class="bcc_login_form" action="{{ route('login.post') }}" method="POST">
                                 @csrf

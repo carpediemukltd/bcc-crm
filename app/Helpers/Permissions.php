@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\DB;
 
 class Permissions
 {
- 
     public static function checkUserAccess($user, $user_id)
     {
         $company_id = 0;
@@ -32,5 +31,22 @@ class Permissions
             })->first();
 
         return $data;
+    }
+
+    public static function getSubRoles($user)
+    {
+        $roles = array('');
+        if ($user->role == 'superadmin') {
+            $roles = array('admin', 'owner', 'user');
+        } else if ($user->role == 'admin') {
+            $roles = array('admin', 'owner', 'user');
+        } else if ($user->role == 'owner') {
+            $roles = array('user');
+        } else if ($user->role == 'user') {
+            // $roles = array('no-permission');
+            $roles = array('');
+        }
+
+        return $roles;
     }
 }

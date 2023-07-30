@@ -24,11 +24,16 @@ class UserController extends Controller
 {
     protected $user;
     protected $data;
+    protected $company_id = 0;
+
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
             $this->data['user'] = $this->user;
+            if ($this->user->role != 'superadmin') {
+                $this->company_id = $this->user->company_id;
+            }
             return $next($request);
         });
     }
@@ -76,16 +81,7 @@ class UserController extends Controller
         }
         $this->data['admins'] = User::where('role', '=', 'admin')->where('company_id', '=', $company_id)->get();
 
-        $roles = array('');
-        if ($user->role == 'superadmin') {
-            $roles = array('admin', 'owner', 'user');
-        } else if ($user->role == 'admin') {
-            $roles = array('owner', 'user');
-        } else if ($user->role == 'owner') {
-            $roles = array('user');
-        } else if ($user->role == 'user') {
-            $roles = array('');
-        }
+        $roles = Permissions::getSubRoles($this->user);
         $this->data['roles'] = $roles;
         if ($request->isMethod('post')) {
             if (!in_array($request->role, $roles)) {
@@ -144,31 +140,17 @@ class UserController extends Controller
 
     public function userList(Request $request)
     {
-        $company_id = 0;
-        $user = auth()->user();
-        if (!$user->hasPermissionTo('list user')) {
+        /* if (!$user->hasPermissionTo('list user')) {
             return redirect(url("dashboard"))->with("error", "No permission to view user list.");
-        }
+        } */
 
-        $user_id = $user->id;
-        $roles = array('');
-        if ($user->role == 'superadmin') {
-            $roles = array('admin', 'owner', 'user');
-        } else if ($user->role == 'admin') {
-            $roles = array('admin', 'owner', 'user');
-        } else if ($user->role == 'owner') {
-            $roles = array('user');
-        } else if ($user->role == 'user') {
-            $roles = array('no-permission');
-        }
-        if ($user->role != 'superadmin') {
-            $company_id = $this->user->company_id;
-        }
+        $roles = Permissions::getSubRoles($this->user);
+        
         $this->data['current_slug'] = 'Contacts';
         $this->data['slug']         = 'user_list';
         $filters['roles'] = $roles;
-        $filters['user_id'] = $user_id;
-        $filters['company_id'] = $company_id;
+        $filters['user_id'] = $this->user->id;
+        $filters['company_id'] = $this->company_id;
         $filters['search_term'] = $request->search_term;
         $filters['status'] = $request->status;
         $filters['role'] = $request->role;
@@ -195,14 +177,9 @@ class UserController extends Controller
             return redirect(route('dashboard'))->with('error', 'Access Denied to User.');
         }
 
-        $this->data['user']       = User::where('id' , $id)->first();
-        $this->data['notes'] = Note::where(['contact_id' => $id])->join('users', function ($join) {
-            $join->on('users.id', '=', 'notes.user_id');
-        })
-            ->select('notes.*', 'users.id as user_id', 'users.first_name', 'users.last_name', 'users.role')
-            ->orderBy('notes.id', 'DESC')->get();
-
         $this->data['id'] = $id;
+        $this->data['user'] = User::where('id' , $id)->first();
+        $this->data['notes'] = Note::getNotesByUser($id);
         $this->data['deals'] = Deals::getDealsByUser($id);;
         $this->data['custom_fields'] =  CustomFields::getDataByUser($id);
 
@@ -239,8 +216,8 @@ class UserController extends Controller
         if (!$access) {
             return redirect(route('dashboard'))->with('error', 'Access Denied.');
         }
-        $this->data['user'] = User::where(['id' => $id])->first();
         $this->data['id'] = $id;
+        $this->data['user'] = User::where(['id' => $id])->first();
         $this->data['custom_fields'] =  CustomFields::getDataByUser($id);
 
         if ($request->isMethod('put')) {
@@ -274,27 +251,11 @@ class UserController extends Controller
     public function exportXLS(Request $request)
     {
         $file_name = 'contacts.xls';
-        $company_id = 0;
-        $user = auth()->user();
-
-        $user_id = $user->id;
-        $roles = array('');
-        if ($user->role == 'superadmin') {
-            $roles = array('admin', 'owner', 'user');
-        } else if ($user->role == 'admin') {
-            $roles = array('admin', 'owner', 'user');
-        } else if ($user->role == 'owner') {
-            $roles = array('user');
-        } else if ($user->role == 'user') {
-            $roles = array('no-permission');
-        }
-        if ($user->role != 'superadmin') {
-            $company_id = $this->user->company_id;
-        }
+        $roles = Permissions::getSubRoles($this->user);
 
         $filters['roles'] = $roles;
-        $filters['user_id'] = $user_id;
-        $filters['company_id'] = $company_id;
+        $filters['user_id'] = $this->user->id;
+        $filters['company_id'] = $this->company_id;
         $filters['search_term'] = $request->search_term;
         $filters['status'] = $request->status;
         $filters['role'] = $request->role;
@@ -353,27 +314,11 @@ class UserController extends Controller
     public function exportCSV(Request $request)
     {
         $file_name = 'contacts.csv';
-        $company_id = 0;
-        $user = auth()->user();
-
-        $user_id = $user->id;
-        $roles = array('');
-        if ($user->role == 'superadmin') {
-            $roles = array('admin', 'owner', 'user');
-        } else if ($user->role == 'admin') {
-            $roles = array('admin', 'owner', 'user');
-        } else if ($user->role == 'owner') {
-            $roles = array('user');
-        } else if ($user->role == 'user') {
-            $roles = array('no-permission');
-        }
-        if ($user->role != 'superadmin') {
-            $company_id = $this->user->company_id;
-        }
+        $roles = Permissions::getSubRoles($this->user);
 
         $filters['roles'] = $roles;
-        $filters['user_id'] = $user_id;
-        $filters['company_id'] = $company_id;
+        $filters['user_id'] = $this->user->id;
+        $filters['company_id'] = $this->company_id;
         $filters['search_term'] = $request->search_term;
         $filters['status'] = $request->status;
         $filters['role'] = $request->role;

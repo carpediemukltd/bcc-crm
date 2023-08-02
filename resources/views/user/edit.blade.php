@@ -98,10 +98,10 @@
                      
                      <div class="row">
                      @foreach($custom_fields as $field)
-                        <div class="col">
+                        <div class="col-6">
                            <div class="form-group">
                               <label class="form-label">{{$field->title}}</label>
-                              <input type="text" class="form-control" id="custom_fields[{{$field->id}}]" value="{{$field->data}}" placeholder="{{$field->title}}" name="custom_fields[{{$field->id}}]">
+                              <input type="text" class="form-control" id="custom_fields[{{$field->id}}]" name="custom_fields[{{$field->id}}]" value="{{$field->data}}" placeholder="{{$field->title}}" name="custom_fields[{{$field->id}}]">
                            </div>
                         </div>
                         @endforeach

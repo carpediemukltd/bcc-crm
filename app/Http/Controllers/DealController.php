@@ -46,6 +46,26 @@ class DealController extends Controller
 
         $this->data['current_user_id'] = $id;
         $this->data['rs_deals'] = Deals::getDealsByUser($id);
+        $pipelines = Pipelines::orderBy('title', 'ASC')->get();
+        $pipeline_stages = array();
+        if ($pipelines->isNotEmpty()) {
+            foreach ($pipelines as $pipeline) {
+                $pipeline_arr['id'] = $pipeline->id;
+                $pipeline_arr['title'] = $pipeline->title;
+                $stages = Stages::where('pipeline_id', $pipeline->id)->orderBy('title', 'ASC')->get();
+                $stages_arr=array();
+                if ($stages->isNotEmpty()) {
+                    foreach ($stages as $stage) {
+                        $this_stage['id'] = $stage->id;
+                        $this_stage['title'] = $stage->title;
+                        array_push($stages_arr,$this_stage);
+                    }
+                }
+                $pipeline_arr['stages'] = $stages_arr;
+                array_push($pipeline_stages, $pipeline_arr);
+            }
+        }
+        $this->data['pipeline_stages'] = $pipeline_stages;
         return view("user.deals.list", $this->data);
     } // userDeals
 
@@ -95,7 +115,7 @@ class DealController extends Controller
         if (!$access) {
             return redirect(route('dashboard'))->with('error', 'Access Denied.');
         }
- 
+
         $this->data['rs_deal'] = Deals::getDeals($user_id, $id);
         if (!$this->data['rs_deal']) {
             return redirect(route('dashboard'))->with('error', 'Access Denied to Deal.');
@@ -132,6 +152,28 @@ class DealController extends Controller
             return view("user.deals.edit", $this->data);
         }
     } // dealsEdit
+
+    public function dealsUpdateStage(Request $request, $user_id, $id)
+    {
+        $access = Permissions::checkUserAccess($this->user, $user_id);
+        if (!$access) {
+            return redirect(route('dashboard'))->with('error', 'Access Denied.');
+        }
+
+        $this->data['rs_deal'] = Deals::getDeals($user_id, $id);
+        if (!$this->data['rs_deal']) {
+            return redirect(route('dashboard'))->with('error', 'Access Denied to Deal.');
+        }
+
+        if ($request->isMethod('post')) {
+            Deals::where('id', $id)->update([
+                'stage_id' => $request->stage_id,
+            ]);
+
+
+            return redirect(route('user.deals', $user_id))->withSuccess('Deal Update Successfully.')->withInput();
+        } 
+    }
 
     public function exportXLS($id)
     {
@@ -223,7 +265,7 @@ class DealController extends Controller
             $row['Pipeline'] = $deal->pipeline;
             $row['Stage'] = $deal->stage;
             $row['Created At']  = $deal->created_at;
-            
+
             if (!$custom_fields->isEmpty()) {
                 foreach ($custom_fields as $custom_field) {
                     $row[$custom_field->title]  = $custom_field->data;

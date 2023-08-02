@@ -52,6 +52,13 @@
                   <div class="table-responsive">
                      <div id="user-list-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                         <div class="table-responsive my-3">
+                           <div class="row" id="show_loading" style="display: none;">
+                              <div class="col-md-2" >
+                                <div class="preloader-dot-loading">
+                                <div class="cssload-loading"><i></i><i></i><i></i><i></i></div>
+                                </div>
+                             </div>
+                             </div>
                            <table id="user-list-table" class="table table-striped dataTable no-footer" role="grid" data-toggle="" aria-describedby="user-list-table_info">
                               <thead>
                                  <tr class="ligth">
@@ -73,7 +80,22 @@
                                           <td>{{$rec->deal_owner}}</td>
                                           <td>{{$rec->lead_source}}</td>
                                           <td>{{$rec->pipeline}}</td>
-                                          <td>{{$rec->stage}}</td>
+                                          <td>
+                                             
+                                             @foreach($pipeline_stages as $pstage)
+                                             @if($pstage['id']==$rec->pipeline_id)
+                                             
+                                             <div class="form-group">
+                                                <select class="form-select" id="stage_id_{{$rec->id}}" name="stage_id_{{$rec->id}}" onchange="UpdateDealStage({{$rec->id}});">
+                                                   @foreach($pstage['stages'] as $stage)
+                                                   <option value="{{$stage['id']}}" @if($stage['id']==$rec->stage_id) selected=selected @endif>{{$stage['title']}}</option>
+                                                   @endforeach
+                                                </select>
+                                                <div class="p-1" id="l_{{$rec->id}}"></div>
+                                             </div>
+                                                @endif
+                                             @endforeach
+                                          </td>
                                           <td>
                                              <div class="flex align-items-center list-user-action">
                                                 <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-original-title="Edit" href="<?= url('contact/'.$current_user_id.'/deals/edit/'.$rec->id);?>" aria-label="Edit" data-bs-original-title="Edit">
@@ -111,6 +133,31 @@
    </div>
 </div>
 <script type="text/javascript">
+   function UpdateDealStage(deal_id){
+      var stage_id = $('#stage_id_'+deal_id).val();
+      r=confirm('Are you sure you want to update this stage?');
+      if (r) {
+         var url ="{{ route('user.deals.updatestage',[$current_user_id,':deal_id']) }}";
+        url = url.replace(':deal_id', deal_id);
+        $('#l_'+deal_id).html($('#show_loading').html());
+        $('#l_'+deal_id).show();
+        $.post({
+           url: url,
+           type: 'POST',
+           data: {_token:"{{ csrf_token() }}", deal_id:deal_id, stage_id:stage_id},
+           success: function(res){
+              console.log(res);
+              $('#l_'+deal_id).hide();
+            },
+            error: function(res){
+             $('#l_'+deal_id).hide();
+            if(res.responseJSON.error_msg){
+               alert(res.responseJSON.error_msg);
+            }
+          }
+        });
+      }
+   }
    function ExportCSV(){
          window.location.href = "{{ route('deal.export.csv',$current_user_id) }}";
    }

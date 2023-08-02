@@ -28,65 +28,77 @@
       </div>
    </div>
 </div>
-<div class="content-inner container-fluid pb-0" id="page_layout">
-   <div class="row">
-      <div class="col-sm-12 col-lg-12">
-         <div class="card">
-            <div class="card-header d-flex justify-content-between">
-               <div class="header-title">
-                  <h4 class="card-title"> Send your query</h4>
-               </div>
-            </div>
-            <div class="card-body">
-               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vulputate, ex ac venenatis mollis, diam nibh finibus leo</p>
-               <form>
-                  <div class="row">
-                     <div class="col-md-6 mb-3">
-                        <label class="form-label" for="validationDefault01">First name</label>
-                        <input type="text" class="form-control" id="validationDefault01" required="">
-                     </div>
-                     <div class="col-md-6 mb-3">
-                        <label class="form-label" for="validationDefault02">Last name</label>
-                        <input type="text" class="form-control" id="validationDefault02" required="">
-                     </div>
-                     <div class="col-md-6 mb-3">
-                        <label for="validationCustomUsername" class="form-label">Username</label>
-                        <div class="form-group input-group">
-                           <span class="input-group-text" id="basic-addon1">@</span>
-                           <input type="text" class="form-control" id="validationCustomUsername" aria-label="Username" aria-describedby="basic-addon1" required="">
+<section class="content-inner about-section container contact_us">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="contact_inner">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="contact_form_inner">
+                                    <div class="contact_field">
+                                        <h3>Contatc Us</h3>
+                                        <p>Feel Free to contact us any time. We will get back to you as soon as we can!.</p>
+                                        <input type="text" class="form-control form-group" placeholder="Name" />
+                                        <input type="text" class="form-control form-group" placeholder="Email" />
+                                        <textarea class="form-control form-group" placeholder="Message"></textarea>
+                                        <button class="contact_form_submit">Send</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="right_conatct_social_icon d-flex align-items-end">
+                                   <div class="socil_item_inner d-flex">
+                                      <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
+                                      <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                      <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                   </div>
+                                </div>
+                            </div>
                         </div>
-                     </div>
-                     <div class="col-md-6 mb-3">
-                        <label class="form-label" for="validationDefault03">City</label>
-                        <input type="text" class="form-control" id="validationDefault03" required="">
-                     </div>
-                     <div class="col-md-6 mb-3">
-                        <label class="form-label" for="validationDefault04">State</label>
-                        <select class="form-select" id="validationDefault04" required="">
-                           <option selected="" disabled="" value="">Choose...</option>
-                           <option>...</option>
-                        </select>
-                     </div>
-                     <div class="col-md-6 mb-3">
-                        <label class="form-label" for="validationDefault05">Zip</label>
-                        <input type="text" class="form-control" id="validationDefault05" required="">
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required="">
-                        <label class="form-check-label" for="invalidCheck2">
-                        Agree to terms and conditions
-                        </label>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <button class="btn btn-primary" type="submit">Submit form</button>
-                  </div>
-               </form>
+                        <div class="contact_info_sec">
+                            <h4>Contact Info</h4>
+                            <div class="d-flex info_single align-items-center">
+                            <svg fill="none" xmlns="http://www.w3.org/2000/svg" style="height:2.3rem;width:2.3rem" width="24" height="24" viewBox="0 0 24 24">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M11.5317 12.4724C15.5208 16.4604 16.4258 11.8467 18.9656 14.3848C21.4143 16.8328 22.8216 17.3232 19.7192 20.4247C19.3306 20.737 16.8616 24.4943 8.1846 15.8197C-0.493478 7.144 3.26158 4.67244 3.57397 4.28395C6.68387 1.17385 7.16586 2.58938 9.61449 5.03733C12.1544 7.5765 7.54266 8.48441 11.5317 12.4724Z" fill="currentColor" />
+  </svg>
+                                <span>+352-995-2374</span>
+                            </div>
+                            <div class="d-flex info_single align-items-center">
+                            <svg fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-32" width="32" height="32" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.9395 3C18.2805 3 19.5705 3.53 20.5195 4.481C21.4695 5.43 22.0005 6.71 22.0005 8.05V15.95C22.0005 18.74 19.7305 21 16.9395 21H7.06049C4.26949 21 2.00049 18.74 2.00049 15.95V8.05C2.00049 5.26 4.25949 3 7.06049 3H16.9395ZM18.5305 9.54L18.6105 9.46C18.8495 9.17 18.8495 8.75 18.5995 8.46C18.4605 8.311 18.2695 8.22 18.0705 8.2C17.8605 8.189 17.6605 8.26 17.5095 8.4L13.0005 12C12.4205 12.481 11.5895 12.481 11.0005 12L6.50049 8.4C6.18949 8.17 5.75949 8.2 5.50049 8.47C5.23049 8.74 5.20049 9.17 5.42949 9.47L5.56049 9.6L10.1105 13.15C10.6705 13.59 11.3495 13.83 12.0605 13.83C12.7695 13.83 13.4605 13.59 14.0195 13.15L18.5305 9.54Z" fill="currentColor"></path></svg>
+                                <span>TeamBCCUSA@bccusa.com</span>
+                            </div>
+                            <div class="d-flex info_single align-items-center">
+                            <svg fill="none" xmlns="http://www.w3.org/2000/svg" style="height:4rem;width:4rem" class="icon-32" width="40" height="40" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 10.3178C3.5 5.71789 7.34388 2 11.9934 2C16.6561 2 20.5 5.71789 20.5 10.3178C20.5 12.6357 19.657 14.7876 18.2695 16.6116C16.7388 18.6235 14.8522 20.3765 12.7285 21.7524C12.2425 22.0704 11.8039 22.0944 11.2704 21.7524C9.13474 20.3765 7.24809 18.6235 5.7305 16.6116C4.34198 14.7876 3.5 12.6357 3.5 10.3178ZM9.19423 10.5768C9.19423 12.1177 10.4517 13.3297 11.9934 13.3297C13.5362 13.3297 14.8058 12.1177 14.8058 10.5768C14.8058 9.0478 13.5362 7.77683 11.9934 7.77683C10.4517 7.77683 9.19423 9.0478 9.19423 10.5768Z" fill="currentColor"></path></svg>
+                                <span>200 Vesey Street, 24th Floor
+New York, NY 10281</span>
+                            </div>
+            
+                        </div>
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-   </div>
-</div>
+        </div>
+    </section>
+    
+    <section class="map_sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="map_inner">
+                        <h2 class="text-center">Find Us on Google Map</h2>
+                        <p>Discover how BCCUSA can unlock the financial potential of your business.<br>
+Get started on your journey towards securing swift and reliable financing.<br>
+Remember, at BCCUSA your success is our priority.</p>
+                        <div class="map_bind">
+                        <iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="gmap_canvas" src="https://maps.google.com/maps?width=520&amp;height=400&amp;hl=en&amp;q=%20New%20Haven+()&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
 @endsection

@@ -39,109 +39,86 @@
                </div>
             </div> -->
             <div class="card-body">
-               <div class="acc-privacy">
-                  <div class="data-privacy">
-                     <h4 class="mb-2">Account Privacy</h4>
-                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="customCheck5">
-                        <label class="form-check-label pl-2" for="customCheck5">Private Account</label>
-                     </div>
-                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                        has been the industry's standard dummy text ever since the 1500s, when an unknown
-                        printer took a galley of type and scrambled it to make a type specimen book
-                     </p>
-                  </div>
-                  <hr>
-                  <div class="data-privacy">
-                     <h4 class="mb-2">Activity Status</h4>
-                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="activety">
-                        <label class="form-check-label pl-2" for="activety">Show Activity Status</label>
-                     </div>
-                     <p>It is a long established fact that a reader will be distracted by the readable content of
-                        a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                        more-or-less normal distribution of letters, as opposed to using 'Content here, content
-                        here', making it look like readable English.
-                     </p>
-                  </div>
-                  <hr>
-                  <div class="data-privacy">
-                     <h4 class="mb-2"> Story Sharing </h4>
-                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="story">
-                        <label class="form-check-label pl-2" for="story">Allow Sharing</label>
-                     </div>
-                     <p>It is a long established fact that a reader will be distracted by the readable content of
-                        a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                        more-or-less normal distribution of letters, as opposed to using 'Content here, content
-                        here', making it look like readable English.
-                     </p>
-                  </div>
-                  <hr>
-                  <div class="data-privacy">
-                     <h4 class="mb-2"> Photo Of You </h4>
-                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="customRadio0" id="automatically" checked="">
-                        <label for="automatically" class="form-check-label pl-2">Add Automatically</label>
-                     </div>
-                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="customRadio0" id="manualy">
-                        <label for="manualy" class="form-check-label pl-2">Add Manualy</label>
-                     </div>
-                     <p>It is a long established fact that a reader will be distracted by the readable content of
-                        a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                        more-or-less normal distribution of letters, as opposed to using 'Content here, content
-                        here', making it look like readable English.
-                     </p>
-                  </div>
-                  <hr>
-                  <div class="data-privacy">
-                     <h4 class="mb-2"> Your Profile </h4>
-                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="customRadio1" id="public">
-                        <label for="public" class="form-check-label pl-2">Public</label>
-                     </div>
-                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="customRadio1" id="friend">
-                        <label for="friend" class="form-check-label pl-2">Friend</label>
-                     </div>
-                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="customRadio1" id="spfriend">
-                        <label for="spfriend" class="form-check-label pl-2">Specific Friend</label>
-                     </div>
-                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="customRadio1" id="onlyme">
-                        <label for="onlyme" class="form-check-label pl-2">Only Me</label>
-                     </div>
-                     <p>It is a long established fact that a reader will be distracted by the readable content of
-                        a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                        more-or-less normal distribution of letters, as opposed to using 'Content here, content
-                        here', making it look like readable English.
-                     </p>
-                  </div>
-                  <hr>
-                  <div class="data-privacy">
-                     <h4 class="mb-2"> Login Notification </h4>
-                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="customRadio2" id="enable">
-                        <label for="enable" class="form-check-label pl-2">Enable</label>
-                     </div>
-                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="customRadio2" id="disable">
-                        <label for="disable" class="form-check-label pl-2">Disable</label>
-                     </div>
-                     <p>It is a long established fact that a reader will be distracted by the readable content of
-                        a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                        more-or-less normal distribution of letters, as opposed to using 'Content here, content
-                        here', making it look like readable English.
-                     </p>
-                  </div>
-                  <hr>
-                  <div class="data-privacy">
-                     <h4 class="mb-2">Privacy Help</h4>
-                     <a href="#"><i class="ri-customer-service-2-line me-2"></i>Support</a>
-                  </div>
-               </div>
+            <div class="bd-example">
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h5 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Accordion Item #1
+                </button>
+            </h5>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <strong>This is the first item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h5 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Accordion Item #2
+                </button>
+            </h5>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h5 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Accordion Item #3
+                </button>
+            </h5>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bd-example">
+    <div class="accordion custom-accordion" id="CustomAccordionExample">
+        <div class="accordion-item">
+            <h5 class="accordion-header" id="custom-headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#custom-collapseOne" aria-expanded="true" aria-controls="custom-collapseOne">
+                    Accordion Item #1
+                </button>
+            </h5>
+            <div id="custom-collapseOne" class="accordion-collapse collapse show" aria-labelledby="custom-headingOne" data-bs-parent="#CustomAccordionExample">
+                <div class="accordion-body">
+                    <strong>This is the first item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h5 class="accordion-header" id="custom-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#custom-collapseTwo" aria-expanded="false" aria-controls="custom-collapseTwo">
+                    Accordion Item #2
+                </button>
+            </h5>
+            <div id="custom-collapseTwo" class="accordion-collapse collapse" aria-labelledby="custom-headingTwo" data-bs-parent="#CustomAccordionExample">
+                <div class="accordion-body">
+                    <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h5 class="accordion-header" id="custome-headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#custom-collapseThree" aria-expanded="false" aria-controls="custom-collapseThree">
+                    Accordion Item #3
+                </button>
+            </h5>
+            <div id="custom-collapseThree" class="accordion-collapse collapse" aria-labelledby="custome-headingThree" data-bs-parent="#CustomAccordionExample">
+                <div class="accordion-body">
+                    <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
             </div>
          </div>
       </div>

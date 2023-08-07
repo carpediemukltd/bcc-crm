@@ -1323,3 +1323,35 @@ margin-top: 50px;
  border-radius: 30px;
  overflow: hidden;
 }
+p.sub_text {
+  padding-left: 20px;
+  position: relative;
+}
+p.sub_text:after{
+  position: absolute;
+  top: 8px;
+  left: 7px;
+  content: '';
+  background-color: #1f386e;
+  height: 6px;
+  width: 6px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.cutsom-field-dropdown button{
+  border: 1px solid #3a57e8;
+  width: 300px;
+  height: 41px;
+  background-color: #fff !important;
+  color: #000 !important;
+}
+.cutsom-field-dropdown .dropdown-menu{
+  width: 300px;
+}
+.cutsom-field-dropdown.dropdown .dropdown-toggle::after {
+  margin-left: 0.5rem;
+  right: 14px;
+  left: auto;
+  position: absolute;
+  color: #3a57e8;
+}

@@ -8,7 +8,7 @@
             <div class="col-md-12">
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
-                     <h1>Custom Fields List</h1>
+                     <h1>Custom Fields List </h1>
                      <p>All Custom Fields.</p>
                   </div>
                   <div>
@@ -37,6 +37,7 @@
                   <div class="header-title">
                      <h4 class="card-title">Custom Field List</h4>
                   </div>
+                  
                </div>
                <div class="card-body px-0">
                   <div class="table-responsive">

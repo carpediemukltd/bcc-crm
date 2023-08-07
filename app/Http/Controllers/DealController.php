@@ -170,7 +170,6 @@ class DealController extends Controller
                 'stage_id' => $request->stage_id,
             ]);
 
-
             return redirect(route('user.deals', $user_id))->withSuccess('Deal Update Successfully.')->withInput();
         } 
     }

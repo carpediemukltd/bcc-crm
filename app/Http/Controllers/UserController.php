@@ -91,7 +91,7 @@ class UserController extends Controller
             if (!in_array($request->role, $roles)) {
                 return redirect()->back()->with('error', 'You\'ve selected an invalid role.')->withInput();
             }
-            if (!in_array($request->owner, $owners)) {
+            if (!in_array($request->owner, $owners) && $request->role == 'user') {
                 return redirect()->back()->with('error', 'You\'ve selected an invalid owner.')->withInput();
             }
 

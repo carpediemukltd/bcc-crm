@@ -113,7 +113,7 @@
                               <select class="form-select" id="owner" name="owner">
                                  <option value="">Select</option>
                               @foreach($owners as $owner)
-                                 <option value="{{$owner->id}}" <?=(count($owners)==1)? 'selected="selected"':'' ?>>{{$owner->first_name}} {{$owner->last_name}}</option>
+                                 <option value="{{$owner->id}}" <?=($round_robin_owner->owner_id==$owner->id || count($owners)==1) ? 'selected="selected"' : '' ?>>{{$owner->first_name}} {{$owner->last_name}}</option>
                               @endforeach
                            </select>
                            </div>

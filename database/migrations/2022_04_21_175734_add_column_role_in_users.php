@@ -17,6 +17,7 @@ class AddColumnRoleInUsers extends Migration
             $table->enum('role', [
                 'superadmin',
                 'admin',
+                'owner',
                 'user'
             ])->default('user');
         });

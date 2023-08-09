@@ -36,7 +36,7 @@
                <div class="d-flex align-items-start justify-content-between mb-2">
                   <p class="mb-0 text-dark">Gross Volume</p>
                   <a class="badge rounded-pill bg-soft-primary" href="#">
-                  View
+                     View
                   </a>
                </div>
                <div class="mb-3">

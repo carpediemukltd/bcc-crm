@@ -8,7 +8,7 @@
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
                      <h1>BCC Privacy</h1>
-                     <p>Experience a simple yet powerful way to build Dashboards.</p>
+                     <p>This Privacy Policy outlines the data collection, use, and disclosure practices of BCC ("we," "us," or "our") in connection with our CRM services (the "Services"). <br>By using our Services, you consent to the practices described in this Privacy Policy.</p>
                   </div>
                   <!-- <div>
                      <a href="" class="btn btn-link btn-soft-light">
@@ -41,105 +41,62 @@
             <div class="card-body">
                <div class="acc-privacy">
                   <div class="data-privacy">
-                     <h4 class="mb-2">Account Privacy</h4>
-                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="customCheck5">
-                        <label class="form-check-label pl-2" for="customCheck5">Private Account</label>
-                     </div>
-                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                        has been the industry's standard dummy text ever since the 1500s, when an unknown
-                        printer took a galley of type and scrambled it to make a type specimen book
+                     <h4 class="mb-2">1. Information We Collect</h4>
+                     <p class="sub_text">Personal Information: We may collect personal information such as name, email address, phone number, and company information provided by users of the Services.</p>
+<p class="sub_text"><b>Usage Data:</b> We may collect information about how the Services are accessed and used, including browser type, device information, and other diagnostic data.</p>
+<p class="sub_text">Cookies and Tracking Technologies: We may use cookies and other tracking technologies to understand user preferences and improve the Services.</p>
+                     
+                  </div>
+                  <hr>
+                  <div class="data-privacy">
+                     <h4 class="mb-2">2. How We Use the Information</h4>
+                     <p>We may use the collected information for various purposes, including:
+                     <p class="sub_text">To provide and maintain the Services</p>
+<p class="sub_text">To notify you about changes to our Services</p>
+<p class="sub_text">To provide customer support</p>
+<p class="sub_text">To gather analysis or valuable information to improve the Services</p>
+<p class="sub_text">To monitor the usage of the Services</p>
                      </p>
                   </div>
                   <hr>
                   <div class="data-privacy">
-                     <h4 class="mb-2">Activity Status</h4>
-                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="activety">
-                        <label class="form-check-label pl-2" for="activety">Show Activity Status</label>
-                     </div>
-                     <p>It is a long established fact that a reader will be distracted by the readable content of
-                        a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                        more-or-less normal distribution of letters, as opposed to using 'Content here, content
-                        here', making it look like readable English.
+                     <h4 class="mb-2">3. Information Sharing and Disclosure </h4>
+                     <p>We may share your personal information with third parties under the following circumstances:
+                     </p>
+                     <p class="sub_text">Compliance with Laws: We may disclose your information where required by law or regulatory request.</p>
+<p class="sub_text"><b>Business Transfers:</b> In the event of a merger, acquisition, or asset sale, your information may be transferred.</p>
+<p class="sub_text"><b>Service Providers:</b> We may employ third-party companies to facilitate our Services and provide service on our behalf.
                      </p>
                   </div>
                   <hr>
                   <div class="data-privacy">
-                     <h4 class="mb-2"> Story Sharing </h4>
-                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="story">
-                        <label class="form-check-label pl-2" for="story">Allow Sharing</label>
-                     </div>
-                     <p>It is a long established fact that a reader will be distracted by the readable content of
-                        a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                        more-or-less normal distribution of letters, as opposed to using 'Content here, content
-                        here', making it look like readable English.
+                     <h4 class="mb-2">4. Security Measures </h4>
+                     
+                     <p class="sub_text">We implement appropriate security measures to protect against unauthorized access, alteration, or destruction of your personal information. However, no method of transmission or electronic storage is 100% secure, and we cannot guarantee absolute security.
                      </p>
                   </div>
                   <hr>
                   <div class="data-privacy">
-                     <h4 class="mb-2"> Photo Of You </h4>
-                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="customRadio0" id="automatically" checked="">
-                        <label for="automatically" class="form-check-label pl-2">Add Automatically</label>
-                     </div>
-                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="customRadio0" id="manualy">
-                        <label for="manualy" class="form-check-label pl-2">Add Manualy</label>
-                     </div>
-                     <p>It is a long established fact that a reader will be distracted by the readable content of
-                        a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                        more-or-less normal distribution of letters, as opposed to using 'Content here, content
-                        here', making it look like readable English.
+                     <h4 class="mb-2">5. Your Choices and Rights </h4>
+                     
+                     
+                     <p class="sub_text">Depending on your jurisdiction, you may have certain rights related to your personal information, such as access, correction, deletion, or objection to processing. To exercise these rights, please contact us at [contact information].
                      </p>
                   </div>
                   <hr>
                   <div class="data-privacy">
-                     <h4 class="mb-2"> Your Profile </h4>
-                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="customRadio1" id="public">
-                        <label for="public" class="form-check-label pl-2">Public</label>
-                     </div>
-                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="customRadio1" id="friend">
-                        <label for="friend" class="form-check-label pl-2">Friend</label>
-                     </div>
-                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="customRadio1" id="spfriend">
-                        <label for="spfriend" class="form-check-label pl-2">Specific Friend</label>
-                     </div>
-                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="customRadio1" id="onlyme">
-                        <label for="onlyme" class="form-check-label pl-2">Only Me</label>
-                     </div>
-                     <p>It is a long established fact that a reader will be distracted by the readable content of
-                        a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                        more-or-less normal distribution of letters, as opposed to using 'Content here, content
-                        here', making it look like readable English.
+                     <h4 class="mb-2">6. Changes to This Privacy Policy </h4>
+                     
+                     <p class="sub_text">We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date. You are advised to review this Privacy Policy periodically for any changes.
                      </p>
                   </div>
                   <hr>
                   <div class="data-privacy">
-                     <h4 class="mb-2"> Login Notification </h4>
-                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="customRadio2" id="enable">
-                        <label for="enable" class="form-check-label pl-2">Enable</label>
-                     </div>
-                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="customRadio2" id="disable">
-                        <label for="disable" class="form-check-label pl-2">Disable</label>
-                     </div>
-                     <p>It is a long established fact that a reader will be distracted by the readable content of
-                        a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                        more-or-less normal distribution of letters, as opposed to using 'Content here, content
-                        here', making it look like readable English.
-                     </p>
-                  </div>
-                  <hr>
-                  <div class="data-privacy">
-                     <h4 class="mb-2">Privacy Help</h4>
-                     <a href="#"><i class="ri-customer-service-2-line me-2"></i>Support</a>
+                     <h4 class="mb-2">7. Contact Us</h4>
+                     <p>If you have any questions about this Privacy Policy, please contact us at:</p>
+                     <p class="sub_text">Email: <a href="#">TeamBCCUSA@bccusa.com</a></p>
+                     <p class="sub_text">Address: 200 Vesey Street, 24th Floor New York, NY 10281</p>
+                     <p class="sub_text">Your use of our Services is also governed by our Terms of Service, available at <a href="#">Terms & Conditions</a></p>
                   </div>
                </div>
             </div>

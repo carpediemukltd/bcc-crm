@@ -63,4 +63,10 @@
    public function about(){
       return view('about');
    }
+   public function robinsetting(){
+      return view('robinsetting');
+   }
+   public function editsetting(){
+      return view('editsetting');
+   }
  }

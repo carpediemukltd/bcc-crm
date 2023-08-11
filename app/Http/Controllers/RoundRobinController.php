@@ -50,12 +50,12 @@ class RoundRobinController extends Controller
             if (!$access) {
                 return redirect(route('dashboard'))->with('error', 'Access Denied.');
             }
-             if ($request->round_robin > 0) {
-                foreach ($request->priority as $key => $value) 
-                {
+
+            if ($request->round_robin > 0) {
+                foreach ($request->priority as $key => $value) {
                     RoundRobinSetting::updateOrCreate(
                         ['company_id' => $request->company_id, 'owner_id' =>  $key],
-                        ['priority' => $value]  
+                        ['priority' => $value]
                     );
                 }
             }
@@ -63,7 +63,6 @@ class RoundRobinController extends Controller
         } else if ($request->isMethod('get')) {
 
             $this->data['settings'] = RoundRobinSetting::getDataByCompany($this->company_id);
-
             return view("roundrobin.index", $this->data);
         }
     }

@@ -21,16 +21,16 @@ class RoundRobinSetting extends Model
 
         return $data;
     }
-    
+
     public static function RoundRobinOwner($company_id)
     {
         $rand = rand(1, 9);
         $priority = "low";
         if ($rand > 3) $priority = "high";
-        
+
         $data = RoundRobinSetting::where('company_id', '=', $company_id)
-        ->where('priority', '=', $priority)
-        ->orderBy('last_lead', 'ASC')->first();
+            ->orderByRaw("priority='$priority' DESC, last_lead ASC")
+            ->first();
 
         return $data;
     }

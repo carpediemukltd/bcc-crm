@@ -51,6 +51,7 @@ Route::middleware([CheckStatus::class])->group(function () {
     Route::get('about', [GeneralController::class, 'about'])->name('about');
     Route::get('contact', [GeneralController::class, 'contact'])->name('contact');
     Route::get('robinsetting', [GeneralController::class, 'robinSetting'])->name('robinsetting');
+    Route::get('notificationsetting', [GeneralController::class, 'notificationSetting'])->name('notificationsetting');
     Route::get('editsetting', [GeneralController::class, 'editSetting'])->name('editsetting');
     Route::get('robinaddsetting', [GeneralController::class, 'robinaddSetting'])->name('robinaddsetting');
     Route::any('profile', [UserController::class, 'editProfile'])->name('profile');

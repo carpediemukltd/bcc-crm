@@ -69,4 +69,7 @@
    public function editsetting(){
       return view('editsetting');
    }
+   public function robinaddsetting(){
+      return view('robinaddsetting');
+   }
  }

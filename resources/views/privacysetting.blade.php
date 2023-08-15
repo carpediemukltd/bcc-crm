@@ -50,13 +50,13 @@
                   <hr>
                   <div class="data-privacy">
                      <h4 class="mb-2">2. How We Use the Information</h4>
-                     <p>We may use the collected information for various purposes, including:
+                     <p>We may use the collected information for various purposes, including:</p>
                      <p class="sub_text">To provide and maintain the Services</p>
-<p class="sub_text">To notify you about changes to our Services</p>
-<p class="sub_text">To provide customer support</p>
-<p class="sub_text">To gather analysis or valuable information to improve the Services</p>
-<p class="sub_text">To monitor the usage of the Services</p>
-                     </p>
+                     <p class="sub_text">To notify you about changes to our Services</p>
+                     <p class="sub_text">To provide customer support</p>
+                     <p class="sub_text">To gather analysis or valuable information to improve the Services</p>
+                     <p class="sub_text">To monitor the usage of the Services</p>
+                     
                   </div>
                   <hr>
                   <div class="data-privacy">

@@ -1355,3 +1355,63 @@ p.sub_text:after{
   position: absolute;
   color: #3a57e8;
 }
+.notification_view .dropdown-menu {
+    width: 500px !important;
+    border-radius: 6px;
+    padding: 20px!important;
+}
+.border {
+  border: 1px solid #dee2e6!important;
+}
+.shadow {
+  box-shadow: 0 .5rem 1rem #00000026!important;
+}
+.notification_listing_color {
+  background-color: #f8f8ff;
+}
+.notification_listing {
+  padding: 10px;
+  display: block;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+.notification_view .img-holder {
+  float: left;
+  margin-right: 10px;
+}
+.notification_view .text-holder {
+  text-align: left;
+  overflow: hidden;
+}
+.notification_view .text-holder p {
+  margin-bottom: 0;
+  font-size: 14px;
+  line-height: 18px;
+  width: 100%;
+}
+.notification_listing_color {
+  background-color: #f8f8ff;
+}
+.notification_view .dropdown-menu:after {
+  border-bottom: 8px solid #fff;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  content: "";
+  right: 10px;
+  top: -8px;
+  position: absolute;
+  z-index: 1001;
+}
+.navbar-expand-lg .navbar-nav .dropdown-menu {
+  left: auto;
+  right: -4px;
+  border-radius: 2;
+  top: 40px !important;
+  padding: 10px 0;
+}
+.navbar-expand-lg .navbar-nav .dropdown-menu {
+  position: absolute;
+}
+.dropdown .dropdown-toggle::after{
+  display: none !important;
+}

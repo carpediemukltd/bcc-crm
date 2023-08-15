@@ -99,6 +99,4 @@ Remember, at BCCUSA your success is our priority.</p>
             </div>
         </div>
     </section>
-
-  
 @endsection

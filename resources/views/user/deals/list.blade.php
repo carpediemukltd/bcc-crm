@@ -102,20 +102,18 @@
                                           <td>{{$rec->lead_source}}</td>
                                           <td>{{$rec->pipeline}}</td>
                                           <td>
-                                             
-                                             @foreach($pipeline_stages as $pstage)
+                                          @foreach($pipeline_stages as $pstage)
                                              @if($pstage['id']==$rec->pipeline_id)
-                                             
                                              <div class="form-group">
                                                 <select class="form-select" id="stage_id_{{$rec->id}}" name="stage_id_{{$rec->id}}" onchange="UpdateDealStage({{$rec->id}});">
                                                    @foreach($pstage['stages'] as $stage)
-                                                   <option value="{{$stage['id']}}" @if($stage['id']==$rec->stage_id) selected=selected @endif>{{$stage['title']}}</option>
+                                                      <option value="{{$stage['id']}}" @if($stage['id']==$rec->stage_id) selected=selected @endif>{{$stage['title']}}</option>
                                                    @endforeach
                                                 </select>
                                                 <div class="p-1" id="l_{{$rec->id}}"></div>
                                              </div>
-                                                @endif
-                                             @endforeach
+                                             @endif
+                                          @endforeach
                                           </td>
                                           <td>
                                              <div class="flex align-items-center list-user-action">
@@ -167,7 +165,6 @@
            type: 'POST',
            data: {_token:"{{ csrf_token() }}", deal_id:deal_id, stage_id:stage_id},
            success: function(res){
-              console.log(res);
               $('#l_'+deal_id).hide();
             },
             error: function(res){

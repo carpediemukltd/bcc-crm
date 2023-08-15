@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Permissions;
 use App\Models\Note;
 use App\Models\User;
 use App\Models\Deals;
@@ -10,9 +9,11 @@ use App\Models\Stages;
 use App\Models\Pipelines;
 use App\Models\UserOwner;
 use App\Models\UserDetails;
+use App\Helpers\Permissions;
 
 use App\Models\CustomFields;
 use Illuminate\Http\Request;
+use App\Models\RoundRobinSetting;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
@@ -69,13 +70,16 @@ class UserController extends Controller
         $this->data['current_slug'] = 'Add Contact';
         $this->data['slug']         = 'add_user';
         $user = auth()->user();
-        $this->data['custom_fields'] =  CustomFields::getDataByUser($user->id);
         $company_id = $user->company_id;
+        $this->data['custom_fields'] =  CustomFields::getDataByUser($user->id);
+        $this->data['round_robin_owner'] =  RoundRobinSetting::RoundRobinOwner($company_id);
+
         $this->data['owners'] = User::where('role', '=', 'owner')->where('company_id', '=', $company_id)
             ->when(($user->role == 'owner'), function ($q) use ($user) {
                 $q->where('id', '=', $user->id);
             })->get();
         $owners = array();
+
         foreach ($this->data['owners'] as $owner) {
             array_push($owners, $owner->id);
         }
@@ -113,6 +117,13 @@ class UserController extends Controller
                     'password' => Hash::make($data['password'])
                 ]);
 
+                if ($data['role'] == 'owner')
+                    RoundRobinSetting::create([
+                        'company_id' => $company_id,
+                        'owner_id' => $new_user->id,
+                        'priority' => 'low'
+                    ]);
+
                 if ($request->custom_fields_count > 0) {
                     foreach ($request->custom_fields as $key => $value) {
                         UserDetails::create([
@@ -123,12 +134,14 @@ class UserController extends Controller
                     }
                 }
 
-                if ($data['role'] == 'user') {
+                if ($data['role'] == 'user' && $data['owner'] > 0) {
                     UserOwner::create([
                         'user_id' => $new_user->id,
                         'owner_id' => $data['owner'],
                         'data' => $value
                     ]);
+                    RoundRobinSetting::where('company_id', $company_id)->where('owner_id', $data['owner'])
+                    ->update(['last_lead' => date("Y-m-d H:i:s")]);
                 }
 
                 return redirect(url('contacts'))->withSuccess('Contact Created Successfully.')->withInput();
@@ -145,7 +158,7 @@ class UserController extends Controller
         } */
 
         $roles = Permissions::getSubRoles($this->user);
-        
+
         $this->data['current_slug'] = 'Contacts';
         $this->data['slug']         = 'user_list';
         $filters['roles'] = $roles;
@@ -173,12 +186,12 @@ class UserController extends Controller
         $access = Permissions::checkUserAccess($this->user, $id);
         if (!$access) {
             return redirect(route('dashboard'))->with('error', 'Access Denied.');
-        }elseif ($access->role != 'user') {
+        } elseif ($access->role != 'user') {
             return redirect(route('dashboard'))->with('error', 'Access Denied to User.');
         }
 
         $this->data['id'] = $id;
-        $this->data['user'] = User::where('id' , $id)->first();
+        $this->data['user'] = User::where('id', $id)->first();
         $this->data['notes'] = Note::getNotesByUser($id);
         $this->data['deals'] = Deals::getDealsByUser($id);;
         $this->data['custom_fields'] =  CustomFields::getDataByUser($id);

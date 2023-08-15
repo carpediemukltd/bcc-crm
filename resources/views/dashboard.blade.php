@@ -440,7 +440,7 @@
                                     <h6 class="mb-0">$2,922</h6>
                                  </div>
                               </td>
-                              <td class="text-primary">
+                          <td class="text-primary">
                                  hui_uikgtphcpo
                               </td>
                               <td class="text-dark">1 month ago</td>

@@ -13,6 +13,7 @@ use App\Http\Middleware\CheckSameCompany;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\PipelineController;
+use App\Http\Controllers\RoundRobinController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CustomFieldController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -92,7 +93,8 @@ Route::middleware([CheckStatus::class])->group(function () {
     });
 
     Route::middleware([CheckAdmin::class])->group(function () {
-        // admin specific methods
+        Route::any('roundrobin', [RoundRobinController::class, 'index'])->name('roundrobin');
+
     });
 
     Route::middleware([CheckUser::class])->group(function () {

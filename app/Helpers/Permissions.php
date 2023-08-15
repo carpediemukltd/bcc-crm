@@ -32,6 +32,11 @@ class Permissions
 
         return $data;
     }
+    
+    public static function checkCompany($user, $company_id)
+    {
+        return ($company_id == $user->company_id);
+    }
 
     public static function getSubRoles($user)
     {

@@ -121,8 +121,8 @@
                      @endif
                      </div>
                      
-                     @unless (count($custom_fields)==0)
                      <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
+                     @if (count($custom_fields)>0)
                      <div class="row">
                          @foreach($custom_fields as $field)        
                         <div class="col-6">

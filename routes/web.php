@@ -9,12 +9,13 @@ use App\Http\Controllers\DealController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckSuperAdmin;
+use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Middleware\CheckSameCompany;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\PipelineController;
-use App\Http\Controllers\RoundRobinController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\RoundRobinController;
 use App\Http\Controllers\CustomFieldController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 
@@ -41,6 +42,7 @@ Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPa
 Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
+Route::any('jotform/add', [UserController::class, 'addJotFormUser'])->name('user.add.jotform')->withoutMiddleware([VerifyCsrfToken::class]);
 
 Route::middleware([CheckStatus::class])->group(function () {
     Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard');

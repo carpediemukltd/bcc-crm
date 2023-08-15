@@ -18,8 +18,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\RoundRobinController;
 use App\Http\Controllers\CustomFieldController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-
-
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,7 +51,6 @@ Route::middleware([CheckStatus::class])->group(function () {
     Route::get('contact', [GeneralController::class, 'contact'])->name('contact');
     Route::get('robinsetting', [GeneralController::class, 'robinSetting'])->name('robinsetting');
     Route::get('editsetting', [GeneralController::class, 'editSetting'])->name('editsetting');
-    Route::get('robinaddsetting', [GeneralController::class, 'robinaddSetting'])->name('robinaddsetting');
     Route::any('profile', [UserController::class, 'editProfile'])->name('profile');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -118,4 +116,7 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::get('companyonboarding', [GeneralController::class, 'companyonbOarding'])->name('companyonboarding');
         Route::get('dynamicbanner', [GeneralController::class, 'dynamicBanner'])->name('dynamicbanner');
     });
+    //notifications
+    Route::put('clear-bell-badge', [NotificationController::class, 'clearBellBadge']);
+    Route::put('notification-mark-read', [NotificationController::class, 'notificationMarkRead']);
 });

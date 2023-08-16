@@ -981,6 +981,69 @@
          document.getElementById("alert-box-close").click();
       }
    }, 5000);
+   $(".notification_view .clear-bell-icon").click(function(){
+      var csrfToken = $('meta[name="csrf-token"]').attr('content');
+      $.ajax({
+         url: '/clear-bell-badge',
+         method: 'PUT',
+         headers: {
+               'X-CSRF-TOKEN': csrfToken
+         },
+         data: {
+         },
+         success: function(response) {
+            $(".custom-notification-badge").remove();
+         },
+         error: function(xhr, status, error) {
+         }
+      });
+   });
+   $(".mark-as-read").click(function(){
+      var id = $(this).data('id');
+      var csrfToken = $('meta[name="csrf-token"]').attr('content');
+      $.ajax({
+         url: '/notification-mark-read',
+         method: 'PUT',
+         headers: {
+               'X-CSRF-TOKEN': csrfToken
+         },
+         data: {
+            id:id
+         },
+         success: function(response) {
+            $("#notification_listing-"+id).removeClass('notification_listing_color_unread');
+         },
+         error: function(xhr, status, error) {
+         }
+      });
+   });
+   $('table').on('change', '.setting-email-enabled', function() {
+        var checkbox = $(this);
+        var settingId = checkbox.data('id'); // Get the data-id attribute
+        var status;
+        if (checkbox.prop('checked')) {
+            status = 'enabled';
+        } else {
+            status = 'disabled';
+        }
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+         $.ajax({
+            url: '/update-notification-setting',
+            method: 'PUT',
+            headers: {
+                  'X-CSRF-TOKEN': csrfToken
+            },
+            data: {
+               id:settingId,
+               status:status
+            },
+            success: function(response) {
+            },
+            error: function(xhr, status, error) {
+            }
+         });
+    });
+
 </script>
 
 </body>

@@ -18,8 +18,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\RoundRobinController;
 use App\Http\Controllers\CustomFieldController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-
-
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,7 +51,6 @@ Route::middleware([CheckStatus::class])->group(function () {
     Route::get('contact', [GeneralController::class, 'contact'])->name('contact');
     Route::get('robinsetting', [GeneralController::class, 'robinSetting'])->name('robinsetting');
     Route::get('editsetting', [GeneralController::class, 'editSetting'])->name('editsetting');
-    Route::get('robinaddsetting', [GeneralController::class, 'robinaddSetting'])->name('robinaddsetting');
     Route::any('profile', [UserController::class, 'editProfile'])->name('profile');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -66,7 +64,11 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::any('customfield/edit/{id}', [CustomFieldController::class, 'editField'])->name('customfield.edit');
         
         Route::any('pipeline/{action}/{id?}', [PipelineController::class, 'pipelines'])->name('pipeline');
-        
+        //notifications
+        Route::put('clear-bell-badge', [NotificationController::class, 'clearBellBadge']);
+        Route::put('notification-mark-read', [NotificationController::class, 'notificationMarkRead']);
+        Route::get('notification-settings', [NotificationController::class, 'notificationSettings']);
+        Route::put('update-notification-setting', [NotificationController::class, 'updateNotificationSetting']);
     });
 
     Route::middleware([CheckStatus::class])->group(function () { // User specific methods
@@ -118,4 +120,5 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::get('companyonboarding', [GeneralController::class, 'companyonbOarding'])->name('companyonboarding');
         Route::get('dynamicbanner', [GeneralController::class, 'dynamicBanner'])->name('dynamicbanner');
     });
+
 });

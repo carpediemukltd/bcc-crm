@@ -40,9 +40,12 @@
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+      <meta name="csrf-token" content="{{ csrf_token() }}">
    </head>
    <body class="dual-compact light theme-default theme-with-animation card-default theme-color-default">
       <!-- loader Start -->
+      <?php $notificationService = app('App\Services\NotificationService');
+    ?>
       <div id="loading">
          <div class="loader simple-loader">
             <div class="loader-body">
@@ -448,15 +451,23 @@
                         </ul>
                         </li> -->
                      <li class="nav-item dropdown notification_view">
-                        <!---->
-                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside">
+                        @if($notificationService::recent()['bell_notification_count'])
+                           @if($notificationService::recent()['bell_notification_count'] > 99)
+                              <span class="custom-notification-badge">99+</span>
+                           @elseif($notificationService::recent()['bell_notification_count'] > 0)
+                              <span class="custom-notification-badge">{{$notificationService::recent()['bell_notification_count']}}</span>
+                           @endif
+                        @endif()                       
+                        <a class="nav-link clear-bell-icon" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside">
                            <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell" style="height: 20px; width: 20px; color: rgb(84, 95, 245);">
                               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                               <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                            </svg>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end notification-dropdown-menu py-0 shadow border border-300 navbar-dropdown-caret" id="navbarDropdownNotfication" aria-labelledby="navbarDropdownNotfication">
-                           <div class="notification_listing notification_listing_color" data-id="67">
+                        @if(count($notificationService::recent()['notifications']))
+                        @foreach($notificationService::recent()['notifications'] as $notification)   
+                        <div id="notification_listing-{{$notification->id}}" class="notification_listing {{ $notification->is_read == '1' ? 'notification_listing_color_read' : 'notification_listing_color_unread' }}" data-id="{{ $notification->id }}">
                               <div class="img-holder">
                                  <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell" style="height: 20px; width: 20px; color: rgb(84, 95, 245);">
                                     <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
@@ -464,17 +475,19 @@
                                  </svg>
                               </div>
                               <div class="text-holder d-flex">
-                                 <p class="hoverable-element">Campaign named Carpediem dev team has been stopped. <b><br> 12th, July 2023 - 01:46 pm</b></p>
+                                 <a href="{{url('/')}}{{$notification->target_url}}"><p class="hoverable-element">{{$notification->title}} <b><br> {{$notification->formatted_created_at}}</b></p></a>
                                  <div class="font-sans-serif d-sm-block">
                                     <button class="btn fs--2 btn-sm dropdown-toggle dropdown-caret-none transition-none notification-dropdown-toggle" type="button" data-stop-propagation="data-stop-propagation" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent">
                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
                                           <path d="M14 12a2 2 0 11-2-2 2 2 0 012 2zM4 10a2 2 0 102 2 2 2 0 00-2-2zm16 0a2 2 0 102 2 2 2 0 00-2-2z"></path>
                                        </svg>
                                     </button>
-                                    <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="#!">Mark as read</a></div>
+                                    <div class="dropdown-menu dropdown-menu-end py-2 mark-as-read" data-id="{{ $notification->id }}"><a class="dropdown-item" href="#" data-id="{{ $notification->id }}">Mark as read</a></div>
                                  </div>
                               </div>
                            </div>
+                           @endforeach()
+                           @endif()
                         </div>
                      </li>
                      <li class="nav-item dropdown" id="itemdropdown1">

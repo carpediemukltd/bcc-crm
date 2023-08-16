@@ -1366,9 +1366,7 @@ p.sub_text:after{
 .shadow {
   box-shadow: 0 .5rem 1rem #00000026!important;
 }
-.notification_listing_color {
-  background-color: #f8f8ff;
-}
+
 .notification_listing {
   padding: 10px;
   display: block;
@@ -1388,9 +1386,6 @@ p.sub_text:after{
   font-size: 14px;
   line-height: 18px;
   width: 100%;
-}
-.notification_listing_color {
-  background-color: #f8f8ff;
 }
 .notification_view .dropdown-menu:after {
   border-bottom: 8px solid #fff;
@@ -1414,4 +1409,25 @@ p.sub_text:after{
 }
 .dropdown .dropdown-toggle::after{
   display: none !important;
+}
+.custom-notification-badge{
+	position: absolute;
+    top: -5px;
+    right: -1px;
+    height: 23px;
+    width: 23px;
+    background: #b93131;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 13px;
+    z-index: 1000;
+    border: 2px solid;
+	box-shadow: rgba(0, 0, 0, 0.06) 0px 4px 20px 1px, rgba(0, 0, 0, 0.08) 0px 1px 4px;
+ }
+.notification_listing_color_unread{
+  background-color: #f8f8ff;
+}
+.notification_listing_color_read{
+  background-color: white;
 }

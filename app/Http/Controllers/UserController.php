@@ -10,7 +10,7 @@ use App\Models\Pipelines;
 use App\Models\UserOwner;
 use App\Models\UserDetails;
 use App\Helpers\Permissions;
-
+use App\Jobs\SendNotification;
 use App\Models\CustomFields;
 use Illuminate\Http\Request;
 use App\Models\RoundRobinSetting;
@@ -142,7 +142,7 @@ class UserController extends Controller
                     RoundRobinSetting::where('company_id', $company_id)->where('owner_id', $data['owner'])
                     ->update(['last_lead' => date("Y-m-d H:i:s")]);
                 }
-
+                SendNotification::dispatch(['id'=> $new_user->id, 'type'=>'contact_added']);
                 return redirect(url('contacts'))->withSuccess('Contact Created Successfully.')->withInput();
             }
         } else if ($request->isMethod('get')) {

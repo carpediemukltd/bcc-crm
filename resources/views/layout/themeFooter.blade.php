@@ -1017,6 +1017,32 @@
          }
       });
    });
+   $('table').on('change', '.setting-email-enabled', function() {
+        var checkbox = $(this);
+        var settingId = checkbox.data('id'); // Get the data-id attribute
+        var status;
+        if (checkbox.prop('checked')) {
+            status = 'enabled';
+        } else {
+            status = 'disabled';
+        }
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+         $.ajax({
+            url: '/update-notification-setting',
+            method: 'PUT',
+            headers: {
+                  'X-CSRF-TOKEN': csrfToken
+            },
+            data: {
+               id:settingId,
+               status:status
+            },
+            success: function(response) {
+            },
+            error: function(xhr, status, error) {
+            }
+         });
+    });
 
 </script>
 

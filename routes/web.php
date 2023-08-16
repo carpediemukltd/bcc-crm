@@ -119,4 +119,7 @@ Route::middleware([CheckStatus::class])->group(function () {
     //notifications
     Route::put('clear-bell-badge', [NotificationController::class, 'clearBellBadge']);
     Route::put('notification-mark-read', [NotificationController::class, 'notificationMarkRead']);
+    Route::get('notification-settings', [NotificationController::class, 'notificationSettings']);
+    Route::put('update-notification-setting', [NotificationController::class, 'updateNotificationSetting']);
+
 });

@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Notification;
 use App\Models\NotificationSetting;
+use App\Models\Stages;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -41,16 +42,41 @@ class SendNotification implements ShouldQueue
         $id   = $this->dataClass['id'];
 
         if ($type == 'contact_added') {
-            $userIds = NotificationSetting::whereSettingName('notification_contact_added')->where('status', 'enabled')->pluck('user_id');
-            $contact = User::whereId($id)->first();
-            $message = "New Contact Named ".$contact->first_name." has been added."; 
+            $userIds    = NotificationSetting::whereSettingName('notification_contact_added')->where('status', 'enabled')->pluck('user_id');
+            $contact    = User::whereId($id)->first();
+            $message    = "New Contact Named " . $contact->first_name . " has been added.";
+            $targetUrl  =  '/contact/edit/' . $contact->id;
+            $roles      = ['superadmin', 'admin'];
         }
-        $admins = User::whereIn('role', ['superadmin', 'admin'])->whereIn('id', $userIds)->get();
-        if($admins->count()){
+        if ($type == 'deal_added') {
+            $stage = Stages::whereId($id)->first();
+            $userIds = NotificationSetting::with('detail')
+                ->whereSettingName('notification_specific_deal_stage')
+                ->where('status', 'enabled')
+                ->whereHas('detail', function ($query) use ($stage) {
+                    $query->where('stage_id', $stage->id);
+                })
+                ->pluck('user_id');
+
+            $message    = "New deal moved to stage named " . $stage->title;
+            $targetUrl  =  '/stages/' . $stage->id;
+            $roles      = ['superadmin', 'admin'];
+        }
+        if ($type == 'round_robin_owner_added') {
+            $userIds = NotificationSetting::whereUserId($id)->whereSettingName('notification_round_robin')
+                ->where('status', 'enabled')
+                ->pluck('user_id');
+
+            $message    = "New contact has been assigned to you!";
+            $targetUrl  =  '/roundrobin';
+            $roles = ['owner'];
+        }
+        $admins = User::whereIn('role', $roles)->whereIn('id', $userIds)->get();
+        if ($admins->count()) {
             foreach ($admins as $admin) {
                 $dataToPost = array();
                 $dataToPost['user_id']    = $admin->id;
-                $dataToPost['target_url'] = '/contact/edit/'.$contact->id;
+                $dataToPost['target_url'] = $targetUrl;
                 $dataToPost['title']      = $message;
                 $dataToPost['is_read']    = '0';
                 Notification::create($dataToPost);
@@ -73,9 +99,7 @@ class SendNotification implements ShouldQueue
                     $mail->send();
                 } catch (Exception $e) {
                 }
-
             }
         }
-        
     }
 }

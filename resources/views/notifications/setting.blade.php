@@ -40,14 +40,29 @@
                                                 <thead>
                                                     <tr class="ligth">
                                                         <th class="sorting sorting_asc" tabindex="0" aria-controls="user-list-table" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Sr: activate to sort column descending">Setting Name</th>
+                                                        <th class="sorting" tabindex="0" aria-controls="user-list-table" rowspan="1" colspan="1" aria-label="Title: activate to sort column ascending"></th>
                                                         <th class="sorting" tabindex="0" aria-controls="user-list-table" rowspan="1" colspan="1" aria-label="Title: activate to sort column ascending">Action</th>
 
                                                     </tr>
                                                 </thead>
                                                 <tbody class="ui-sortable">
-                                                    @foreach($data as $setting)
+                                                    @foreach($data['settings'] as $setting)
                                                     <tr class="odd ui-sortable-handle">
                                                         <td class="sorting_1">{{ucfirst(str_replace('_', ' ', $setting->setting_name))}}</td>
+                                                        <td class="">
+                                                        @if($setting->setting_name == 'notification_specific_deal_stage')
+                                                        <select data-id="{{$setting->id}}" id="options-dropdown-deals" class="form-control" multiple>
+                                                            @if(count($data['stages']))
+                                                            @foreach($data['stages'] as $stage)
+                                                            <option value="{{$stage->id}}"
+                                                                @if($setting->detail->contains('stage_id', $stage->id)) selected @endif>
+                                                                {{$stage->title}}
+                                                            </option>
+                                                             @endforeach()
+                                                             @endif()           
+                                                        </select>
+                                                        @endif()
+                                                        </td>                                                       
                                                         <td>
                                                             <div class="form-check form-switch form-check-inline">
                                                                 <input data-id="{{$setting->id}}" class="form-check-input setting-email-enabled" type="checkbox" @if($setting->status === 'enabled') checked @endif>

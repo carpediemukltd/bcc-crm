@@ -1431,3 +1431,6 @@ p.sub_text:after{
 .notification_listing_color_read{
   background-color: white;
 }
+#options-dropdown-deals option{
+  padding: 5px;
+}

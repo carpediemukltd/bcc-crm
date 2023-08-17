@@ -19,6 +19,7 @@ use App\Http\Controllers\RoundRobinController;
 use App\Http\Controllers\CustomFieldController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Middleware\CheckAdminOwner;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,11 +65,7 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::any('customfield/edit/{id}', [CustomFieldController::class, 'editField'])->name('customfield.edit');
         
         Route::any('pipeline/{action}/{id?}', [PipelineController::class, 'pipelines'])->name('pipeline');
-        //notifications
-        Route::put('clear-bell-badge', [NotificationController::class, 'clearBellBadge']);
-        Route::put('notification-mark-read', [NotificationController::class, 'notificationMarkRead']);
-        Route::get('notification-settings', [NotificationController::class, 'notificationSettings']);
-        Route::put('update-notification-setting', [NotificationController::class, 'updateNotificationSetting']);
+    
     });
 
     Route::middleware([CheckStatus::class])->group(function () { // User specific methods
@@ -104,8 +101,15 @@ Route::middleware([CheckStatus::class])->group(function () {
     Route::middleware([CheckUser::class])->group(function () {
         // user specific methods
     });
-
-
+    //notifications
+    
+    Route::middleware([CheckAdminOwner::class])->group(function () {
+        Route::get('notification-settings', [NotificationController::class, 'notificationSettings']);
+        Route::put('clear-bell-badge', [NotificationController::class, 'clearBellBadge']);
+        Route::put('notification-mark-read', [NotificationController::class, 'notificationMarkRead']);
+        Route::put('update-notification-setting', [NotificationController::class, 'updateNotificationSetting']);
+        Route::post('update-stage-settings-options', [NotificationController::class, 'updateStageSettingsOptions']);
+    });
     Route::prefix('demo')->group(function () {
         Route::get('userlist', [GeneralController::class, 'userList'])->name('userlist');
         Route::get('useradd', [GeneralController::class, 'userAdd'])->name('useradd');

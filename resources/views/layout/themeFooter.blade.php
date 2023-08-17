@@ -1043,6 +1043,29 @@
             }
          });
     });
+    $('#options-dropdown-deals').on('change', function () {
+         const selectedOptions = $(this).val();
+         const settingId = $(this).data('id');
+         updateSelectedOptions(settingId, selectedOptions.join(','));
+   });
+   function updateSelectedOptions(settingId, selectedOptions) {
+      var csrfToken = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+        url: '/update-stage-settings-options',
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken
+         },
+        data: {
+            settingId: settingId,
+            selectedOptions: selectedOptions
+        },
+        success: function (response) {
+        },
+        error: function (error) {
+        }
+    });
+}
 
 </script>
 

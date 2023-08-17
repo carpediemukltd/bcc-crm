@@ -10,7 +10,7 @@ use App\Models\Pipelines;
 use App\Models\UserOwner;
 use App\Models\UserDetails;
 use App\Helpers\Permissions;
-
+use App\Jobs\SendNotification;
 use App\Models\CustomFields;
 use Illuminate\Http\Request;
 use App\Models\RoundRobinSetting;
@@ -57,6 +57,7 @@ class RoundRobinController extends Controller
                         ['company_id' => $request->company_id, 'owner_id' =>  $key],
                         ['priority' => $value]
                     );
+                    SendNotification::dispatch(['id'=> $key, 'type'=>'round_robin_owner_added']);
                 }
             }
             return redirect(url('roundrobin'))->withSuccess('Round Robin settings updated successfully.');

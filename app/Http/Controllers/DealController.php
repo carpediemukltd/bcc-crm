@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Permissions;
+use App\Jobs\SendNotification;
 use App\Models\Note;
 use App\Models\User;
 use App\Models\Deals;
@@ -95,7 +96,7 @@ class DealController extends Controller
                     );
                 }
             }
-
+            SendNotification::dispatch(['id'=> $request->stage_id, 'type'=>'deal_added']);
             return redirect(route('user.deals', $id))->withSuccess('Deal Created Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
             $this->data['current_slug'] = 'Add Deal';

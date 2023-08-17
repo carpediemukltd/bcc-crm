@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpParser\Node\Stmt\Else_;
 
 class JotFormController extends Controller
 {
@@ -32,18 +33,18 @@ class JotFormController extends Controller
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
             $this->data['user'] = $this->user;
-            if(Auth::user()){
-            if ($this->user->role != 'superadmin') {
-                $this->company_id = $this->user->company_id;
+            if (Auth::user()) {
+                if ($this->user->role != 'superadmin') {
+                    $this->company_id = $this->user->company_id;
+                }
             }
-        }
             return $next($request);
         });
     }
 
     public function addUser(Request $request)
     {
-     
+        dd($request);
         $this->data['current_slug'] = 'Add Contact';
         $this->data['slug']         = 'add_user_jotform';
         $company_id = 1;
@@ -51,10 +52,22 @@ class JotFormController extends Controller
 
         if ($request->isMethod('post')) {
 
-            $data['first_name'] = $request->full_name['first'];
-            $data['last_name'] = $request->full_name['last'];
+            if ($request->legalBusiness6) {
+
+                $data['first_name'] = $request->full_name['first'];
+                $data['last_name'] = $request->full_name['last'];
+            } else {
+
+                $data['first_name'] = $request->full_name['first'];
+                $data['last_name'] = $request->full_name['last'];
+            }
             $data['email'] = $request->email;
-            $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->phonenumber['full']);
+            if ($request->phoneNumber) {
+                $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->phoneNumber['full']);
+            } else {
+                $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->phonenumber['full']);
+            }
+
             $data['role'] = 'user';
             $data['password'] = Hash::make('asdfasdf');
             $data['owner'] = $this->data['round_robin_owner']->owner_id;
@@ -64,7 +77,7 @@ class JotFormController extends Controller
                 unset($data['email'], $data['owner']);
                 User::where('email', $request->email)->update($data);
                 return redirect()->back()->withSuccess('Contact Updated Successfully.');
-            }else{
+            } else {
                 $new_user = User::create([
                     'first_name' => $data['first_name'],
                     'last_name' => $data['last_name'],
@@ -81,7 +94,7 @@ class JotFormController extends Controller
                         'owner_id' => $data['owner']
                     ]);
                     RoundRobinSetting::where('company_id', $company_id)->where('owner_id', $data['owner'])
-                    ->update(['last_lead' => date("Y-m-d H:i:s")]);
+                        ->update(['last_lead' => date("Y-m-d H:i:s")]);
                 }
                 return redirect()->back()->withSuccess('Contact Created Successfully.');
             }

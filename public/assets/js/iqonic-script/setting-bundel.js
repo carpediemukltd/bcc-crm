@@ -111,7 +111,7 @@
         ],
         type: "variable",
         colors: {
-          "--{{prefix}}primary": "#3a57e8",
+          "--{{prefix}}primary": "#00562c",
           "--{{prefix}}info": "#08B1BA",
         },
         value: "theme-color-default",

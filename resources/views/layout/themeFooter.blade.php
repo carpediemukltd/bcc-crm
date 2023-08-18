@@ -154,7 +154,7 @@
                            <div data-setting="radio">
                               <input type="radio" value="theme-color-default" class="btn-check"
                                  name="theme_color" id="theme-color-default"
-                                 data-colors='{"primary": "#3a57e8", "info": "#08B1BA"}'>
+                                 data-colors='{"primary": "#00562c", "info": "#08B1BA"}'>
                               <label class="btn bg-transparent px-2 border-0" for="theme-color-default"
                                  data-bs-toggle="tooltip" data-bs-placement="top" title="Reset Color"
                                  data-bs-original-title="Reset color">
@@ -175,7 +175,7 @@
                         <div class="form-group d-flex justify-content-between align-items-center">
                            <label class="" for="custom-primary-color">Primary</label>
                            <input class="" name="theme_color" data-extra="primary" type="color"
-                              id="custom-primary-color" value="#3a57e8" data-setting="color">
+                              id="custom-primary-color" value="#00562c" data-setting="color">
                         </div>
                         <div class="form-group d-flex d-flex justify-content-between align-items-center">
                            <label class="" for="custom-info-color">Secondary</label>

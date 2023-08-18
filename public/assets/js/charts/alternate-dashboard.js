@@ -261,7 +261,7 @@
                             opacityFrom: .4,
                             opacityTo: .1,
                             stops: [0, 50, 80],
-                            colors: ["#3a57e8", "#4bc7d2"]
+                            colors: ["#00562c", "#4bc7d2"]
                         }
                     },
                     tooltip: {

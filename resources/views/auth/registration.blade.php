@@ -51,7 +51,7 @@
                               <a href="#" class="navbar-brand d-flex align-items-center mb-3">
                                  <!--Logo start-->
                                  <div class="logo-main">
-                                    <img src="{{asset('assets/images/bcc-logo.png')}}" alt="" style="width:150px">
+                                    <img src="{{asset('assets/images/bcc-update-logo.png')}}" alt="" style="width:150px">
                                  </div>
                                  <!--logo End-->                              
                               </a>

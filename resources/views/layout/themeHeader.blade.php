@@ -31,7 +31,7 @@
       <!-- Customizer Css -->
       <link rel="stylesheet" href="{{asset('assets/css/customizer.min.css?v=3.0.0')}}" />
       <!-- RTL Css -->
-      <link rel="stylesheet" href="{{asset('assets/css/rtl.min.css?v=3.0.0')}}" />
+      <!-- <link rel="stylesheet" href="{{asset('assets/css/rtl.min.css?v=3.0.0')}}" /> -->
       <!-- Google Font -->
       <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
       <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -62,7 +62,7 @@
                   <!--Logo start-->
                   <div class="logo-main">
                      <div class="logo-normal">
-                        <img src="{{asset('assets/images/bcc-logo.png')}}" alt="" style="width:80px">
+                        <img src="{{asset('assets/images/bcc-update-logo.png')}}" alt="" style="width:100px">
                      </div>
                   </div>
                   <!--logo End-->         

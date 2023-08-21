@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class CustomFields extends Model
 {
     use HasFactory;
-    protected $fillable = ['id', 'title', 'type', 'sort'];
+    protected $fillable = ['id', 'title', 'type', 'sort', 'visible'];
 
     public static function getDataByDeal($id)
     {

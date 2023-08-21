@@ -66,11 +66,12 @@ class JotFormController extends Controller
                 $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->phoneNumber['full']);
             } else if (isset($request->phonenumber['full'])) {
                 $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->phonenumber['full']);
-            }} else if (isset($request->businessnumber['phone'])) {
+            } else if (isset($request->businessnumber['phone'])) {
                 $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->businessnumber['phone']);
             } else if (isset($request->phonenumber)) {
                 $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->phonenumber);
             }
+
 
             $data['role'] = 'user';
             $data['password'] = Hash::make('asdfasdf');
@@ -183,11 +184,13 @@ class JotFormController extends Controller
                 }
                 if (is_array($fields) && count($fields) > 0) {
                     foreach ($fields as $field => $value) {
-                        if(!empty($value))
-                        self::saveCustomFieldData($user_id, $field, $value);
+                        if (!empty($value))
+                            self::saveCustomFieldData($user_id, $field, $value);
                     }
                 }
             }
+            
+            return redirect()->back()->withSuccess('Contact Created Successfully.');
         }
     }
 

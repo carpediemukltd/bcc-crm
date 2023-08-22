@@ -1050,24 +1050,24 @@
    });
    function updateSelectedOptions(settingId, selectedOptions) {
       var csrfToken = $('meta[name="csrf-token"]').attr('content');
-    $.ajax({
-        url: '/update-stage-settings-options',
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': csrfToken
+      $.ajax({
+         url: '/update-stage-settings-options',
+         method: 'POST',
+         headers: {
+               'X-CSRF-TOKEN': csrfToken
+            },
+         data: {
+               settingId: settingId,
+               selectedOptions: selectedOptions
          },
-        data: {
-            settingId: settingId,
-            selectedOptions: selectedOptions
-        },
-        success: function (response) {
-        },
-        error: function (error) {
-        }
-    });
-}
-
+         success: function (response) {
+         },
+         error: function (error) {
+         }
+      });
+   }
 </script>
+   @yield('script')
 
 </body>
 

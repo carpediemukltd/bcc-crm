@@ -7,7 +7,7 @@
             <div class="col-md-12">
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
-                     <h1>Add Custom Field</h1>
+                     <h1>Add Custom Field </h1>
                      <p>Add new field.</p>
                   </div>
                   <div>
@@ -38,6 +38,10 @@
                <div class="card-header d-flex justify-content-between">
                   <div class="header-title">
                      <h4 class="card-title">Add Form</h4>
+                  </div>
+                  <div class="form-check form-switch form-check-inline">
+                     <input class="form-check-input" type="checkbox" id="switch1">
+                     <label class="pl-2 form-check-label" for="switch1">Add Custom Field</label>
                   </div>
                </div>
                <div class="card-body">

@@ -50,10 +50,16 @@ class CustomFieldController extends Controller
                 if ($last_sort) {
                     $sort = $last_sort['sort'] + 1;
                 }
+
+                $visible = 0;
+                if (isset($request->visible) && $request->visible == 'on')
+                    $visible = 1;
+
                 CustomFields::create([
                     'title' => $data['title'],
                     'type'  => $data['type'],
-                    'sort'  => $sort
+                    'sort'  => $sort,
+                    'visible'  => $visible
                 ]);
                 return redirect(url('customfield'))->withSuccess('Custom Field Created Successfully.')->withInput();
             }
@@ -69,9 +75,15 @@ class CustomFieldController extends Controller
         $this->data['fields_type']  = ['contact', 'deals'];
 
         if ($request->isMethod('put')) {
+            
+            $visible = 0;
+            if (isset($request->visible) && $request->visible == 'on')
+                $visible = 1;
+
             $update_data = [
-                'title'   => $request->title,
-                'type'    => $request->type
+                'title' => $request->title,
+                'type' => $request->type,
+                'visible' => $visible,
             ];
             CustomFields::whereId($id)->update($update_data);
             return redirect(url('customfield'))->withSuccess('Custom Field Update Successfully.')->withInput();

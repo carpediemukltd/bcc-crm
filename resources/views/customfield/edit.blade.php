@@ -10,10 +10,6 @@
                      <h1>Edit Contact</h1>
                      <p>You can edit this contact.</p>
                   </div>
-                  <div class="form-check form-switch form-check-inline">
-                     <input class="form-check-input" type="checkbox" id="switch1">
-                     <label class="pl-2 form-check-label" for="switch1">Add Custom Field</label>
-                  </div>
                </div>
             </div>
          </div>
@@ -58,6 +54,14 @@
                         </div>
                      </div>
 
+                     <div class="row">
+                        <div class="col">
+                           <div class="form-check form-switch form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="visible" name="visible" <?php if($rs_field->visible==1){echo 'checked';}?>>
+                              <label class="pl-2 form-check-label" for="visible">Visible</label>
+                           </div>
+                        </div>
+                     </div>
                      <div class="row"><div class="col"><br /></div></div>
 
                      <div class="row">

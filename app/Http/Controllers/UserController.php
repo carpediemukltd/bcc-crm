@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use App\Models\User;
 use App\Models\Deals;
-use App\Models\Stages;
-use App\Models\Pipelines;
 use App\Models\UserOwner;
 use App\Models\UserDetails;
 use App\Helpers\Permissions;
@@ -140,9 +138,9 @@ class UserController extends Controller
                         'owner_id' => $data['owner'],
                     ]);
                     RoundRobinSetting::where('company_id', $company_id)->where('owner_id', $data['owner'])
-                    ->update(['last_lead' => date("Y-m-d H:i:s")]);
+                        ->update(['last_lead' => date("Y-m-d H:i:s")]);
                 }
-                SendNotification::dispatch(['id'=> $new_user->id, 'type'=>'contact_added']);
+                SendNotification::dispatch(['id' => $new_user->id, 'type' => 'contact_added']);
                 return redirect(url('contacts'))->withSuccess('Contact Created Successfully.')->withInput();
             }
         } else if ($request->isMethod('get')) {
@@ -196,7 +194,6 @@ class UserController extends Controller
         $this->data['custom_fields'] =  CustomFields::getDataByUser($id);
 
         if ($request->isMethod('put')) {
-
             $update_data = [
                 'first_name'   => $request->first_name,
                 'last_name'    => $request->last_name,

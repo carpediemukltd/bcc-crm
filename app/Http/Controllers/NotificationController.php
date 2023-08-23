@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Deals;
 use App\Models\Notification;
 use App\Models\NotificationSetting;
 use App\Models\NotificationSettingDetail;

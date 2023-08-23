@@ -14,7 +14,8 @@ class RoundRobinSetting extends Model
 
     public static function getDataByCompany($company_id)
     {
-        $data = User::where('users.role', '=', 'owner')->where('users.company_id', '=', $company_id)
+        $data = User::where('users.role', '=', 'owner')
+            ->where('users.company_id', '=', $company_id)
             ->leftJoin('round_robin_settings', function ($join) {
                 $join->on('round_robin_settings.owner_id', '=', 'users.id');
             })->select('users.*', 'round_robin_settings.priority')->get();

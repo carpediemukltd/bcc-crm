@@ -14,7 +14,6 @@ class Deals extends Model
     public static function getDeals($user_id,$deal_id)
     {
         $data = Deals::where('id', $deal_id)->where('user_id', $user_id)->first();
-
         return $data;
     }
 

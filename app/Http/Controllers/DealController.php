@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Permissions;
 use App\Jobs\SendNotification;
-use App\Models\Note;
 use App\Models\User;
 use App\Models\Deals;
 use App\Models\Stages;

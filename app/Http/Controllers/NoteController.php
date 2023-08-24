@@ -25,6 +25,7 @@ class NoteController extends Controller
             return $next($request);
         });
     }
+
     public function listNote($contact_id)
     {
         $this->data['notes'] = Note::where(['contact_id' => $contact_id])
@@ -39,17 +40,17 @@ class NoteController extends Controller
     public function addNote(Request $request)
     {
         if ($request->isMethod('post')) {
-            $user = auth()->user();
             $request->validate([
                 'contact_id' => 'required',
                 'note' => 'required'
             ]);
 
             $note = Note::create([
-                'user_id' => $user->id,
+                'user_id' => $this->user->id,
                 'contact_id' => $request->contact_id,
                 'note' => $request->note
             ]);
+
             if ($note->id > 0) {
                 $this->data['notes'] = Note::where(['contact_id' => $request->contact_id])
                     ->join('users', function ($join) {

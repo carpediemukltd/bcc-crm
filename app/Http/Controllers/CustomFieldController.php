@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CustomFields;
+use App\Models\CustomField;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -36,7 +36,7 @@ class CustomFieldController extends Controller
             $data = $request->all();
             if ($data) {
                 $sort = 0;
-                $last_sort = CustomFields::select('sort')->where('type', $data['type'])->orderBy('sort', 'desc')->first();
+                $last_sort = CustomField::select('sort')->where('type', $data['type'])->orderBy('sort', 'desc')->first();
                 if ($last_sort) {
                     $sort = $last_sort['sort'] + 1;
                 }
@@ -45,7 +45,7 @@ class CustomFieldController extends Controller
                 if (isset($request->visible) && $request->visible == 'on')
                     $visible = 1;
 
-                CustomFields::create([
+                CustomField::create([
                     'title' => $data['title'],
                     'type'  => $data['type'],
                     'sort'  => $sort,
@@ -75,10 +75,10 @@ class CustomFieldController extends Controller
                 'type' => $request->type,
                 'visible' => $visible,
             ];
-            CustomFields::whereId($id)->update($update_data);
+            CustomField::whereId($id)->update($update_data);
             return redirect(url('customfield'))->withSuccess('Custom Field Update Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
-            $this->data['rs_field'] = CustomFields::where('id', $id)->first();
+            $this->data['rs_field'] = CustomField::where('id', $id)->first();
             return view("customfield.edit", $this->data);
         }
     } // editField
@@ -90,11 +90,11 @@ class CustomFieldController extends Controller
 
         if ($request->isMethod('post')) {
             foreach ($request->sorting as $index => $id) {
-                CustomFields::whereId($id)->update(['sort' => $index]);
+                CustomField::whereId($id)->update(['sort' => $index]);
             }
             return redirect(url('customfield'))->withSuccess('Sorted Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
-            $this->data['rs_field']     = CustomFields::orderBy('sort', 'asc')->get();
+            $this->data['rs_field']     = CustomField::orderBy('sort', 'asc')->get();
             return view("customfield.list", $this->data);
         }
     } // fieldList

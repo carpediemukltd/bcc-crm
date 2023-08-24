@@ -37,7 +37,6 @@
                   <div class="header-title">
                      <h4 class="card-title">Custom Field List</h4>
                   </div>
-                  
                </div>
                <div class="card-body px-0">
                   <div class="table-responsive">

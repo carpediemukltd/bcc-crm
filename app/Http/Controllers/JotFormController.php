@@ -2,16 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Note;
 use App\Models\User;
-use App\Models\Deals;
-use App\Models\Stages;
-use App\Models\Pipelines;
 use App\Models\UserOwner;
 use App\Models\UserDetails;
-use App\Helpers\Permissions;
-
-use App\Models\CustomFields;
+use App\Models\CustomField;
 use Illuminate\Http\Request;
 use App\Models\RoundRobinSetting;
 use Illuminate\Support\Facades\DB;
@@ -71,7 +65,6 @@ class JotFormController extends Controller
             } else if (isset($request->phonenumber)) {
                 $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->phonenumber);
             }
-
 
             $data['role'] = 'user';
             $data['password'] = Hash::make('asdfasdf');
@@ -196,7 +189,7 @@ class JotFormController extends Controller
 
     private static function saveCustomFieldData($user_id, $field, $data)
     {
-        $custom_field = CustomFields::firstOrCreate(
+        $custom_field = CustomField::firstOrCreate(
             ["title" =>  $field],
             ["title" =>  $field, "type" => "contact", "visible" => 0],
         );

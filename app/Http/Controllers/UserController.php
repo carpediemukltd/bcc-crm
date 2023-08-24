@@ -5,13 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use App\Models\User;
 use App\Models\Deals;
-use App\Models\Stages;
-use App\Models\Pipelines;
 use App\Models\UserOwner;
 use App\Models\UserDetails;
 use App\Helpers\Permissions;
 use App\Jobs\SendNotification;
-use App\Models\CustomFields;
+use App\Models\CustomField;
 use Illuminate\Http\Request;
 use App\Models\RoundRobinSetting;
 use Illuminate\Support\Facades\DB;
@@ -71,7 +69,7 @@ class UserController extends Controller
         $this->data['slug']         = 'add_user';
         $user = auth()->user();
         $company_id = $user->company_id;
-        $this->data['custom_fields'] =  CustomFields::getDataByUser($user->id);
+        $this->data['custom_fields'] =  CustomField::getDataByUser($user->id);
         $this->data['round_robin_owner'] =  RoundRobinSetting::RoundRobinOwner($company_id);
 
         $this->data['owners'] = User::where('role', '=', 'owner')->where('company_id', '=', $company_id)
@@ -140,9 +138,9 @@ class UserController extends Controller
                         'owner_id' => $data['owner'],
                     ]);
                     RoundRobinSetting::where('company_id', $company_id)->where('owner_id', $data['owner'])
-                    ->update(['last_lead' => date("Y-m-d H:i:s")]);
+                        ->update(['last_lead' => date("Y-m-d H:i:s")]);
                 }
-                SendNotification::dispatch(['id'=> $new_user->id, 'type'=>'contact_added']);
+                SendNotification::dispatch(['id' => $new_user->id, 'type' => 'contact_added']);
                 return redirect(url('contacts'))->withSuccess('Contact Created Successfully.')->withInput();
             }
         } else if ($request->isMethod('get')) {
@@ -193,10 +191,9 @@ class UserController extends Controller
         $this->data['user'] = User::where('id', $id)->first();
         $this->data['notes'] = Note::getNotesByUser($id);
         $this->data['deals'] = Deals::getDealsByUser($id);;
-        $this->data['custom_fields'] =  CustomFields::getDataByUser($id);
+        $this->data['custom_fields'] =  CustomField::getDataByUser($id);
 
         if ($request->isMethod('put')) {
-
             $update_data = [
                 'first_name'   => $request->first_name,
                 'last_name'    => $request->last_name,
@@ -230,7 +227,7 @@ class UserController extends Controller
         }
         $this->data['id'] = $id;
         $this->data['user'] = User::where(['id' => $id])->first();
-        $this->data['custom_fields'] =  CustomFields::getDataByUser($id);
+        $this->data['custom_fields'] =  CustomField::getDataByUser($id);
 
         if ($request->isMethod('put')) {
             $update_data = [
@@ -285,7 +282,7 @@ class UserController extends Controller
         $active_sheet->setCellValue('D1', 'Phone Number');
         $active_sheet->setCellValue('E1', 'Status');
         $active_sheet->setCellValue('F1', 'Created At');
-        $cfields = CustomFields::where('type', '=', 'contact')->get();
+        $cfields = CustomField::where('type', '=', 'contact')->where('visible', '=', 1)->get();
 
         $startColumn = 'G';
         $column = $startColumn;
@@ -299,7 +296,7 @@ class UserController extends Controller
         foreach ($users as $user) {
             $column = $startColumn;
             $this->data['user_id'] = $user->id;
-            $custom_fields =  CustomFields::getDataByUser($this->data['user_id']);
+            $custom_fields =  CustomField::getDataByUser($this->data['user_id']);
 
             $active_sheet->setCellValue('A' . $count, $user->first_name);
             $active_sheet->setCellValue('B' . $count, $user->last_name);
@@ -342,7 +339,7 @@ class UserController extends Controller
         $columns = array('First Name', 'Last Name', 'Email', 'Phone Number', 'Status', 'Created At');
 
         $file = fopen($path = storage_path($file_name), 'w');
-        $cfields = CustomFields::where('type', '=', 'contact')->get();
+        $cfields = CustomField::where('type', '=', 'contact')->where('visible', '=', 1)->get();
 
         if (!$cfields->isEmpty()) {
             foreach ($cfields as $cfield) {
@@ -353,7 +350,7 @@ class UserController extends Controller
 
         foreach ($users as $user) {
             $this->data['user_id'] = $user->id;
-            $custom_fields =  CustomFields::getDataByUser($this->data['user_id']);
+            $custom_fields =  CustomField::getDataByUser($this->data['user_id']);
 
             $row['First Name'] = $user->first_name;
             $row['Last Name'] = $user->last_name;

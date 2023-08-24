@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Permissions;
 use App\Jobs\SendNotification;
-use App\Models\Note;
 use App\Models\User;
 use App\Models\Deals;
 use App\Models\Stages;
@@ -12,7 +11,7 @@ use App\Models\Pipelines;
 use App\Models\UserOwner;
 use App\Models\UserDetails;
 
-use App\Models\CustomFields;
+use App\Models\CustomField;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -102,7 +101,7 @@ class DealController extends Controller
             $this->data['current_slug'] = 'Add Deal';
             $this->data['slug'] = 'user_add_deal';
             $this->data['current_user_id'] = $id;
-            $this->data['custom_fields'] =  CustomFields::getDataByDeal($id);
+            $this->data['custom_fields'] =  CustomField::getDataByDeal($id);
 
             $this->data['rs_pipelines'] = Pipelines::orderBy('title', 'ASC')->get();
             $this->data['rs_stages'] = Stages::orderBy('title', 'ASC')->get();
@@ -149,7 +148,7 @@ class DealController extends Controller
 
             $this->data['rs_pipelines'] = Pipelines::orderBy('title', 'ASC')->get();
             $this->data['rs_stages'] = Stages::orderBy('title', 'ASC')->get();
-            $this->data['custom_fields'] = CustomFields::getDataByDeal($id);
+            $this->data['custom_fields'] = CustomField::getDataByDeal($id);
             return view("user.deals.edit", $this->data);
         }
     } // dealsEdit
@@ -195,7 +194,7 @@ class DealController extends Controller
         $active_sheet->setCellValue('E1', 'Pipeline');
         $active_sheet->setCellValue('F1', 'Stage');
         $active_sheet->setCellValue('G1', 'Created At');
-        $cfields = CustomFields::where('type', '=', 'contact')->get();
+        $cfields = CustomField::where('type', '=', 'contact')->where('visible', '=', 1)->get();
 
         $startColumn = 'H';
         $column = $startColumn;
@@ -208,7 +207,7 @@ class DealController extends Controller
         $count = 2;
         foreach ($deals as $deal) {
             $column = $startColumn;
-            $custom_fields =  CustomFields::getDataByDeal($deal->id);
+            $custom_fields =  CustomField::getDataByDeal($deal->id);
             $active_sheet->setCellValue('A' . $count, $deal->title);
             $active_sheet->setCellValue('B' . $count, $deal->amount);
             $active_sheet->setCellValue('C' . $count, $deal->deal_owner);
@@ -246,7 +245,7 @@ class DealController extends Controller
 
         $columns = array('Title', 'Amount', 'Deal Owner', 'Source', 'Pipeline', 'Stage', 'Created At');
         $file = fopen($path = storage_path($file_name), 'w');
-        $cfields = CustomFields::where('type', '=', 'deals')->get();
+        $cfields = CustomField::where('type', '=', 'deals')->where('visible', '=', 1)->get();
 
         if (!$cfields->isEmpty()) {
             foreach ($cfields as $cfield) {
@@ -257,7 +256,7 @@ class DealController extends Controller
 
         foreach ($deals as $deal) {
 
-            $custom_fields =  CustomFields::getDataByDeal($deal->id);
+            $custom_fields =  CustomField::getDataByDeal($deal->id);
             $row['Title'] = $deal->title;
             $row['Amount'] = $deal->amount;
             $row['Deal Owner'] = $deal->deal_owner;

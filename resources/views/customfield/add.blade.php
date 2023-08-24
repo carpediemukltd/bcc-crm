@@ -39,10 +39,7 @@
                   <div class="header-title">
                      <h4 class="card-title">Add Form</h4>
                   </div>
-                  <div class="form-check form-switch form-check-inline">
-                     <input class="form-check-input" type="checkbox" id="switch1">
-                     <label class="pl-2 form-check-label" for="switch1">Add Custom Field</label>
-                  </div>
+                  
                </div>
                <div class="card-body">
                   <form action="{{route('customfield.add')}}" method="POST">
@@ -52,24 +49,37 @@
                            <div class="form-group">
                               <label class="form-label" for="title">Title:</label>
                               <input type="text" class="form-control" id="title" placeholder="Title" name="title" required>
+                              @if ($errors->has('title'))
+                                 <span class="text-danger">{{ $errors->first('title') }}</span>
+                              @endif
                            </div>
                         </div>
                         <div class="col">
                            <div class="form-group">
-                              <label class="form-label" for="last_name">Type:</label>
+                              <label class="form-label" for="type">Type:</label>
                               <select class="form-select" id="type" name="type">
                                  <option value="contact">Contact</option>
                                  <option value="deals">Deals</option>
                               </select>
+                              @if ($errors->has('type'))
+                                 <span class="text-danger">{{ $errors->first('type') }}</span>
+                              @endif
                            </div>
                         </div>
                      </div>
 
+                     <div class="row">
+                        <div class="col">
+                           <div class="form-check form-switch form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="visible" name="visible">
+                              <label class="pl-2 form-check-label" for="visible">Visible</label>
+                           </div>
+                        </div>
+                     </div>
                      <div class="row"><div class="col"><br /></div></div>
 
                      <div class="row">
                         <div class="col">
-                           
                            <a href="{{ route('dashboard') }}" class="btn btn-danger">Cancel</a>
                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

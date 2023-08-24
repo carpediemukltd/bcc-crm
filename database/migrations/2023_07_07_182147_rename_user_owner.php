@@ -23,6 +23,6 @@ class RenameUserOwner extends Migration
      */
     public function down()
     {
-        //
+        Schema::rename('user_owners', 'user_owner');
     }
 }

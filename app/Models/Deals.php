@@ -32,4 +32,12 @@ class Deals extends Model
 
         return $Deals;
     }
+
+    public function stage() {
+        return $this->hasOne(Stages::class, 'id', 'stage_id');
+    }
+
+    public function pipeline() {
+        return $this->hasOne(Pipelines::class, 'id', 'pipeline_id');
+    }
 }

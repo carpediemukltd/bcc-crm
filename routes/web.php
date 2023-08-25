@@ -47,6 +47,9 @@ Route::any('jotform/add', [UserController::class, 'addJotFormUser'])->name('user
 Route::middleware([CheckStatus::class])->group(function () {
     Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
     Route::get('dashboard-sandbox', [AuthController::class, 'dashboard_sandbox'])->name('dashboard-sandbox');
+    Route::get('deals-sandbox', [AuthController::class, 'deals_sandbox'])->name('deals-sandbox');
+    Route::get('filter-deals', [AuthController::class, 'filter_deals'])->name('filter-deals');
+
     Route::get('sandbox-daterange', [AuthController::class, 'sandbox_daterange'])->name('sandbox-daterange');
 
 

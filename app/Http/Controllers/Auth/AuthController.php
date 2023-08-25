@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Deals;
 use Carbon\Carbon;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -95,7 +96,7 @@ class AuthController extends Controller
             'password'     => 'required|confirmed|min:6'
         ]);
            
-        $data = $request->all();
+        $data  = $request->all();
         $check = $this->create($data);
          
         return redirect("login")->withSuccess('Great! You have Successfully Registered');
@@ -111,16 +112,14 @@ class AuthController extends Controller
         $this->data['slug']         = 'dashboard';
         if(Auth::check()) {
 
-            $this->data['slug']       = 'dashboard';
-            
+            $this->data['slug']     = 'dashboard';
             $user = auth()->user();
             if(!$user->hasAnyRole(['admin','owner', 'user'])) {
                 $user->assignRole($user->role);
             }
-
             return view('dashboard', $this->data);
         }
-  
+
         return redirect("login", $this->data)->withError('Opps! session is timeout plz login again.');
     }
 
@@ -128,7 +127,6 @@ class AuthController extends Controller
 
         $datesWithWeeks = [];
         $today          = Carbon::today();
-
         $lastSunday    = Carbon::now()->previous('Sunday');
         $lastMonday    = Carbon::now()->previous('Monday');
         $lastTuesday   = Carbon::now()->previous('Tuesday');
@@ -260,12 +258,23 @@ class AuthController extends Controller
         return response()->json($week_data);
         
     }
+
+    public function deals_sandbox() {
+        $slug = "deals-sandbox";
+        return view('deals_report', compact('slug'));
+    }
+
+    public function filter_deals(Request $request) {
+        
+        $dates = explode("-",$request->daterange);
+        $Date1 = rtrim(date('Y-m-d', strtotime($dates[0])));
+        $Date2 = ltrim(date('Y-m-d', strtotime($dates[1])));
+
+        $deals = Deals::with('stage', 'pipeline')->whereDate('created_at','>=', $Date1)->whereDate('created_at','<=', $Date2)->where('stage_id',$request->stages)->get();
+
+       return response()->json($deals);
+    }
     
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
     public function create(array $data)
     {
       return User::create([
@@ -277,11 +286,6 @@ class AuthController extends Controller
       ]);
     }
     
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
     public function logout() {
         Session::flush();
         Auth::logout();

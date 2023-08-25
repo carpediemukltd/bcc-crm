@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Notification;
 use App\Models\NotificationSetting;
 use App\Models\NotificationSettingDetail;
-use App\Models\Stages;
+use App\Models\Stage;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -23,7 +23,7 @@ class NotificationController extends Controller
      }
      public function notificationSettings(){
         $data['settings'] = NotificationSetting::whereUserId(auth()->user()->id)->with('detail')->get();
-        $data['stages']    = Stages::get();
+        $data['stages']    = Stage::get();
         if(!count($data['settings'])){
            NotificationSetting::create(['user_id'=> auth()->user()->id, 'setting_name'=> 'notification_contact_added', 'status'=> 'disabled']);
            NotificationSetting::create(['user_id'=> auth()->user()->id, 'setting_name'=> 'notification_specific_deal_stage', 'status'=> 'disabled']);

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use App\Models\User;
-use App\Models\Deals;
+use App\Models\Deal;
 use App\Models\UserOwner;
 use App\Models\UserDetails;
 use App\Helpers\Permissions;
@@ -30,8 +30,10 @@ class UserController extends Controller
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
             $this->data['user'] = $this->user;
-            if ($this->user->role != 'superadmin') {
-                $this->company_id = $this->user->company_id;
+            if (Auth::user()) {
+                if ($this->user->role != 'superadmin') {
+                    $this->company_id = $this->user->company_id;
+                }
             }
             return $next($request);
         });
@@ -190,7 +192,7 @@ class UserController extends Controller
         $this->data['id'] = $id;
         $this->data['user'] = User::where('id', $id)->first();
         $this->data['notes'] = Note::getNotesByUser($id);
-        $this->data['deals'] = Deals::getDealsByUser($id);;
+        $this->data['deals'] = Deal::getDealsByUser($id);;
         $this->data['custom_fields'] =  CustomField::getDataByUser($id);
 
         if ($request->isMethod('put')) {

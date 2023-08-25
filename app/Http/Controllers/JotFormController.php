@@ -46,11 +46,12 @@ class JotFormController extends Controller
         $this->data['round_robin_owner'] =  RoundRobinSetting::RoundRobinOwner($company_id);
         $user_type = "";
         if ($request->isMethod('post')) {
-
+            $data['first_name']='';
+            $data['last_name']='';
             if (isset($request->legalbusiness6)) {
                 $name_arr  =  explode(" ", $request->legalbusiness6);
-                $data['first_name'] = $name_arr[0];
-                $data['last_name'] = $name_arr[1];
+                if(isset($name_arr[0])) $data['first_name'] = $name_arr[0];
+                if(isset($name_arr[1])) $data['last_name'] = $name_arr[1];
             } else if (isset($request->full_name)) {
                 $data['first_name'] = $request->full_name['first'];
                 $data['last_name'] = $request->full_name['last'];

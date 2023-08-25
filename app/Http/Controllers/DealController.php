@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Helpers\Permissions;
 use App\Jobs\SendNotification;
 use App\Models\User;
-use App\Models\Deals;
-use App\Models\Stages;
-use App\Models\Pipelines;
+use App\Models\Deal;
+use App\Models\Stage;
+use App\Models\Pipeline;
 use App\Models\UserOwner;
 use App\Models\UserDetails;
 
@@ -45,14 +45,14 @@ class DealController extends Controller
         }
 
         $this->data['current_user_id'] = $id;
-        $this->data['rs_deals'] = Deals::getDealsByUser($id);
-        $pipelines = Pipelines::orderBy('title', 'ASC')->get();
+        $this->data['rs_deals'] = Deal::getDealsByUser($id);
+        $pipelines = Pipeline::orderBy('title', 'ASC')->get();
         $pipeline_stages = array();
         if ($pipelines->isNotEmpty()) {
             foreach ($pipelines as $pipeline) {
                 $pipeline_arr['id'] = $pipeline->id;
                 $pipeline_arr['title'] = $pipeline->title;
-                $stages = Stages::where('pipeline_id', $pipeline->id)->orderBy('title', 'ASC')->get();
+                $stages = Stage::where('pipeline_id', $pipeline->id)->orderBy('title', 'ASC')->get();
                 $stages_arr=array();
                 if ($stages->isNotEmpty()) {
                     foreach ($stages as $stage) {
@@ -77,7 +77,7 @@ class DealController extends Controller
         }
 
         if ($request->isMethod('post')) {
-            $deal = Deals::create([
+            $deal = Deal::create([
                 'title' => $request->title,
                 'user_id' => $id,
                 'pipeline_id' => $request->pipeline_id,
@@ -103,8 +103,8 @@ class DealController extends Controller
             $this->data['current_user_id'] = $id;
             $this->data['custom_fields'] =  CustomField::getDataByDeal($id);
 
-            $this->data['rs_pipelines'] = Pipelines::orderBy('title', 'ASC')->get();
-            $this->data['rs_stages'] = Stages::orderBy('title', 'ASC')->get();
+            $this->data['rs_pipelines'] = Pipeline::orderBy('title', 'ASC')->get();
+            $this->data['rs_stages'] = Stage::orderBy('title', 'ASC')->get();
             return view("user.deals.add", $this->data);
         }
     } // dealsAdd
@@ -116,13 +116,13 @@ class DealController extends Controller
             return redirect(route('dashboard'))->with('error', 'Access Denied.');
         }
 
-        $this->data['rs_deal'] = Deals::getDeals($user_id, $id);
+        $this->data['rs_deal'] = Deal::getDeals($user_id, $id);
         if (!$this->data['rs_deal']) {
             return redirect(route('dashboard'))->with('error', 'Access Denied to Deal.');
         }
 
         if ($request->isMethod('post')) {
-            Deals::where('id', $id)->update([
+            Deal::where('id', $id)->update([
                 'title' => $request->title,
                 'pipeline_id' => $request->pipeline_id,
                 'stage_id' => $request->stage_id,
@@ -146,8 +146,8 @@ class DealController extends Controller
             $this->data['slug'] = 'user_edit_deal';
             $this->data['current_user_id'] = $user_id;
 
-            $this->data['rs_pipelines'] = Pipelines::orderBy('title', 'ASC')->get();
-            $this->data['rs_stages'] = Stages::orderBy('title', 'ASC')->get();
+            $this->data['rs_pipelines'] = Pipeline::orderBy('title', 'ASC')->get();
+            $this->data['rs_stages'] = Stage::orderBy('title', 'ASC')->get();
             $this->data['custom_fields'] = CustomField::getDataByDeal($id);
             return view("user.deals.edit", $this->data);
         }
@@ -160,13 +160,13 @@ class DealController extends Controller
             return redirect(route('dashboard'))->with('error', 'Access Denied.');
         }
 
-        $this->data['rs_deal'] = Deals::getDeals($user_id, $id);
+        $this->data['rs_deal'] = Deal::getDeals($user_id, $id);
         if (!$this->data['rs_deal']) {
             return redirect(route('dashboard'))->with('error', 'Access Denied to Deal.');
         }
 
         if ($request->isMethod('post')) {
-            Deals::where('id', $id)->update([
+            Deal::where('id', $id)->update([
                 'stage_id' => $request->stage_id,
             ]);
 
@@ -182,7 +182,7 @@ class DealController extends Controller
         }
         $this->data['user']       = User::where(['id' => $id])->first();
         $file_name = "deals_{$id}.xls";
-        $deals = Deals::getDealsByUser($id);
+        $deals = Deal::getDealsByUser($id);
 
         $file = new Spreadsheet();
         $active_sheet = $file->getActiveSheet();
@@ -241,7 +241,7 @@ class DealController extends Controller
 
         $this->data['user']       = User::where(['id' => $id])->first();
         $file_name = "deals_{$id}.csv";
-        $deals = Deals::getDealsByUser($id);
+        $deals = Deal::getDealsByUser($id);
 
         $columns = array('Title', 'Amount', 'Deal Owner', 'Source', 'Pipeline', 'Stage', 'Created At');
         $file = fopen($path = storage_path($file_name), 'w');

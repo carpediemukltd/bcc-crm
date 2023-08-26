@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'CheckUser' => \App\Http\Middleware\CheckUser::class,
         'CheckSuperAdmin' => \App\Http\Middleware\CheckSuperAdmin::class,
         'CheckAdmin' => \App\Http\Middleware\CheckAdmin::class,
+        'dialogflow' => \App\Http\Middleware\DialogflowMiddleware::class,
     ];
 }

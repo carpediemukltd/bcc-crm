@@ -86,7 +86,7 @@
                   <div class="offcanvas offcanvas-end shadow-none iq-product-menu-responsive" tabindex="-1" id="offcanvasBottom">
                      <div class="offcanvas-body">
                         <ul class="iq-nav-menu list-unstyled">
-                           <li class="nav-item iq-responsive-menu border-end d-block">
+                           <li class="nav-item iq-responsive-menu d-block">
                               <a class="nav-link <?php if(isset($slug) && $slug == 'dashboard'){echo 'active';}?>" aria-current="page"
                                  href="{{route('dashboard')}}">
                                  <i class="icon">
@@ -102,7 +102,7 @@
                                  <span class="item-name">Dashboard</span>
                               </a>
                            </li>
-                           <li class="nav-item iq-responsive-menu border-end d-block">
+                           <li class="nav-item iq-responsive-menu d-block">
                               <a class="nav-link <?php if(isset($slug) && $slug == 'dashboard-sandbox'){echo 'active';}?>" aria-current="page"
                                  href="{{ url('dashboard-sandbox')}}">
                                  <i class="icon">
@@ -119,7 +119,7 @@
                               </a>
                            </li>
                            @if (Auth::user()->role == 'superadmin' || Auth::user()->role == 'admin' || Auth::user()->role == 'owner')
-                           <li class="nav-item dropdown iq-responsive-menu border-end d-block">
+                           <li class="nav-item dropdown iq-responsive-menu d-block">
                               <a class="nav-link <?php if(isset($slug) && in_array($slug, ['add_user', 'user_list', 'edit_user', 'user_details', 'user_deals', 'user_add_deal', 'user_edit_deal'])){echo 'active';}?>" data-bs-toggle="dropdown" href="#sidebar-user" role="button" aria-expanded="false"
                                  aria-controls="sidebar-special">
                                  <i class="icon">
@@ -222,7 +222,7 @@
                               </ul>
                            </li>
                            @if (Auth::user()->role == 'superadmin')
-                           <li class="nav-item dropdown iq-responsive-menu border-end d-block">
+                           <li class="nav-item dropdown iq-responsive-menu d-block">
                               <a class="nav-link <?php if(isset($slug) && in_array($slug, ['add_field', 'field_list', 'edit_field'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
                                  aria-expanded="false" href="#sidebar-custon-fields">
                                  <i class="icon" >
@@ -290,7 +290,7 @@
                            </li>
                            @endif
                            @if (Auth::user()->role == 'superadmin')
-                           <li class="nav-item dropdown iq-responsive-menu border-end d-block">
+                           <li class="nav-item dropdown iq-responsive-menu d-block">
                               <a class="nav-link <?php if(isset($slug) && in_array($slug, ['pipelines', 'edit_pipeline', 'add_pipeline'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
                                  aria-expanded="false" href="#sidebar-pipelines">
                                  <i class="icon" >
@@ -348,7 +348,7 @@
                                  </li>
                               </ul>
                            </li>
-                           <li class="nav-item dropdown iq-responsive-menu border-end d-block">
+                           <li class="nav-item dropdown iq-responsive-menu d-block">
                               <a class="nav-link <?php if(isset($slug) && in_array($slug, ['companies', 'list_company', 'edit_company', 'add_company'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
                                  aria-expanded="false" href="#sidebar-companies">
                                  <i class="icon" >
@@ -425,7 +425,7 @@
                </div>
                <div class="navbar-collapse collapse" id="navbarSupportedContent">
                   <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
-                     <!-- <li class="nav-item dropdown border-end pe-3 d-none d-xl-block">
+                     <!-- <li class="nav-item dropdown pe-3 d-none d-xl-block">
                         <div class="form-group input-group mb-0 search-input">
                            <input type="text" class="form-control" placeholder="Search...">
                            <span class="input-group-text">

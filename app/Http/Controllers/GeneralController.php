@@ -72,4 +72,10 @@
    public function robinaddsetting(){
       return view('robinaddsetting');
    }
+   public function notificationview(){
+      return view('notificationview');
+   }
+   public function boardview(){
+      return view('boardview');
+   }
  }

@@ -1515,3 +1515,11 @@ p.sub_text:after{
 .borad_view_holder .mb-0.card .card-body {
   min-height: 100px !important;
 }
+.notification_view_holder .notification-list{
+  cursor: pointer;
+}
+.see-more-text-header{
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}

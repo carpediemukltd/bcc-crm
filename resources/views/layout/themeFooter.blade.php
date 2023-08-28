@@ -1066,6 +1066,30 @@
          }
       });
    }
+   $('.notification-list').on('click', function () {
+         const settingId      = $(this).data('id');
+         const settingUrl     = $(this).data('url');
+         const settingStatus  = $(this).data('status');
+         if(settingStatus == '0' || settingStatus == 0){
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+               url: '/notification-mark-read',
+               method: 'PUT',
+               headers: {
+                     'X-CSRF-TOKEN': csrfToken
+                  },
+               data: {
+                     id: settingId,
+               },
+               success: function (response) {
+               },
+               error: function (error) {
+               }
+            });
+         }
+      //redirect to setting url
+      window.location.href = window.location.origin+settingUrl;
+   });
 </script>
    @yield('script')
 

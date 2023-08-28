@@ -505,6 +505,9 @@
                            </div>
                            @endforeach()
                            @endif()
+                           <div class="see-more-text-header">
+                              <a href="{{ route('notifications') }}"><b>See More...</b></a>
+                           </div>
                         </div>
                      </li>
                      <li class="nav-item dropdown" id="itemdropdown1">

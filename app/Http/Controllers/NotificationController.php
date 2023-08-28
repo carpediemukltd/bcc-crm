@@ -12,7 +12,8 @@ use Illuminate\Http\Request;
 class NotificationController extends Controller
 {
     public function index(){
-        return Notification::whereUserId(auth()->user()->id)->orderBy('created_at', 'desc')->paginate(10);
+        $data = Notification::whereUserId(auth()->user()->id)->orderBy('created_at', 'desc')->paginate(10);
+        return view('notifications.notifications', ['data'=> $data]);
      }
      public function notificationMarkRead(Request $request){
          Notification::where('user_id', auth()->user()->id)->whereId($request->id)->update(['is_read'=> '1']);

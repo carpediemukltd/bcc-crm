@@ -491,8 +491,8 @@
                                     <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                                  </svg>
                               </div>
-                              <div class="text-holder d-flex">
-                                 <a href="{{url('/')}}{{$notification->target_url}}"><p class="hoverable-element">{{$notification->title}} <b><br> {{$notification->formatted_created_at}}</b></p></a>
+                              <div class="text-holder d-flex align-items-center justify-content-between">
+                                 <a href="{{url('/')}}{{$notification->target_url}}"><p class="hoverable-element">{{$notification->title}} <p><b>{{$notification->formatted_created_at}}</b></p></p></a>
                                  <div class="font-sans-serif d-sm-block">
                                     <button class="btn fs--2 btn-sm dropdown-toggle dropdown-caret-none transition-none notification-dropdown-toggle" type="button" data-stop-propagation="data-stop-propagation" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent">
                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">

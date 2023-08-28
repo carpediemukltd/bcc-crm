@@ -509,4 +509,32 @@
       </div>
    </div>
 </div>
+<div class="chat-container">
+    <div class="chat-icon">Chat</div>
+    <div class="chat-window">
+        <iframe
+            allow="microphone;"
+            width="350"
+            height="430"
+            src="https://console.dialogflow.com/api-client/demo/embedded/ed7295ef-a82c-49a4-b58f-399c788ba661">
+        </iframe>
+    </div>
+</div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const chatIcon = document.querySelector(".chat-icon");
+            const chatWindow = document.querySelector(".chat-window");
+            let isChatOpen = false;
+            let borderRadius = $(".chat-icon").css("border-radius");
+            chatIcon.addEventListener("click", function () {
+                isChatOpen = !isChatOpen;
+                chatWindow.style.display = isChatOpen ? "block" : "none";
+                if(borderRadius == "50px")
+                    borderRadius = "0px";
+                else
+                    borderRadius = "50px"
+                $(".chat-icon").css({borderRadius: borderRadius})
+            });
+        });
+    </script>
 @endsection

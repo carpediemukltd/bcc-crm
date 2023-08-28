@@ -10,7 +10,7 @@ class Deal extends Model
 {
     use HasFactory;
     protected $fillable = ['id', 'title', 'user_id', 'pipeline_id', 'stage_id', 'amount', 'deal_owner', 'lead_source'];
- 
+
     public static function getDeals($user_id,$deal_id)
     {
         $data = Deal::where('id', $deal_id)->where('user_id', $user_id)->first();
@@ -30,5 +30,15 @@ class Deal extends Model
         ->orderBy('id', 'DESC')->paginate(10);
 
         return $Deals;
+    }
+
+    public static function getApplicationStatus($iUserId)
+    {
+        return self::from("deals AS D")
+            ->join("stages AS S", "S.id", "D.stage_id")
+            #->join("pipelines AS P", "P.id", "D.pipeline_id")
+            ->select(["S.title"])
+            ->where("D.user_id", $iUserId)
+            ->get();
     }
 }

@@ -5,8 +5,8 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title>
          @if(isset($current_slug))
-         {{$current_slug}} | 
-         @endif 
+         {{$current_slug}} |
+         @endif
          BCC CRM
       </title>
       <meta name="description" content="">
@@ -42,6 +42,30 @@
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
       <meta name="csrf-token" content="{{ csrf_token() }}">
       @yield('css')
+       <style>
+           .chat-container {
+               position: fixed;
+               bottom: 20px;
+               right: 20px;
+               z-index: 1000;
+           }
+
+           .chat-icon {
+               background-color: #007bff;
+               color: white;
+               padding: 10px 40px;
+               border-radius: 50px;
+               cursor: pointer;
+           }
+
+           .chat-window {
+               display: none;
+               background-color: white;
+               box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+               max-height: 480px;
+               overflow-y: auto;
+           }
+       </style>
    </head>
    <body class="dual-compact light theme-default theme-with-animation card-default theme-color-default">
       <!-- loader Start -->
@@ -66,7 +90,7 @@
                         <img src="{{asset('assets/images/bcc-update-logo.png')}}" alt="" style="width:100px">
                      </div>
                   </div>
-                  <!--logo End-->         
+                  <!--logo End-->
                </a>
                <!-- <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
                   <i class="icon d-flex">
@@ -474,7 +498,7 @@
                            @elseif($notificationService::recent()['bell_notification_count'] > 0)
                               <span class="custom-notification-badge">{{$notificationService::recent()['bell_notification_count']}}</span>
                            @endif
-                        @endif()                       
+                        @endif()
                         <a class="nav-link clear-bell-icon" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside">
                            <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell" style="height: 20px; width: 20px; color: rgb(84, 95, 245);">
                               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
@@ -483,7 +507,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-end notification-dropdown-menu py-0 shadow border border-300 navbar-dropdown-caret" id="navbarDropdownNotfication" aria-labelledby="navbarDropdownNotfication">
                         @if(count($notificationService::recent()['notifications']))
-                        @foreach($notificationService::recent()['notifications'] as $notification)   
+                        @foreach($notificationService::recent()['notifications'] as $notification)
                         <div id="notification_listing-{{$notification->id}}" class="notification_listing {{ $notification->is_read == '1' ? 'notification_listing_color_read' : 'notification_listing_color_unread' }}" data-id="{{ $notification->id }}">
                               <div class="img-holder">
                                  <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell" style="height: 20px; width: 20px; color: rgb(84, 95, 245);">

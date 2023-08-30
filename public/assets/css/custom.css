@@ -1376,6 +1376,10 @@ p.sub_text:after{
 .notification_view .img-holder {
   float: left;
   margin-right: 10px;
+  margin-top: 4px;
+}
+.notification_view .text-holder a:hover p {
+  opacity: 0.7;
 }
 .notification_view .text-holder {
   text-align: left;
@@ -1433,4 +1437,93 @@ p.sub_text:after{
 }
 #options-dropdown-deals option{
   padding: 5px;
+}
+
+
+.m-b-50 {
+  margin-bottom: 50px;
+}
+
+.dark-link {
+  color: #333;
+}
+
+.heading-line {
+  position: relative;
+  padding-bottom: 5px;
+}
+
+.notification-ui_dd-content {
+  margin-bottom: 30px;
+}
+
+.notification-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 20px;
+  margin-bottom: 7px;
+  background: #fff;
+  -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+.notification-list--unread {
+  border-left: 2px solid #29B6F6;
+}
+
+.notification-list .notification-list_content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.notification-list .notification-list_content .notification-list_img img {
+  height: 48px;
+  width: 48px;
+  border-radius: 50px;
+  margin-right: 20px;
+}
+
+.notification-list .notification-list_content .notification-list_detail p {
+  margin-bottom: 5px;
+  line-height: 1.2;
+}
+
+.notification-list .notification-list_feature-img img {
+  height: 48px;
+  width: 48px;
+  border-radius: 5px;
+  margin-left: 20px;
+}
+.notification_view_holder{
+  padding: 0 40px;
+}
+.borad_view_holder{
+  padding: 0 20px;
+}
+.borad_view_holder .card{
+  border: 1px solid #efefef;
+}
+.borad_view_holder .card + h3{
+  font-size: 13px;
+  text-align: center;
+  margin-top: 10px;
+}
+.filter_view_holder{
+  padding: 20px 20px 0;
+}
+.borad_view_holder .mb-0.card .card-body {
+  min-height: 100px !important;
+}
+.notification_view_holder .notification-list{
+  cursor: pointer;
+}
+.see-more-text-header{
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 10px;
 }

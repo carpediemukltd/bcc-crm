@@ -2,22 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Note;
-use App\Models\User;
-use App\Models\Deals;
-use App\Models\Stages;
-use App\Models\Pipelines;
-use App\Models\UserOwner;
-use App\Models\UserDetails;
 use App\Helpers\Permissions;
 use App\Jobs\SendNotification;
-use App\Models\CustomFields;
 use Illuminate\Http\Request;
 use App\Models\RoundRobinSetting;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 

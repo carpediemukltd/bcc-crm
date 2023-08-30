@@ -72,4 +72,7 @@
    public function robinaddsetting(){
       return view('robinaddsetting');
    }
+   public function boardview(){
+      return view('boardview');
+   }
  }

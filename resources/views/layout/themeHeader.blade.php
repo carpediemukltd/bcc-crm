@@ -5,8 +5,8 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title>
          @if(isset($current_slug))
-         {{$current_slug}} | 
-         @endif 
+         {{$current_slug}} |
+         @endif
          BCC CRM
       </title>
       <meta name="description" content="">
@@ -42,6 +42,30 @@
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
       <meta name="csrf-token" content="{{ csrf_token() }}">
       @yield('css')
+       <style>
+           .chat-container {
+               position: fixed;
+               bottom: 20px;
+               right: 20px;
+               z-index: 1000;
+           }
+
+           .chat-icon {
+               background-color: #007bff;
+               color: white;
+               padding: 10px 40px;
+               border-radius: 50px;
+               cursor: pointer;
+           }
+
+           .chat-window {
+               display: none;
+               background-color: white;
+               box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+               max-height: 480px;
+               overflow-y: auto;
+           }
+       </style>
    </head>
    <body class="dual-compact light theme-default theme-with-animation card-default theme-color-default">
       <!-- loader Start -->
@@ -66,7 +90,7 @@
                         <img src="{{asset('assets/images/bcc-update-logo.png')}}" alt="" style="width:100px">
                      </div>
                   </div>
-                  <!--logo End-->         
+                  <!--logo End-->
                </a>
                <!-- <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
                   <i class="icon d-flex">
@@ -86,7 +110,7 @@
                   <div class="offcanvas offcanvas-end shadow-none iq-product-menu-responsive" tabindex="-1" id="offcanvasBottom">
                      <div class="offcanvas-body">
                         <ul class="iq-nav-menu list-unstyled">
-                           <li class="nav-item iq-responsive-menu border-end d-block">
+                           <li class="nav-item iq-responsive-menu d-block">
                               <a class="nav-link <?php if(isset($slug) && $slug == 'dashboard'){echo 'active';}?>" aria-current="page"
                                  href="{{route('dashboard')}}">
                                  <i class="icon">
@@ -102,7 +126,7 @@
                                  <span class="item-name">Dashboard</span>
                               </a>
                            </li>
-                           <li class="nav-item iq-responsive-menu border-end d-block">
+                           <li class="nav-item iq-responsive-menu d-block">
                               <a class="nav-link <?php if(isset($slug) && $slug == 'dashboard-sandbox'){echo 'active';}?>" aria-current="page"
                                  href="#sidebar-user">
                                  <i class="icon">
@@ -170,7 +194,7 @@
                            </li>
                        
                            @if (Auth::user()->role == 'superadmin' || Auth::user()->role == 'admin' || Auth::user()->role == 'owner')
-                           <li class="nav-item dropdown iq-responsive-menu border-end d-block">
+                           <li class="nav-item dropdown iq-responsive-menu d-block">
                               <a class="nav-link <?php if(isset($slug) && in_array($slug, ['add_user', 'user_list', 'edit_user', 'user_details', 'user_deals', 'user_add_deal', 'user_edit_deal'])){echo 'active';}?>" data-bs-toggle="dropdown" href="#sidebar-user" role="button" aria-expanded="false"
                                  aria-controls="sidebar-special">
                                  <i class="icon">
@@ -273,7 +297,7 @@
                               </ul>
                            </li>
                            @if (Auth::user()->role == 'superadmin')
-                           <li class="nav-item dropdown iq-responsive-menu border-end d-block">
+                           <li class="nav-item dropdown iq-responsive-menu d-block">
                               <a class="nav-link <?php if(isset($slug) && in_array($slug, ['add_field', 'field_list', 'edit_field'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
                                  aria-expanded="false" href="#sidebar-custon-fields">
                                  <i class="icon" >
@@ -341,7 +365,7 @@
                            </li>
                            @endif
                            @if (Auth::user()->role == 'superadmin')
-                           <li class="nav-item dropdown iq-responsive-menu border-end d-block">
+                           <li class="nav-item dropdown iq-responsive-menu d-block">
                               <a class="nav-link <?php if(isset($slug) && in_array($slug, ['pipelines', 'edit_pipeline', 'add_pipeline'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
                                  aria-expanded="false" href="#sidebar-pipelines">
                                  <i class="icon" >
@@ -399,7 +423,7 @@
                                  </li>
                               </ul>
                            </li>
-                           <li class="nav-item dropdown iq-responsive-menu border-end d-block">
+                           <li class="nav-item dropdown iq-responsive-menu d-block">
                               <a class="nav-link <?php if(isset($slug) && in_array($slug, ['companies', 'list_company', 'edit_company', 'add_company'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
                                  aria-expanded="false" href="#sidebar-companies">
                                  <i class="icon" >
@@ -476,7 +500,7 @@
                </div>
                <div class="navbar-collapse collapse" id="navbarSupportedContent">
                   <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
-                     <!-- <li class="nav-item dropdown border-end pe-3 d-none d-xl-block">
+                     <!-- <li class="nav-item dropdown pe-3 d-none d-xl-block">
                         <div class="form-group input-group mb-0 search-input">
                            <input type="text" class="form-control" placeholder="Search...">
                            <span class="input-group-text">
@@ -525,7 +549,7 @@
                            @elseif($notificationService::recent()['bell_notification_count'] > 0)
                               <span class="custom-notification-badge">{{$notificationService::recent()['bell_notification_count']}}</span>
                            @endif
-                        @endif()                       
+                        @endif()
                         <a class="nav-link clear-bell-icon" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside">
                            <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell" style="height: 20px; width: 20px; color: rgb(84, 95, 245);">
                               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
@@ -534,7 +558,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-end notification-dropdown-menu py-0 shadow border border-300 navbar-dropdown-caret" id="navbarDropdownNotfication" aria-labelledby="navbarDropdownNotfication">
                         @if(count($notificationService::recent()['notifications']))
-                        @foreach($notificationService::recent()['notifications'] as $notification)   
+                        @foreach($notificationService::recent()['notifications'] as $notification)
                         <div id="notification_listing-{{$notification->id}}" class="notification_listing {{ $notification->is_read == '1' ? 'notification_listing_color_read' : 'notification_listing_color_unread' }}" data-id="{{ $notification->id }}">
                               <div class="img-holder">
                                  <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell" style="height: 20px; width: 20px; color: rgb(84, 95, 245);">
@@ -542,8 +566,8 @@
                                     <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                                  </svg>
                               </div>
-                              <div class="text-holder d-flex">
-                                 <a href="{{url('/')}}{{$notification->target_url}}"><p class="hoverable-element">{{$notification->title}} <b><br> {{$notification->formatted_created_at}}</b></p></a>
+                              <div class="text-holder d-flex align-items-center justify-content-between">
+                                 <a href="{{url('/')}}{{$notification->target_url}}"><p class="hoverable-element">{{$notification->title}} <p><b>{{$notification->formatted_created_at}}</b></p></p></a>
                                  <div class="font-sans-serif d-sm-block">
                                     <button class="btn fs--2 btn-sm dropdown-toggle dropdown-caret-none transition-none notification-dropdown-toggle" type="button" data-stop-propagation="data-stop-propagation" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent">
                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
@@ -556,6 +580,9 @@
                            </div>
                            @endforeach()
                            @endif()
+                           <div class="see-more-text-header">
+                              <a href="{{ route('notifications') }}"><b>See More...</b></a>
+                           </div>
                         </div>
                      </li>
                      <li class="nav-item dropdown" id="itemdropdown1">

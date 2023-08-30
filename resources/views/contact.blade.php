@@ -60,8 +60,8 @@
                             <h4>Contact Info</h4>
                             <div class="d-flex info_single align-items-center">
                             <svg fill="none" xmlns="http://www.w3.org/2000/svg" style="height:2.3rem;width:2.3rem" width="24" height="24" viewBox="0 0 24 24">
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M11.5317 12.4724C15.5208 16.4604 16.4258 11.8467 18.9656 14.3848C21.4143 16.8328 22.8216 17.3232 19.7192 20.4247C19.3306 20.737 16.8616 24.4943 8.1846 15.8197C-0.493478 7.144 3.26158 4.67244 3.57397 4.28395C6.68387 1.17385 7.16586 2.58938 9.61449 5.03733C12.1544 7.5765 7.54266 8.48441 11.5317 12.4724Z" fill="currentColor" />
-  </svg>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M11.5317 12.4724C15.5208 16.4604 16.4258 11.8467 18.9656 14.3848C21.4143 16.8328 22.8216 17.3232 19.7192 20.4247C19.3306 20.737 16.8616 24.4943 8.1846 15.8197C-0.493478 7.144 3.26158 4.67244 3.57397 4.28395C6.68387 1.17385 7.16586 2.58938 9.61449 5.03733C12.1544 7.5765 7.54266 8.48441 11.5317 12.4724Z" fill="currentColor" />
+                            </svg>
                                 <span>+352-995-2374</span>
                             </div>
                             <div class="d-flex info_single align-items-center">
@@ -71,7 +71,7 @@
                             <div class="d-flex info_single align-items-center">
                             <svg fill="none" xmlns="http://www.w3.org/2000/svg" style="height:4rem;width:4rem" class="icon-32" width="40" height="40" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 10.3178C3.5 5.71789 7.34388 2 11.9934 2C16.6561 2 20.5 5.71789 20.5 10.3178C20.5 12.6357 19.657 14.7876 18.2695 16.6116C16.7388 18.6235 14.8522 20.3765 12.7285 21.7524C12.2425 22.0704 11.8039 22.0944 11.2704 21.7524C9.13474 20.3765 7.24809 18.6235 5.7305 16.6116C4.34198 14.7876 3.5 12.6357 3.5 10.3178ZM9.19423 10.5768C9.19423 12.1177 10.4517 13.3297 11.9934 13.3297C13.5362 13.3297 14.8058 12.1177 14.8058 10.5768C14.8058 9.0478 13.5362 7.77683 11.9934 7.77683C10.4517 7.77683 9.19423 9.0478 9.19423 10.5768Z" fill="currentColor"></path></svg>
                                 <span>200 Vesey Street, 24th Floor
-New York, NY 10281</span>
+                                New York, NY 10281</span>
                             </div>
             
                         </div>
@@ -88,8 +88,8 @@ New York, NY 10281</span>
                     <div class="map_inner">
                         <h2 class="text-center">Find Us on Google Map</h2>
                         <p>Discover how BCCUSA can unlock the financial potential of your business.<br>
-Get started on your journey towards securing swift and reliable financing.<br>
-Remember, at BCCUSA your success is our priority.</p>
+                            Get started on your journey towards securing swift and reliable financing.<br>
+                            Remember, at BCCUSA your success is our priority.</p>
                         <div class="map_bind">
                         <iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="gmap_canvas" src="https://maps.google.com/maps?width=520&amp;height=400&amp;hl=en&amp;q=%20New%20Haven+()&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
 

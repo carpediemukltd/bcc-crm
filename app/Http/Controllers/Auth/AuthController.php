@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use App\Models\Deals;
+use App\Models\Deal;
 use Carbon\Carbon;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -270,7 +270,7 @@ class AuthController extends Controller
         $Date1 = rtrim(date('Y-m-d', strtotime($dates[0])));
         $Date2 = ltrim(date('Y-m-d', strtotime($dates[1])));
 
-        $deals = Deals::with('stage', 'pipeline')->whereDate('created_at','>=', $Date1)->whereDate('created_at','<=', $Date2)->where('stage_id',$request->stages)->get();
+        $deals = Deal::with('stage', 'pipeline')->whereDate('created_at','>=', $Date1)->whereDate('created_at','<=', $Date2)->where('stage_id',$request->stages)->get();
 
        return response()->json($deals);
     }

@@ -4,7 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Notification;
 use App\Models\NotificationSetting;
-use App\Models\Stages;
+use App\Models\Stage;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -49,7 +49,7 @@ class SendNotification implements ShouldQueue
             $roles      = ['superadmin', 'admin'];
         }
         if ($type == 'deal_added') {
-            $stage = Stages::whereId($id)->first();
+            $stage = Stage::whereId($id)->first();
             $userIds = NotificationSetting::with('detail')
                 ->whereSettingName('notification_specific_deal_stage')
                 ->where('status', 'enabled')

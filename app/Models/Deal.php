@@ -6,21 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Deals extends Model
+class Deal extends Model
 {
     use HasFactory;
     protected $fillable = ['id', 'title', 'user_id', 'pipeline_id', 'stage_id', 'amount', 'deal_owner', 'lead_source'];
- 
+
     public static function getDeals($user_id,$deal_id)
     {
-        $data = Deals::where('id', $deal_id)->where('user_id', $user_id)->first();
-
+        $data = Deal::where('id', $deal_id)->where('user_id', $user_id)->first();
         return $data;
     }
 
     public static function getDealsByUser($id)
     {
-        $Deals = Deals::where('user_id', $id)
+        $Deals = Deal::where('user_id', $id)
         ->join('pipelines', function ($join) {
             $join->on('pipelines.id', '=', 'deals.pipeline_id');
         })
@@ -34,10 +33,20 @@ class Deals extends Model
     }
 
     public function stage() {
-        return $this->hasOne(Stages::class, 'id', 'stage_id');
+        return $this->hasOne(Stage::class, 'id', 'stage_id');
     }
 
     public function pipeline() {
-        return $this->hasOne(Pipelines::class, 'id', 'pipeline_id');
+        return $this->hasOne(Pipeline::class, 'id', 'pipeline_id');
+    }
+    public static function getApplicationStatus($iUserId)
+    {
+        return self::from("deals AS D")
+            ->join("stages AS S", "S.id", "D.stage_id")
+            #->join("pipelines AS P", "P.id", "D.pipeline_id")
+            ->select(["S.title"])
+            ->where("D.user_id", $iUserId)
+            ->get();
+
     }
 }

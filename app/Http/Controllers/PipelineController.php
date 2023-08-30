@@ -2,21 +2,13 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Models\Note;
-use App\Models\User;
-use App\Models\Deals;
-use App\Models\Stages;
-use App\Models\Pipelines;
-use App\Models\UserOwner;
-use App\Models\UserDetails;
-
-use App\Models\CustomFields;
+use App\Models\Deal;
+use App\Models\Stage;
+use App\Models\Pipeline;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
@@ -40,11 +32,11 @@ class PipelineController extends Controller
             $this->data['slug']            = 'add_pipeline';
 
             if ($request->isMethod('post')) {
-                $inserted_data = Pipelines::create(['title' => $request->title]);
+                $inserted_data = Pipeline::create(['title' => $request->title]);
                 if (isset($request->stages) && !empty($request->stages)) {
                     $sort = 0;
                     foreach ($request->stages as $rec_stage_title) {
-                        Stages::create([
+                        Stage::create([
                             'pipeline_id' => $inserted_data->id,
                             'title'       => $rec_stage_title,
                             'sort'        => $sort
@@ -61,21 +53,21 @@ class PipelineController extends Controller
         if ($action == 'edit') {
             $this->data['current_slug'] = 'Edit Pipeline';
             $this->data['slug']         = 'edit_pipeline';
-            $this->data['rs_pipeline']  = Pipelines::where('id', $id)->first();
-            $this->data['rs_stages']    = Stages::where('pipeline_id', $id)->orderBy('sort', 'ASC')->get();
+            $this->data['rs_pipeline']  = Pipeline::where('id', $id)->first();
+            $this->data['rs_stages']    = Stage::where('pipeline_id', $id)->orderBy('sort', 'ASC')->get();
 
             if ($request->isMethod('post')) {
-                Pipelines::whereId($id)->update(['title' => $request->title]);
+                Pipeline::whereId($id)->update(['title' => $request->title]);
                 if (isset($request->stages) && !empty($request->stages)) {
                     $sort = 0;
                     foreach ($request->stages as $rec_stage_title) {
                         if (isset($rec_stage_title['title']) && isset($rec_stage_title['stage_id']) && !empty($rec_stage_title['title'])) {
-                            Stages::whereId($rec_stage_title['stage_id'])->update([
+                            Stage::whereId($rec_stage_title['stage_id'])->update([
                                 'title' => $rec_stage_title['title'],
                                 'sort'  => $sort
                             ]);
                         } else {
-                            Stages::create([
+                            Stage::create([
                                 'pipeline_id' => $id,
                                 'title'       => $rec_stage_title,
                                 'sort'        => $sort
@@ -93,15 +85,15 @@ class PipelineController extends Controller
         if ($action == 'list') {
             $this->data['current_slug'] = 'Pipelines';
             $this->data['slug']         = 'pipelines';
-            $this->data['rs_pipeline']  = Pipelines::orderBy('id', 'DESC')->paginate(10);
+            $this->data['rs_pipeline']  = Pipeline::orderBy('id', 'DESC')->paginate(10);
             return view("pipeline.list", $this->data);
         } //view
 
         if ($action == 'delete_stage') {
-            if (Deals::where('stage_id', $id)->first()) {
+            if (Deal::where('stage_id', $id)->first()) {
                 echo json_encode(['status' => 1, 'error' => 'Delete this stage associate deals than try again.']);
             } else {
-                Stages::where('id', $id)->delete();
+                Stage::where('id', $id)->delete();
                 echo json_encode(['status' => 2, 'error' => '']);
             }
         }
@@ -112,14 +104,14 @@ class PipelineController extends Controller
         $this->data['current_slug']  = 'Stages';
         $this->data['slug']          = 'pipeline_stages';
         // $this->data['rs_user']       = User::where(['role' => 'user', 'id' => $id])->first();
-        // $this->data['total_details'] = Deals::where('user_id', $id)->get()->count();
+        // $this->data['total_details'] = Deal::where('user_id', $id)->get()->count();
 
         return view("pipeline.stages", $this->data);
     } // userDetails
 
     public function getPipelineStages($id, $stage_id = NULL)
     {
-        $stages = Stages::where('pipeline_id', $id)->orderBy('title', 'ASC')->get();
+        $stages = Stage::where('pipeline_id', $id)->orderBy('title', 'ASC')->get();
         $stages_data = "";
         if ($stage_id) {
             foreach ($stages as $rec) {

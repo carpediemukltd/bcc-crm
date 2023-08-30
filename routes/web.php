@@ -8,18 +8,19 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DealController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\CheckAdminOwner;
 use App\Http\Middleware\CheckSuperAdmin;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Middleware\CheckSameCompany;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\JotFormController;
 use App\Http\Controllers\PipelineController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\RoundRobinController;
 use App\Http\Controllers\CustomFieldController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Middleware\CheckAdminOwner;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +43,7 @@ Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPa
 Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
-Route::any('jotform/add', [UserController::class, 'addJotFormUser'])->name('user.add.jotform')->withoutMiddleware([VerifyCsrfToken::class]);
+Route::any('jotform/add', [JotFormController::class, 'addUser'])->name('user.add.jotform')->withoutMiddleware([VerifyCsrfToken::class]);
 
 Route::middleware([CheckStatus::class])->group(function () {
     Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
@@ -58,6 +59,7 @@ Route::middleware([CheckStatus::class])->group(function () {
     Route::get('about', [GeneralController::class, 'about'])->name('about');
     Route::get('contact', [GeneralController::class, 'contact'])->name('contact');
     Route::get('robinsetting', [GeneralController::class, 'robinSetting'])->name('robinsetting');
+    Route::get('boardview', [GeneralController::class, 'boardView'])->name('boardview');
     Route::get('editsetting', [GeneralController::class, 'editSetting'])->name('editsetting');
     Route::any('profile', [UserController::class, 'editProfile'])->name('profile');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
@@ -116,6 +118,8 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::put('notification-mark-read', [NotificationController::class, 'notificationMarkRead']);
         Route::put('update-notification-setting', [NotificationController::class, 'updateNotificationSetting']);
         Route::post('update-stage-settings-options', [NotificationController::class, 'updateStageSettingsOptions']);
+        Route::get('notifications', [NotificationController::class, 'index'])->name('notifications');
+
     });
     Route::prefix('demo')->group(function () {
         Route::get('userlist', [GeneralController::class, 'userList'])->name('userlist');

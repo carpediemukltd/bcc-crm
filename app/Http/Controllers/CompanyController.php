@@ -89,7 +89,8 @@ class CompanyController extends Controller
 
         $this->data['companies'] = Company::join('users', function ($join) {
             $join->on('companies.id', '=', 'users.company_id');
-        })->where('role', '=', 'admin')
+        })
+            ->where('role', '=', 'admin')
             ->when($request->search_term, function ($q) use ($request) {
                 $q->where(function ($query) use ($request) {
                     $query->where('first_name', 'like', '%' . $request->search_term . '%');
@@ -107,7 +108,8 @@ class CompanyController extends Controller
             ->when($request->start_date, function ($q) use ($request) {
                 $q->whereBetween('created_at', [$request->start_date, $request->end_date]);
             })
-            ->select('users.*', 'companies.id as company_id', 'companies.name as company_name')
+            ->select('users.*', 'companies.id as the_company_id', 'companies.name as company_name')
+           // ->groupBy('the_company_id')
             ->orderBy('users.id', 'DESC')->paginate(10);
 
         if ($request->ajax())

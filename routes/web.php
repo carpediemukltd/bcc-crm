@@ -19,6 +19,7 @@ use App\Http\Controllers\PipelineController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\RoundRobinController;
 use App\Http\Controllers\CustomFieldController;
+use App\Http\Controllers\DialogflowController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 
@@ -42,6 +43,7 @@ Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPassw
 Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
 Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+Route::post("/chat", [DialogflowController::class, "chat"]);
 
 Route::any('jotform/add', [JotFormController::class, 'addUser'])->name('user.add.jotform')->withoutMiddleware([VerifyCsrfToken::class]);
 
@@ -64,13 +66,13 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::any('company/add', [CompanyController::class, 'addCompany'])->name('company.add');
         Route::get('companies', [CompanyController::class, 'listCompany'])->name('company.list');
         Route::any('company/edit/{id}', [CompanyController::class, 'editCompany'])->name('company.edit');
-        
+
         Route::any('customfield/add', [CustomFieldController::class, 'addField'])->name('customfield.add');
         Route::any('customfield', [CustomFieldController::class, 'fieldList'])->name('customfield.list');
         Route::any('customfield/edit/{id}', [CustomFieldController::class, 'editField'])->name('customfield.edit');
-        
+
         Route::any('pipeline/{action}/{id?}', [PipelineController::class, 'pipelines'])->name('pipeline');
-    
+
     });
 
     Route::middleware([CheckStatus::class])->group(function () { // User specific methods
@@ -107,7 +109,7 @@ Route::middleware([CheckStatus::class])->group(function () {
         // user specific methods
     });
     //notifications
-    
+
     Route::middleware([CheckAdminOwner::class])->group(function () {
         Route::get('notification-settings', [NotificationController::class, 'notificationSettings']);
         Route::put('clear-bell-badge', [NotificationController::class, 'clearBellBadge']);

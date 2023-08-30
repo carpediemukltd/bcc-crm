@@ -40,32 +40,9 @@
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+       <link href="{{asset('assets/css/chat-style.css')}}" rel="stylesheet" />
       <meta name="csrf-token" content="{{ csrf_token() }}">
       @yield('css')
-       <style>
-           .chat-container {
-               position: fixed;
-               bottom: 20px;
-               right: 20px;
-               z-index: 1000;
-           }
-
-           .chat-icon {
-               background-color: #007bff;
-               color: white;
-               padding: 10px 40px;
-               border-radius: 50px;
-               cursor: pointer;
-           }
-
-           .chat-window {
-               display: none;
-               background-color: white;
-               box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-               max-height: 480px;
-               overflow-y: auto;
-           }
-       </style>
    </head>
    <body class="dual-compact light theme-default theme-with-animation card-default theme-color-default">
       <!-- loader Start -->

@@ -8,6 +8,8 @@
         "php": "^7.3|^8.0",
         "doctrine/dbal": "^3.6",
         "fruitcake/laravel-cors": "^2.0",
+        "google/auth": "^1.29",
+        "google/cloud-dialogflow": "^1.8",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",

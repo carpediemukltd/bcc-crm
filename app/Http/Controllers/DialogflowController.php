@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Deals;
+use App\Models\Deal;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Google\Cloud\Dialogflow\V2\TextInput;
+use Google\Cloud\Dialogflow\V2\QueryInput;
+use Google\Cloud\Dialogflow\V2\SessionsClient;
 
 class DialogflowController extends Controller
 {
@@ -39,7 +42,7 @@ class DialogflowController extends Controller
             $sFirstName = $aUserExists->first_name;
             $sLastName  = $aUserExists->last_name;
 
-            $aApplicationStatus = Deals::getApplicationStatus($iRecordId);
+            $aApplicationStatus = Deal::getApplicationStatus($iRecordId);
             if(sizeof($aApplicationStatus) <= 0)
                 throw new \Exception("Sorry, no open application found. For more details please email on mjunaud292@gmail.com");
 
@@ -51,5 +54,33 @@ class DialogflowController extends Controller
         {
             return ["fulfillmentText" => $e->getMessage()];
         }
+    }
+    public static function chat(Request $request)
+    {
+        $sMessage   = $request->message;
+        $sSessionID = $request->sessionID;
+
+        if(preg_match("/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/", $sMessage))
+            if(auth()->user()->email != $sMessage)
+                return ["message" => "Unauthorized email address"];
+
+        $objSessionsClient = new SessionsClient([
+            'credentials' => public_path(env("DIALOGFLOW_ACCESS_KEY"))
+        ]);
+
+        $sSession = $objSessionsClient->sessionName(env("DIALOGFLOW_PROJECTID"), $sSessionID);
+
+        $objTextInput = new TextInput();
+        $objTextInput->setText($sMessage);
+        $objTextInput->setLanguageCode('en-US');
+
+        $objQueryInput = new QueryInput();
+        $objQueryInput->setText($objTextInput);
+        $objResponse = $objSessionsClient->detectIntent($sSession, $objQueryInput);
+
+        $fulfillmentText = $objResponse->getQueryResult()->getFulfillmentText();
+        $objSessionsClient->close();
+
+        return ["message" => $fulfillmentText];
     }
 }

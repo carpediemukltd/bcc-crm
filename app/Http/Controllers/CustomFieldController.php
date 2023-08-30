@@ -33,6 +33,7 @@ class CustomFieldController extends Controller
                 'title'  => 'required|unique:custom_fields',
                 'type'   => 'required'
             ]);
+
             $data = $request->all();
             if ($data) {
                 $sort = 0;
@@ -65,6 +66,11 @@ class CustomFieldController extends Controller
         $this->data['fields_type']  = ['contact', 'deals'];
 
         if ($request->isMethod('put')) {
+
+            $request->validate([
+                'title'  => 'required|unique:custom_fields,title,' . $id,
+                'type'   => 'required'
+            ]);
 
             $visible = 0;
             if (isset($request->visible) && $request->visible == 'on')

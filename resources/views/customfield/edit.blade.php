@@ -40,6 +40,9 @@
                            <div class="form-group">
                               <label class="form-label" for="title">Title:</label>
                               <input type="text" class="form-control" id="title" placeholder="Title" value="{{$rs_field->title}}" name="title" required>
+                              @if ($errors->has('title'))
+                                 <span class="text-danger">{{ $errors->first('title') }}</span>
+                              @endif
                            </div>
                         </div>
                         <div class="col">
@@ -50,6 +53,9 @@
                                     <option value="{{$rec_field}}" <?php if($rec_field == $rs_field->type){echo 'selected';}?>>{{$rec_field}}</option>
                                  @endforeach
                               </select>
+                              @if ($errors->has('type'))
+                                 <span class="text-danger">{{ $errors->first('type') }}</span>
+                              @endif
                            </div>
                         </div>
                      </div>

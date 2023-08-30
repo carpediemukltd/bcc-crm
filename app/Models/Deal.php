@@ -32,6 +32,13 @@ class Deal extends Model
         return $Deals;
     }
 
+    public function stage() {
+        return $this->hasOne(Stage::class, 'id', 'stage_id');
+    }
+
+    public function pipeline() {
+        return $this->hasOne(Pipeline::class, 'id', 'pipeline_id');
+    }
     public static function getApplicationStatus($iUserId)
     {
         return self::from("deals AS D")
@@ -40,5 +47,6 @@ class Deal extends Model
             ->select(["S.title"])
             ->where("D.user_id", $iUserId)
             ->get();
+
     }
 }

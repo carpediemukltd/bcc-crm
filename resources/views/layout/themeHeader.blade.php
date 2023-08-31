@@ -544,7 +544,7 @@
                                  </svg>
                               </div>
                               <div class="text-holder d-flex align-items-center justify-content-between">
-                                 <a href="{{url('/')}}{{$notification->target_url}}"><p class="hoverable-element">{{$notification->title}} <p><b>{{$notification->formatted_created_at}}</b></p></p></a>
+                                 <a data-type="header" data-status="{{$notification->is_read}}" data-url="{{$notification->target_url}}" data-id="{{$notification->id}}" href="#" class="notification-list-header"><p class="hoverable-element">{{$notification->title}} <p><b>{{$notification->formatted_created_at}}</b></p></p></a>
                                  <div class="font-sans-serif d-sm-block">
                                     <button class="btn fs--2 btn-sm dropdown-toggle dropdown-caret-none transition-none notification-dropdown-toggle" type="button" data-stop-propagation="data-stop-propagation" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent">
                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">

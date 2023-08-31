@@ -1002,7 +1002,7 @@
       var id = $(this).data('id');
       var csrfToken = $('meta[name="csrf-token"]').attr('content');
       $.ajax({
-         url: '/notification-mark-read',
+         url: '/notification-mark-read?type=delete',
          method: 'PUT',
          headers: {
                'X-CSRF-TOKEN': csrfToken
@@ -1011,7 +1011,7 @@
             id:id
          },
          success: function(response) {
-            $("#notification_listing-"+id).removeClass('notification_listing_color_unread');
+            $("#notification_listing-"+id).remove();
          },
          error: function(xhr, status, error) {
          }
@@ -1066,14 +1066,15 @@
          }
       });
    }
-   $('.notification-list').on('click', function () {
+   $('.notification-list, .notification-list-header').on('click', function () {
          const settingId      = $(this).data('id');
          const settingUrl     = $(this).data('url');
          const settingStatus  = $(this).data('status');
+         const type           = $(this).data('type');
          if(settingStatus == '0' || settingStatus == 0){
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
-               url: '/notification-mark-read',
+               url: '/notification-mark-read?type=read',
                method: 'PUT',
                headers: {
                      'X-CSRF-TOKEN': csrfToken
@@ -1082,6 +1083,10 @@
                      id: settingId,
                },
                success: function (response) {
+                  if(type == 'header'){
+                     $("#notification_listing-"+id).removeClass('notification_listing_color_unread');
+                  }
+
                },
                error: function (error) {
                }

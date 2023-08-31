@@ -29,28 +29,27 @@
                </div>
             </div>
             <div class="card-body px-0">
-                <div class="notification_view_holder">
-                    <div class="notification-ui_dd-content">
-                        @foreach($data as $notification)
-                        
-                        <div data-status="{{$notification->is_read}}" data-url="{{$notification->target_url}}" data-id="{{$notification->id}}" class="notification-list @if($notification->is_read == 0) notification-list--unread @endif">
-                            <div class="notification-list_content">
-                                <div class="notification-list_img">
-                                    <!-- <img src="{{asset('assets/images/notification-profile.jpg')}}" alt="user"> -->
-                                </div>
-                                <div class="notification-list_detail">
-                                    <p><b>{{$notification->title}}</b></p>
-                                    <p class="text-muted"><small>{{$notification->formatted_created_at}}</small></p>
-                                </div>
-                            </div>
-                            <div class="notification-list_feature-img">
-                                <img src="{{asset('assets/images/notification-profile2.jpg')}}" alt="Feature image">
-                            </div>
+               <div class="notification_view_holder">
+                  <div class="notification-ui_dd-content">
+                     @foreach($data as $notification)
+                     <div data-type="list" data-status="{{$notification->is_read}}" data-url="{{$notification->target_url}}" data-id="{{$notification->id}}" class="notification-list @if($notification->is_read == 0) notification-list--unread @endif">
+                        <div class="notification-list_content">
+                           <div class="notification-list_img">
+                              <!-- <img src="{{asset('assets/images/notification-profile.jpg')}}" alt="user"> -->
+                           </div>
+                           <div class="notification-list_detail">
+                              <p><b>{{$notification->title}}</b></p>
+                              <p class="text-muted"><small>{{$notification->formatted_created_at}}</small></p>
+                           </div>
                         </div>
-                        @endforeach()
-                        {{$data->links()}}
-                    </div>
-                </div>
+                        <div class="notification-list_feature-img">
+                           <img src="{{asset('assets/images/notification-profile2.jpg')}}" alt="Feature image">
+                        </div>
+                     </div>
+                     @endforeach()
+                     {{$data->links()}}
+                  </div>
+               </div>
             </div>
          </div>
       </div>

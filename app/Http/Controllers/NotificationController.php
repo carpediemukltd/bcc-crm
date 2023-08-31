@@ -16,8 +16,13 @@ class NotificationController extends Controller
         return view('notifications.notifications', ['data'=> $data]);
      }
      public function notificationMarkRead(Request $request){
-         Notification::where('user_id', auth()->user()->id)->whereId($request->id)->update(['is_read'=> '1']);
-         return response()->json(['message' => 'Notification marked as read!']);
+        if($request->type =='delete'){
+            Notification::where('user_id', auth()->user()->id)->whereId($request->id)->delete();
+        }
+        else{
+            Notification::where('user_id', auth()->user()->id)->whereId($request->id)->update(['is_read'=> '1']);
+        }
+        return response()->json(['message' => 'Notification marked as read!']);
      }
      public function clearBellBadge(){
          User::whereId(auth()->user()->id)->update(['bell_notification_count'=> 0]);

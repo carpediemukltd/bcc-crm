@@ -100,7 +100,7 @@ class DealController extends Controller
                 }
             }
             SendNotification::dispatch(['id' => $request->stage_id, 'type' => 'deal_added']);
-            return redirect(route('user.deals', $id))->withSuccess('Deal Created Successfully.')->withInput();
+            return redirect(route('user.deals', [$id,'listing']))->withSuccess('Deal Created Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
             $this->data['current_slug'] = 'Add Deal';
             $this->data['slug'] = 'user_add_deal';
@@ -144,7 +144,7 @@ class DealController extends Controller
                 }
             }
 
-            return redirect(route('user.deals', $user_id))->withSuccess('Deal Update Successfully.')->withInput();
+            return redirect(route('user.deals', [$user_id,'listing']))->withSuccess('Deal Update Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
             $this->data['current_slug'] = 'Edit Deal';
             $this->data['slug'] = 'user_edit_deal';
@@ -174,7 +174,7 @@ class DealController extends Controller
                 'stage_id' => $request->stage_id,
             ]);
 
-            return redirect(route('user.deals', $user_id))->withSuccess('Deal Update Successfully.')->withInput();
+            return redirect(route('user.deals', [$user_id,'listing']))->withSuccess('Deal Update Successfully.')->withInput();
         }
     }
 

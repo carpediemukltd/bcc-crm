@@ -478,7 +478,7 @@
                            </div>
                            <br style="clear: both" />
                            <li class="nav-item">
-                              <a class="nav-link" href="{{route('user.deals', $user->id)}}" data-bs-toggle="" aria-expanded="false">
+                              <a class="nav-link" href="{{route('user.deals', [$user->id,'listing'])}}" data-bs-toggle="" aria-expanded="false">
                                  <div class="d-flex align-items-center"><span class="nav-link-text"> All Deals</span></div>
                               </a>
                            </li>

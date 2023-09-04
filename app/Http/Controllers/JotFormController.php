@@ -38,7 +38,7 @@ class JotFormController extends Controller
 
     public function addUser(Request $request)
     {
-        //    dd($request);
+        // dd($request);
         $this->data['current_slug'] = 'Add Contact';
         $this->data['slug']         = 'add_user_jotform';
         $company_id = 1;
@@ -46,12 +46,12 @@ class JotFormController extends Controller
         $this->data['round_robin_owner'] =  RoundRobinSetting::RoundRobinOwner($company_id);
         $user_type = "";
         if ($request->isMethod('post')) {
-            $data['first_name']='';
-            $data['last_name']='';
+            $data['first_name'] = '';
+            $data['last_name'] = '';
             if (isset($request->legalbusiness6)) {
                 $name_arr  =  explode(" ", $request->legalbusiness6);
-                if(isset($name_arr[0])) $data['first_name'] = $name_arr[0];
-                if(isset($name_arr[1])) $data['last_name'] = $name_arr[1];
+                if (isset($name_arr[0])) $data['first_name'] = $name_arr[0];
+                if (isset($name_arr[1])) $data['last_name'] = $name_arr[1];
             } else if (isset($request->full_name)) {
                 $data['first_name'] = $request->full_name['first'];
                 $data['last_name'] = $request->full_name['last'];
@@ -130,16 +130,21 @@ class JotFormController extends Controller
                         "Date of Birth" => $request->dateof['year'] . "-" . $request->dateof['month'] . "-" . $request->dateof['day'],
                         "US Citizen" => $request->uscitizen,
                         "Second Owner Yes/No" => $request->doyou,
-                        "Second Officer Name" => $request->secondofficerowner['first'] . " " . $request->secondofficerowner['last'],
-                        "2nd Officer Email" => $request->email34,
-                        "2nd Officer SSN" => $request->ssn35,
-                        "2nd Officer Home Address" => $request->homeaddress36['addr_line1'] . " " . $request->homeaddress36['addr_line2'],
-                        "2nd Officer Home City" => $request->homeaddress36['city'],
-                        "2nd Officer Home State" => $request->homeaddress36['state'],
-                        "2nd Officer Home Zip Code" => $request->homeaddress36['postal'],
-                        "2nd Officer Date of Birth" => $request->dateof40['year'] . "-" . $request->dateof40['month'] . "-" . $request->dateof40['day'],
-                        "2nd Officer US Citizen" => $request->ownerus81,
                     );
+                    if (isset($request->doyou) && strtolower($request->doyou) == 'yes') {
+                        $second_owner = array(
+                            "Second Officer Name" => $request->secondofficerowner['first'] . " " . $request->secondofficerowner['last'],
+                            "2nd Officer Email" => $request->email34,
+                            "2nd Officer SSN" => $request->ssn35,
+                            "2nd Officer Home Address" => $request->homeaddress36['addr_line1'] . " " . $request->homeaddress36['addr_line2'],
+                            "2nd Officer Home City" => $request->homeaddress36['city'],
+                            "2nd Officer Home State" => $request->homeaddress36['state'],
+                            "2nd Officer Home Zip Code" => $request->homeaddress36['postal'],
+                            "2nd Officer Date of Birth" => $request->dateof40['year'] . "-" . $request->dateof40['month'] . "-" . $request->dateof40['day'],
+                            "2nd Officer US Citizen" => $request->ownerus81,
+                        );
+                        $fields = array_merge($fields, $second_owner);
+                    }
                 } else if ($request->formID == 232325998161462 || $request->formID == 232286307893464) {
                     //Preliminary Application BCCUSA-FB Ads
                     $fields = array(
@@ -175,6 +180,7 @@ class JotFormController extends Controller
                         "2nd Officer Date of Birth" => $request->dateof40['year'] . "-" . $request->dateof40['month'] . "-" . $request->dateof40['day'],
                         "2nd Officer US Citizen" => $request->ownerus81,
                     );
+                    
                 }
                 if (is_array($fields) && count($fields) > 0) {
                     foreach ($fields as $field => $value) {
@@ -183,7 +189,7 @@ class JotFormController extends Controller
                     }
                 }
             }
-            
+
             return redirect()->back()->withSuccess('Contact Created Successfully.');
         }
     }

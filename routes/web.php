@@ -87,7 +87,8 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::any('contact/edit/{id}', [UserController::class, 'editUser'])->name('user.edit');
         Route::any('contact/{id}/details', [UserController::class, 'userDetails'])->name('user.details');
 
-        Route::get('contact/{id}/deals', [DealController::class, 'userDeals'])->name('user.deals');
+        Route::get('contact/{id}/deals/{view}', [DealController::class, 'userDeals'])->name('user.deals');
+        Route::get('contact/{id}/deals/board', [DealController::class, 'userDeals'])->name('user.deals.board');
         Route::any('contact/{id}/deals/add', [DealController::class, 'dealsAdd'])->name('user.deals.add');
         Route::any('contact/{user_id}/deals/edit/{id}', [DealController::class, 'dealsEdit'])->name('user.deals.edit');
         Route::post('contact/{user_id}/deals/updateStage/{id}', [DealController::class, 'dealsUpdateStage'])->name('user.deals.updatestage');

@@ -34,7 +34,7 @@ class DealController extends Controller
         });
     }
 
-    public function userDeals($id)
+    public function userDeals($id, $view = 'listing')
     {
         $this->data['current_slug'] = 'Deals';
         $this->data['slug']         = 'user_deals';
@@ -53,12 +53,12 @@ class DealController extends Controller
                 $pipeline_arr['id'] = $pipeline->id;
                 $pipeline_arr['title'] = $pipeline->title;
                 $stages = Stage::where('pipeline_id', $pipeline->id)->orderBy('title', 'ASC')->get();
-                $stages_arr=array();
+                $stages_arr = array();
                 if ($stages->isNotEmpty()) {
                     foreach ($stages as $stage) {
                         $this_stage['id'] = $stage->id;
                         $this_stage['title'] = $stage->title;
-                        array_push($stages_arr,$this_stage);
+                        array_push($stages_arr, $this_stage);
                     }
                 }
                 $pipeline_arr['stages'] = $stages_arr;
@@ -66,7 +66,11 @@ class DealController extends Controller
             }
         }
         $this->data['pipeline_stages'] = $pipeline_stages;
-        return view("user.deals.list", $this->data);
+        if ($view == 'board') {
+            return view("user.deals.board", $this->data);
+        } else {
+            return view("user.deals.list", $this->data);
+        }
     } // userDeals
 
     public function dealsAdd(Request $request, $id)
@@ -95,7 +99,7 @@ class DealController extends Controller
                     );
                 }
             }
-            SendNotification::dispatch(['id'=> $request->stage_id, 'type'=>'deal_added']);
+            SendNotification::dispatch(['id' => $request->stage_id, 'type' => 'deal_added']);
             return redirect(route('user.deals', $id))->withSuccess('Deal Created Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
             $this->data['current_slug'] = 'Add Deal';
@@ -171,7 +175,7 @@ class DealController extends Controller
             ]);
 
             return redirect(route('user.deals', $user_id))->withSuccess('Deal Update Successfully.')->withInput();
-        } 
+        }
     }
 
     public function exportXLS($id)

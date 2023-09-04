@@ -44,7 +44,7 @@ class Permissions
         if ($user->role == 'superadmin') {
             $roles = array('admin', 'owner', 'user');
         } else if ($user->role == 'admin') {
-            $roles = array('admin', 'owner', 'user');
+            $roles = array('owner', 'user');
         } else if ($user->role == 'owner') {
             $roles = array('user');
         } else if ($user->role == 'user') {

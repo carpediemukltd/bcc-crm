@@ -198,7 +198,7 @@ class DealController extends Controller
         $active_sheet->setCellValue('E1', 'Pipeline');
         $active_sheet->setCellValue('F1', 'Stage');
         $active_sheet->setCellValue('G1', 'Created At');
-        $cfields = CustomField::where('type', '=', 'contact')->where('visible', '=', 1)->get();
+        $cfields = CustomField::where('type', '=', 'deals')->where('visible', '=', 1)->get();
 
         $startColumn = 'H';
         $column = $startColumn;
@@ -253,7 +253,7 @@ class DealController extends Controller
 
         if (!$cfields->isEmpty()) {
             foreach ($cfields as $cfield) {
-                array_push($columns, "'" . $cfield->title . "'");
+                array_push($columns, $cfield->title);
             }
         }
         fputcsv($file, $columns);

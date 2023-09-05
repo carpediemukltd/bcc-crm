@@ -47,7 +47,7 @@
                               <table id="user-list-table" class="table table-striped dataTable no-footer customfield-list-table" data-toggle="data-table" role="grid" aria-describedby="user-list-table_info">
                                  <thead>
                                     <tr class="ligth">
-                                       <th class="sorting" tabindex="0" aria-controls="user-list-table">Sr</th>
+                                       <th class="sorting" tabindex="0" aria-controls="user-list-table">S/No.</th>
                                        <th class="sorting" tabindex="0" aria-controls="user-list-table">Title</th>
                                        <th class="sorting" tabindex="0" aria-controls="user-list-table">Type</th>
                                        <th style="min-width: 100px" class="sorting" tabindex="0" aria-controls="user-list-table">Action</th>

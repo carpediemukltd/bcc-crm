@@ -38,7 +38,6 @@ class JotFormController extends Controller
 
     public function addUser(Request $request)
     {
-        // dd($request);
         $this->data['current_slug'] = 'Add Contact';
         $this->data['slug']         = 'add_user_jotform';
         $company_id = 1;
@@ -180,7 +179,6 @@ class JotFormController extends Controller
                         "2nd Officer Date of Birth" => $request->dateof40['year'] . "-" . $request->dateof40['month'] . "-" . $request->dateof40['day'],
                         "2nd Officer US Citizen" => $request->ownerus81,
                     );
-                    
                 }
                 if (is_array($fields) && count($fields) > 0) {
                     foreach ($fields as $field => $value) {
@@ -200,6 +198,7 @@ class JotFormController extends Controller
             ["title" =>  $field],
             ["title" =>  $field, "type" => "contact", "visible" => 0],
         );
+
         UserDetails::updateOrCreate(
             ['user_id' => $user_id, 'deal_id' => 0, 'custom_field_id' => $custom_field->id],
             ['data' => $data]

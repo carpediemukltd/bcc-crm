@@ -85,7 +85,7 @@
                 <div class="form-group">
                     <label for="">Stages<span style="color: red">*</span></label>
                     <select class="input-sm form-control" id="stages" name="stages">
-                        <option value="">Select Stage</option>
+                        <option value="0">Select Stage</option>
                         <option value="1">Stage 1</option>
                         <option value="2">Stage 2</option>
                         <option value="3">Stage 3</option>
@@ -98,8 +98,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="">Date In<span style="color: red">*</span></label>
-                    <input type="text" class="input-sm form-control" id="daterange" name="daterange"
-                        autocomplete="off" />
+                    <input type="text" class="input-sm form-control" id="daterange" name="daterange" autocomplete="off" />
                 </div>
             </div>
             <div class="col-md-3">
@@ -175,8 +174,13 @@
     $(document).on('click', '#filter', function () {
 
         let daterange = $('#daterange').val();
-        let stages = $('#stages').val();
-        $.ajax({
+        let stages    = $('#stages').val();
+
+        if(daterange == "" || daterange == null || stages === "0") {
+            alert('please Select both fields to continue');
+        } else {
+            console.log('hello');
+            $.ajax({
             url: '{{ route("filter-deals") }}',
             method: 'GET',
             data: {
@@ -220,6 +224,7 @@
                 console.log('Error:', textStatus, errorThrown);
             }
         });
+        }
     });
 
 </script>

@@ -55,49 +55,51 @@
 <div class="content-inner container-fluid pb-0" id="page_layout">
     @include('alert_message')
     <div id="loader" style="display: none;"></div>
-    <div class="d-flex justify-content-between align-items-center flex-wrap mb-4 gap-3">
-        <div class="d-flex flex-column">
-            <h3>Quick Insights</h3>
-            <p class="text-primary mb-0">Users Count</p>
-        </div>
         <div class="row">
-            <div class="col-md-9">
-                <div class="form-group">
-                    <label for="">Date In<span style="color: red">*</span></label>
-                    <input type="text" class="input-sm form-control" id="daterange" name="daterange"
-                        autocomplete="off" />
+            <div class="col-lg-12 col-md-12">
+                <div class="card card-block card-stretch card-height">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap mb-2 gap-3">
+                            <div class="d-flex flex-column">
+                                <h3>Quick Insights</h3>
+                                <p class="text-primary mb-0">Users Count</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="form-group">
+                                    <label for="">Date In<span style="color: red">*</span></label>
+                                    <input type="text" class="input-sm form-control" id="daterange" name="daterange"
+                                        autocomplete="off" />
+                                </div>
+                                <div class="form-group mt-4">
+                                    <label for=""></label>
+                                    <button type="button" name="filter" id="filter" class="btn btn-primary m2">Filter</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="card card-block card-stretch card-height">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start justify-content-between mb-2">
+                                            <p class="mb-0 text-dark">Gross Volume</p>
+                                            {{-- <a class="badge rounded-pill bg-soft-primary" href="#">
+                                        View
+                                    </a> --}}
+                                        </div>
+                                        <div class="mb-3">
+                                            <h2 class="counter" id="CountUser">{{ $user_count }}</h2>
+                                            <small>Last updated 1 hour ago.</small>
+                                        </div>
+                                        <div>
+                                            <div id="contactReport"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <label for=""></label>
-                <button type="button" name="filter" id="filter" class="btn btn-primary m2">Filter</button>
-            </div>
         </div>
-
-    </div>
-    <div class="row">
-        <div class="col-lg-2 col-md-2"></div>
-        <div class="col-lg-8 col-md-8">
-            <div class="card card-block card-stretch card-height">
-                <div class="card-body">
-                    <div class="d-flex align-items-start justify-content-between mb-2">
-                        <p class="mb-0 text-dark">Gross Volume</p>
-                        {{-- <a class="badge rounded-pill bg-soft-primary" href="#">
-                     View
-                  </a> --}}
-                    </div>
-                    <div class="mb-3">
-                        <h2 class="counter" id="CountUser">{{ $user_count }}</h2>
-                        <small>Last updated 1 hour ago.</small>
-                    </div>
-                    <div>
-                        <div id="contactReport"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-2"></div>
-
     </div>
 </div>
 @endsection

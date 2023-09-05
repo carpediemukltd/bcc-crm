@@ -80,28 +80,27 @@
             <h3>Deals Report</h3>
             <p class="text-primary mb-0">Users Count</p>
         </div>
-        <div class="row">
-            <div class="col-md-5">
-                <div class="form-group">
-                    <label for="">Stages<span style="color: red">*</span></label>
-                    <select class="input-sm form-control" id="stages" name="stages">
-                        <option value="0">Select Stage</option>
-                        <option value="1">Stage 1</option>
-                        <option value="2">Stage 2</option>
-                        <option value="3">Stage 3</option>
-                        <option value="4">Stage 4</option>
-                        <option value="5">Stage 5</option>
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div class="form-group">
+                <label for="">Stages<span style="color: red">*</span></label>
+                <select class="input-sm form-control" id="stages" name="stages">
+                    <option value="0">Select Stage</option>
+                    <option value="1">Stage 1</option>
+                    <option value="2">Stage 2</option>
+                    <option value="3">Stage 3</option>
+                    <option value="4">Stage 4</option>
+                    <option value="5">Stage 5</option>
 
-                    </select>
-                </div>
+                </select>
             </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="">Date In<span style="color: red">*</span></label>
-                    <input type="text" class="input-sm form-control" id="daterange" name="daterange" autocomplete="off" />
-                </div>
+            &nbsp;
+            &nbsp;
+            <div class="form-group">
+                <label for="">Date In<span style="color: red">*</span></label>
+                <input type="text" class="input-sm form-control" id="daterange" name="daterange" autocomplete="off" />
             </div>
-            <div class="col-md-3">
+            &nbsp;
+            <div class="form-group mt-4">
                 <label for=""></label>
                 <button type="button" name="filter" id="filter" class="btn btn-primary m2">Filter</button>
             </div>

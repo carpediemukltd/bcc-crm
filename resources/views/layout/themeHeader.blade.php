@@ -34,6 +34,7 @@
       <!-- <link rel="stylesheet" href="{{asset('assets/css/rtl.min.css?v=3.0.0')}}" /> -->
       <!-- Google Font -->
       <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+      <script type="text/javascript" src="{{asset('assets/js/jsFunctions.js?v=1.0')}}"></script>
       <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" defer></script>
       <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
@@ -123,7 +124,7 @@
                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                                     </svg>
                                  </i>
-                                 
+
                               </a>
                               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-search-11" style="width: 15rem;">
                                  <li class="nav-item">
@@ -166,10 +167,10 @@
                                        <span class="item-name">Deals Sandbox</span>
                                     </a>
                                  </li>
-                             
+
                               </ul>
                            </li>
-                       
+
                            @if (Auth::user()->role == 'superadmin' || Auth::user()->role == 'admin' || Auth::user()->role == 'owner')
                            <li class="nav-item dropdown iq-responsive-menu d-block">
                               <a class="nav-link <?php if(isset($slug) && in_array($slug, ['add_user', 'user_list', 'edit_user', 'user_details', 'user_deals', 'user_add_deal', 'user_edit_deal'])){echo 'active';}?>" data-bs-toggle="dropdown" href="#sidebar-user" role="button" aria-expanded="false"

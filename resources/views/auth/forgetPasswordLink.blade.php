@@ -89,7 +89,7 @@
                               <div class="col-lg-12">
                                  <div class="floating-label form-group">
                                     <label for="password-confirm" class="form-label">Confirm Password</label>
-                                    <input type="password" class="form-control" id="password-confirm" aria-describedby="password-confirm" placeholder="******" name="password-confirm" required autofocus>
+                                    <input type="password" class="form-control" id="password-confirm" aria-describedby="password-confirm" placeholder="******" name="password_confirmation" required autofocus>
                                     @if ($errors->has('password-confirm'))
                                     <span class="text-danger">{{ $errors->first('password-confirm') }}</span>
                                     @endif

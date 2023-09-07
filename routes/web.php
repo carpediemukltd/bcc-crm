@@ -62,6 +62,7 @@ Route::middleware([CheckStatus::class])->group(function () {
     Route::get('contact', [GeneralController::class, 'contact'])->name('contact');
     Route::get('robinsetting', [GeneralController::class, 'robinSetting'])->name('robinsetting');
     Route::get('boardview', [GeneralController::class, 'boardView'])->name('boardview');
+    Route::get('dealsboardview', [GeneralController::class, 'dealsboardView'])->name('dealsboardview');
     Route::get('editsetting', [GeneralController::class, 'editSetting'])->name('editsetting');
     Route::any('profile', [UserController::class, 'editProfile'])->name('profile');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');

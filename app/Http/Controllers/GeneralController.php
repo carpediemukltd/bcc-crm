@@ -75,4 +75,7 @@
    public function boardview(){
       return view('boardview');
    }
+   public function dealsboardview(){
+      return view('dealsboardview');
+   }
  }

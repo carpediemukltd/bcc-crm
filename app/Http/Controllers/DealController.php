@@ -45,8 +45,9 @@ class DealController extends Controller
         }
 
         $this->data['current_user_id'] = $id;
-        $this->data['rs_deals'] = Deal::getDealsByUser($id);
+        $this->data['rs_deals'] = Deal::getDealsByUser($id, 0);
         $pipelines = Pipeline::orderBy('title', 'ASC')->get();
+        $this->data['pipelines'] = $pipelines;
         $pipeline_stages = array();
         if ($pipelines->isNotEmpty()) {
             foreach ($pipelines as $pipeline) {
@@ -72,6 +73,42 @@ class DealController extends Controller
             return view("user.deals.list", $this->data);
         }
     } // userDeals
+
+    public function userDealsBoardCards($id, $pipeline_id)
+    {
+        $this->data['current_slug'] = 'Deals';
+        $this->data['slug']         = 'user_deals';
+
+        $access = Permissions::checkUserAccess($this->user, $id);
+        if (!$access) {
+            return redirect(route('dashboard'))->with('error', 'Access Denied.');
+        }
+
+        $this->data['current_user_id'] = $id;
+        $this->data['rs_deals'] = Deal::getDealsByUser($id, $pipeline_id);
+        $pipelines = Pipeline::orderBy('title', 'ASC')->get();
+        $pipeline_stages = array();
+        if ($pipelines->isNotEmpty()) {
+            foreach ($pipelines as $pipeline) {
+                $pipeline_arr['id'] = $pipeline->id;
+                $pipeline_arr['title'] = $pipeline->title;
+                $stages = Stage::where('pipeline_id', $pipeline->id)->orderBy('title', 'ASC')->get();
+                $stages_arr = array();
+                if ($stages->isNotEmpty()) {
+                    foreach ($stages as $stage) {
+                        $this_stage['id'] = $stage->id;
+                        $this_stage['title'] = $stage->title;
+                        array_push($stages_arr, $this_stage);
+                    }
+                }
+                $pipeline_arr['stages'] = $stages_arr;
+                array_push($pipeline_stages, $pipeline_arr);
+            }
+        }
+        $this->data['pipeline_stages'] = $pipeline_stages;
+        
+            return view("user.deals.board_card", $this->data);
+    }
 
     public function dealsAdd(Request $request, $id)
     {
@@ -186,7 +223,7 @@ class DealController extends Controller
         }
         $this->data['user']       = User::where(['id' => $id])->first();
         $file_name = "deals_{$id}.xls";
-        $deals = Deal::getDealsByUser($id);
+        $deals = Deal::getDealsByUser($id, 0);
 
         $file = new Spreadsheet();
         $active_sheet = $file->getActiveSheet();
@@ -245,7 +282,7 @@ class DealController extends Controller
 
         $this->data['user']       = User::where(['id' => $id])->first();
         $file_name = "deals_{$id}.csv";
-        $deals = Deal::getDealsByUser($id);
+        $deals = Deal::getDealsByUser($id, 0);
 
         $columns = array('Title', 'Amount', 'Deal Owner', 'Source', 'Pipeline', 'Stage', 'Created At');
         $file = fopen($path = storage_path($file_name), 'w');

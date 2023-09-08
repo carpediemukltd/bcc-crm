@@ -44,9 +44,9 @@
                   <div class="col">
                      <div class="form-group">
                         <label class="form-label" for="title">Company Name</label>
-                        <input type="text" class="form-control" id="company_name" name="company_name" placeholder="Company Name" value="{{old('company_name')}}" required>
-                        @if ($errors->has('company_name'))
-                           <span class="text-danger">{{ $errors->first('company_name') }}</span>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Company Name" value="{{old('name')}}" required>
+                        @if ($errors->has('name'))
+                           <span class="text-danger">{{ $errors->first('name') }}</span>
                         @endif
                         <input type="hidden" id="role" name="role" value="admin" required>
                      </div>

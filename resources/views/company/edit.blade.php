@@ -46,12 +46,12 @@
                   <div class="col">
                      <div class="form-group">
                         <label class="form-label" for="title">Company Name</label>
-                        <input type="text" class="form-control" id="company_name" name="company_name" placeholder="Company Name" value="{{$company->company_name}}" required />
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Company Name" value="{{$company->company_name}}" required />
                         <input type="hidden" id="company_id" name="company_id" value="{{$company->company_id}}" />
                         <input type="hidden" id="admin_id" name="admin_id" value="{{$company->id}}" />
                         <input type="hidden" id="role" name="role" value="admin" />
-                        @if ($errors->has('company_name'))
-                            <span class="text-danger">{{ $errors->first('company_name') }}</span>
+                        @if ($errors->has('name'))
+                            <span class="text-danger">{{ $errors->first('name') }}</span>
                         @endif
                      </div>
                   </div>

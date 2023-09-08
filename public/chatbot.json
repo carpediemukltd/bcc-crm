@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "bankchatbot-kgqx",
+  "private_key_id": "85b26ad72e960a86224733b28a8eee91b007ab76",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCigs4wZPrj48SX\n31SGLZobZr/srpS5m6AK69PK16z7i/ugNYtSBE0kR4HiZx4hR6kau9j6cDrwCQQx\nO0h3yOXsfhn8wYKTsI+4ODKmvwIWGZD44a2spTg41w5LilXW1A2lsDCSTfIG9Qbw\nfqxvX22Fr86RnEBE6UbNXAZbOzicMmegRrUXS9l3HMoYkVKtpKRnVjt8nqVP+BSx\nRB8XxlMBiy2RwAi4ZRLniZdT0DWji6kfvVk3DQ/ckikHdpZi/VtiP3Cp0OxS2Pjq\n2MKZoG5JnSQHAdSn2Qa+BS1SMTakKbuJT1ZT/VUHOKkWTchKj/5JVaPdfbZfv2jS\npu6cjUeFAgMBAAECggEAJ/ZqpdPvLmMwUPiGXIiSQPK/d4Bm6k2uyYC8kEEBNMpz\nki4YmI6eObGr6vTYn+5zUzOmY899btGIymJ9q5cnk0RfN5yOc6sTbIXFTuPhq3WW\nBN3aS35FmRSpW0IlYbK7uGbfStsIDVXr4vADj0+0Kw/UiFIYK9oBozZiCcVCYoZO\nE1gPgA7INjpD8BHwhb0ZSCbWPEgmqXPcLgVuZBRvyed2Gg0G27LNAoXNu59wm2dk\nkUhRIs5MhLnCqu3kE38dnU8lvkrPOPFe/SdoDKw/XoX6YrivV/KPTV081HGkSclq\nQtEH17FkLI+9QIZFCSzaHFY3DtxRNn1foGyVl/+0cQKBgQDaCNwDLgNQgpwtqayt\nAqlU0Yby2aFXObLyI0+hwQ6MeXKJI+SCIcCsI7vbUe+LFZAmz98Y4OiI/bF1oozR\n6kiCA8CEaOCRwx++/jurlQyAatLLHgqs8jL7VBpHGlJHuIE9TrSfco23QvmhrQ0s\nDZrROUEyG7DReYAG2I7rlwlp6wKBgQC+zuqN8jTFHF2hSeIo4boSUDt0DEy++I6f\nwrsLInGRDs/DOMCiV/dPG3F4ogqpfilB/9ur2+bnh4naJGlvDXcB9smYvXea3f6c\nwFop84tqC7D7DSJUPZeyVTH3B4qrIhWW4OXnGHEEKTYrDXIVKYxY8xnKkWSwPoa0\nKxRLYjLITwKBgAbSziffUcU8QS0AqWHEuo3n/MQu4Wi8aog/aKeURiNJTbdTAzy7\nV69Lcv6bItcEdr1wNfguWbinz9zxmFyda2V+PpEmQxjstVqh1DY7dOez8CLhLs5Y\nyhWpfSUKgtaxxIGpq+dti1fX5b4Uj1v4lQbFNvAdg7wahFIyhs6CrI2/AoGBAKb4\nIE6oZT8bbF+IbMzDgnUmGnCZlssCbKQm3lCHCoQaRvqZfhBSE8r4w9oBSn05NldX\n0t3X534xoBLxDAYu7TYdxBnRqoktu/FlbUEKqrPYmT2HJ8Q5xbY7USbPRawtfmDy\nWpxYSgWPHqSb9nnIStVHngkiI88KWAvvKqowuymHAoGAMYv1/EffOEjJEwQhj+vN\nlZe4/wsXAzEiLEXdDAQURiktyWFp6tYcd8+6XcWpQ22Abf9PqjzEAy182qK4aif1\n7oncRsDYfHcIcFodZ8Lor4XP8sULCH6PeLOs3wZBwrAuGoG8lXIT2l1TAKZ04q+L\ntwH6uqiAO4PA9e2WecBriYo=\n-----END PRIVATE KEY-----\n",
+  "client_email": "muhammad-junaid@bankchatbot-kgqx.iam.gserviceaccount.com",
+  "client_id": "108903322103478345214",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/muhammad-junaid%40bankchatbot-kgqx.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

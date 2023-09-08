@@ -26,34 +26,36 @@ class DialogflowController extends Controller
         }
         catch(\Exception $e)
         {
-            return ["FulfillmentText" => $e->getMessage()];
+            return self::returnMessage($e->getMessage());
         }
     }
-
-    private static function BankEmailAddress($aRequestParameters) : array
+    private static function userApplicationStatus($aRequestParameters): array
     {
-        try
-        {
-            $aUserExists = User::where("email", $aRequestParameters["BankEmailAddress"])->get()->first();
-            if(!$aUserExists)
-                throw new \Exception("Record not found");
+        $aUserExists = User::where("email", $aRequestParameters["userApplicationStatus"])->get()->first();
+        if(!$aUserExists)
+            return self::returnMessage("Record not found");
 
-            $iRecordId  = $aUserExists->id;
-            $sFirstName = $aUserExists->first_name;
-            $sLastName  = $aUserExists->last_name;
+        $iRecordId          = $aUserExists->id;
+        $aApplicationStatus = Deal::getApplicationStatus($iRecordId);
+        if(sizeof($aApplicationStatus) <= 0)
+            return self::returnMessage("Sorry, no application found. If you feel this is in error, please email TeamBccusa@BCCUSA.com and we will provide immediate assistance. If you have no already applied, please apply here <a href='https://bccusa.com/sba-lending/' target='_blank'>https://bccusa.com/sba-lending/</a>");
 
-            $aApplicationStatus = Deal::getApplicationStatus($iRecordId);
-            if(sizeof($aApplicationStatus) <= 0)
-                throw new \Exception("Sorry, no open application found. For more details please email on mjunaud292@gmail.com");
+        $sApplicationStatus = $aApplicationStatus[0]->title;
+        $aReturnMessage = [
+            "Your application has been located, and it is currently in a $sApplicationStatus status.",
+            "I've discovered your application, and it's currently marked as $sApplicationStatus.",
+            "Your application has been located, and at the moment, it's in a $sApplicationStatus state.",
+            "I've come across your application, and its status is currently $sApplicationStatus.",
+            "Your application has been found, and it's currently in a $sApplicationStatus condition.","
+            I've located your application, and its status is presently marked as $sApplicationStatus.",
+            "Your application has been identified, and it's in a state $sApplicationStatus $sApplicationStatus.",
+            "I've uncovered your application, and its current status is $sApplicationStatus.",
+            "Your application has been located, and it is presently in a pending status.",
+            "I've detected your application, and it's currently in a $sApplicationStatus state."
+        ];
 
-            $sMessage = "Dear $sFirstName $sLastName your application status is ".$aApplicationStatus[0]->title." stage";
-
-            return ["fulfillmentText" => $sMessage];
-        }
-        catch(\Exception $e)
-        {
-            return ["fulfillmentText" => $e->getMessage()];
-        }
+        $iMessageIndex = rand(0,9);
+        return self::returnMessage($aReturnMessage[$iMessageIndex]);
     }
     public static function chat(Request $request)
     {
@@ -82,5 +84,10 @@ class DialogflowController extends Controller
         $objSessionsClient->close();
 
         return ["message" => $fulfillmentText];
+    }
+
+    private static function returnMessage($sReturnMessage)
+    {
+        return ["fulfillmentText" => $sReturnMessage];
     }
 }

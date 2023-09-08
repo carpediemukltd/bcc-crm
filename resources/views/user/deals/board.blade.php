@@ -10,6 +10,12 @@
                                 <h1>Board View</h1>
                                 <p>Experience a simple yet powerful way to build Dashboards.</p>
                             </div>
+                            <div>
+                                <a href="{{route('user.deals.add', $current_user_id)}}" class="btn btn-link btn-soft-light">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-28"><path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                   Add New Deal
+                                </a>
+                             </div>
                         </div>
                     </div>
                 </div>
@@ -76,25 +82,36 @@
                             </a>
                         </div>
                     </div>
+                    <div class="row">
+                    <div class="col-1">
+                    </div>
+                    <div class="col-2">
+                        <label>Select Pipeline</label>
+                    </div>
+                    <div class="col-2">
+                        @if(isset($pipelines))
+                        <select class="form-control" id="pipelines" name="pipelines">
+                            @foreach($pipelines as $pipeline)
+                            <option value="{{$pipeline->id}}">{{$pipeline->title}}</option>
+                            @endforeach
+                        </select>
+                        @endif
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" onclick="triggerGet()">Load</button>
+                    </div>
+                </div>
+                    <div class="row" id="show_loading" style="display: none;">
+                        <div class="col-md-2" >
+                          <div class="preloader-dot-loading">
+                          <div class="cssload-loading"><i></i><i></i><i></i><i></i></div>
+                          </div>
+                       </div>
+                       </div>
                     <div class="card-body px-0">
                         <div class="borad_view_holder">
                             <div class="row row-cols-1 mb-4 row-cols-md-6 g-4">
-                                @if(isset($rs_deals))
-                                    @foreach($rs_deals as $rec)
-                                    <div class="col">
-                                    <div class="mb-0 card">
-                                    <div class="card-body">
-                                        <p class="card-text"><b>Title:</b> {{$rec->title}}</p>
-                                        <p class="card-text"><b>Amount:</b> {{$rec->amount}}</p>
-                                        <p class="card-text"><b>Deal Owner:</b> {{$rec->deal_owner}}</p>
-                                        <p class="card-text"><b>Source:</b> {{$rec->lead_source}}</p>
-                                        <p class="card-text"><b>Pipeline:</b> {{$rec->pipeline}}</p>
-                                        <p class="card-text"><b>Stage:</b> {{$rec->stage}}</p>
-                                    </div>
-                                    </div>
-                                    </div>
-                                    @endforeach
-                                 @endif
+                                <div id="deals"></div>
                             </div>
                         </div>
                     </div>
@@ -104,35 +121,38 @@
         </div>
     </div>
     <script type="text/javascript">
-        function UpdateDealStage(deal_id){
-           var stage_id = $('#stage_id_'+deal_id).val();
-           r=confirm('Are you sure you want to update this stage?');
-           if (r) {
-              var url ="{{ route('user.deals.updatestage',[$current_user_id,':deal_id']) }}";
-             url = url.replace(':deal_id', deal_id);
-             $('#l_'+deal_id).html($('#show_loading').html());
-             $('#l_'+deal_id).show();
-             $.post({
+        $(document).ready(function() {
+            $('#pipelines').change(function() {
+                getDeals($(this).val());
+            });
+            triggerGet();
+        });
+    
+        function triggerGet() {
+            $('#pipelines').trigger('change');
+        }
+    
+        function getDeals(id) {
+            $('#deals').html('Loading...');
+            var url = "{{ route('user.deals.board_cards', [$current_user_id, ':pipeline_id']) }}";
+            url = url.replace(':pipeline_id', id);
+            $('#show_loading').show();
+            $.get({
                 url: url,
-                type: 'POST',
-                data: {_token:"{{ csrf_token() }}", deal_id:deal_id, stage_id:stage_id},
-                success: function(res){
-                   $('#l_'+deal_id).hide();
-                 },
-                 error: function(res){
-                  $('#l_'+deal_id).hide();
-                 if(res.responseJSON.error_msg){
-                    alert(res.responseJSON.error_msg);
-                 }
-               }
-             });
-           }
+                success: function(res) {
+                    $('#show_loading').hide();
+                    $('#deals').html(res);
+                }
+            });
         }
-        function ExportCSV(){
-              window.location.href = "{{ route('deal.export.csv',$current_user_id) }}";
+    
+        function ExportCSV() {
+            window.location.href = "{{ route('deal.export.csv', $current_user_id) }}";
         }
-        function ExportXLS(){
-              window.location.href = "{{ route('deal.export.xls',$current_user_id) }}";
+    
+        function ExportXLS() {
+            window.location.href = "{{ route('deal.export.xls', $current_user_id) }}";
         }
-     </script>
+    </script>
+    
 @endsection

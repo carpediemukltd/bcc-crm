@@ -192,7 +192,7 @@ class UserController extends Controller
         $this->data['id'] = $id;
         $this->data['user'] = User::where('id', $id)->first();
         $this->data['notes'] = Note::getNotesByUser($id);
-        $this->data['deals'] = Deal::getDealsByUser($id);;
+        $this->data['deals'] = Deal::getDealsByUser($id, 0);
         $this->data['custom_fields'] =  CustomField::getDataByUser($id);
 
         if ($request->isMethod('put')) {

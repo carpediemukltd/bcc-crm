@@ -8,7 +8,7 @@
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
                      <h1>Add Custom Field </h1>
-                     <p>Add new field.</p>
+                     <p>Add new Custom Field.</p>
                   </div>
                   <div>
                      <!-- <a href="" class="btn btn-link btn-soft-light">

@@ -51,7 +51,7 @@
                             </svg> Export XLS</a>
                   </div>
                </div>
-               <div class="card-body px-0">
+               <div class="card-body">
                   <div class="table-responsive">
                      <div id="user-list-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                         <!-- date range start -->
@@ -99,14 +99,7 @@
                            </div>
                         </div>
                         <!-- date range end -->
-                        <div class="table-responsive my-3 table-ajax-paginate">
-                           <div class="row">
-                           <div class="col-3">&nbsp;</div>
-                           <div class="col-3">&nbsp;</div>
-                           <div class="col-3">&nbsp;</div>
-                           <div class="col-3">
-                           </div>
-                        </div>
+                        
                            <table id="user-list-table" class="table table-striped dataTable no-footer" role="grid" aria-describedby="user-list-table_info">
                               <thead>
                                  <tr class="ligth">

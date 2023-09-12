@@ -8,8 +8,8 @@
             <div class="col-md-12">
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
-                     <h1>Add Contact</h1>
-                     <p>Add new contact.</p>
+                     <h1>Add Admin / Owner </h1>
+                     <p>Add new Admin / Owner.</p>
                   </div>
                   <div>
                      <!-- <a href="" class="btn btn-link btn-soft-light">
@@ -79,8 +79,37 @@
                            </div>
                         </div>
                      </div>
-                     <input type="hidden" class="form-control" id="role" name="role" value="user">
-                     <input type="hidden" class="form-control" id="password" name="password" value="{{ Str::random(8) }}">
+
+                     <div class="row">
+                        <div class="col-6">
+                           <div class="form-group">
+                              <label class="form-label" for="password">Password:</label>
+                              <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
+                              @if ($errors->has('password'))
+                                 <span class="text-danger">{{ $errors->first('password') }}</span>
+                              @endif
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="row">
+                        @if (count($roles)>0)
+                     <input type="hidden" id="roles_count"  name="roles_count" value="{{count($roles)}}">
+                        <div class="col-6">
+                           <div class="form-group">
+                              <label class="form-label" for="role">Roles</label>
+                              <select class="form-select" id="role" name="role" onchange="toggleRoles()" required>
+                                 <option value="">Select</option>
+                              @foreach($roles as $role)
+                                 <option value="{{$role}}" <?=(count($roles)==1)? 'selected="selected"':'' ?>>{{ucfirst($role)}}</option>
+                              @endforeach
+                           </select>
+                           </div>
+                        </div>
+                        
+                     @endif
+                     </div>
+                     
                      <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
                      @if (count($custom_fields)>0)
                      <div class="row">

@@ -938,7 +938,7 @@
    </div>
 </div>
 <!-- Library Bundle Script -->
-<script src="{{asset('assets/js/plugins/kanban.js')}}"></script>
+
 <script src="{{asset('assets/js/core/libs.min.js')}}"></script>
 <!-- Plugin Scripts -->
 <!-- Tour plugin Start -->
@@ -970,10 +970,11 @@
 <!-- Hopeui Script -->
 <script src="{{asset('assets/js/hope-ui.js?v=3.0.0')}}" defer></script>
 <script src="{{asset('assets/js/hope-uipro.js?v=3.0.0')}}" defer></script>
-<!-- <script src="{{asset('assets/js/sidebar.js?v=3.0.0')}}" defer></script>   -->
+<script src="{{asset('assets/js/sidebar.js?v=3.0.0')}}" defer></script>  
 <script src="{{asset('assets/js/solid-icon-search-filter.js')}}"></script>
 
 <script src="{{asset('assets/vendor/sortable/Sortable.min.js')}}"></script>
+<script src="{{asset('assets/js/plugins/kanban.js')}}"></script>
 
 
 <script>

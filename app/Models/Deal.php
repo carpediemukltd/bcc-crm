@@ -44,6 +44,7 @@ class Deal extends Model
     {
         return $this->hasOne(Pipeline::class, 'id', 'pipeline_id');
     }
+
     public static function getApplicationStatus($iUserId)
     {
         return self::from("deals AS D")

@@ -86,8 +86,8 @@
                                  <select name="role" id="role" class="form-select">
                                     <option value="">Select Role</option>
                                     <option value="admin">Admin</option>
-                                    <option value="owner">Owner</option>
-                                    <option value="user">User</option>
+                                    <option value="owner">Super User</option>
+                                    <option value="user">Contact</option>
                                  </select>
                               </div>
                            </div>

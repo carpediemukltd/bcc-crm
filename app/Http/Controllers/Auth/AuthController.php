@@ -59,7 +59,7 @@ class AuthController extends Controller
         $user_exist = User::where('email', $request->email)->first();
         if($user_exist){
             if($user_exist->role == 'user'){
-                return redirect('login')->withError('You have been barred from login, Please contact Admin.')->withInput();
+                return redirect('login')->withError('No user found with the provided Email Address.')->withInput();
             }
             if($user_exist->status == 'banned'){
                 return redirect('login')->withError('You have been blocked by Admin, Please contact Admin.')->withInput();

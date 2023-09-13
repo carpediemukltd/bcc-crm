@@ -74,6 +74,22 @@ class DealController extends Controller
         }
     } // userDeals
 
+    public function deals_sandbox() {
+        $slug = "deals-sandbox";
+        return view('deals_report', compact('slug'));
+    }
+
+    public function filter_deals(Request $request) {
+        
+        $dates = explode("-",$request->daterange);
+        $Date1 = rtrim(date('Y-m-d', strtotime($dates[0])));
+        $Date2 = ltrim(date('Y-m-d', strtotime($dates[1])));
+
+        $deals = Deal::with('stage', 'pipeline')->whereDate('created_at','>=', $Date1)->whereDate('created_at','<=', $Date2)->where('stage_id',$request->stages)->get();
+
+       return response()->json($deals);
+    }
+
     public function userDealsBoardCards($id, $pipeline_id)
     {
         $this->data['current_slug'] = 'Deals';

@@ -460,7 +460,7 @@
                               </ul>
                               @endif
                            </li>
-                              
+                           @if (Auth::user()->role == 'superadmin')
                            <li class="nav-item iq-responsive-menu d-block">
                               <a class="nav-link" aria-current="page"
                                  href="#">
@@ -493,7 +493,7 @@
 
                               </ul>
                            </li>      
-
+                           @endif()
                            @endif
                         </ul>
                      </div>

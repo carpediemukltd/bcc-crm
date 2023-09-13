@@ -8,8 +8,8 @@
             <div class="col-md-12">
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
-                     <h1>Add Admin / Owner </h1>
-                     <p>Add new Admin / Owner.</p>
+                     <h1>Add Admin / Super User </h1>
+                     <p>Add new Admin / Super User.</p>
                   </div>
                   <div>
                      <!-- <a href="" class="btn btn-link btn-soft-light">
@@ -101,7 +101,7 @@
                               <select class="form-select" id="role" name="role" onchange="toggleRoles()" required>
                                  <option value="">Select</option>
                               @foreach($roles as $role)
-                                 <option value="{{$role}}" <?=(count($roles)==1)? 'selected="selected"':'' ?>>{{ucfirst($role)}}</option>
+                                 <option value="{{$role}}" <?=(count($roles)==1)? 'selected="selected"':'' ?>>{{ucfirst($role =='owner'?'Super User':$role)}}</option>
                               @endforeach
                            </select>
                            </div>

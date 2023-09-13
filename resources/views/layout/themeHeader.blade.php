@@ -487,7 +487,7 @@
                                                 fill="currentColor"></path>
                                           </svg>
                                        </i>
-                                       <span class="item-name">Add Admin / Owner</span>
+                                       <span class="item-name">Add Admin / Super User</span>
                                     </a>
                                  </li>
 

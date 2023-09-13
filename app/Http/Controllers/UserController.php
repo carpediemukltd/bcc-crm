@@ -139,7 +139,7 @@ class UserController extends Controller
                         ->update(['last_lead' => date("Y-m-d H:i:s")]);
                 }
                 SendNotification::dispatch(['id' => $new_user->id, 'type' => 'contact_added']);
-                $type = ($data['role'] == 'user') ? 'Contact' : ucfirst($data['role']);
+                $type = ($data['role'] == 'user') ? 'Contact' : (($data['role'] == 'owner') ? 'Super User' : ucfirst($data['role']));
                 return redirect(url('contacts'))->withSuccess("$type Created Successfully.")->withInput();
             }
         } else if ($request->isMethod('get')) {

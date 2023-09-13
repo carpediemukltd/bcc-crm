@@ -521,12 +521,19 @@
     </div>
 </div>
 <script>
+
+    const sessionID = {{rand(999, 99999)}};
+    let firstMessage = true;
     document.addEventListener("DOMContentLoaded", function () {
+
         const chatIcon = document.querySelector(".chat-icon");
         const chatWindow = document.querySelector(".chat-window");
         let isChatOpen = false;
         let borderRadius = $(".chat-icon").css("border-radius");
         chatIcon.addEventListener("click", function () {
+            if(firstMessage)
+                addUserMessage("hi");
+
             isChatOpen = !isChatOpen;
             chatWindow.style.display = isChatOpen ? "block" : "none";
             if(borderRadius == "50px")
@@ -534,8 +541,10 @@
             else
                 borderRadius = "50px"
             $(".chat-icon").css({borderRadius: borderRadius})
+
         });
     });
+
     const sendButton = document.getElementById('send-button');
     const userMessageInput = document.getElementById('user-message');
     const chatMessages = document.getElementById('chat-messages');
@@ -549,46 +558,30 @@
     });
 
     $("#user-message").on("keypress", function(event) {
-        if(event.keyCode == 13)
+        if(event.keyCode === 13)
             $("#send-button").click();
     })
 
     async function addUserMessage(message) {
-        let messageDiv = document.createElement('div');
-        messageDiv.classList.add('message', 'user-message');
-        messageDiv.innerHTML = `<div class="content">${message}</div>`;
-        chatMessages.appendChild(messageDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        const sessionID = {{rand(999, 99999)}}
-            const response  = await AsyncAjax("chat", {"message": message, "sessionID": sessionID});
+        let messageDiv = "";
+        if(firstMessage) {
+            firstMessage = false;
+        } else {
+            messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', 'user-message');
+            messageDiv.innerHTML = `<div class="content">${message}</div>`;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        const response  = await AsyncAjax("chat", {"message": message, "sessionID": sessionID});
         messageDiv      = document.createElement('div');
 
         messageDiv.classList.add('message', 'other-message');
         messageDiv.innerHTML = `<div class="content">${response.message}</div>`;
         chatMessages.appendChild(messageDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    async function AsyncAjax(sURL, objData = {}, sType = "POST") {
-
-        let response        = {};
-        const csrf_token    = $("meta[name='csrf-token'").attr("content");
-
-        await $.ajax({
-            headers : {"X-CSRF-TOKEN": csrf_token},
-            url     : sURL,
-            data    : objData,
-            type    : sType,
-            success : await async function(sResponse) {
-                response = sResponse;
-            },
-            error: await async function(err) {
-                console.log(err);
-                response = sResponse;
-            }
-        });
-        return response;
     }
 </script>
 @endsection

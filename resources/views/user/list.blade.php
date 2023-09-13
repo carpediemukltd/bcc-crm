@@ -51,7 +51,7 @@
                             </svg> Export XLS</a>
                   </div>
                </div>
-               <div class="card-body px-0">
+               <div class="card-body">
                   <div class="table-responsive">
                      <div id="user-list-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                         <!-- date range start -->
@@ -86,8 +86,8 @@
                                  <select name="role" id="role" class="form-select">
                                     <option value="">Select Role</option>
                                     <option value="admin">Admin</option>
-                                    <option value="owner">Owner</option>
-                                    <option value="user">User</option>
+                                    <option value="owner">Super User</option>
+                                    <option value="user">Contact</option>
                                  </select>
                               </div>
                            </div>
@@ -99,14 +99,7 @@
                            </div>
                         </div>
                         <!-- date range end -->
-                        <div class="table-responsive my-3 table-ajax-paginate">
-                           <div class="row">
-                           <div class="col-3">&nbsp;</div>
-                           <div class="col-3">&nbsp;</div>
-                           <div class="col-3">&nbsp;</div>
-                           <div class="col-3">
-                           </div>
-                        </div>
+                        
                            <table id="user-list-table" class="table table-striped dataTable no-footer" role="grid" aria-describedby="user-list-table_info">
                               <thead>
                                  <tr class="ligth">

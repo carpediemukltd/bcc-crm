@@ -8,7 +8,7 @@
             <div class="col-md-12">
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
-                     <h1>All Deals </h1>
+                     <h1>All Deals</h1>
                      <p>Experience a simple yet powerful way to build Dashboards.</p>
                   </div>
                   <div>
@@ -130,7 +130,7 @@
                                           <td>
                                           @foreach($pipeline_stages as $pstage)
                                              @if($pstage['id']==$rec->pipeline_id)
-                                             <div class="form-group">
+                                             <div class="form-group mb-0">
                                                 <select class="form-select" id="stage_id_{{$rec->id}}" name="stage_id_{{$rec->id}}" onchange="UpdateDealStage({{$rec->id}});">
                                                    @foreach($pstage['stages'] as $stage)
                                                       <option value="{{$stage['id']}}" @if($stage['id']==$rec->stage_id) selected=selected @endif>{{$stage['title']}}</option>

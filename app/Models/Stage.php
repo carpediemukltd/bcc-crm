@@ -15,4 +15,9 @@ class Stage extends Model
     {
         return $this->belongsTo(Pipeline::class, 'pipeline_id');
     }
+
+    public function deal()
+    {
+        return $this->hasMany(Deal::class, 'stage_id');
+    }
 }

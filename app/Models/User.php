@@ -82,4 +82,10 @@ class User extends Authenticatable
             $users = $users->get();
         return $users;
     }
+    public function getRoleAttribute($value){
+        $valueMap = [
+            'user'  => 'contact',
+        ];        
+        return $valueMap[$value] ?? $value;
+    }
 }

@@ -67,6 +67,7 @@ class UserController extends Controller
 
     public function addUser(Request $request)
     {
+        
         $this->data['current_slug'] = 'Add Contact';
         $this->data['slug']         = 'add_user';
         $user = auth()->user();
@@ -91,16 +92,11 @@ class UserController extends Controller
             if (!in_array($request->role, $roles)) {
                 return redirect()->back()->with('error', 'You\'ve selected an invalid role.')->withInput();
             }
-            if (!in_array($request->owner, $owners) && $request->role == 'user') {
-                return redirect()->back()->with('error', 'You\'ve selected an invalid owner.')->withInput();
-            }
-
             $request->validate([
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'phone_number' => 'required',
                 'role' => 'required',
-                'owner' => ($request->role == 'user') ? 'required' : '',
                 'email' => 'required|email|unique:users',
                 'password' => 'required|min:6'
             ]);
@@ -134,19 +130,21 @@ class UserController extends Controller
                     }
                 }
 
-                if ($data['role'] == 'user' && $data['owner'] > 0) {
+                if ($data['role'] == 'user') {
                     UserOwner::create([
                         'user_id' => $new_user->id,
-                        'owner_id' => $data['owner'],
+                        'owner_id' => auth()->user()->id,
                     ]);
-                    RoundRobinSetting::where('company_id', $company_id)->where('owner_id', $data['owner'])
+                    RoundRobinSetting::where('company_id', $company_id)->where('owner_id', auth()->user()->id)
                         ->update(['last_lead' => date("Y-m-d H:i:s")]);
                 }
                 SendNotification::dispatch(['id' => $new_user->id, 'type' => 'contact_added']);
-                return redirect(url('contacts'))->withSuccess('Contact Created Successfully.')->withInput();
+                $type = ($data['role'] == 'user') ? 'Contact' : (($data['role'] == 'owner') ? 'Super User' : ucfirst($data['role']));
+                return redirect(url('contacts'))->withSuccess("$type Created Successfully.")->withInput();
             }
         } else if ($request->isMethod('get')) {
-            return view("user.add", $this->data);
+            $this->data['roles'] = array_diff($this->data['roles'], ['user']);
+            return view($request->type == 'admin' ? 'user.add-admin' : 'user.add', $this->data);          
         }
     }
 
@@ -192,7 +190,7 @@ class UserController extends Controller
         $this->data['id'] = $id;
         $this->data['user'] = User::where('id', $id)->first();
         $this->data['notes'] = Note::getNotesByUser($id);
-        $this->data['deals'] = Deal::getDealsByUser($id);;
+        $this->data['deals'] = Deal::getDealsByUser($id, 0);
         $this->data['custom_fields'] =  CustomField::getDataByUser($id);
 
         if ($request->isMethod('put')) {

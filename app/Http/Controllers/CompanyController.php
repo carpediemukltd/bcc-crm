@@ -42,7 +42,7 @@ class CompanyController extends Controller
                 'last_name' => 'required',
                 'phone_number' => 'required',
                 'role' => 'required',
-                'company_name' => 'required',
+                'name' => 'required|unique:companies',
                 'email' => 'required|email|unique:users',
                 'password' => 'required|min:6'
             ]);
@@ -56,7 +56,7 @@ class CompanyController extends Controller
 
             if ($data) {
                 $new_company = Company::create([
-                    'name' => $data['company_name']
+                    'name' => $data['name']
                 ]);
 
                 User::create([
@@ -129,7 +129,7 @@ class CompanyController extends Controller
             $request->validate([
                 'company_id' => 'required',
                 'admin_id' => 'required',
-                'company_name' => 'required',
+                'name' => 'required|unique:companies,name,'.$id,
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'phone_number' => 'required',
@@ -151,7 +151,7 @@ class CompanyController extends Controller
                 'status'       => $request->status
             ];
             $company_data = [
-                'name'   => $request->company_name,
+                'name'   => $request->name,
             ];
             if (isset($data['password'])) {
                 $user_data['password'] = $data['password'];

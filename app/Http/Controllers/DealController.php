@@ -45,8 +45,9 @@ class DealController extends Controller
         }
 
         $this->data['current_user_id'] = $id;
-        $this->data['rs_deals'] = Deal::getDealsByUser($id);
+        $this->data['rs_deals'] = Deal::getDealsByUser($id, 0);
         $pipelines = Pipeline::orderBy('title', 'ASC')->get();
+        $this->data['pipelines'] = $pipelines;
         $pipeline_stages = array();
         if ($pipelines->isNotEmpty()) {
             foreach ($pipelines as $pipeline) {
@@ -72,6 +73,23 @@ class DealController extends Controller
             return view("user.deals.list", $this->data);
         }
     } // userDeals
+
+    public function userDealsBoardCards($id, $pipeline_id)
+    {
+        $this->data['current_slug'] = 'Deals';
+        $this->data['slug']         = 'user_deals_board_cards';
+
+        $access = Permissions::checkUserAccess($this->user, $id);
+        if (!$access) {
+            return redirect(route('dashboard'))->with('error', 'Access Denied.');
+        }
+
+        $this->data['current_user_id'] = $id;
+        $this->data['stages'] = Stage::where('pipeline_id', $pipeline_id)->get();
+        $this->data['deals'] = Deal::where('pipeline_id', $pipeline_id)->where('user_id', $id)->get();
+
+        return view("user.deals.board_card", $this->data);
+    }
 
     public function dealsAdd(Request $request, $id)
     {
@@ -186,7 +204,7 @@ class DealController extends Controller
         }
         $this->data['user']       = User::where(['id' => $id])->first();
         $file_name = "deals_{$id}.xls";
-        $deals = Deal::getDealsByUser($id);
+        $deals = Deal::getDealsByUser($id, 0);
 
         $file = new Spreadsheet();
         $active_sheet = $file->getActiveSheet();
@@ -245,7 +263,7 @@ class DealController extends Controller
 
         $this->data['user']       = User::where(['id' => $id])->first();
         $file_name = "deals_{$id}.csv";
-        $deals = Deal::getDealsByUser($id);
+        $deals = Deal::getDealsByUser($id, 0);
 
         $columns = array('Title', 'Amount', 'Deal Owner', 'Source', 'Pipeline', 'Stage', 'Created At');
         $file = fopen($path = storage_path($file_name), 'w');

@@ -84,7 +84,6 @@ class User extends Authenticatable
     }
     public function getRoleAttribute($value){
         $valueMap = [
-            'owner' => 'super user',
             'user'  => 'contact',
         ];        
         return $valueMap[$value] ?? $value;

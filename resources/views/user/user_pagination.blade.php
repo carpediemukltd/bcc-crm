@@ -4,7 +4,7 @@
       <td>{{$rec_user->first_name.' '.$rec_user->last_name}}</td>
       <td>{{$rec_user->phone_number}}</td>
       <td>{{$rec_user->email}}</td>
-      <td>{{$rec_user->role}}</td>
+      <td>{{$rec_user->role == 'owner'?'super user':$rec_user->role}}</td>
       <td>
          @if($rec_user->status == 'active')
             <span class="badge bg-success">{{ucfirst($rec_user->status)}}</span>

@@ -58,7 +58,7 @@ class AuthController extends Controller
 
         $user_exist = User::where('email', $request->email)->first();
         if($user_exist){
-            if($user_exist->role == 'user'){
+            if($user_exist->role == 'user' || $user_exist->role == 'contact'){
                 return redirect('login')->withError('No user found with the provided Email Address.')->withInput();
             }
             if($user_exist->status == 'banned'){

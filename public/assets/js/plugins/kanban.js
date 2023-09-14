@@ -1,4 +1,4 @@
-"use strict";
+/* "use strict";
 
 const group1 = document.getElementById("group1");
 const group2 = document.getElementById("group2");
@@ -92,4 +92,4 @@ const sortable4 = Sortable.create(group4, {
 
 if (!Element.prototype.matches) {
     Element.prototype.matches = Element.prototype.msMatchesSelector;
-}
+} */

@@ -1,12 +1,12 @@
 @if (isset($stages))
     <div class="row mt-2">
         <?php
-         $icount=0;   
+        $icount = 0;
         ?>
         @foreach ($stages as $stage)
-        <?php
-         $icount++; 
-        ?>
+            <?php
+            $icount++;
+            ?>
             <div class="col-lg-3">
                 <div class="card-transparent mb-0 desk-info">
                     <div class="card-body p-0">
@@ -89,7 +89,7 @@
                                 @foreach ($deals as $deal)
                                     @if ($stage->id == $deal->stage_id)
                                         <div class="group2-wrap">
-                                            <div class="group" id="group{{$icount}}">
+                                            <div class="group" id="group{{ $icount }}">
                                                 <div class="col-lg-12 group__item" style="">
                                                     <div class="card">
                                                         <div class="card-body">
@@ -191,7 +191,8 @@
                                                                     {{ $deal->lead_source }}</p>
                                                                 <p class="card-text"><b>Pipeline:</b>
                                                                     {{ $deal->pipeline->title }}</p>
-                                                                <p class="card-text"><b>Stage:</b> {{ $deal->stage->title }}
+                                                                <p class="card-text"><b>Stage:</b>
+                                                                    {{ $deal->stage->title }}
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -210,3 +211,164 @@
         @endforeach
     </div>
 @endif
+
+<script type="text/javascript">
+    /* var group1 = document.getElementById("group1");
+var group2 = document.getElementById("group2");
+var group3 = document.getElementById("group3");
+var group4 = document.getElementById("group4");
+var groups = ['group1','group2','group3','group4']
+var sortableSpeed = 150;
+
+var sortable1 = Sortable.create(group1, {
+  group: {
+    name: "group1",
+    put: groups
+  },
+  cursor: 'move',
+  animation: sortableSpeed,
+
+  onMove: function(evt) {
+    console.log(evt);
+    console.log(evt.to);
+    console.log(evt.from);
+    var dropGroup = evt.to;
+    group2.classList.add("adding");
+  },
+  onSort: function(evt) {
+    evt.from.classList.remove("adding");
+  },
+  onEnd: function(evt) {
+    group2.classList.remove("adding");
+  },
+  filter: ".remove",
+  onFilter: function(evt) {
+    var item = evt.item,
+      ctrl = evt.target;
+    if (Sortable.utils.is(ctrl, ".remove")) {
+      $(item).slideUp('400', function() {
+         $(item).remove();
+      });
+    }
+  }
+});
+
+var sortable2 = Sortable.create(group2, {
+  group: {
+    name: "group2",
+    put: groups
+  },
+  cursor: 'move',
+  animation: sortableSpeed,
+
+  onMove: function(evt) {
+    var dropGroup = evt.to;
+    group2.classList.add("adding");
+  },
+  onSort: function(evt) {
+    evt.from.classList.remove("adding");
+  },
+  onEnd: function(evt) {
+    group2.classList.remove("adding");
+  },
+  filter: ".remove",
+  onFilter: function(evt) {
+    var item = evt.item,
+      ctrl = evt.target;
+    if (Sortable.utils.is(ctrl, ".remove")) {
+      $(item).slideUp('400', function() {
+         $(item).remove();
+      });
+    }
+  }
+});
+
+var sortable3 = Sortable.create(group3, {
+  group: {
+    name: "group3",
+    put: groups
+  },
+  cursor: 'move',
+  animation: sortableSpeed,
+  onMove: function(evt) {
+    var dropGroup = evt.to;
+    dropGroup.classList.add("adding");
+    evt.from.classList.remove("adding");
+  },
+  onSort: function(evt) {
+    evt.from.classList.remove("adding");
+  },
+  onEnd: function(evt) {
+    document.getElementById("group2").classList.remove("adding");
+  }
+});
+
+var sortable4 = Sortable.create(group4, {
+  group: {
+    name: "group4",
+    put: groups
+  },
+  cursor: 'move',
+  animation: sortableSpeed,
+  onMove: function(evt) {
+    var dropGroup = evt.to;
+    dropGroup.classList.add("adding");
+    evt.from.classList.remove("adding");
+  },
+  onSort: function(evt) {
+    evt.from.classList.remove("adding");
+  },
+  onEnd: function(evt) {
+    document.getElementById("group2").classList.remove("adding");
+  }
+});
+
+if (!Element.prototype.matches) {
+    Element.prototype.matches = Element.prototype.msMatchesSelector;
+} */
+
+    var stages = {{ count($stages) }};
+    // console.log(stages);
+    var groups = Array();
+    for (var i = 1; i <= stages; i++) {
+        groups.push('group' + i);
+    }
+    // console.log(groups);
+    var sortableSpeed = 150;
+    for (var i = 0; i < stages; i++) {
+         var group1 = document.getElementById(groups[i]);
+        console.log(group1);
+         var sortable1 = Sortable.create(group1, {
+            group: {
+                name: "group1",
+                put: groups
+            },
+            cursor: 'move',
+            animation: sortableSpeed,
+
+            onMove: function(evt) {
+                var dropGroup = evt.to;
+                group2.classList.add("adding");
+            },
+            onSort: function(evt) {
+                evt.from.classList.remove("adding");
+            },
+            onEnd: function(evt) {
+                group2.classList.remove("adding");
+            },
+            filter: ".remove",
+            onFilter: function(evt) {
+                var item = evt.item,
+                    ctrl = evt.target;
+                if (Sortable.utils.is(ctrl, ".remove")) {
+                    $(item).slideUp('400', function() {
+                        $(item).remove();
+                    });
+                }
+            }
+        }); 
+    }
+    if (!Element.prototype.matches) {
+        Element.prototype.matches = Element.prototype.msMatchesSelector;
+    }
+</script>

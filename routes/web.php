@@ -49,11 +49,10 @@ Route::any('jotform/add', [JotFormController::class, 'addUser'])->name('user.add
 
 Route::middleware([CheckStatus::class])->group(function () {
     Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
-    Route::get('dashboard-sandbox', [AuthController::class, 'dashboard_sandbox'])->name('dashboard-sandbox');
-    Route::get('deals-sandbox', [AuthController::class, 'deals_sandbox'])->name('deals-sandbox');
-    Route::get('filter-deals', [AuthController::class, 'filter_deals'])->name('filter-deals');
-
-    Route::get('sandbox-daterange', [AuthController::class, 'sandbox_daterange'])->name('sandbox-daterange');
+    Route::get('dashboard-sandbox', [UserController::class, 'dashboard_sandbox'])->name('dashboard-sandbox');
+    Route::get('deals-sandbox', [DealController::class, 'deals_sandbox'])->name('deals-sandbox');
+    Route::get('filter-deals', [DealController::class, 'filter_deals'])->name('filter-deals');
+    Route::get('sandbox-daterange', [UserController::class, 'sandbox_daterange'])->name('sandbox-daterange');
 
 
     Route::get('privacy', [GeneralController::class, 'privacySetting'])->name('privacy');
@@ -95,6 +94,8 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::post('contact/{user_id}/deals/updateStage/{id}', [DealController::class, 'dealsUpdateStage'])->name('user.deals.updatestage');
         Route::get('deal/{id}/exportcsv', [DealController::class, 'exportCSV'])->name('deal.export.csv');
         Route::get('deal/{id}/exportxls', [DealController::class, 'exportXLS'])->name('deal.export.xls');
+
+        
 
         Route::get('notes/{contact_id}', [NoteController::class, 'listNote'])->name('note.list');
         Route::any('note/add', [NoteController::class, 'addNote'])->name('note.add');

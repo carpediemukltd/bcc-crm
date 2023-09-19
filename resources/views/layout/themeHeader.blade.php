@@ -173,7 +173,7 @@
 
                            @if (Auth::user()->role == 'superadmin' || Auth::user()->role == 'admin' || Auth::user()->role == 'owner')
                            <li class="nav-item dropdown iq-responsive-menu d-block">
-                              <a class="nav-link <?php if(isset($slug) && in_array($slug, ['add_user', 'user_list', 'edit_user', 'user_details', 'user_deals', 'user_add_deal', 'user_edit_deal'])){echo 'active';}?>" data-bs-toggle="dropdown" href="#sidebar-user" role="button" aria-expanded="false"
+                              <a class="nav-link <?php if(isset($slug) && in_array($slug, ['add_user', 'user_list', 'edit_user', 'user_details', 'user_deals', 'user_add_deal', 'user_edit_deal']) && !isset($_GET['type'])){echo 'active';}?>" data-bs-toggle="dropdown" href="#sidebar-user" role="button" aria-expanded="false"
                                  aria-controls="sidebar-special">
                                  <i class="icon">
                                     <svg width="20" class="icon-20" viewBox="0 0 24 24" fill="none" xmlns="">
@@ -208,7 +208,7 @@
                               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-search-11"
                                  style="width: 15rem;">
                                  <li class="nav-item">
-                                    <a class="nav-link <?php if(isset($slug) && $slug == 'add_user'){echo 'active';}?>"
+                                    <a class="nav-link <?php if(isset($slug) && $slug == 'add_user' && !isset($_GET['type'])){echo 'active';}?>"
                                        href="{{route('user.add')}}">
                                        <i class="icon">
                                           <svg width="20" class="icon-20" height="20" viewBox="0 0 24 24" fill="none"
@@ -462,7 +462,7 @@
                            </li>
                            @if (Auth::user()->role == 'superadmin')
                            <li class="nav-item iq-responsive-menu d-block">
-                              <a class="nav-link" aria-current="page"
+                              <a class="nav-link <?php if(isset($_GET['type']) && $_GET['type'] == 'admin'){echo 'active';} ?>" aria-current="page"
                                  href="#">
                                  <span class="item-name">Admin Console</span>
                                  <i class="right-icon">
@@ -475,7 +475,7 @@
                               </a>
                               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-search-11" style="width: 15rem;">
                                  <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('user.add', ['type' => 'admin']) }}">
+                                    <a class="nav-link <?php if(isset($_GET['type']) && $_GET['type'] == 'admin'){echo 'active';} ?>" href="{{ route('user.add', ['type' => 'admin']) }}">
                                        <i class="icon">
                                           <svg width="20" class="icon-20" height="20" viewBox="0 0 24 24" fill="none"
                                              xmlns="">

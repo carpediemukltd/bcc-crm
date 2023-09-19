@@ -80,7 +80,7 @@
                         </div>
                      </div>
                      <input type="hidden" class="form-control" id="role" name="role" value="user">
-                     <input type="hidden" class="form-control" id="password" name="password" value="{{ Str::random(8) }}">
+                     <input type="hidden" class="form-control" id="password" name="password" value="BCCUSA.com">
                      <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
                      @if (count($custom_fields)>0)
                      <div class="row">

@@ -9,6 +9,7 @@ use App\Models\UserOwner;
 use App\Models\UserDetails;
 use App\Helpers\Permissions;
 use App\Jobs\SendNotification;
+use App\Models\Company;
 use App\Models\CustomField;
 use Illuminate\Http\Request;
 use App\Models\RoundRobinSetting;
@@ -72,7 +73,7 @@ class UserController extends Controller
         $this->data['current_slug'] = 'Add Contact';
         $this->data['slug']         = 'add_user';
         $user = auth()->user();
-        $company_id = $user->company_id;
+        $company_id = $request->company??$user->company_id;
         $this->data['custom_fields'] =  CustomField::getDataByUser($user->id);
         $this->data['round_robin_owner'] =  RoundRobinSetting::RoundRobinOwner($company_id);
 
@@ -144,7 +145,8 @@ class UserController extends Controller
                 return redirect(url('contacts'))->withSuccess("$type Created Successfully.")->withInput();
             }
         } else if ($request->isMethod('get')) {
-            $this->data['roles'] = array_diff($this->data['roles'], ['user']);
+            $this->data['roles']     = array_diff($this->data['roles'], ['user']);
+            $this->data['companies'] = Company::whereStatus('active')->get(); 
             return view($request->type == 'admin' ? 'user.add-admin' : 'user.add', $this->data);          
         }
     }
@@ -180,7 +182,7 @@ class UserController extends Controller
     {
         $this->data['current_slug']  = 'Contact Details';
         $this->data['slug']          = 'user_details';
-
+        return $this->user;
         $access = Permissions::checkUserAccess($this->user, $id);
         if (!$access) {
             return redirect(route('dashboard'))->with('error', 'Access Denied.');

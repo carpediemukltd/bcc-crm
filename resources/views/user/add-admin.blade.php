@@ -106,6 +106,17 @@
                            </select>
                            </div>
                         </div>
+                        <div class="col-6">
+                           <div class="form-group">
+                              <label class="form-label" for="role">Company</label>
+                              <select class="form-select" id="company" name="company" required>
+                                 <option value="">Select</option>
+                                 @foreach($companies as $company)
+                                 <option value="{{$company->id}}" >{{$company->name}}</option>
+                                 @endforeach
+                              </select>
+                           </div>
+                        </div>
                         
                      @endif
                      </div>

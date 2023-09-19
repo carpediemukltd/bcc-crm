@@ -45,7 +45,7 @@ class SendNotification implements ShouldQueue
             $userIds    = NotificationSetting::whereSettingName('notification_contact_added')->where('status', 'enabled')->pluck('user_id');
             $contact    = User::whereId($id)->first();
             $message    = "New Contact Named " . $contact->first_name . " has been added.";
-            $targetUrl  =  '/contact/edit/' . $contact->id;
+            $targetUrl  =  '/contact/' . $contact->id . "/details";
             $roles      = ['superadmin', 'admin'];
         }
         if ($type == 'deal_added') {

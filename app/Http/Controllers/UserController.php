@@ -182,7 +182,6 @@ class UserController extends Controller
     {
         $this->data['current_slug']  = 'Contact Details';
         $this->data['slug']          = 'user_details';
-        return $this->user;
         $access = Permissions::checkUserAccess($this->user, $id);
         if (!$access) {
             return redirect(route('dashboard'))->with('error', 'Access Denied.');

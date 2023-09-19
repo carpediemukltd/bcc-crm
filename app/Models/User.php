@@ -59,7 +59,7 @@ class User extends Authenticatable
             ->when((!$data['status']), function ($q) {
                 $q->where('status', '=', "active");
             })
-            ->when(($data['status']!='all' && $data['status']!=null), function ($q) use ($data) {
+            ->when(($data['status'] != 'all' && $data['status'] != null), function ($q) use ($data) {
                 $q->where('status', '=', $data['status']);
             })
             ->when($data['role'], function ($q) use ($data) {
@@ -82,10 +82,12 @@ class User extends Authenticatable
             $users = $users->get();
         return $users;
     }
-    public function getRoleAttribute($value){
+
+    public function getRoleAttribute($value)
+    {
         $valueMap = [
             'user'  => 'contact',
-        ];        
+        ];
         return $valueMap[$value] ?? $value;
     }
 }

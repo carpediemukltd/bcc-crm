@@ -71,7 +71,7 @@
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="pipeline_id">Pipeline:</label>
-                              <select class="form-select" id="pipeline_id" onchange="changePiepeline(this);" name="pipeline_id" required>
+                              <select class="form-select" id="pipeline_id" name="pipeline_id" required>
                                  <option selected="true" value="" disabled="disabled">Select</option>
                                  @if(isset($rs_pipelines))
                                     @foreach($rs_pipelines as $rec_pipeline)
@@ -86,6 +86,11 @@
                               <label class="form-label" for="stage_id">Stage:</label>
                               <select class="form-select" id="stage_id" name="stage_id" required>
                                  <option selected="true" value="" disabled="disabled">Select</option>
+                                 @if(isset($rs_stages))
+                                    @foreach($rs_stages as $stage)
+                                       <option value="{{$stage->id}}">{{ucfirst($stage->title)}}</option>
+                                    @endforeach
+                                 @endif
                               </select>
                            </div>
                         </div>
@@ -120,18 +125,4 @@
       </div>
    </div>
 </div>
-
-<script>
-   function changePiepeline(selected){
-      var pipeline_id = $(selected).find(":selected").val();
-      var pipeline_url = "{{ url('pipelineStages') }}/"+pipeline_id;
-      $.ajax({ 
-         url: pipeline_url,
-         success:function(data){
-            $('#stage_id').html(data);
-         }
-      });
-   }
-</script>
-
 @endsection

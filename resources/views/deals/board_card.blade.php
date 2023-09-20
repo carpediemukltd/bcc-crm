@@ -7,7 +7,7 @@
             <?php
             $icount++;
             ?>
-            <div class="col-lg-3">
+            <div class="col">
                 <div class="card-transparent mb-0 desk-info">
                     <div class="card-body p-0">
                         <div class="row">
@@ -85,18 +85,18 @@
                                     </div>
                                 </div>
                             </div>
-                            @if (isset($deals))
-                                @foreach ($deals as $deal)
-                                    @if ($stage->id == $deal->stage_id)
-                                        <div class="group2-wrap">
-                                            <div class="group" id="group{{ $icount }}">
-                                                <div class="col-lg-12 group__item" style="">
+                            <div class="group2-wrap">
+                                <div class="group" id="group{{ $icount }}" data-stage_id="{{ $stage->id }}">
+                                    @if (isset($deals))
+                                        @foreach ($deals as $deal)
+                                            @if ($stage->id == $deal->stage_id)
+                                                <div class="col-lg-12 group__item" data-deal_id="{{ $deal->id }}">
                                                     <div class="card">
                                                         <div class="card-body">
                                                             <div
                                                                 class="d-grid grid-flow-col align-items-center justify-content-between mb-2">
                                                                 <div class="d-flex align-items-center">
-                                                                    <p class="mb-0">Deal Details</p>
+                                                                    <p class="mb-0"><b>Deal Details</b></p>
                                                                     {{-- <svg class="icon-20" width="20"
                                                                         viewBox="0 0 24 24" fill="none"
                                                                         xmlns="http://www.w3.org/2000/svg">
@@ -181,6 +181,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="card-body p-0 pt-2">
+                                                                {{-- <p class="card-text"><b>ID:</b> {{ $deal->id }}</p> --}}
                                                                 <p class="card-text"><b>Title:</b> {{ $deal->title }}
                                                                 </p>
                                                                 <p class="card-text"><b>Amount:</b> {{ $deal->amount }}
@@ -191,19 +192,19 @@
                                                                     {{ $deal->lead_source }}</p>
                                                                 <p class="card-text"><b>Pipeline:</b>
                                                                     {{ $deal->pipeline->title }}</p>
-                                                                <p class="card-text"><b>Stage:</b>
-                                                                    {{ $deal->stage->title }}
-                                                                </p>
+                                                                {{-- <p class="card-text"><b>Stage:</b>
+                                                                    {{ $deal->stage->title }}</p> --}}
                                                             </div>
                                                         </div>
                                                         <span class="remove"></span>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            @endif
+                                        @endforeach
                                     @endif
-                                @endforeach
-                            @endif
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -213,140 +214,26 @@
 @endif
 
 <script type="text/javascript">
-    /* var group1 = document.getElementById("group1");
-var group2 = document.getElementById("group2");
-var group3 = document.getElementById("group3");
-var group4 = document.getElementById("group4");
-var groups = ['group1','group2','group3','group4']
-var sortableSpeed = 150;
-
-var sortable1 = Sortable.create(group1, {
-  group: {
-    name: "group1",
-    put: groups
-  },
-  cursor: 'move',
-  animation: sortableSpeed,
-
-  onMove: function(evt) {
-    console.log(evt);
-    console.log(evt.to);
-    console.log(evt.from);
-    var dropGroup = evt.to;
-    group2.classList.add("adding");
-  },
-  onSort: function(evt) {
-    evt.from.classList.remove("adding");
-  },
-  onEnd: function(evt) {
-    group2.classList.remove("adding");
-  },
-  filter: ".remove",
-  onFilter: function(evt) {
-    var item = evt.item,
-      ctrl = evt.target;
-    if (Sortable.utils.is(ctrl, ".remove")) {
-      $(item).slideUp('400', function() {
-         $(item).remove();
-      });
-    }
-  }
-});
-
-var sortable2 = Sortable.create(group2, {
-  group: {
-    name: "group2",
-    put: groups
-  },
-  cursor: 'move',
-  animation: sortableSpeed,
-
-  onMove: function(evt) {
-    var dropGroup = evt.to;
-    group2.classList.add("adding");
-  },
-  onSort: function(evt) {
-    evt.from.classList.remove("adding");
-  },
-  onEnd: function(evt) {
-    group2.classList.remove("adding");
-  },
-  filter: ".remove",
-  onFilter: function(evt) {
-    var item = evt.item,
-      ctrl = evt.target;
-    if (Sortable.utils.is(ctrl, ".remove")) {
-      $(item).slideUp('400', function() {
-         $(item).remove();
-      });
-    }
-  }
-});
-
-var sortable3 = Sortable.create(group3, {
-  group: {
-    name: "group3",
-    put: groups
-  },
-  cursor: 'move',
-  animation: sortableSpeed,
-  onMove: function(evt) {
-    var dropGroup = evt.to;
-    dropGroup.classList.add("adding");
-    evt.from.classList.remove("adding");
-  },
-  onSort: function(evt) {
-    evt.from.classList.remove("adding");
-  },
-  onEnd: function(evt) {
-    document.getElementById("group2").classList.remove("adding");
-  }
-});
-
-var sortable4 = Sortable.create(group4, {
-  group: {
-    name: "group4",
-    put: groups
-  },
-  cursor: 'move',
-  animation: sortableSpeed,
-  onMove: function(evt) {
-    var dropGroup = evt.to;
-    dropGroup.classList.add("adding");
-    evt.from.classList.remove("adding");
-  },
-  onSort: function(evt) {
-    evt.from.classList.remove("adding");
-  },
-  onEnd: function(evt) {
-    document.getElementById("group2").classList.remove("adding");
-  }
-});
-
-if (!Element.prototype.matches) {
-    Element.prototype.matches = Element.prototype.msMatchesSelector;
-} */
-
     var stages = {{ count($stages) }};
-    // console.log(stages);
+    var sortableSpeed = 150;
     var groups = Array();
+    var deal_id = 0;
+    var from_stage_id = 0;
+    var to_stage_id = 0;
     for (var i = 1; i <= stages; i++) {
         groups.push('group' + i);
     }
-    // console.log(groups);
-    var sortableSpeed = 150;
     for (var i = 0; i < stages; i++) {
-         var group1 = document.getElementById(groups[i]);
-        console.log(group1);
-         var sortable1 = Sortable.create(group1, {
+        var group1 = document.getElementById(groups[i]);
+        var sortable1 = Sortable.create(group1, {
             group: {
-                name: "group1",
+                name: groups[i],
                 put: groups
             },
             cursor: 'move',
             animation: sortableSpeed,
-
             onMove: function(evt) {
+                deal_id = $(evt.dragged).data('deal_id');
                 var dropGroup = evt.to;
                 group2.classList.add("adding");
             },
@@ -354,7 +241,11 @@ if (!Element.prototype.matches) {
                 evt.from.classList.remove("adding");
             },
             onEnd: function(evt) {
+                from_stage_id = $(evt.from).data('stage_id');
+                to_stage_id = $(evt.to).data('stage_id');
                 group2.classList.remove("adding");
+                if(from_stage_id!=to_stage_id)
+                UpdateDealStage(deal_id, to_stage_id);
             },
             filter: ".remove",
             onFilter: function(evt) {
@@ -366,9 +257,33 @@ if (!Element.prototype.matches) {
                     });
                 }
             }
-        }); 
+        });
     }
     if (!Element.prototype.matches) {
         Element.prototype.matches = Element.prototype.msMatchesSelector;
+    }
+
+    function UpdateDealStage(deal_id, stage_id) {
+        var url = "{{ route('user.deals.updatestage', [$current_user_id, ':deal_id']) }}";
+        url = url.replace(':deal_id', deal_id);
+        $('#show_loading').show();
+        $.post({
+            url: url,
+            type: 'POST',
+            data: {
+                _token: "{{ csrf_token() }}",
+                deal_id: deal_id,
+                stage_id: stage_id
+            },
+            success: function(res) {
+                $('#show_loading').hide();
+            },
+            error: function(res) {
+                $('#show_loading').hide();
+                if (res.responseJSON.error_msg) {
+                    alert(res.responseJSON.error_msg);
+                }
+            }
+        });
     }
 </script>

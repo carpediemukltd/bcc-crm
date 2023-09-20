@@ -8,17 +8,17 @@
                     <div class="col-md-12">
                         <div class="flex-wrap d-flex justify-content-between align-items-center">
                             <div>
-                                <h1>Pipelines</h1>
+                                <h1>All Stages</h1>
                                 <p>Experience a simple yet powerful way to build Dashboards.</p>
                             </div>
                             {{-- <div>
-                                <a href="{{ route('pipeline.add') }}" class="btn btn-link btn-soft-light">
+                                <a href="{{ route('stage.add') }}" class="btn btn-link btn-soft-light">
                                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg" class="icon-28">
                                         <path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"></path>
                                     </svg>
-                                    Add New Pipeline
+                                    Add New Stage
                                 </a>
                             </div> --}}
                         </div>
@@ -40,7 +40,7 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <div class="header-title">
-                                <h4 class="card-title">List of Pipelines</h4>
+                                <h4 class="card-title">List of Stages</h4>
                             </div>
                         </div>
                         <div class="row" id="show_loading" style="display: none;">
@@ -65,8 +65,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="control-group">
-                                                @if (isset($pipelines))
-                                                    @foreach ($pipelines as $rec)
+                                                @if (isset($stages))
+                                                    @foreach ($stages as $rec)
                                                         <tr class="odd" id="{{ $rec->id }}">
                                                             <td style="widh:60%;">
                                                                 <div id="show_text_{{ $rec->id }}">{{ $rec->title }}
@@ -74,8 +74,8 @@
                                                                 <div id="show_edit_text_{{ $rec->id }}"
                                                                     style="display: none;">
                                                                     <input type="text" class="form-control"
-                                                                        id="pipeline_{{ $rec->id }}"
-                                                                        name="pipeline_{{ $rec->id }}"
+                                                                        id="stage_{{ $rec->id }}"
+                                                                        name="stage_{{ $rec->id }}"
                                                                         value="{{ $rec->title }}" />
                                                                 </div>
                                                                 <br />
@@ -131,28 +131,28 @@
 
                                     <div class="row">
 
-                                        <div class="col">
-                                            <button type="button" class="btn btn-success btn-sm btn-info addClickrBtn"
-                                                style="float:right;">
-                                                <span class="btn-inner">
-                                                    <svg width="28" height="28" viewBox="0 0 24 24"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                        class="icon-28">
-                                                        <path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2"
-                                                            stroke-linecap="round" stroke-linejoin="round"></path>
-                                                    </svg>
-                                                </span>
-                                                Add New
-                                            </button>
-                                        </div>
-                                    </div>
+                                       <div class="col">
+                                           <button type="button" class="btn btn-success btn-sm btn-info addClickrBtn"
+                                               style="float:right;">
+                                               <span class="btn-inner">
+                                                   <svg width="28" height="28" viewBox="0 0 24 24"
+                                                       fill="none" xmlns="http://www.w3.org/2000/svg"
+                                                       class="icon-28">
+                                                       <path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2"
+                                                           stroke-linecap="round" stroke-linejoin="round"></path>
+                                                   </svg>
+                                               </span>
+                                               Add New
+                                           </button>
+                                       </div>
+                                   </div>
 
                                     <div class="row align-items-center pagination">
                                         <div class="col-md-6">
                                             <!-- nothing happend -->
                                         </div>
                                         <div class="col-md-6">
-                                            {!! $pipelines->links('vendor.pagination.custom') !!}
+                                            {!! $stages->links('vendor.pagination.custom') !!}
                                         </div>
                                     </div>
                                 </div>
@@ -179,12 +179,12 @@
         }
 
         function saveEdited(id) {
-            var text = $('#pipeline_' + id).val();
+            var text = $('#stage_' + id).val();
             if (text !== '') {
                 $('#loading_' + id).html($('#show_loading').html());
                 $('#loading_' + id).show();
-                var url = "{{ route('pipeline.edit', ':pipeline_id') }}";
-                url = url.replace(':pipeline_id', id);
+                var url = "{{ route('stage.edit', ':stage_id') }}";
+                url = url.replace(':stage_id', id);
                 $.post({
                     url: url,
                     type: 'POST',
@@ -212,11 +212,12 @@
         }
 
         function saveNew(id) {
-            var text = $('#pipeline_' + id).val();
+         var text = $('#stage_' + id).val();
             if (text !== '') {
                 $('#loading_' + id).html($('#show_loading').html());
                 $('#loading_' + id).show();
-                var url = "{{ route('pipeline.add') }}";
+                var url = "{{ route('stage.add') }}";
+                url = url.replace(':stage_id', id);
                 $.post({
                     url: url,
                     type: 'POST',
@@ -246,8 +247,8 @@
         $('.addClickrBtn').click(function() {
             var c = $('#control-group tr:last').attr('id');
             c = parseInt(c) + 1;
-            var tr = '<tr id="' + c + '"><td><div><input type="text" placeholder="New Pipeline" id="pipeline_' + c +
-                '" name="pipeline_' + c + '" class="form-control" required></div><br /><div id="loading_' + c + '" style="display: none;"></div></td><td>';
+            var tr = '<tr id="' + c + '"><td><div><input type="text" placeholder="New Stage" id="stage_' + c +
+                '" name="stage_' + c + '" class="form-control" required></div><br /><div id="loading_' + c + '" style="display: none;"></div></td><td>';
             tr += '<a href="javascript:void(0)" onclick="saveNew(' + c + ');">';
             tr +=
                 '<svg fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-32" width="32" height="32" viewBox="0 0 32 32"><path d="M21.4354 2.58198C20.9352 2.0686 20.1949 1.87734 19.5046 2.07866L3.408 6.75952C2.6797 6.96186 2.16349 7.54269 2.02443 8.28055C1.88237 9.0315 2.37858 9.98479 3.02684 10.3834L8.0599 13.4768C8.57611 13.7939 9.24238 13.7144 9.66956 13.2835L15.4329 7.4843C15.723 7.18231 16.2032 7.18231 16.4934 7.4843C16.7835 7.77623 16.7835 8.24935 16.4934 8.55134L10.72 14.3516C10.2918 14.7814 10.2118 15.4508 10.5269 15.9702L13.6022 21.0538C13.9623 21.6577 14.5826 22 15.2628 22C15.3429 22 15.4329 22 15.513 21.9899C16.2933 21.8893 16.9135 21.3558 17.1436 20.6008L21.9156 4.52479C22.1257 3.84028 21.9356 3.09537 21.4354 2.58198Z" fill="currentColor"></path></svg>';

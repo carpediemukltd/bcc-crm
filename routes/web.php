@@ -11,15 +11,16 @@ use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckAdminOwner;
 use App\Http\Middleware\CheckSuperAdmin;
 use App\Http\Middleware\VerifyCsrfToken;
+use App\Http\Controllers\StageController;
 use App\Http\Middleware\CheckSameCompany;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\JotFormController;
 use App\Http\Controllers\PipelineController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\DialogflowController;
 use App\Http\Controllers\RoundRobinController;
 use App\Http\Controllers\CustomFieldController;
-use App\Http\Controllers\DialogflowController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 
@@ -68,6 +69,8 @@ Route::middleware([CheckStatus::class])->group(function () {
 
     Route::middleware([CheckSuperAdmin::class])->group(function () { // SuperAdmin specific methods
         Route::any('company/add', [CompanyController::class, 'addCompany'])->name('company.add');
+        Route::any('company/deals', [CompanyController::class, 'companyDeals'])->name('company.deals');
+        Route::any('company/deals/{view}', [CompanyController::class, 'companyDealsDetail'])->name('company.deals.detail');
         Route::get('companies', [CompanyController::class, 'listCompany'])->name('company.list');
         Route::any('company/edit/{id}', [CompanyController::class, 'editCompany'])->name('company.edit');
 
@@ -75,7 +78,17 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::any('customfield', [CustomFieldController::class, 'fieldList'])->name('customfield.list');
         Route::any('customfield/edit/{id}', [CustomFieldController::class, 'editField'])->name('customfield.edit');
 
+        
+        Route::get('stages', [StageController::class, 'stageList'])->name('stage.list');
+        Route::post('stage/add', [StageController::class, 'stageAdd'])->name('stage.add');
+        Route::post('stage/edit/{id}', [StageController::class, 'stageEdit'])->name('stage.edit');
+        
+        Route::get('pipelines', [PipelineController::class, 'pipelineList'])->name('pipeline.list');
+        Route::post('pipeline/add', [PipelineController::class, 'pipelineAdd'])->name('pipeline.add');
+        Route::post('pipeline/edit/{id}', [PipelineController::class, 'pipelineEdit'])->name('pipeline.edit');
+        
         Route::any('pipeline/{action}/{id?}', [PipelineController::class, 'pipelines'])->name('pipeline');
+        Route::any('deals/{view}', [DealController::class, 'dealsList'])->name('deals.list');
 
     });
 
@@ -94,9 +107,7 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::post('contact/{user_id}/deals/updateStage/{id}', [DealController::class, 'dealsUpdateStage'])->name('user.deals.updatestage');
         Route::get('deal/{id}/exportcsv', [DealController::class, 'exportCSV'])->name('deal.export.csv');
         Route::get('deal/{id}/exportxls', [DealController::class, 'exportXLS'])->name('deal.export.xls');
-
         
-
         Route::get('notes/{contact_id}', [NoteController::class, 'listNote'])->name('note.list');
         Route::any('note/add', [NoteController::class, 'addNote'])->name('note.add');
         Route::post('note/edit/{id}', [NoteController::class, 'editNote'])->name('note.edit');

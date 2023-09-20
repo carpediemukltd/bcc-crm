@@ -48,7 +48,7 @@ class DealController extends Controller
         $this->data['rs_deals'] = Deal::getDealsByUser($id, 0);
         $pipelines = Pipeline::orderBy('title', 'ASC')->get();
         $this->data['pipelines'] = $pipelines;
-        $pipeline_stages = array();
+       /*  $pipeline_stages = array();
         if ($pipelines->isNotEmpty()) {
             foreach ($pipelines as $pipeline) {
                 $pipeline_arr['id'] = $pipeline->id;
@@ -66,13 +66,54 @@ class DealController extends Controller
                 array_push($pipeline_stages, $pipeline_arr);
             }
         }
-        $this->data['pipeline_stages'] = $pipeline_stages;
+        $this->data['pipeline_stages'] = $pipeline_stages; */
+        $this->data['stages'] = Stage::orderBy('sort', 'ASC')->get();
         if ($view == 'board') {
-            return view("user.deals.board", $this->data);
+            return view("deals.board", $this->data);
         } else {
-            return view("user.deals.list", $this->data);
+            return view("deals.list", $this->data);
         }
-    } // userDeals
+    }
+
+    public function dealsList($id, $view = 'listing')
+    {
+        $this->data['current_slug'] = 'Deals';
+        $this->data['slug']         = 'user_deals';
+
+        $access = Permissions::checkUserAccess($this->user, $id);
+        if (!$access) {
+            return redirect(route('dashboard'))->with('error', 'Access Denied.');
+        }
+
+        $this->data['current_user_id'] = $id;
+        $this->data['rs_deals'] = Deal::getDealsByUser($id, 0);
+        $pipelines = Pipeline::orderBy('title', 'ASC')->get();
+        $this->data['pipelines'] = $pipelines;
+        /* $pipeline_stages = array();
+        if ($pipelines->isNotEmpty()) {
+            foreach ($pipelines as $pipeline) {
+                $pipeline_arr['id'] = $pipeline->id;
+                $pipeline_arr['title'] = $pipeline->title;
+                $stages = Stage::where('pipeline_id', $pipeline->id)->orderBy('title', 'ASC')->get();
+                $stages_arr = array();
+                if ($stages->isNotEmpty()) {
+                    foreach ($stages as $stage) {
+                        $this_stage['id'] = $stage->id;
+                        $this_stage['title'] = $stage->title;
+                        array_push($stages_arr, $this_stage);
+                    }
+                }
+                $pipeline_arr['stages'] = $stages_arr;
+                array_push($pipeline_stages, $pipeline_arr);
+            }
+        } */
+        $this->data['stages'] = Stage::orderBy('sort', 'ASC')->get();
+        if ($view == 'board') {
+            return view("deals.board", $this->data);
+        } else {
+            return view("deals.list", $this->data);
+        }
+    }
 
     public function deals_sandbox() {
         $slug = "deals-sandbox";
@@ -101,10 +142,10 @@ class DealController extends Controller
         }
 
         $this->data['current_user_id'] = $id;
-        $this->data['stages'] = Stage::where('pipeline_id', $pipeline_id)->get();
+        $this->data['stages'] = Stage::orderBy('sort','ASC')->get();
         $this->data['deals'] = Deal::where('pipeline_id', $pipeline_id)->where('user_id', $id)->get();
 
-        return view("user.deals.board_card", $this->data);
+        return view("deals.board_card", $this->data);
     }
 
     public function dealsAdd(Request $request, $id)
@@ -142,8 +183,8 @@ class DealController extends Controller
             $this->data['custom_fields'] =  CustomField::getDataByDeal($id);
 
             $this->data['rs_pipelines'] = Pipeline::orderBy('title', 'ASC')->get();
-            $this->data['rs_stages'] = Stage::orderBy('title', 'ASC')->get();
-            return view("user.deals.add", $this->data);
+            $this->data['rs_stages'] = Stage::orderBy('sort', 'ASC')->get();
+            return view("deals.add", $this->data);
         }
     } // dealsAdd
 
@@ -185,9 +226,9 @@ class DealController extends Controller
             $this->data['current_user_id'] = $user_id;
 
             $this->data['rs_pipelines'] = Pipeline::orderBy('title', 'ASC')->get();
-            $this->data['rs_stages'] = Stage::orderBy('title', 'ASC')->get();
+            $this->data['rs_stages'] = Stage::orderBy('sort', 'ASC')->get();
             $this->data['custom_fields'] = CustomField::getDataByDeal($id);
-            return view("user.deals.edit", $this->data);
+            return view("deals.edit", $this->data);
         }
     } // dealsEdit
 

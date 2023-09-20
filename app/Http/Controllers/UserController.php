@@ -132,7 +132,7 @@ class UserController extends Controller
                     }
                 }
 
-                if ($data['role'] == 'user') {
+                if ($data['role'] == 'contact') {
                     UserOwner::create([
                         'user_id' => $new_user->id,
                         'owner_id' => auth()->user()->id,
@@ -185,7 +185,7 @@ class UserController extends Controller
         $access = Permissions::checkUserAccess($this->user, $id);
         if (!$access) {
             return redirect(route('dashboard'))->with('error', 'Access Denied.');
-        } elseif ($access->role != 'user') {
+        } elseif ($access->role != 'contact') {
             return redirect(route('dashboard'))->with('error', 'Access Denied to User.');
         }
 

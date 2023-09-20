@@ -55,7 +55,20 @@ class JotFormController extends Controller
                 $data['first_name'] = $request->full_name['first'];
                 $data['last_name'] = $request->full_name['last'];
             }
-            $data['email'] = $request->email;
+            //BCCUSA Apply Now Landing Page Form
+            else if (isset($request->q3_name)) {
+                $data['first_name'] = $request->q3_name['first'];
+                $data['last_name'] = $request->q3_name['last'];
+            }
+
+            if(isset($request->q4_email)){
+                $data['email'] = $request->q4_email;
+            }
+            //BCCUSA Apply Now Landing Page Form
+
+            else{
+                $data['email'] = $request->email;
+            }
             if (isset($request->phoneNumber)) {
                 $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->phoneNumber['full']);
             } else if (isset($request->phonenumber['full'])) {
@@ -65,6 +78,11 @@ class JotFormController extends Controller
             } else if (isset($request->phonenumber)) {
                 $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->phonenumber);
             }
+            //BCCUSA Apply Now Landing Page Form
+            else if (isset($request->q5_phoneNumber['full'])) {
+                $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->q5_phoneNumber['full']);
+            }
+            //BCCUSA Apply Now Landing Page Form
 
             $data['role'] = 'user';
             $data['password'] = Hash::make('asdfasdf');
@@ -179,6 +197,15 @@ class JotFormController extends Controller
                         "2nd Officer Date of Birth" => $request->dateof40['year'] . "-" . $request->dateof40['month'] . "-" . $request->dateof40['day'],
                         "2nd Officer US Citizen" => $request->ownerus81,
                     );
+                } else if ($request->formID == 222756540184053) {
+                    //BCCUSA Apply Now Landing Page Form
+                    $fields = array(
+                        "Legal Business Name" => $request->q6_legalBusiness,
+                        "Once Approved, Use of Funds" => $request->q8_onceApproved,
+                        "Estimated FICO Score" => $request->q13_estimatedFico,
+                        "History Tracking" => serialize(json_decode($request->q17_typeA17)),
+                    );
+                    //BCCUSA Apply Now Landing Page Form
                 }
                 if (is_array($fields) && count($fields) > 0) {
                     foreach ($fields as $field => $value) {

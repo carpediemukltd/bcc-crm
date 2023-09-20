@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Deal;
 use App\Models\User;
+use App\Models\Stage;
 use App\Models\Company;
+use App\Models\Pipeline;
+use App\Helpers\Permissions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -24,9 +28,36 @@ class CompanyController extends Controller
         });
     }
 
+    public function companyDeals(){
+        $this->data['current_slug'] = 'Company Deals';
+        $this->data['slug']         = 'deals_company';
+
+        $pipelines = Pipeline::orderBy('title', 'ASC')->get();
+        $companies = Company::orderBy('name', 'ASC')->get();
+        $this->data['pipelines'] = $pipelines;
+        $this->data['companies'] = $companies;
+    
+        $this->data['stages'] = Stage::orderBy('sort', 'ASC')->get();
+        return view("deals.company", $this->data);
+    }
+
+    
+    public function companyDealsDetail($view, Request $request)
+    {
+        $company_id = $request->company_id;
+        $pipeline_id = $request->pipeline_id;
+        $this->data['deals'] = Deal::getDealsByCompany($company_id, $pipeline_id);
+        $this->data['stages'] = Stage::orderBy('sort', 'ASC')->get();
+      
+        if ($view == 'board') {
+            return view("deals.company_board", $this->data);
+        } else {
+            return view("deals.company_list", $this->data);
+        }
+    }
+
     public function addCompany(Request $request)
     {
-
         $this->data['current_slug'] = 'Add Company';
         $this->data['slug']         = 'add_company';
 

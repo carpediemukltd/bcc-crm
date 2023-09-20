@@ -35,6 +35,32 @@ class Deal extends Model
         return $Deals;
     }
 
+    public static function getDealsByCompany($company_id, $pipeline_id)
+    {
+        $Deals = Deal::join('users', function ($join) {
+                $join->on('users.id', '=', 'deals.user_id');
+            })
+            ->join('companies', function ($join) {
+                $join->on('companies.id', '=', 'users.company_id');
+            })
+            ->join('pipelines', function ($join) {
+                $join->on('pipelines.id', '=', 'deals.pipeline_id');
+            })
+            ->join('stages', function ($join) {
+                $join->on('stages.id', '=', 'deals.stage_id');
+            })
+            ->when($pipeline_id > 0, function ($q) use ($pipeline_id) {
+                $q->where('pipelines.id', '=', DB::raw($pipeline_id));
+            })
+            ->when($company_id > 0, function ($q) use ($company_id) {
+                $q->where('users.company_id', '=', DB::raw($company_id));
+            })
+            ->select('deals.*', 'pipelines.title as pipeline', 'stages.title as stage', 'companies.id as company_id', 'companies.name as company_name')
+            ->orderBy('id', 'DESC')->paginate(10);
+
+        return $Deals;
+    }
+
     public function stage()
     {
         return $this->hasOne(Stage::class, 'id', 'stage_id');

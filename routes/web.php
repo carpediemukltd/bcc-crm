@@ -69,7 +69,8 @@ Route::middleware([CheckStatus::class])->group(function () {
 
     Route::middleware([CheckSuperAdmin::class])->group(function () { // SuperAdmin specific methods
         Route::any('company/add', [CompanyController::class, 'addCompany'])->name('company.add');
-        Route::any('company/deals', [CompanyController::class, 'addCompany'])->name('company.deals');
+        Route::any('company/deals', [CompanyController::class, 'companyDeals'])->name('company.deals');
+        Route::any('company/deals/{view}', [CompanyController::class, 'companyDealsDetail'])->name('company.deals.detail');
         Route::get('companies', [CompanyController::class, 'listCompany'])->name('company.list');
         Route::any('company/edit/{id}', [CompanyController::class, 'editCompany'])->name('company.edit');
 

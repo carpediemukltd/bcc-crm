@@ -23,6 +23,8 @@ use App\Http\Controllers\RoundRobinController;
 use App\Http\Controllers\CustomFieldController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\MagicLinkController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -44,11 +46,16 @@ Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPassw
 Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
 Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+
+Route::get('/magic-link/{contact_id}', [MagicLinkController::class, 'generateLink'])->name('magic.link.generate');
+Route::get('/magic-link/view/{token}', [MagicLinkController::class, 'viewLink'])->name('magic.link.view');
+
 Route::post("/chat", [DialogflowController::class, "chat"]);
 
 Route::any('jotform/add', [JotFormController::class, 'addUser'])->name('user.add.jotform')->withoutMiddleware([VerifyCsrfToken::class]);
 
 Route::middleware([CheckStatus::class])->group(function () {
+
     Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
     Route::get('dashboard-sandbox', [UserController::class, 'dashboard_sandbox'])->name('dashboard-sandbox');
     Route::get('deals-sandbox', [DealController::class, 'deals_sandbox'])->name('deals-sandbox');

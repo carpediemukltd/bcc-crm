@@ -139,8 +139,8 @@ class UserController extends Controller
                     ]);
                     RoundRobinSetting::where('company_id', $company_id)->where('owner_id', auth()->user()->id)
                         ->update(['last_lead' => date("Y-m-d H:i:s")]);
+                    SendNotification::dispatch(['id' => $new_user->id, 'type' => 'contact_added']);
                 }
-                SendNotification::dispatch(['id' => $new_user->id, 'type' => 'contact_added']);
                 $type = ($data['role'] == 'user') ? 'Contact' : (($data['role'] == 'owner') ? 'Super User' : ucfirst($data['role']));
                 return redirect(url('contacts'))->withSuccess("$type Created Successfully.")->withInput();
             }

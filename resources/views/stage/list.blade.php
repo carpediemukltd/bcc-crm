@@ -78,12 +78,12 @@
                                                                         name="stage_{{ $rec->id }}"
                                                                         value="{{ $rec->title }}" />
                                                                 </div>
-                                                                <br />
                                                                 <div id="loading_{{ $rec->id }}"
                                                                     style="display: none;">
                                                                 </div>
                                                             </td>
                                                             <td class="text-center">
+                                                                <div class="d-flex justify-content">
                                                                 <a href="javascript:void(0)"
                                                                     onclick="showEditOption('{{ $rec->id }}');">
                                                                     <svg fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -120,6 +120,7 @@
                                                                                 fill="currentColor"></path>
                                                                         </svg>
                                                                     </a>
+                                                                </div>
                                                                 </div>
                                                             </td>
                                                         </tr>

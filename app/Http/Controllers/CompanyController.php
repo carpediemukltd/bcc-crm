@@ -100,6 +100,12 @@ class CompanyController extends Controller
                     'password' => Hash::make($data['password'])
                 ]);
 
+                Pipeline::create([
+                    'company_id' => $new_company->id,
+                    'title' => $data['name']." Pipeline",
+                    
+                ]);                
+
                 return redirect(route('company.list'))->withSuccess('Company Created Successfully.');
             }
         } else if ($request->isMethod('get')) {

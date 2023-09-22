@@ -174,7 +174,7 @@ class DealController extends Controller
                     );
                 }
             }
-            SendNotification::dispatch(['id' => $request->stage_id, 'type' => 'deal_added']);
+            SendNotification::dispatch(['id' => $deal->id, 'type' => 'deal_added']);
             return redirect(route('user.deals', [$id, 'listing']))->withSuccess('Deal Created Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
             $this->data['current_slug'] = 'Add Deal';

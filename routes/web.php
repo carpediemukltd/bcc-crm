@@ -82,10 +82,12 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::get('stages', [StageController::class, 'stageList'])->name('stage.list');
         Route::post('stage/add', [StageController::class, 'stageAdd'])->name('stage.add');
         Route::post('stage/edit/{id}', [StageController::class, 'stageEdit'])->name('stage.edit');
+        Route::post('stage/delete/{id}', [StageController::class, 'stageDelete'])->name('stage.delete');
         
         Route::get('pipelines', [PipelineController::class, 'pipelineList'])->name('pipeline.list');
         Route::post('pipeline/add', [PipelineController::class, 'pipelineAdd'])->name('pipeline.add');
         Route::post('pipeline/edit/{id}', [PipelineController::class, 'pipelineEdit'])->name('pipeline.edit');
+        Route::post('pipeline/delete/{id}', [PipelineController::class, 'pipelineDelete'])->name('pipeline.delete');
         
         Route::any('pipeline/{action}/{id?}', [PipelineController::class, 'pipelines'])->name('pipeline');
         Route::any('deals/{view}', [DealController::class, 'dealsList'])->name('deals.list');

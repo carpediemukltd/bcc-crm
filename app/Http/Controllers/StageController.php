@@ -56,6 +56,18 @@ class StageController extends Controller
             return response(Stage::where('id', $id)->first());
         }
     }
+    public function stageDelete(Request $request, $id)
+    {
+        $this->data['stage'] = Stage::where('id', $id)->first();
+
+        if ($request->isMethod('post')) {
+            if (!$this->data['stage']) {
+                return redirect()->back()->withError('Stage not found.')->withInput();
+            }
+            Stage::whereId($id)->delete();
+            return response(['message' => 'success', 'detail' => "Stage deleted successfully."]);
+        }
+    }
 
     public function pipelines(Request $request, $action, $id = NULL)
     {

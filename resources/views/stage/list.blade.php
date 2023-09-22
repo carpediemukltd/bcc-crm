@@ -94,6 +94,15 @@
                                                                             fill="currentColor"></path>
                                                                     </svg>
                                                                 </a>
+                                                                <a href="javascript:void(0)"
+                                                                    onclick="DeleteConfirm('{{ $rec->id }}','{{ $rec->title }}');">
+                                                                    <svg fill="none" xmlns="http://www.w3.org/2000/svg"
+                                                                        width="24" height="24" viewBox="0 0 24 24">
+                                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                            d="M20.2871 5.24297C20.6761 5.24297 21 5.56596 21 5.97696V6.35696C21 6.75795 20.6761 7.09095 20.2871 7.09095H3.71385C3.32386 7.09095 3 6.75795 3 6.35696V5.97696C3 5.56596 3.32386 5.24297 3.71385 5.24297H6.62957C7.22185 5.24297 7.7373 4.82197 7.87054 4.22798L8.02323 3.54598C8.26054 2.61699 9.0415 2 9.93527 2H14.0647C14.9488 2 15.7385 2.61699 15.967 3.49699L16.1304 4.22698C16.2627 4.82197 16.7781 5.24297 17.3714 5.24297H20.2871ZM18.8058 19.134C19.1102 16.2971 19.6432 9.55712 19.6432 9.48913C19.6626 9.28313 19.5955 9.08813 19.4623 8.93113C19.3193 8.78413 19.1384 8.69713 18.9391 8.69713H5.06852C4.86818 8.69713 4.67756 8.78413 4.54529 8.93113C4.41108 9.08813 4.34494 9.28313 4.35467 9.48913C4.35646 9.50162 4.37558 9.73903 4.40755 10.1359C4.54958 11.8992 4.94517 16.8102 5.20079 19.134C5.38168 20.846 6.50498 21.922 8.13206 21.961C9.38763 21.99 10.6811 22 12.0038 22C13.2496 22 14.5149 21.99 15.8094 21.961C17.4929 21.932 18.6152 20.875 18.8058 19.134Z"
+                                                                            fill="currentColor" />
+                                                                    </svg>
+                                                                </a>
                                                                 <div id="save_rights_{{ $rec->id }}"
                                                                     style="display:none;float: right;">
 
@@ -131,21 +140,21 @@
 
                                     <div class="row">
 
-                                       <div class="col">
-                                           <button type="button" class="btn btn-success btn-sm btn-info addClickrBtn"
-                                               style="float:right;">
-                                               <span class="btn-inner">
-                                                   <svg width="28" height="28" viewBox="0 0 24 24"
-                                                       fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                       class="icon-28">
-                                                       <path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2"
-                                                           stroke-linecap="round" stroke-linejoin="round"></path>
-                                                   </svg>
-                                               </span>
-                                               Add New
-                                           </button>
-                                       </div>
-                                   </div>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-success btn-sm btn-info addClickrBtn"
+                                                style="float:right;">
+                                                <span class="btn-inner">
+                                                    <svg width="28" height="28" viewBox="0 0 24 24"
+                                                        fill="none" xmlns="http://www.w3.org/2000/svg"
+                                                        class="icon-28">
+                                                        <path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    </svg>
+                                                </span>
+                                                Add New
+                                            </button>
+                                        </div>
+                                    </div>
 
                                     <div class="row align-items-center pagination">
                                         <div class="col-md-6">
@@ -212,7 +221,7 @@
         }
 
         function saveNew(id) {
-         var text = $('#stage_' + id).val();
+            var text = $('#stage_' + id).val();
             if (text !== '') {
                 $('#loading_' + id).html($('#show_loading').html());
                 $('#loading_' + id).show();
@@ -232,8 +241,9 @@
                         $('#show_edit_text_' + id).val(res.title);
                         $('#show_edit_text_' + id).hide();
                         $('#save_rights_' + id).hide();
-                        $('#loading_' + id).html('<br /><b>Pipeline saved successfully, loading the page...</b>');
-                        if(res.message=='success') location.reload();
+                        $('#loading_' + id).html(
+                            '<br /><b>Pipeline saved successfully, loading the page...</b>');
+                        if (res.message == 'success') location.reload();
                     },
                     error: function(res) {
                         if (res.responseJSON.error_msg) {
@@ -248,7 +258,8 @@
             var c = $('#control-group tr:last').attr('id');
             c = parseInt(c) + 1;
             var tr = '<tr id="' + c + '"><td><div><input type="text" placeholder="New Stage" id="stage_' + c +
-                '" name="stage_' + c + '" class="form-control" required></div><br /><div id="loading_' + c + '" style="display: none;"></div></td><td>';
+                '" name="stage_' + c + '" class="form-control" required></div><br /><div id="loading_' + c +
+                '" style="display: none;"></div></td><td>';
             tr += '<a href="javascript:void(0)" onclick="saveNew(' + c + ');">';
             tr +=
                 '<svg fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-32" width="32" height="32" viewBox="0 0 32 32"><path d="M21.4354 2.58198C20.9352 2.0686 20.1949 1.87734 19.5046 2.07866L3.408 6.75952C2.6797 6.96186 2.16349 7.54269 2.02443 8.28055C1.88237 9.0315 2.37858 9.98479 3.02684 10.3834L8.0599 13.4768C8.57611 13.7939 9.24238 13.7144 9.66956 13.2835L15.4329 7.4843C15.723 7.18231 16.2032 7.18231 16.4934 7.4843C16.7835 7.77623 16.7835 8.24935 16.4934 8.55134L10.72 14.3516C10.2918 14.7814 10.2118 15.4508 10.5269 15.9702L13.6022 21.0538C13.9623 21.6577 14.5826 22 15.2628 22C15.3429 22 15.4329 22 15.513 21.9899C16.2933 21.8893 16.9135 21.3558 17.1436 20.6008L21.9156 4.52479C22.1257 3.84028 21.9356 3.09537 21.4354 2.58198Z" fill="currentColor"></path></svg>';
@@ -265,5 +276,38 @@
         /* $('.delete_row_btn').click(function(){
            $(this).closest("tr").remove();
         }); */
+        function DeleteConfirm(id, title) {
+            r = confirm('Are you sure you want to delete?');
+            if (r) {
+                t = prompt("Enter the title of stage to delete.");
+                if (t == title) {
+                    alert('Deleting the stage named "' + title + '"');
+                    $('#loading_' + id).html($('#show_loading').html());
+                    $('#loading_' + id).show();
+                    var url = "{{ route('stage.delete', ':stage_id') }}";
+                    url = url.replace(':stage_id', id);
+                    $.post({
+                        url: url,
+                        type: 'POST',
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id: id
+                        },
+                        success: function(res) {
+                            $('#' + id).hide();
+                            $('#loading_' + id).hide();
+                        },
+                        error: function(res) {
+                            if (res.responseJSON.error_msg) {
+                                $('#loading_' + id).hide();
+                                alert(res.responseJSON.error_msg);
+                            }
+                        }
+                    });
+                } else {
+                    alert('Incorrect Stage name, aborting...');
+                }
+            }
+        }
     </script>
 @endsection

@@ -17,6 +17,7 @@
         "paragonie/random_compat": "2.*",
         "phpmailer/phpmailer": "^6.8",
         "phpoffice/phpspreadsheet": "^1.12",
+        "phpseclib/bcmath_compat": "^2.0",
         "spatie/laravel-permission": "^5.10"
     },
     "require-dev": {

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCompanyIdToUsersTable extends Migration
+class AlterTableUserDetailsChangeColumnDataTypeFromStringToText extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddCompanyIdToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('company_id')->default(0);
+        Schema::table('user_details', function (Blueprint $table) {
+            $table->text('data')->nullable()->change();
         });
     }
 
@@ -25,8 +25,8 @@ class AddCompanyIdToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('company_id');
+        Schema::table('user_details', function (Blueprint $table) {
+            $table->string('data')->nullable()->change();
         });
     }
 }

@@ -13,7 +13,7 @@ class AlterTableUserDetailsChangeColumnDataTypeFromStringToText extends Migratio
      */
     public function up()
     {
-        Schema::create('user_details', function (Blueprint $table) {
+        Schema::table('user_details', function (Blueprint $table) {
             $table->text('data')->nullable()->change();
         });
     }

@@ -182,7 +182,7 @@ class DealController extends Controller
             $this->data['current_user_id'] = $id;
             $this->data['custom_fields'] =  CustomField::getDataByDeal($id);
 
-            $this->data['rs_pipelines'] = Pipeline::orderBy('title', 'ASC')->get();
+            $this->data['rs_pipelines'] = Pipeline::getPipelineByUser($id);
             $this->data['rs_stages'] = Stage::orderBy('sort', 'ASC')->get();
             return view("deals.add", $this->data);
         }

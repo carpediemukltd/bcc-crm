@@ -72,11 +72,12 @@
                            <div class="form-group">
                               <label class="form-label" for="pipeline_id">Pipeline:</label>
                               <select class="form-select" id="pipeline_id" name="pipeline_id" required>
-                                 <option selected="true" value="" disabled="disabled">Select</option>
-                                 @if(isset($rs_pipelines))
+                                 @if(isset($rs_pipelines) && count($rs_pipelines)>0)
                                     @foreach($rs_pipelines as $rec_pipeline)
                                        <option value="{{$rec_pipeline->id}}">{{ucfirst($rec_pipeline->title)}}</option>
                                     @endforeach
+                                 @else
+                                    <option selected="true" value="" disabled="disabled">Select</option>
                                  @endif
                               </select>
                            </div>

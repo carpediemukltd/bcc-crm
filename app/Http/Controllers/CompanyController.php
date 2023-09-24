@@ -34,10 +34,10 @@ class CompanyController extends Controller
 
         $pipelines = Pipeline::orderBy('title', 'ASC')->get();
         $companies = Company::orderBy('name', 'ASC')->get();
+        $stages = Stage::orderBy('sort', 'ASC')->get();
         $this->data['pipelines'] = $pipelines;
         $this->data['companies'] = $companies;
-    
-        $this->data['stages'] = Stage::orderBy('sort', 'ASC')->get();
+        $this->data['stages'] = $stages;
         return view("deals.company", $this->data);
     }
 

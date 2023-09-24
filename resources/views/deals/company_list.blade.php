@@ -48,7 +48,7 @@
     </div>
  </div>
  <script type="text/javascript">
-  function UpdateDealStage(user_id,deal_id){
+  function UpdateDealStage(user_id, deal_id){
       var stage_id = $('#stage_id_'+deal_id).val();
       r=confirm('Are you sure you want to update this stage?');
       if (r) {

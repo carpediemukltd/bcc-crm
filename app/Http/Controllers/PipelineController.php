@@ -31,14 +31,13 @@ class PipelineController extends Controller
 
     public function pipelineEdit(Request $request, $id)
     {
-        $this->data['current_slug'] = 'Edit Pipeline';
-        $this->data['slug'] = 'edit_pipeline';
         $this->data['pipeline'] = Pipeline::where('id', $id)->first();
 
         if ($request->isMethod('post')) {
             if (!$this->data['pipeline']) {
                 return redirect()->back()->withError('Pipeline not found.')->withInput();
             }
+
             if (empty($request->title)) {
                 return redirect()->back()->withError('Title can not be empty.')->withInput();
             }
@@ -49,12 +48,26 @@ class PipelineController extends Controller
         }
     }
 
+    public function pipelineDelete(Request $request, $id)
+    {
+        $this->data['pipeline'] = Pipeline::where('id', $id)->first();
+
+        if ($request->isMethod('post')) {
+            if (!$this->data['pipeline']) {
+                return redirect()->back()->withError('Pipeline not found.')->withInput();
+            }
+
+            Pipeline::whereId($id)->delete();
+            return response(['message' => 'success', 'detail' => "Pipeline deleted successfully."]);
+        }
+    }
+
     public function pipelineAdd(Request $request)
     {
         if ($request->isMethod('post')) {
-        $data = Pipeline::create(['company_id'=>1,'title' => $request->title]);
+            $data = Pipeline::create(['company_id' => 1, 'title' => $request->title]);
 
-        return response(['message' => 'success', 'data' => Pipeline::where('id', $data->id)->first()]);
+            return response(['message' => 'success', 'data' => Pipeline::where('id', $data->id)->first()]);
         }
     }
 

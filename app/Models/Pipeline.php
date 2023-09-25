@@ -15,4 +15,17 @@ class Pipeline extends Model
     {
         return $this->hasMany(Deal::class, 'pipeline_id');
     }
+
+    public static function getPipelineByUser($user_id)
+    {
+        $data = Pipeline::join('users', function ($join) {
+            $join->on('users.company_id', '=', 'pipelines.company_id');
+        })
+        ->where('users.id', $user_id)
+        ->select('pipelines.*')
+        ->orderBy('title', 'ASC')
+        ->get();
+        
+        return $data;
+    }
 }

@@ -161,7 +161,7 @@
                                         <label class="form-label">&nbsp;</label>
                                         <div class="d-flex align-items-center justify-content-between">
                                             <button type="button" class="btn btn-primary" data-toggle="tooltip"
-                                        data-placement="top" onclick="triggerGet()">Load</button>
+                                        data-placement="top" onclick="triggerGetDeals()">Load</button>
                                         </div>
                                     </div>
                                     
@@ -191,7 +191,7 @@
             $('#companies').change(function() {
                 getDeals();
             });
-            triggerGet();
+            triggerGetDeals();
         });
         var dealsView = 'list';
 
@@ -200,7 +200,7 @@
             getDeals();
         }
 
-        function triggerGet() {
+        function triggerGetDeals() {
             $('#companies').trigger('change');
         }
 
@@ -210,6 +210,7 @@
             $('#deals').html('Loading...');
             var url = "{{ route('company.deals.detail', ':deals_view') }}";
             url = url.replace(':deals_view', dealsView);
+            console.log(url);
             $('#show_loading').show();
             $.post({
                 url: url,

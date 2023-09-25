@@ -190,7 +190,7 @@
                      <h3 class="text-center mb-4">Are you sure you want to delete?</h3>
                      <div class="form-group mb-4">
                         <label class="form-label">Enter the title of stage to delete.</label>
-                        <input type="email" class="form-control mb-0" placeholder="Enter email" autocomplete="off">
+                        <input type="text" class="form-control mb-0" placeholder="Enter Stage Name" autocomplete="off">
                      </div>
                     
                      <div class="text-center pb-2">

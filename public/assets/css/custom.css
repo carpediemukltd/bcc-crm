@@ -1505,6 +1505,9 @@ p.sub_text:after{
 .borad_view_holder{
   /* padding: 0 20px; */
 }
+.iq-nav-menu>li>a{
+  padding: .5rem 0.5rem;
+}
 .borad_view_holder .card{
   border: 1px solid #efefef;
 }

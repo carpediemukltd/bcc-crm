@@ -78,12 +78,12 @@
                                                                         name="stage_{{ $rec->id }}"
                                                                         value="{{ $rec->title }}" />
                                                                 </div>
-                                                                <br />
                                                                 <div id="loading_{{ $rec->id }}"
                                                                     style="display: none;">
                                                                 </div>
                                                             </td>
                                                             <td class="text-center">
+                                                                <div class="d-flex justify-content">
                                                                 <a href="javascript:void(0)"
                                                                     onclick="showEditOption('{{ $rec->id }}');">
                                                                     <svg fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -94,7 +94,16 @@
                                                                             fill="currentColor"></path>
                                                                     </svg>
                                                                 </a>
-                                                                <a href="javascript:void(0)"
+                                                                <a class="nav-link" href="#" >
+                                    <i class="icon">
+                                       <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor" xmlns="">
+                                          <g>
+                                             <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                          </g>
+                                       </svg>
+                                    </i>
+                                 </a>
+                                                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                                                                     onclick="DeleteConfirm('{{ $rec->id }}','{{ $rec->title }}');">
                                                                     <svg fill="none" xmlns="http://www.w3.org/2000/svg"
                                                                         width="24" height="24" viewBox="0 0 24 24">
@@ -104,7 +113,7 @@
                                                                     </svg>
                                                                 </a>
                                                                 <div id="save_rights_{{ $rec->id }}"
-                                                                    style="display:none;float: right;">
+                                                                    style="display:none;">
 
                                                                     <a href="javascript:void(0)"
                                                                         onclick="cancelEdit('{{ $rec->id }}');">
@@ -129,6 +138,7 @@
                                                                                 fill="currentColor"></path>
                                                                         </svg>
                                                                     </a>
+                                                                </div>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -172,6 +182,27 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true" style="display: none;">
+         <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+               <div class="modal-body px-4 py-4">
+                  <form action="#" autocomplete="off">
+                     <h3 class="text-center mb-4">Are you sure you want to delete?</h3>
+                     <div class="form-group mb-4">
+                        <label class="form-label">Enter the title of stage to delete.</label>
+                        <input type="text" class="form-control mb-0" placeholder="Enter Stage Name" autocomplete="off">
+                     </div>
+                    
+                     <div class="text-center pb-2">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Delete</button>
+                     </div>
+                     
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
     <script type="text/javascript">
         function showEditOption(id) {
             $('#show_text_' + id).hide();

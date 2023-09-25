@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
+    "content-hash": "1d3dcf4779d1d20292f5af4e651ede6d",
+=======
     "content-hash": "200b9becd285156104f1e7a83ec79c88",
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -292,6 +296,18 @@
         },
         {
             "name": "doctrine/dbal",
+<<<<<<< HEAD
+            "version": "3.6.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/dbal.git",
+                "reference": "8e0e268052b4a8974cb00215bb2892787021614f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/8e0e268052b4a8974cb00215bb2892787021614f",
+                "reference": "8e0e268052b4a8974cb00215bb2892787021614f",
+=======
             "version": "3.6.6",
             "source": {
                 "type": "git",
@@ -302,6 +318,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/doctrine/dbal/zipball/63646ffd71d1676d2f747f871be31b7e921c7864",
                 "reference": "63646ffd71d1676d2f747f871be31b7e921c7864",
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
                 "shasum": ""
             },
             "require": {
@@ -317,9 +334,15 @@
                 "doctrine/coding-standard": "12.0.0",
                 "fig/log-test": "^1",
                 "jetbrains/phpstorm-stubs": "2023.1",
+<<<<<<< HEAD
+                "phpstan/phpstan": "1.10.34",
+                "phpstan/phpstan-strict-rules": "^1.5",
+                "phpunit/phpunit": "9.6.12",
+=======
                 "phpstan/phpstan": "1.10.29",
                 "phpstan/phpstan-strict-rules": "^1.5",
                 "phpunit/phpunit": "9.6.9",
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
                 "psalm/plugin-phpunit": "0.18.4",
                 "slevomat/coding-standard": "8.13.1",
                 "squizlabs/php_codesniffer": "3.7.2",
@@ -385,7 +408,11 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
+<<<<<<< HEAD
+                "source": "https://github.com/doctrine/dbal/tree/3.6.7"
+=======
                 "source": "https://github.com/doctrine/dbal/tree/3.6.6"
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
             },
             "funding": [
                 {
@@ -401,7 +428,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
+            "time": "2023-09-19T20:15:41+00:00"
+=======
             "time": "2023-08-17T05:38:17+00:00"
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
         },
         {
             "name": "doctrine/deprecations",
@@ -2121,6 +2152,18 @@
         },
         {
             "name": "laravel/tinker",
+<<<<<<< HEAD
+            "version": "v2.8.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/tinker.git",
+                "reference": "b936d415b252b499e8c3b1f795cd4fc20f57e1f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/tinker/zipball/b936d415b252b499e8c3b1f795cd4fc20f57e1f3",
+                "reference": "b936d415b252b499e8c3b1f795cd4fc20f57e1f3",
+=======
             "version": "v2.8.1",
             "source": {
                 "type": "git",
@@ -2131,6 +2174,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/tinker/zipball/04a2d3bd0d650c0764f70bf49d1ee39393e4eb10",
                 "reference": "04a2d3bd0d650c0764f70bf49d1ee39393e4eb10",
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
                 "shasum": ""
             },
             "require": {
@@ -2143,6 +2187,10 @@
             },
             "require-dev": {
                 "mockery/mockery": "~1.3.3|^1.4.2",
+<<<<<<< HEAD
+                "phpstan/phpstan": "^1.10",
+=======
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
                 "phpunit/phpunit": "^8.5.8|^9.3.3"
             },
             "suggest": {
@@ -2183,6 +2231,24 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/tinker/issues",
+<<<<<<< HEAD
+                "source": "https://github.com/laravel/tinker/tree/v2.8.2"
+            },
+            "time": "2023-08-15T14:27:00+00:00"
+        },
+        {
+            "name": "league/commonmark",
+            "version": "2.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/commonmark.git",
+                "reference": "3669d6d5f7a47a93c08ddff335e6d945481a1dd5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/3669d6d5f7a47a93c08ddff335e6d945481a1dd5",
+                "reference": "3669d6d5f7a47a93c08ddff335e6d945481a1dd5",
+=======
                 "source": "https://github.com/laravel/tinker/tree/v2.8.1"
             },
             "time": "2023-02-15T16:40:09+00:00"
@@ -2199,6 +2265,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/d44a24690f16b8c1808bf13b1bd54ae4c63ea048",
                 "reference": "d44a24690f16b8c1808bf13b1bd54ae4c63ea048",
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
                 "shasum": ""
             },
             "require": {
@@ -2291,7 +2358,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
+            "time": "2023-08-30T16:55:00+00:00"
+=======
             "time": "2023-03-24T15:16:10+00:00"
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
         },
         {
             "name": "league/config",
@@ -2877,6 +2948,18 @@
         },
         {
             "name": "nesbot/carbon",
+<<<<<<< HEAD
+            "version": "2.70.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/briannesbitt/Carbon.git",
+                "reference": "d3298b38ea8612e5f77d38d1a99438e42f70341d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/d3298b38ea8612e5f77d38d1a99438e42f70341d",
+                "reference": "d3298b38ea8612e5f77d38d1a99438e42f70341d",
+=======
             "version": "2.69.0",
             "source": {
                 "type": "git",
@@ -2887,6 +2970,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/4308217830e4ca445583a37d1bf4aff4153fa81c",
                 "reference": "4308217830e4ca445583a37d1bf4aff4153fa81c",
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
                 "shasum": ""
             },
             "require": {
@@ -2979,7 +3063,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
+            "time": "2023-09-07T16:43:50+00:00"
+=======
             "time": "2023-08-03T09:00:52+00:00"
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
         },
         {
             "name": "nette/schema",
@@ -3251,6 +3339,76 @@
             "time": "2022-01-27T09:35:39+00:00"
         },
         {
+<<<<<<< HEAD
+            "name": "paragonie/constant_time_encoding",
+            "version": "v2.6.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paragonie/constant_time_encoding.git",
+                "reference": "58c3f47f650c94ec05a151692652a868995d2938"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/58c3f47f650c94ec05a151692652a868995d2938",
+                "reference": "58c3f47f650c94ec05a151692652a868995d2938",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7|^8"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6|^7|^8|^9",
+                "vimeo/psalm": "^1|^2|^3|^4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ParagonIE\\ConstantTime\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paragon Initiative Enterprises",
+                    "email": "security@paragonie.com",
+                    "homepage": "https://paragonie.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Steve 'Sc00bz' Thomas",
+                    "email": "steve@tobtu.com",
+                    "homepage": "https://www.tobtu.com",
+                    "role": "Original Developer"
+                }
+            ],
+            "description": "Constant-time Implementations of RFC 4648 Encoding (Base-64, Base-32, Base-16)",
+            "keywords": [
+                "base16",
+                "base32",
+                "base32_decode",
+                "base32_encode",
+                "base64",
+                "base64_decode",
+                "base64_encode",
+                "bin2hex",
+                "encoding",
+                "hex",
+                "hex2bin",
+                "rfc4648"
+            ],
+            "support": {
+                "email": "info@paragonie.com",
+                "issues": "https://github.com/paragonie/constant_time_encoding/issues",
+                "source": "https://github.com/paragonie/constant_time_encoding"
+            },
+            "time": "2022-06-14T06:56:20+00:00"
+        },
+        {
+=======
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
             "name": "paragonie/random_compat",
             "version": "v2.0.21",
             "source": {
@@ -3306,6 +3464,18 @@
         },
         {
             "name": "phpmailer/phpmailer",
+<<<<<<< HEAD
+            "version": "v6.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPMailer/PHPMailer.git",
+                "reference": "e88da8d679acc3824ff231fdc553565b802ac016"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/e88da8d679acc3824ff231fdc553565b802ac016",
+                "reference": "e88da8d679acc3824ff231fdc553565b802ac016",
+=======
             "version": "v6.8.0",
             "source": {
                 "type": "git",
@@ -3316,6 +3486,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/df16b615e371d81fb79e506277faea67a1be18f1",
                 "reference": "df16b615e371d81fb79e506277faea67a1be18f1",
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
                 "shasum": ""
             },
             "require": {
@@ -3325,13 +3496,21 @@
                 "php": ">=5.5.0"
             },
             "require-dev": {
+<<<<<<< HEAD
+                "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+=======
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
                 "doctrine/annotations": "^1.2.6 || ^1.13.3",
                 "php-parallel-lint/php-console-highlighter": "^1.0.0",
                 "php-parallel-lint/php-parallel-lint": "^1.3.2",
                 "phpcompatibility/php-compatibility": "^9.3.5",
                 "roave/security-advisories": "dev-latest",
+<<<<<<< HEAD
+                "squizlabs/php_codesniffer": "^3.7.2",
+=======
                 "squizlabs/php_codesniffer": "^3.7.1",
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
                 "yoast/phpunit-polyfills": "^1.0.4"
             },
             "suggest": {
@@ -3374,7 +3553,11 @@
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
             "support": {
                 "issues": "https://github.com/PHPMailer/PHPMailer/issues",
+<<<<<<< HEAD
+                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.8.1"
+=======
                 "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.8.0"
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
             },
             "funding": [
                 {
@@ -3382,7 +3565,11 @@
                     "type": "github"
                 }
             ],
+<<<<<<< HEAD
+            "time": "2023-08-29T08:26:30+00:00"
+=======
             "time": "2023-03-06T14:43:22+00:00"
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
         },
         {
             "name": "phpoffice/phpspreadsheet",
@@ -3565,6 +3752,41 @@
             "time": "2023-02-25T19:38:58+00:00"
         },
         {
+<<<<<<< HEAD
+            "name": "phpseclib/bcmath_compat",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpseclib/bcmath_compat.git",
+                "reference": "2ffea8bfe1702b4535a7b3c2649c4301968e9a3c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpseclib/bcmath_compat/zipball/2ffea8bfe1702b4535a7b3c2649c4301968e9a3c",
+                "reference": "2ffea8bfe1702b4535a7b3c2649c4301968e9a3c",
+                "shasum": ""
+            },
+            "require": {
+                "phpseclib/phpseclib": "^3.0"
+            },
+            "provide": {
+                "ext-bcmath": "8.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35|^5.7|^6.0|^9.4",
+                "squizlabs/php_codesniffer": "^3.0"
+            },
+            "suggest": {
+                "ext-gmp": "Will enable faster math operations"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "lib/bcmath.php"
+                ],
+                "psr-4": {
+                    "bcmath_compat\\": "src"
+=======
             "name": "predis/predis",
             "version": "v2.2.2",
             "source": {
@@ -3593,6 +3815,7 @@
             "autoload": {
                 "psr-4": {
                     "Predis\\": "src/"
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3601,6 +3824,137 @@
             ],
             "authors": [
                 {
+<<<<<<< HEAD
+                    "name": "Jim Wigginton",
+                    "email": "terrafrost@php.net",
+                    "homepage": "http://phpseclib.sourceforge.net"
+                }
+            ],
+            "description": "PHP 5.x-8.x polyfill for bcmath extension",
+            "keywords": [
+                "BigInteger",
+                "bcmath",
+                "bigdecimal",
+                "math",
+                "polyfill"
+            ],
+            "support": {
+                "email": "terrafrost@php.net",
+                "issues": "https://github.com/phpseclib/bcmath_compat/issues",
+                "source": "https://github.com/phpseclib/bcmath_compat"
+            },
+            "time": "2021-12-16T02:35:52+00:00"
+        },
+        {
+            "name": "phpseclib/phpseclib",
+            "version": "3.0.23",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpseclib/phpseclib.git",
+                "reference": "866cc78fbd82462ffd880e3f65692afe928bed50"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/866cc78fbd82462ffd880e3f65692afe928bed50",
+                "reference": "866cc78fbd82462ffd880e3f65692afe928bed50",
+                "shasum": ""
+            },
+            "require": {
+                "paragonie/constant_time_encoding": "^1|^2",
+                "paragonie/random_compat": "^1.4|^2.0|^9.99.99",
+                "php": ">=5.6.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "suggest": {
+                "ext-dom": "Install the DOM extension to load XML formatted public keys.",
+                "ext-gmp": "Install the GMP (GNU Multiple Precision) extension in order to speed up arbitrary precision integer arithmetic operations.",
+                "ext-libsodium": "SSH2/SFTP can make use of some algorithms provided by the libsodium-php extension.",
+                "ext-mcrypt": "Install the Mcrypt extension in order to speed up a few other cryptographic operations.",
+                "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations."
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "phpseclib/bootstrap.php"
+                ],
+                "psr-4": {
+                    "phpseclib3\\": "phpseclib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jim Wigginton",
+                    "email": "terrafrost@php.net",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Patrick Monnerat",
+                    "email": "pm@datasphere.ch",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Andreas Fischer",
+                    "email": "bantu@phpbb.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Hans-Jürgen Petrich",
+                    "email": "petrich@tronic-media.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Graham Campbell",
+                    "email": "graham@alt-three.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP Secure Communications Library - Pure-PHP implementations of RSA, AES, SSH2, SFTP, X.509 etc.",
+            "homepage": "http://phpseclib.sourceforge.net",
+            "keywords": [
+                "BigInteger",
+                "aes",
+                "asn.1",
+                "asn1",
+                "blowfish",
+                "crypto",
+                "cryptography",
+                "encryption",
+                "rsa",
+                "security",
+                "sftp",
+                "signature",
+                "signing",
+                "ssh",
+                "twofish",
+                "x.509",
+                "x509"
+            ],
+            "support": {
+                "issues": "https://github.com/phpseclib/phpseclib/issues",
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.23"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/terrafrost",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/phpseclib",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpseclib/phpseclib",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-09-18T17:22:01+00:00"
+=======
                     "name": "Till Krüss",
                     "homepage": "https://till.im",
                     "role": "Maintainer"
@@ -3624,6 +3978,7 @@
                 }
             ],
             "time": "2023-09-13T16:42:03+00:00"
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
         },
         {
             "name": "psr/cache",
@@ -4083,6 +4438,18 @@
         },
         {
             "name": "psy/psysh",
+<<<<<<< HEAD
+            "version": "v0.11.21",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bobthecow/psysh.git",
+                "reference": "bcb22101107f3bf770523b65630c9d547f60c540"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/bcb22101107f3bf770523b65630c9d547f60c540",
+                "reference": "bcb22101107f3bf770523b65630c9d547f60c540",
+=======
             "version": "v0.11.20",
             "source": {
                 "type": "git",
@@ -4093,6 +4460,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/bobthecow/psysh/zipball/0fa27040553d1d280a67a4393194df5228afea5b",
                 "reference": "0fa27040553d1d280a67a4393194df5228afea5b",
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
                 "shasum": ""
             },
             "require": {
@@ -4122,6 +4490,13 @@
             "extra": {
                 "branch-alias": {
                     "dev-main": "0.11.x-dev"
+<<<<<<< HEAD
+                },
+                "bamarni-bin": {
+                    "bin-links": false,
+                    "forward-command": false
+=======
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
                 }
             },
             "autoload": {
@@ -4153,9 +4528,15 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
+<<<<<<< HEAD
+                "source": "https://github.com/bobthecow/psysh/tree/v0.11.21"
+            },
+            "time": "2023-09-17T21:15:54+00:00"
+=======
                 "source": "https://github.com/bobthecow/psysh/tree/v0.11.20"
             },
             "time": "2023-07-31T14:32:22+00:00"
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
         },
         {
             "name": "ralouphie/getallheaders",
@@ -4391,6 +4772,18 @@
         },
         {
             "name": "spatie/laravel-permission",
+<<<<<<< HEAD
+            "version": "5.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-permission.git",
+                "reference": "0a35e99da4cb6f85b07b3b58b718ff659c39a009"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/0a35e99da4cb6f85b07b3b58b718ff659c39a009",
+                "reference": "0a35e99da4cb6f85b07b3b58b718ff659c39a009",
+=======
             "version": "5.10.2",
             "source": {
                 "type": "git",
@@ -4401,6 +4794,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/671e46e079cbd4990a98427daaa09f4977b57ca9",
                 "reference": "671e46e079cbd4990a98427daaa09f4977b57ca9",
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
                 "shasum": ""
             },
             "require": {
@@ -4461,7 +4855,11 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-permission/issues",
+<<<<<<< HEAD
+                "source": "https://github.com/spatie/laravel-permission/tree/5.11.0"
+=======
                 "source": "https://github.com/spatie/laravel-permission/tree/5.10.2"
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
             },
             "funding": [
                 {
@@ -4469,7 +4867,11 @@
                     "type": "github"
                 }
             ],
+<<<<<<< HEAD
+            "time": "2023-08-30T23:41:24+00:00"
+=======
             "time": "2023-07-04T13:38:13+00:00"
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -7950,6 +8352,18 @@
         },
         {
             "name": "phpunit/php-code-coverage",
+<<<<<<< HEAD
+            "version": "9.2.29",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
+                "reference": "6a3a87ac2bbe33b25042753df8195ba4aa534c76"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/6a3a87ac2bbe33b25042753df8195ba4aa534c76",
+                "reference": "6a3a87ac2bbe33b25042753df8195ba4aa534c76",
+=======
             "version": "9.2.27",
             "source": {
                 "type": "git",
@@ -7960,6 +8374,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/b0a88255cb70d52653d80c890bd7f38740ea50d1",
                 "reference": "b0a88255cb70d52653d80c890bd7f38740ea50d1",
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
                 "shasum": ""
             },
             "require": {
@@ -8016,7 +8431,11 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
                 "security": "https://github.com/sebastianbergmann/php-code-coverage/security/policy",
+<<<<<<< HEAD
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.29"
+=======
                 "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.27"
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
             },
             "funding": [
                 {
@@ -8024,7 +8443,11 @@
                     "type": "github"
                 }
             ],
+<<<<<<< HEAD
+            "time": "2023-09-19T04:57:46+00:00"
+=======
             "time": "2023-07-26T13:44:30+00:00"
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -8269,6 +8692,18 @@
         },
         {
             "name": "phpunit/phpunit",
+<<<<<<< HEAD
+            "version": "9.6.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/phpunit.git",
+                "reference": "f3d767f7f9e191eab4189abe41ab37797e30b1be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/f3d767f7f9e191eab4189abe41ab37797e30b1be",
+                "reference": "f3d767f7f9e191eab4189abe41ab37797e30b1be",
+=======
             "version": "9.6.11",
             "source": {
                 "type": "git",
@@ -8279,6 +8714,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/810500e92855eba8a7a5319ae913be2da6f957b0",
                 "reference": "810500e92855eba8a7a5319ae913be2da6f957b0",
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
                 "shasum": ""
             },
             "require": {
@@ -8293,7 +8729,11 @@
                 "phar-io/manifest": "^2.0.3",
                 "phar-io/version": "^3.0.2",
                 "php": ">=7.3",
+<<<<<<< HEAD
+                "phpunit/php-code-coverage": "^9.2.28",
+=======
                 "phpunit/php-code-coverage": "^9.2.13",
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
                 "phpunit/php-file-iterator": "^3.0.5",
                 "phpunit/php-invoker": "^3.1.1",
                 "phpunit/php-text-template": "^2.0.3",
@@ -8352,7 +8792,11 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
+<<<<<<< HEAD
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.13"
+=======
                 "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.11"
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
             },
             "funding": [
                 {
@@ -8368,7 +8812,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
+            "time": "2023-09-19T05:39:22+00:00"
+=======
             "time": "2023-08-19T07:10:56+00:00"
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
         },
         {
             "name": "sebastian/cli-parser",
@@ -9394,5 +9842,9 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
+<<<<<<< HEAD
+    "plugin-api-version": "2.3.0"
+=======
     "plugin-api-version": "2.6.0"
+>>>>>>> 3d7efbc79195d954b58fd977eaf57a0a2de0b731
 }

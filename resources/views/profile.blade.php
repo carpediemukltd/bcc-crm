@@ -24,12 +24,12 @@
          </div>
       </div>
       <div class="iq-header-img">
-      <img src="{{asset('assets/images/dashboard/top-header.png')}}" alt="header" class="theme-color-default-img img-fluid w-100 h-100 animated-scaleX" loading="lazy">
-         
+         <img src="{{asset('assets/images/dashboard/top-header.png')}}" alt="header" class="theme-color-default-img img-fluid w-100 h-100 animated-scaleX" loading="lazy">
+
       </div>
    </div>
 </div>
-<div class="content-inner container-fluid pb-0" id="page_layout">
+<div class="content-inner container-fluid pb-0 edit-profile" id="page_layout">
    <div>
       @include('alert_message')
       <div class="row">
@@ -79,7 +79,7 @@
                               <label class="form-label" for="password">Password:</label>
                               <input type="password" class="form-control" id="password" placeholder="Password" name="password">
                               @if ($errors->has('password'))
-                                 <span class="text-danger">{{ $errors->first('password') }}</span>
+                              <span class="text-danger">{{ $errors->first('password') }}</span>
                               @endif
                            </div>
                         </div>
@@ -88,13 +88,38 @@
                               <label class="form-label" for="confirm_password">Confirm Password:</label>
                               <input type="password" class="form-control" id="confirm_password" placeholder="Confirm Password" name="confirm_password">
                               @if ($errors->has('confirm_password'))
-                                 <span class="text-danger">{{ $errors->first('confirm_password') }}</span>
+                              <span class="text-danger">{{ $errors->first('confirm_password') }}</span>
                               @endif
                            </div>
                         </div>
                      </div>
+                     <div class="row">
 
-                     <div class="row"><div class="col"><br /></div></div>
+                        <div class="col-lg-3">
+                           <div class="form-group  p-0 mb-3">
+                              <br>
+                              <label for="toggle2FA">Enable 2FA</label>
+                              <label class="switch">
+                                 <input type="checkbox" id="toggle2FA" name="two_factor" {{ auth()->user()->two_factor_enabled ? 'checked' : '' }}>
+                                 <span class="slider round"></span>
+                              </label>
+                           </div>
+                        </div>
+                        <div id="twoFactorType" class="{{ auth()->user()->two_factor_enabled ? 'col-lg-3' : 'col-lg-3 display-none' }}">
+                           <div class="form-group p-0 mb-3">
+                              <br>
+                              <select name="two_factor_type" class="form-control">
+                                 <option value="email" {{ auth()->user()->two_factor_type === 'email' ? 'selected' : '' }}>Email</option>
+                                 <option value="phone" {{ auth()->user()->two_factor_type === 'phone' ? 'selected' : '' }}>Phone Number</option>
+                              </select>
+
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="row">
+                        <div class="col"><br /></div>
+                     </div>
 
                      <div class="row">
                         <div class="col">
@@ -109,4 +134,19 @@
       </div>
    </div>
 </div>
+<script>
+   const toggle = document.getElementById('toggle2FA');
+   const twoFactorTypeContainer = document.getElementById('twoFactorType');
+   // Function to toggle the design
+   toggle.addEventListener('change', function() {
+      console.log(toggle)
+      if (toggle.checked) {
+         twoFactorTypeContainer.style.display = 'block';
+
+      } else {
+         twoFactorTypeContainer.style.display = 'none';
+
+      }
+   });
+</script>
 @endsection

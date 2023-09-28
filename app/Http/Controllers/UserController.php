@@ -46,11 +46,14 @@ class UserController extends Controller
         $this->data['current_slug'] = 'My Profile';
         if ($request->isMethod('post')) {
             $update_data = [
-                'first_name'   => $request->first_name,
-                'last_name'    => $request->last_name,
-                'phone_number' => $request->phone_number
+                'first_name'            => $request->first_name,
+                'last_name'             => $request->last_name,
+                'phone_number'          => $request->phone_number,
+                'two_factor_enabled'    => $request->has('two_factor') ? '1' : '0',
             ];
-
+            if($request->has('two_factor')){
+                $update_data['two_factor_type'] = $request->two_factor_type; 
+            } 
             if ($request->password && !$request->confirm_password) {
                 return redirect()->back()->withError('Confirm password is required.')->withInput();
             } else if ($request->password && ($request->password != $request->confirm_password)) {

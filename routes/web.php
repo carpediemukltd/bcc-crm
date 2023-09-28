@@ -39,6 +39,7 @@ use App\Http\Controllers\MagicLinkController;
 
 Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::post('verify-2fa', [AuthController::class, 'verify2FA'])->name('verify-2fa');
 Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
 Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');

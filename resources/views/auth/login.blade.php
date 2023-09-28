@@ -55,9 +55,9 @@
                               </a>
                               <h2 class="mb-2 text-center">Sign In</h2>
                               <p class="text-center">Login to stay connected.</p>
-                              @include('alert_message')
+                              <div style="display: none;" class="alert alert-danger alert-block"></div>
 
-                              <form class="bcc_login_form" action="{{ route('login.post') }}" method="POST">
+                              <form id="login-form" class="bcc_login_form" action="{{ route('login.post') }}" method="POST">
                                 @csrf
                                  <div class="row">
                                     <div class="col-lg-12">
@@ -85,6 +85,21 @@
                                  </div>
                                  
                               </form>
+                              <!-- Add this HTML inside your login-form div -->
+								<div class="2fa-form" style="display: none;">
+									<form id="2fa-verification-form" action="{{ route('verify-2fa') }}" method="POST">
+										{{ csrf_field() }}
+										<input type="hidden" name="email" value="">
+										<input type="hidden" name="password" value="">
+										<div class="group">
+											<label for="2fa-code" class="label">2FA Code</label>
+											<input id="2fa-code" type="text" class="form-control" name="verification_code" required>
+										</div>
+										<div class="group mb-0">
+											<input type="submit" class="btn btn-primary mt-2" value="Verify Code">
+										</div>
+									</form>
+								</div>
                            </div>
                         </div>
                      </div>
@@ -124,5 +139,72 @@
       <script src="{{asset('assets/js/hope-ui.js?v=3.0.0')}}" defer></script>
       <script src="{{asset('assets/js/hope-uipro.js?v=3.0.0')}}" defer></script>
       <script src="{{asset('assets/js/sidebar.js?v=3.0.0')}}" defer></script>  
+      <script>
+			$(document).ready(function() {
+				$('#login-form').submit(function(event) {
+					// Prevent the default form submission
+					event.preventDefault();
+					$('.alert-danger').hide();
+					// Get the form data
+					var formData = $(this).serialize();
+
+					// Send an Ajax POST request for initial login
+					$.ajax({
+						type: 'POST',
+						url: $(this).attr('action'),
+						data: formData,
+						success: function(response) {
+							// Check if 2FA is required
+							if (response.success) {
+								if (response.success == 'loggedin') {
+									window.location.href = 'dashboard';
+								} else {
+									// Hide the initial login form
+									$('#login-form').hide();
+
+									// Show the 2FA form
+									$('.2fa-form').show();
+									// Set the email value in the 2FA form
+									$('#2fa-verification-form input[name="email"]').val($('#email').val());
+									$('#2fa-verification-form input[name="password"]').val($('#password').val());
+                    
+								}
+
+							} else if (response.error) {
+								$('.alert-danger').html('<ul><li>' + response.error + '</li></ul>').show();
+							}
+						},
+						error: function(response) {
+							$('.alert-danger').html('<ul><li>Oops! Something went Wrong.</li></ul>').show();							
+						}
+					});
+				});
+
+				$('#2fa-verification-form').submit(function(event) {
+					// Prevent the default form submission
+					event.preventDefault();
+
+					// Get the form data
+					var formData = $(this).serialize();
+
+					// Send an Ajax POST request for 2FA verification
+					$.ajax({
+						type: 'POST',
+						url: $(this).attr('action'),
+						data: formData,
+						success: function(response) {
+							if(response.error){
+								$('.alert-danger').html('<ul><li>' + response.error + '</li></ul>').show();
+							}else{
+								window.location.href = 'dashboard';
+							}
+						},
+						error: function(response) {
+							$('.alert-danger').html('<ul><li>Oops! Something went Wrong.</li></ul>').show();						
+						}
+					});
+				});
+			});
+		</script>
    </body>
 </html>

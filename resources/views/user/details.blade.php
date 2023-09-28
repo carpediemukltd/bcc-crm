@@ -678,7 +678,7 @@
             dataType: 'JSON', // The expected data type of the response
             success: function (response) {  
 
-               var data = `<iframe src="http://127.0.0.1:8000/documents/view/`+response.contact_id+`?token=`+response.token+`&hide-header=true" width="70%" height="800"></iframe>`;
+               var data = `<iframe src="http://dashboard.bccusa.com/documents/view/`+response.contact_id+`?token=`+response.token+`&hide-header=true" width="70%" height="800"></iframe>`;
                $('#modalBody').append(data);
                $('#TestModal').modal('show');
                // console.table(response);

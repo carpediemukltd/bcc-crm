@@ -67,9 +67,12 @@
                         </div>
                         <div class="col">
                            <div class="form-group">
+                              <input type="hidden" name="phone_country_code" id="selected-country-code" >
                               <label class="form-label" for="phone_number">Phone number:</label>
-                              <input type="number" id="phone_number" value="{{$user->phone_number}}" class="form-control" name="phone_number" placeholder="123456789" required>
-                           </div>
+                              <div class="phone-input">
+                                 <input value="{{$user->phone_number}}" name="phone_number" type="tel" id="phone-number" placeholder="Enter your phone number" class="form-control" required>
+                              </div>
+                             </div>
                         </div>
                      </div>
 

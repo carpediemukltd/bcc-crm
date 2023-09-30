@@ -43,6 +43,8 @@
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
        <link href="{{asset('assets/css/chat-style.css')}}" rel="stylesheet" />
       <meta name="csrf-token" content="{{ csrf_token() }}">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+
       @yield('css')
    </head>
    <body class="dual-compact light theme-default theme-with-animation card-default theme-color-default">

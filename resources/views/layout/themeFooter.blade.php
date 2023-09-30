@@ -975,6 +975,8 @@
 
 <script src="{{asset('assets/vendor/sortable/Sortable.min.js')}}"></script>
 <script src="{{asset('assets/js/plugins/kanban.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput-jquery.min.js"></script>
+
 
 
 <script>
@@ -1098,6 +1100,33 @@
       //redirect to setting url
       window.location.href = window.location.origin+settingUrl;
    });
+
+$(document).ready(function () {
+    // Initialize the plugin with the user's country code.
+    var phoneNumberInput = $('#phone-number');
+    var selectedCountryCodeInput = $('#selected-country-code'); // Hidden input field
+
+    // Remove non-digit characters as the user types.
+    phoneNumberInput.on('input', function () {
+        var sanitizedValue = phoneNumberInput.val().replace(/\D/g, ''); // Remove non-digit characters
+        phoneNumberInput.val(sanitizedValue); // Add the plus sign back
+    });
+
+    phoneNumberInput.intlTelInput({
+        separateDialCode: true,
+    });
+
+    // Add an event listener to update the hidden input with the selected country code.
+    phoneNumberInput.on('countrychange', function (e) {
+        var selectedCountryData = phoneNumberInput.intlTelInput('getSelectedCountryData');
+        var selectedCountryCode = '+' + selectedCountryData.dialCode;
+        selectedCountryCodeInput.val(selectedCountryCode);
+    });
+    phoneNumberInput.trigger('countrychange');
+
+});
+
+
 </script>
    @yield('script')
 

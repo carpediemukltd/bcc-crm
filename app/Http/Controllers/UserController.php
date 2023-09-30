@@ -48,7 +48,7 @@ class UserController extends Controller
             $update_data = [
                 'first_name'            => $request->first_name,
                 'last_name'             => $request->last_name,
-                'phone_number'          => $request->phone_number,
+                'phone_number'          => $request->phone_country_code." ".$request->phone_number,
                 'two_factor_enabled'    => $request->has('two_factor') ? '1' : '0',
             ];
             if($request->has('two_factor')){
@@ -112,7 +112,7 @@ class UserController extends Controller
                     'first_name' => $data['first_name'],
                     'last_name' => $data['last_name'],
                     'email' => $data['email'],
-                    'phone_number'  => $data['phone_number'],
+                    'phone_number'  => $data['phone_country_code']." ".$data['phone_number'],
                     'role' => $data['role'],
                     'company_id' => $company_id,
                     'password' => Hash::make($data['password'])
@@ -237,7 +237,7 @@ class UserController extends Controller
             $update_data = [
                 'first_name'   => $request->first_name,
                 'last_name'    => $request->last_name,
-                'phone_number' => $request->phone_number,
+                'phone_number' => $request->phone_country_code." ".$request->phone_number,
                 'status'       => $request->status
             ];
 

@@ -196,7 +196,8 @@ class AuthController extends Controller
             $twilioSid          = env('TWILIO_SID');
             $twilioToken        = env('TWILIO_AUTH_TOKEN');
             $client             = new Client($twilioSid, $twilioToken);
-            $toPhoneNumber      = $user->phone_number;
+            // Remove spaces from the phone number
+            $toPhoneNumber = str_replace(' ', '', $user->phone_number);
             try {
                 $client->messages->create(
                     $toPhoneNumber,

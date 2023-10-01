@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class CompanyController extends Controller
 {
@@ -28,7 +29,8 @@ class CompanyController extends Controller
         });
     }
 
-    public function companyDeals(){
+    public function companyDeals()
+    {
         $this->data['current_slug'] = 'Company Deals';
         $this->data['slug']         = 'deals_company';
 
@@ -41,14 +43,17 @@ class CompanyController extends Controller
         return view("deals.company", $this->data);
     }
 
-    
     public function companyDealsDetail($view, Request $request)
     {
-        $company_id = $request->company_id;
-        $pipeline_id = $request->pipeline_id;
-        $this->data['deals'] = Deal::getDealsByCompany($company_id, $pipeline_id);
+        $filters['company_id'] = $request->company_id;
+        $filters['depositing_institution'] = $request->depositing_institution;
+        $filters['state'] = $request->state;
+        $filters['submitted_bank'] = $request->submitted_bank;
+        $filters['sub_type'] = $request->sub_type;
+        $filters['paginate'] = 10;
+        $this->data['deals'] = Deal::getDealsByFilters($filters);
         $this->data['stages'] = Stage::orderBy('sort', 'ASC')->get();
-      
+
         if ($view == 'board') {
             return view("deals.company_board", $this->data);
         } else {
@@ -102,9 +107,9 @@ class CompanyController extends Controller
 
                 Pipeline::create([
                     'company_id' => $new_company->id,
-                    'title' => $data['name']." Pipeline",
-                    
-                ]);                
+                    'title' => $data['name'] . " Pipeline",
+
+                ]);
 
                 return redirect(route('company.list'))->withSuccess('Company Created Successfully.');
             }
@@ -146,7 +151,7 @@ class CompanyController extends Controller
                 $q->whereBetween('created_at', [$request->start_date, $request->end_date]);
             })
             ->select('users.*', 'companies.id as the_company_id', 'companies.name as company_name')
-           // ->groupBy('the_company_id')
+            // ->groupBy('the_company_id')
             ->orderBy('users.id', 'DESC')->paginate(10);
 
         if ($request->ajax())
@@ -166,7 +171,7 @@ class CompanyController extends Controller
             $request->validate([
                 'company_id' => 'required',
                 'admin_id' => 'required',
-                'name' => 'required|unique:companies,name,'.$id,
+                'name' => 'required|unique:companies,name,' . $id,
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'phone_number' => 'required',
@@ -209,5 +214,90 @@ class CompanyController extends Controller
                 ->orderBy('users.id', 'DESC')->first();
             return view("company.edit", $this->data);
         }
+    }
+
+     public function exportDealsXLS(Request $request)
+    {
+        $file_name = 'company_deals.xls';
+        $filters['user_id'] = $this->user->id;
+        $filters['company_id'] = $request->company_id;
+        $filters['depositing_institution'] = $request->depositing_institution;
+        $filters['state'] = $request->state;
+        $filters['submitted_bank'] = $request->submitted_bank;
+        $filters['sub_type'] = $request->sub_type;
+        $filters['paginate'] = 0;
+        $deals = Deal::getDealsByFilters($filters);
+
+        $file = new Spreadsheet();
+        $active_sheet = $file->getActiveSheet();
+
+        $active_sheet->setCellValue('A1', 'Company');
+        $active_sheet->setCellValue('B1', 'Stage');
+        $active_sheet->setCellValue('C1', 'Title');
+        $active_sheet->setCellValue('D1', 'Amount');
+        $active_sheet->setCellValue('E1', 'Deal Owner');
+        $active_sheet->setCellValue('F1', 'Source');
+        $active_sheet->setCellValue('G1', 'Depositing Institution');
+        $active_sheet->setCellValue('H1', 'State');
+        $active_sheet->setCellValue('I1', 'Submitted Bank');
+        $active_sheet->setCellValue('J1', 'Sub Type');
+
+        $count = 2;
+        foreach ($deals as $deal) {
+            $active_sheet->setCellValue('A' . $count, $deal->company_name);
+            $active_sheet->setCellValue('B' . $count, $deal->stage);
+            $active_sheet->setCellValue('C' . $count, $deal->title);
+            $active_sheet->setCellValue('D' . $count, $deal->amount);
+            $active_sheet->setCellValue('E' . $count, $deal->deal_owner);
+            $active_sheet->setCellValue('F' . $count, $deal->lead_source);
+            $active_sheet->setCellValue('G' . $count, $deal->depositing_institution);
+            $active_sheet->setCellValue('H' . $count, $deal->state);
+            $active_sheet->setCellValue('I' . $count, $deal->submitted_bank);
+            $active_sheet->setCellValue('J' . $count, $deal->sub_type);
+
+            $count++;
+        }
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($file, 'Xls');
+        $writer->save($path = storage_path($file_name));
+
+        return response()->download($path)->deleteFileAfterSend();
+    }
+ 
+    public function exportDealsCSV(Request $request)
+    {
+        $file_name = 'company_deals.csv';
+        $filters['user_id'] = $this->user->id;
+        $filters['company_id'] = $request->company_id;
+        $filters['depositing_institution'] = $request->depositing_institution;
+        $filters['state'] = $request->state;
+        $filters['submitted_bank'] = $request->submitted_bank;
+        $filters['sub_type'] = $request->sub_type;
+        $filters['paginate'] = 0;
+        $deals = Deal::getDealsByFilters($filters);
+
+        $columns = array('Company', 'Stage', 'Title', 'Amount', 'Deal Owner', 'Source', 'Depositing Institution', 'State', 'Submitted Bank', 'Sub Type');
+
+        $file = fopen($path = storage_path($file_name), 'w');
+
+        fputcsv($file, $columns);
+
+        foreach ($deals as $deal) {
+
+            $row['Company'] = $deal->company_name;
+            $row['Stage'] = $deal->stage;
+            $row['Title'] = $deal->title;
+            $row['Amount'] = $deal->amount;
+            $row['Deal Owner'] = $deal->deal_owner;
+            $row['Source'] = $deal->lead_source;
+            $row['Depositing Institution'] = $deal->depositing_institution;
+            $row['State'] = $deal->state;
+            $row['Submitted Bank'] = $deal->submitted_bank;
+            $row['Sub Type'] = $deal->sub_type;
+
+            fputcsv($file, $row);
+        }
+        fclose($file);
+        return response()->download($path)->deleteFileAfterSend();
     }
 }

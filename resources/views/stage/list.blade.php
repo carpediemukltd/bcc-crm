@@ -103,7 +103,7 @@
                                        </svg>
                                     </i>
                                  </a>
-                                                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                                                <a href="javascript:void(0)"
                                                                     onclick="DeleteConfirm('{{ $rec->id }}','{{ $rec->title }}');">
                                                                     <svg fill="none" xmlns="http://www.w3.org/2000/svg"
                                                                         width="24" height="24" viewBox="0 0 24 24">
@@ -204,6 +204,9 @@
          </div>
       </div>
     <script type="text/javascript">
+    function ShowModal(){
+        $("#staticBackdrop").modal("show");
+    }
         function showEditOption(id) {
             $('#show_text_' + id).hide();
             $('#show_edit_text_' + id).show();

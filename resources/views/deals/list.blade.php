@@ -111,7 +111,10 @@
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Amount</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Deal Owner</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Source</th>
-                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">Pipeline</th>
+                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">Depositing Institution</th>
+                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">State</th>
+                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">Submitted Bank</th>
+                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">Sub Type</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Stage</th>
                                     <th style="min-width: 100px" class="sorting" tabindex="0" aria-controls="user-list-table">Actions</th>
                                  </tr>
@@ -126,7 +129,10 @@
                                           <td>{{$rec->amount}}</td>
                                           <td>{{$rec->deal_owner}}</td>
                                           <td>{{$rec->lead_source}}</td>
-                                          <td>{{$rec->pipeline}}</td>
+                                          <td>{{$rec->depositing_institution}}</td>
+                                          <td>{{$rec->state}}</td>
+                                          <td>{{$rec->submitted_bank}}</td>
+                                          <td>{{$rec->sub_type}}</td>
                                           <td>
                                              <div class="form-group mb-0">
                                                 <select class="form-select" id="stage_id_{{$rec->id}}" name="stage_id_{{$rec->id}}" onchange="UpdateDealStage({{$rec->id}});">

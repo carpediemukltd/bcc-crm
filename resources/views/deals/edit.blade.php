@@ -70,6 +70,36 @@
                      <div class="row">
                         <div class="col">
                            <div class="form-group">
+                              <label class="form-label" for="depositing_institution">Depositing Institution:</label>
+                              <input type="text" class="form-control" id="depositing_institution" value="{{$rs_deal->depositing_institution}}" placeholder="Depositing Institution" name="depositing_institution" required>
+                           </div>
+                        </div>
+                        <div class="col">
+                           <div class="form-group">
+                              <label class="form-label" for="state">State:</label>
+                              <input type="text" class="form-control" id="state" value="{{$rs_deal->state}}" placeholder="State" name="state" required>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="row">
+                        <div class="col">
+                           <div class="form-group">
+                              <label class="form-label" for="submitted_bank">Submitted Bank:</label>
+                              <input type="text" class="form-control" id="submitted_bank" value="{{$rs_deal->submitted_bank}}" placeholder="Submitted Bank" name="submitted_bank" required>
+                           </div>
+                        </div>
+                        <div class="col">
+                           <div class="form-group">
+                              <label class="form-label" for="sub_type">Sub Type:</label>
+                              <input type="text" class="form-control" id="sub_type" value="{{$rs_deal->sub_type}}" placeholder="Sub Type" name="sub_type" required>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="row">
+                        <div class="col">
+                           <div class="form-group">
                               <label class="form-label" for="pipeline_id">Pipeline:</label>
                               <select class="form-select" id="pipeline_id" name="pipeline_id" onchange="changePiepeline(this);" required>
                                  <option selected="true" value="" disabled="disabled">Select</option>
@@ -85,7 +115,11 @@
                            <div class="form-group">
                               <label class="form-label" for="stage_id">Stage:</label>
                               <select class="form-select" id="stage_id" name="stage_id" required>
-                                 <option selected="true" value="" disabled="disabled">Select</option>
+                                 @if(isset($rs_stages))
+                                    @foreach($rs_stages as $stage)
+                                       <option value="{{$stage->id}}" <?php if($stage->id == $rs_deal->stage_id){echo 'selected';}?>>{{ucfirst($stage->title)}}</option>
+                                    @endforeach
+                                 @endif
                               </select>
                            </div>
                         </div>

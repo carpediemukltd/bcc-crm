@@ -3,22 +3,26 @@
        <tr class="ligth">
           <th class="sorting" tabindex="0" aria-controls="user-list-table">S/No.</th>
           <th class="sorting" tabindex="0" aria-controls="user-list-table">Company</th>
-          <th class="sorting" tabindex="0" aria-controls="user-list-table">Pipeline</th>
+          {{-- <th class="sorting" tabindex="0" aria-controls="user-list-table">Pipeline</th> --}}
           <th class="sorting" tabindex="0" aria-controls="user-list-table">Stage</th>
           <th class="sorting" tabindex="0" aria-controls="user-list-table">Title</th>
           <th class="sorting" tabindex="0" aria-controls="user-list-table">Amount</th>
           <th class="sorting" tabindex="0" aria-controls="user-list-table">Deal Owner</th>
           <th class="sorting" tabindex="0" aria-controls="user-list-table">Source</th>
+          <th class="sorting" tabindex="0" aria-controls="user-list-table">Depositing Institution</th>
+          <th class="sorting" tabindex="0" aria-controls="user-list-table">State</th>
+          <th class="sorting" tabindex="0" aria-controls="user-list-table">Submitted Bank</th>
+          <th class="sorting" tabindex="0" aria-controls="user-list-table">Sub Type</th>
        </tr>
     </thead>
     <tbody>
        @if(isset($deals))
-       <?php $count=1; ?>
+       <?php $count= (($deals->currentPage()-1) * $deals->perPage()) +1; ?>
           @foreach($deals as $rec)
-             <tr class="odd">
+             <tr class="odd" id="{{$rec->id}}-{{$rec->user_id}}">
                 <td>{{$count}}</td>
                 <td>{{$rec->company_name}}</td>
-                <td>{{$rec->pipeline}}</td>
+                {{-- <td>{{$rec->pipeline}}</td> --}}
                 <td>
                    <div class="form-group mb-0">
                       <select class="form-select" id="stage_id_{{$rec->id}}" name="stage_id_{{$rec->id}}" onchange="UpdateDealStage({{$rec->user_id}},{{$rec->id}});">
@@ -33,6 +37,10 @@
                 <td>{{$rec->amount}}</td>
                 <td>{{$rec->deal_owner}}</td>
                 <td>{{$rec->lead_source}}</td>
+                <td>{{$rec->depositing_institution}}</td>
+                <td>{{$rec->state}}</td>
+                <td>{{$rec->submitted_bank}}</td>
+                <td>{{$rec->sub_type}}</td>
              </tr>
              <?php $count++; ?>
           @endforeach
@@ -44,7 +52,7 @@
        <!-- nothing happend -->
     </div>
     <div class="col-md-6">
-       {!! $deals->links('vendor.pagination.custom') !!}
+       {!! $deals->links('deals.company_list_pagination') !!}
     </div>
  </div>
  <script type="text/javascript">

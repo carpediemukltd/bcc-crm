@@ -99,7 +99,8 @@
                                                 fill="currentColor"></path>
                                         </svg>
                                     </a>
-                                    <a href="javascript:void(0);" class="btn btn-sm btn-primary" onclick="ExportCSV();">
+                                    <a href="javascript:void(0);" class="btn btn-sm btn-primary"
+                                        onclick="ExportData('csv');">
                                         <svg width="32" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path opacity="0.4"
@@ -111,7 +112,7 @@
                                         </svg> Export CSV
                                     </a>
                                     <a href="javascript:void(0);" style="margin-left:5px;" class="btn btn-sm btn-primary"
-                                        onclick="ExportXLS();"> <svg width="32" viewBox="0 0 24 24" fill="none"
+                                        onclick="ExportData('xls');"> <svg width="32" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path opacity="0.4"
                                                 d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2Z"
@@ -126,7 +127,8 @@
                         </div>
                         <div class="card-body pt-0">
                             <div class="row">
-                                <div class="col-lg-3">
+                                <div class="col-lg-2">
+                                    <input type="hidden" id="page_no" name="page_no" value="1" />
                                     @if (isset($companies))
                                         <div class="form-group w-100">
                                             <label class="form-label">Select Company</label>
@@ -141,30 +143,43 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="col-lg-3">
-                                    @if (isset($pipelines))
-                                        <div class="form-group w-100">
-                                            <label class="form-label">Select Pipeline</label>
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <select class="form-control" id="pipelines" name="pipelines">
-                                                    <option value="0">All</option>
-                                                    @foreach ($pipelines as $pipeline)
-                                                        <option value="{{ $pipeline->id }}">{{ $pipeline->title }}</option>
-                                                    @endforeach
-                                                </select>&nbsp;
-                                            </div>
-                                        </div>
-                                    @endif
+                                <div class="col-lg-2">
+                                    <div class="form-group w-100">
+                                        <label class="form-label">Depositing Institution</label>
+                                        <input type="text" class="form-control" id="depositing_institution"
+                                            name="depositing_institution" placeholder="Depositing Institution" />
+                                    </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-2">
+                                    <div class="form-group w-100">
+                                        <label class="form-label">State</label>
+                                        <input type="text" class="form-control" id="state" name="state"
+                                            placeholder="State" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group w-100">
+                                        <label class="form-label">Submitted Bank</label>
+                                        <input type="text" class="form-control" id="submitted_bank"
+                                            name="submitted_bank" placeholder="Submitted Bank" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group w-100">
+                                        <label class="form-label">Sub Type</label>
+                                        <input type="text" class="form-control" id="sub_type" name="sub_type"
+                                            placeholder="Sub Type" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
                                     <div class="form-group w-100">
                                         <label class="form-label">&nbsp;</label>
                                         <div class="d-flex align-items-center justify-content-between">
                                             <button type="button" class="btn btn-primary" data-toggle="tooltip"
-                                        data-placement="top" onclick="triggerGetDeals()">Load</button>
+                                                data-placement="top" onclick="triggerGetDeals()">Load</button>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="row" id="show_loading" style="display: none;">
@@ -185,40 +200,59 @@
     </div>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#pipelines').change(function() {
-                getDeals();
-            });
             $('#companies').change(function() {
-                getDeals();
+                $('#page_no').val(1);
+                getDeals(1);
+            });
+            $('#depositing_institution').change(function() {
+                $('#page_no').val(1);
+            });
+            $('#state').change(function() {
+                $('#page_no').val(1);
+            });
+            $('#submitted_bank').change(function() {
+                $('#page_no').val(1);
+            });
+            $('#sub_type').change(function() {
+                $('#page_no').val(1);
             });
             triggerGetDeals();
         });
+
         var dealsView = 'list';
 
         function setView(view) {
             dealsView = view;
-            getDeals();
+            getDeals($('#page_no').val());
         }
 
         function triggerGetDeals() {
             $('#companies').trigger('change');
         }
 
-        function getDeals() {
+        function getDeals(page_no) {
             var company_id = $('#companies').val();
-            var pipeline_id = $('#pipelines').val();
+            var depositing_institution = $('#depositing_institution').val();
+            var state = $('#state').val();
+            var submitted_bank = $('#submitted_bank').val();
+            var sub_type = $('#sub_type').val();
             $('#deals').html('Loading...');
+            $('#page_no').val(page_no);
             var url = "{{ route('company.deals.detail', ':deals_view') }}";
             url = url.replace(':deals_view', dealsView);
-            console.log(url);
+            if (!page_no) page_no = 1;
+
             $('#show_loading').show();
             $.post({
-                url: url,
+                url: url + '?page=' + page_no,
                 type: 'POST',
                 data: {
                     _token: "{{ csrf_token() }}",
                     company_id: company_id,
-                    pipeline_id: pipeline_id
+                    depositing_institution: depositing_institution,
+                    state: state,
+                    submitted_bank: submitted_bank,
+                    sub_type: sub_type,
                 },
                 success: function(res) {
                     $('#show_loading').hide();
@@ -229,6 +263,37 @@
                     $('#deals').html('Something went wrong...');
                 }
             });
+        }
+
+        function ExportData(type) {
+            var company_id = $('#companies').val();
+            var depositing_institution = $('#depositing_institution').val();
+            var state = $('#state').val();
+            var submitted_bank = $('#submitted_bank').val();
+            var sub_type = $('#sub_type').val();
+            if (company_id === undefined) {
+                company_id = "";
+            }
+            if (depositing_institution === undefined) {
+                depositing_institution = "";
+            }
+            if (state === undefined) {
+                state = "";
+            }
+            if (submitted_bank === undefined) {
+                submitted_bank = "";
+            }
+            if (sub_type === undefined) {
+                sub_type = "";
+            }
+            var params = "/?company_id="+company_id+"&depositing_institution=" + encodeURIComponent(depositing_institution) + "&state=" +
+                encodeURIComponent(state) + "&submitted_bank=" + encodeURIComponent(submitted_bank) + "&sub_type=" +
+                encodeURIComponent(sub_type);
+            if (type == 'csv') {
+                window.location.href = "{{ route('company.deals.export.csv') }}" + params;
+            } else if (type == 'xls') {
+                window.location.href = "{{ route('company.deals.export.xls') }}" + params;
+            }
         }
     </script>
 @endsection

@@ -70,6 +70,36 @@
                      <div class="row">
                         <div class="col">
                            <div class="form-group">
+                              <label class="form-label" for="depositing_institution">Depositing Institution:</label>
+                              <input type="text" class="form-control" id="depositing_institution" placeholder="Depositing Institution" name="depositing_institution" required>
+                           </div>
+                        </div>
+                        <div class="col">
+                           <div class="form-group">
+                              <label class="form-label" for="state">State:</label>
+                              <input type="text" class="form-control" id="state" placeholder="State" name="state" required>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="row">
+                        <div class="col">
+                           <div class="form-group">
+                              <label class="form-label" for="submitted_bank">Submitted Bank:</label>
+                              <input type="text" class="form-control" id="submitted_bank" placeholder="Submitted Bank" name="submitted_bank" required>
+                           </div>
+                        </div>
+                        <div class="col">
+                           <div class="form-group">
+                              <label class="form-label" for="sub_type">Sub Type:</label>
+                              <input type="text" class="form-control" id="sub_type" placeholder="Sub Type" name="sub_type" required>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="row">
+                        <div class="col">
+                           <div class="form-group">
                               <label class="form-label" for="pipeline_id">Pipeline:</label>
                               <select class="form-select" id="pipeline_id" name="pipeline_id" required>
                                  @if(isset($rs_pipelines) && count($rs_pipelines)>0)

@@ -190,8 +190,8 @@
                                                                     {{ $deal->deal_owner }}</p>
                                                                 <p class="card-text"><b>Source:</b>
                                                                     {{ $deal->lead_source }}</p>
-                                                                <p class="card-text"><b>Pipeline:</b>
-                                                                    {{ $deal->pipeline }}</p>
+                                                                <p class="card-text"><b>Company:</b>
+                                                                    {{ $deal->company_name }}</p>
                                                                 {{-- <p class="card-text"><b>Stage:</b>
                                                                     {{ $deal->stage->title }}</p> --}}
                                                             </div>
@@ -212,7 +212,14 @@
         @endforeach
     </div>
 @endif
-
+<div class="row align-items-center pagination">
+    <div class="col-md-6">
+       <!-- nothing happend -->
+    </div>
+    <div class="col-md-6">
+       {!! $deals->links('deals.company_list_pagination') !!}
+    </div>
+ </div>
 <script type="text/javascript">
     var stages = {{ count($stages) }};
     var sortableSpeed = 150;

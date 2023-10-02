@@ -39,7 +39,7 @@
                   </div>
                  
                   <div class="d-flex justify-content-between">
-                     <div class="cutsom-field-dropdown dropdown">
+                     {{-- <div class="cutsom-field-dropdown dropdown">
                         <button class="btn  dropdown-toggle me-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                            Custom Field
                         </button>
@@ -58,7 +58,7 @@
                            </li>
                            <li><a class="dropdown-item" href="#"><input type="radio"> Separated link</a></li>
                         </ul>
-                     </div>
+                     </div> --}}
                      <div>
                         <a class="btn btn-primary px-3 me-1" href="{{ route('user.deals',[$current_user_id,'listing']) }}" data-bs-toggle="tooltip"
                                 data-bs-placement="top" data-bs-title="List view">

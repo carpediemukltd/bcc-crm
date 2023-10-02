@@ -135,7 +135,7 @@ class UserController extends Controller
                     }
                 }
 
-                if ($data['role'] == 'contact') {
+                if ($data['role'] == 'contact' || $data['role'] == 'user') {
                     UserOwner::create([
                         'user_id' => $new_user->id,
                         'owner_id' => auth()->user()->id,

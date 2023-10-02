@@ -14,6 +14,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use App\Services\TwilioService;
+
 
 class SendNotification implements ShouldQueue
 {
@@ -21,6 +23,7 @@ class SendNotification implements ShouldQueue
 
     private $dataClass;
     public $timeout = 18000;
+
     /**
      * Create a new job instance.
      *
@@ -111,10 +114,14 @@ class SendNotification implements ShouldQueue
                     $mail->addAddress($admin->email);
                     $mail->isHTML(true);
                     $mail->Subject      = $subject;
-                    $mail->Body         = $message;
+                    $mail->Body         = "BCCUSA CRM - ".$message;
                     $mail->send();
                 } catch (Exception $e) {
                 }
+                //twilio notification
+                $twilioService = app(TwilioService::class);
+                $twilioService->sendSms($admin->phone_number, "BCCUSA CRM - ".$message);
+
             }
         }
     }

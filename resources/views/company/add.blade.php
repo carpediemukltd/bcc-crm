@@ -99,8 +99,11 @@
                <div class="row">
                   <div class="col">
                      <div class="form-group">
-                        <label class="form-label" for="title">Phone Number</label>
-                        <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Phone Number" value="{{old('phone_number')}}" required>
+                        <input type="hidden" name="phone_country_code" id="selected-country-code" value="+1">
+                        <label class="form-label" for="phone_number">Phone number:</label>
+                        <div class="phone-input">
+                           <input name="phone_number" type="tel" id="phone-number" placeholder="Enter your phone number" class="form-control" required>
+                        </div>
                         @if ($errors->has('phone_number'))
                            <span class="text-danger">{{ $errors->first('phone_number') }}</span>
                         @endif

@@ -172,6 +172,30 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdrop" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body px-4 py-4">
+                    <form action="#" autocomplete="off">
+                        <h3 class="text-center mb-4">Are you sure you want to delete?</h3>
+                        <div class="form-group mb-4">
+                            <label class="form-label">Enter the Title of Pipeline to delete.</label>
+                            <input type="hidden" id="pipeline_id" name="pipeline_id" />
+                            <input type="hidden" id="original_pipeline_title" name="original_pipeline_title" />
+                            <input type="text" class="form-control mb-0" id="pipeline_title" name="pipeline_title" placeholder="Pipeline Title" autocomplete="off">
+                        </div>
+
+                        <div class="text-center pb-2">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="DeletePipeline();">Delete</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript">
         function showEditOption(id) {
             $('#show_text_' + id).hide();
@@ -277,36 +301,42 @@
         }); */
 
         function DeleteConfirm(id, title) {
-            r = confirm('Are you sure you want to delete?');
-            if (r) {
-                t = prompt("Enter the title of pipline to delete.");
-                if (t == title) {
-                    alert('Deleting the pipline named "' + title + '"');
-                    $('#loading_' + id).html($('#show_loading').html());
-                    $('#loading_' + id).show();
-                    var url = "{{ route('pipeline.delete', ':pipeline_id') }}";
-                    url = url.replace(':pipeline_id', id);
-                    $.post({
-                        url: url,
-                        type: 'POST',
-                        data: {
-                            _token: "{{ csrf_token() }}",
-                            id: id
-                        },
-                        success: function(res) {
-                            $('#' + id).hide();
-                            $('#loading_' + id).hide();
-                        },
-                        error: function(res) {
-                            if (res.responseJSON.error_msg) {
-                                $('#loading_' + id).hide();
-                                alert(res.responseJSON.error_msg);
-                            }
+            $("#pipeline_id").val(id);
+            $("#original_pipeline_title").val(title);
+            $("#pipeline_title").val("");
+            $("#staticBackdrop").modal("show");
+        }
+
+        function DeletePipeline() {
+            var pipeline_id = $("#pipeline_id").val();
+            var original_pipeline_title = $("#original_pipeline_title").val();
+            var pipeline_title = $("#pipeline_title").val();
+            if (pipeline_title == original_pipeline_title) {
+                alert('Deleting the pipline named "' + pipeline_title + '"');
+                $('#loading_' + pipeline_id).html($('#show_loading').html());
+                $('#loading_' + pipeline_id).show();
+                var url = "{{ route('pipeline.delete', ':pipeline_id') }}";
+                url = url.replace(':pipeline_id', pipeline_id);
+                $.post({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id: pipeline_id
+                    },
+                    success: function(res) {
+                        $('#' + pipeline_id).hide();
+                        $('#loading_' + pipeline_id).hide();
+                    },
+                    error: function(res) {
+                        if (res.responseJSON.error_msg) {
+                            $('#loading_' + pipeline_id).hide();
+                            alert(res.responseJSON.error_msg);
                         }
-                    });
-                } else {
-                    alert('Incorrect Pipeline name, aborting...');
-                }
+                    }
+                });
+            } else {
+                alert('Incorrect Pipeline name, aborting...');
             }
         }
     </script>

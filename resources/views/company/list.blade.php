@@ -205,5 +205,5 @@
        }, cb);
       //  cb(start, end);
     });
- </script>
+</script>
 @endsection

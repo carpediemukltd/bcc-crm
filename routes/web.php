@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityLogController;
 use App\Http\Middleware\CheckUser;
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckStatus;
@@ -43,9 +44,16 @@ Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPa
 Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
+// zaid
+
+
+
 Route::any('jotform/add', [JotFormController::class, 'addUser'])->name('user.add.jotform')->withoutMiddleware([VerifyCsrfToken::class]);
 
 Route::middleware([CheckStatus::class])->group(function () {
+
+    Route::any('activity', [ActivityLogController::class, 'list'])->name('activityReport.list');
+
     Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
     Route::get('dashboard-sandbox', [AuthController::class, 'dashboard_sandbox'])->name('dashboard-sandbox');
     Route::get('sandbox-daterange', [AuthController::class, 'sandbox_daterange'])->name('sandbox-daterange');
@@ -63,19 +71,30 @@ Route::middleware([CheckStatus::class])->group(function () {
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::middleware([CheckSuperAdmin::class])->group(function () { // SuperAdmin specific methods
-        Route::any('company/add', [CompanyController::class, 'addCompany'])->name('company.add');
-        Route::get('companies', [CompanyController::class, 'listCompany'])->name('company.list');
-        Route::any('company/edit/{id}', [CompanyController::class, 'editCompany'])->name('company.edit');
-        
-        Route::any('customfield/add', [CustomFieldController::class, 'addField'])->name('customfield.add');
-        Route::any('customfield', [CustomFieldController::class, 'fieldList'])->name('customfield.list');
-        Route::any('customfield/edit/{id}', [CustomFieldController::class, 'editField'])->name('customfield.edit');
-        
-        Route::any('pipeline/{action}/{id?}', [PipelineController::class, 'pipelines'])->name('pipeline');
-    
+
+
+        Route::middleware(['auth', 'log_user_activity'])->group(function () {
+            Route::any('company/add', [CompanyController::class, 'addCompany'])->name('company.add');
+            Route::get('companies', [CompanyController::class, 'listCompany'])->name('company.list');
+            Route::any('company/edit/{id}', [CompanyController::class, 'editCompany'])->name('company.edit');
+        });
+
+
+
+        Route::middleware(['auth', 'log_user_activity'])->group(function () {
+            Route::any('customfield/add', [CustomFieldController::class, 'addField'])->name('customfield.add');
+            Route::any('customfield', [CustomFieldController::class, 'fieldList'])->name('customfield.list');
+            Route::any('customfield/edit/{id}', [CustomFieldController::class, 'editField'])->name('customfield.edit');
+        });
+        Route::middleware(['auth', 'log_user_activity:customers:add'])->group(function () {
+
+            Route::any('pipeline/{action}/{id?}', [PipelineController::class, 'pipelines'])->name('pipeline');
+        });
     });
 
     Route::middleware([CheckStatus::class])->group(function () { // User specific methods
+
+        Route::middleware(['auth', 'log_user_activity'])->group(function () {
         Route::any('contact/add', [UserController::class, 'addUser'])->name('user.add');
         Route::get('contact/exportcsv', [UserController::class, 'exportCSV'])->name('user.export.csv');
         Route::get('contact/exportxls', [UserController::class, 'exportXLS'])->name('user.export.xls');
@@ -98,18 +117,18 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::get('pipelineStages/{id}/{stage_id?}', [PipelineController::class, 'getPipelineStages']);
         Route::get('stages/{id}', [PipelineController::class, 'stages'])->name('stages');
 
+        });
     });
 
     Route::middleware([CheckAdmin::class])->group(function () {
         Route::any('roundrobin', [RoundRobinController::class, 'index'])->name('roundrobin');
-
     });
 
     Route::middleware([CheckUser::class])->group(function () {
         // user specific methods
     });
     //notifications
-    
+
     Route::middleware([CheckAdminOwner::class])->group(function () {
         Route::get('notification-settings', [NotificationController::class, 'notificationSettings']);
         Route::put('clear-bell-badge', [NotificationController::class, 'clearBellBadge']);
@@ -131,5 +150,4 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::get('companyonboarding', [GeneralController::class, 'companyonbOarding'])->name('companyonboarding');
         Route::get('dynamicbanner', [GeneralController::class, 'dynamicBanner'])->name('dynamicbanner');
     });
-
 });

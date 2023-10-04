@@ -88,18 +88,18 @@
                         </div>
                         <ul class="d-flex nav nav-pills mb-0 text-center profile-tab" data-toggle="slider-tab"
                             id="profile-pills-tab" role="tablist">
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link active show" data-bs-toggle="tab" href="#profile-feed" role="tab"
                                     aria-selected="false">Meetings</a>
-                            </li>
+                            </li> -->
                             <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#profile-activity" role="tab"
+                                <a class="nav-link active show" data-bs-toggle="tab" href="#profile-activity" role="tab"
                                     aria-selected="false">Activity</a>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#profile-friends" role="tab"
                                     aria-selected="false">Emails</a>
-                            </li>
+                            </li> -->
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#profile-notes" role="tab"
                                     aria-selected="false">Notes</a>
@@ -223,15 +223,15 @@
             <div class="card">
 
                 <div class="profile-content tab-content iq-tab-fade-up">
-                    <div id="profile-feed" class="tab-pane fade active show">
+                    <!-- <div id="profile-feed" class="tab-pane fade active show">
                         <div class="card-body p-0">
                             <p class="p-3 mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla
                                 dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra.
                                 Proin blandit ac massa sed rhoncus</p>
 
                         </div>
-                    </div>
-                    <div id="profile-activity" class="tab-pane fade">
+                    </div> -->
+                    <div id="profile-activity" class="tab-pane fade active show">
                         <div class="card-header d-flex justify-content-between">
                             <div class="header-title">
                                 <h4 class="card-title">Activity</h4>
@@ -297,7 +297,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="profile-friends" class="tab-pane fade">
+                    <!-- <div id="profile-friends" class="tab-pane fade">
                         <div class="card-header">
                             <div class="header-title">
                                 <h4 class="card-title">Emails</h4>
@@ -459,7 +459,7 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                    </div> -->
                     <div id="profile-notes" class="tab-pane fade">
                         <div class="card-header">
                             <div class="header-title">
@@ -537,7 +537,7 @@
                                         @foreach($deals as $deal)
                                         <div class="nav-item">
                                             <span>{{$deal->title}} ({{$deal->deal_owner}})</span>
-                                            <span>{{$deal->pipeline}} ({{$deal->stage}})</span><br />
+                                            <span>{{$deal->pipeline}} ({{$deal->stage}})</span>
                                         </div>
                                         @endforeach
                                         @endif
@@ -561,7 +561,7 @@
                             </div>
                         </div>
                         <!-- parent pages-->
-                        <div class="nav-item-wrapper">
+                        <!-- <div class="nav-item-wrapper">
                             <a class="nav-link dropdown-indicator label-1" href="#social" role="button"
                                 data-bs-toggle="collapse" aria-expanded="false" aria-controls="social">
                                 <div class="d-flex align-items-center">
@@ -586,7 +586,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- parent pages-->
                         <div class="nav-item-wrapper">
                             <a class="nav-link dropdown-indicator label-1" href="#view-documents" role="button"

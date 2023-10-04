@@ -111,7 +111,9 @@
                                        <option value="{{$rec_pipeline->id}}">{{ucfirst($rec_pipeline->title)}}</option>
                                     @endforeach
                                  @else
-                                    <option selected="true" value="" disabled="disabled">Select</option>
+                                    <option selected="true" value="" disabled="disabled">Add your Pipelines</option>
+                                    <!-- add deals url will come here -->
+                                    <option value=""></option>
                                  @endif
                               </select>
                            </div>

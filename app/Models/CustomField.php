@@ -26,7 +26,7 @@ class CustomField extends Model
     public static function getDataByUser($id)
     {
         $CustomField = CustomField::where('custom_fields.type', '=', 'contact')
-            ->where('custom_fields.visible', '=', 1)
+//            ->where('custom_fields.visible', '=', 1)
             ->leftJoin('user_details', function ($join) use ($id) {
                 $join->on('custom_fields.id', '=', 'user_details.custom_field_id');
                 $join->on('user_details.user_id', '=', DB::raw($id));

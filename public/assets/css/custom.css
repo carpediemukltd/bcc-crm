@@ -1616,3 +1616,6 @@ p.sub_text:after{
 .display-none{
   display: none;
 }
+.login-content .resend-code{
+  cursor: pointer;
+ }

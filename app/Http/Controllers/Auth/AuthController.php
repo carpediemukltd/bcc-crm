@@ -252,4 +252,13 @@ class AuthController extends Controller
         }
         return response()->json(['error' => 'Invalid verification code or code has expired.']);
     }
+    public function resendVerificationCode(Request $request){
+        $user = User::where(['email' =>  $request->email])->first();
+        $response = $this->generate2FACode($user);
+            if ($response) {
+                return response()->json(['error' => $response]);
+            }
+            return response()->json(['success' => 'Code sent successfully.']);
+
+    }
 }

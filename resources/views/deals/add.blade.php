@@ -45,7 +45,11 @@
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="deal_owner">Deal Owner:</label>
-                              <input type="text" class="form-control" id="deal_owner" placeholder="Deal Owner" name="deal_owner" required>
+                              <select class="form-select" name="deal_owner" required>
+                                 @foreach($owners as $owner)
+                                 <option value="{{$owner->full_name}}">{{$owner->full_name}}</option>
+                                 @endforeach()
+                              </select>
                            </div>
                         </div>
                      </div>

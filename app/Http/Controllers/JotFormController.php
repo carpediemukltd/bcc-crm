@@ -103,7 +103,7 @@ class JotFormController extends Controller
                     'first_name' => $data['first_name'],
                     'last_name' => $data['last_name'],
                     'email' => $data['email'],
-                    'phone_number'  => $data['phone_number'],
+                    'phone_number'  => isset($data['phone_number']) ? $data['phone_number'] : null,
                     'role' => $data['role'],
                     'company_id' => $company_id,
                     'password' => $data['password']

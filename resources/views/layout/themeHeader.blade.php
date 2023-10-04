@@ -166,7 +166,7 @@
                                                 fill="currentColor"></path>
                                           </svg>
                                        </i>
-                                       <span class="item-name">Deals Sandbox</span>
+                                       <span class="item-name">Deals</span>
                                     </a>
                                  </li>
 

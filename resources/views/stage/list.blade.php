@@ -95,14 +95,14 @@
                                                                     </svg>
                                                                 </a>
                                                                 <a class="nav-link" href="#" >
-                                    <i class="icon">
-                                       <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor" xmlns="">
-                                          <g>
-                                             <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                          </g>
-                                       </svg>
-                                    </i>
-                                 </a>
+                                                                    <i class="icon">
+                                                                    <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor" xmlns="">
+                                                                        <g>
+                                                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                                                        </g>
+                                                                    </svg>
+                                                                    </i>
+                                                                </a>
                                                                 <a href="javascript:void(0)"
                                                                     onclick="DeleteConfirm('{{ $rec->id }}','{{ $rec->title }}');">
                                                                     <svg fill="none" xmlns="http://www.w3.org/2000/svg"

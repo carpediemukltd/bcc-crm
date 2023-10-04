@@ -9,6 +9,7 @@ use App\Models\UserOwner;
 use App\Models\UserDetails;
 use App\Helpers\Permissions;
 use App\Jobs\SendNotification;
+use App\Models\Company;
 use App\Models\CustomField;
 use Illuminate\Http\Request;
 use App\Models\RoundRobinSetting;
@@ -45,11 +46,14 @@ class UserController extends Controller
         $this->data['current_slug'] = 'My Profile';
         if ($request->isMethod('post')) {
             $update_data = [
-                'first_name'   => $request->first_name,
-                'last_name'    => $request->last_name,
-                'phone_number' => $request->phone_number
+                'first_name'            => $request->first_name,
+                'last_name'             => $request->last_name,
+                'phone_number'          => $request->phone_country_code." ".$request->phone_number,
+                'two_factor_enabled'    => $request->has('two_factor') ? '1' : '0',
             ];
-
+            if($request->has('two_factor')){
+                $update_data['two_factor_type'] = $request->two_factor_type; 
+            } 
             if ($request->password && !$request->confirm_password) {
                 return redirect()->back()->withError('Confirm password is required.')->withInput();
             } else if ($request->password && ($request->password != $request->confirm_password)) {
@@ -72,7 +76,7 @@ class UserController extends Controller
         $this->data['current_slug'] = 'Add Contact';
         $this->data['slug']         = 'add_user';
         $user = auth()->user();
-        $company_id = $user->company_id;
+        $company_id = $request->company??$user->company_id;
         $this->data['custom_fields'] =  CustomField::getDataByUser($user->id);
         $this->data['round_robin_owner'] =  RoundRobinSetting::RoundRobinOwner($company_id);
 
@@ -108,7 +112,7 @@ class UserController extends Controller
                     'first_name' => $data['first_name'],
                     'last_name' => $data['last_name'],
                     'email' => $data['email'],
-                    'phone_number'  => $data['phone_number'],
+                    'phone_number'  => $data['phone_country_code']." ".$data['phone_number'],
                     'role' => $data['role'],
                     'company_id' => $company_id,
                     'password' => Hash::make($data['password'])
@@ -131,20 +135,21 @@ class UserController extends Controller
                     }
                 }
 
-                if ($data['role'] == 'user') {
+                if ($data['role'] == 'contact' || $data['role'] == 'user') {
                     UserOwner::create([
                         'user_id' => $new_user->id,
                         'owner_id' => auth()->user()->id,
                     ]);
                     RoundRobinSetting::where('company_id', $company_id)->where('owner_id', auth()->user()->id)
                         ->update(['last_lead' => date("Y-m-d H:i:s")]);
+                    SendNotification::dispatch(['id' => $new_user->id, 'type' => 'contact_added']);
                 }
-                SendNotification::dispatch(['id' => $new_user->id, 'type' => 'contact_added']);
                 $type = ($data['role'] == 'user') ? 'Contact' : (($data['role'] == 'owner') ? 'Super User' : ucfirst($data['role']));
                 return redirect(url('contacts'))->withSuccess("$type Created Successfully.")->withInput();
             }
         } else if ($request->isMethod('get')) {
-            $this->data['roles'] = array_diff($this->data['roles'], ['user']);
+            $this->data['roles']     = array_diff($this->data['roles'], ['user']);
+            $this->data['companies'] = Company::whereStatus('active')->get(); 
             return view($request->type == 'admin' ? 'user.add-admin' : 'user.add', $this->data);          
         }
     }
@@ -180,14 +185,12 @@ class UserController extends Controller
     {
         $this->data['current_slug']  = 'Contact Details';
         $this->data['slug']          = 'user_details';
-
         $access = Permissions::checkUserAccess($this->user, $id);
         if (!$access) {
             return redirect(route('dashboard'))->with('error', 'Access Denied.');
-        } elseif ($access->role != 'user') {
+        } elseif ($access->role != 'contact') {
             return redirect(route('dashboard'))->with('error', 'Access Denied to User.');
         }
-
         $this->data['id'] = $id;
         $this->data['user'] = User::where('id', $id)->first();
         $this->data['notes'] = Note::getNotesByUser($id);
@@ -234,7 +237,7 @@ class UserController extends Controller
             $update_data = [
                 'first_name'   => $request->first_name,
                 'last_name'    => $request->last_name,
-                'phone_number' => $request->phone_number,
+                'phone_number' => $request->phone_country_code." ".$request->phone_number,
                 'status'       => $request->status
             ];
 
@@ -370,8 +373,11 @@ class UserController extends Controller
         fclose($file);
         return response()->download($path)->deleteFileAfterSend();
     }
-
     public function dashboard_sandbox() {
+        $slug = "dashboard-sandbox";
+        return view('dashboard-sandbox',compact('slug'));
+    }
+    public function dashboard() {
 
         $datesWithWeeks = [];
         $today          = Carbon::today();
@@ -427,8 +433,8 @@ class UserController extends Controller
             if(!$user->hasAnyRole(['admin','owner', 'user'])) {
                 $user->assignRole($user->role);
             }
-            $slug = "dashboard-sandbox";
-            return view('dashboard-sandbox',compact('user_count', 'week_data', 'slug'));
+            $slug = "dashboard";
+            return view('dashboard',compact('user_count', 'week_data', 'slug'));
         
         }
 

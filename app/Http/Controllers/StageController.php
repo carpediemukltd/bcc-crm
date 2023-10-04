@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Deal;
 use App\Models\Stage;
 use App\Models\Pipeline;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PipelineController extends Controller
+class StageController extends Controller
 {
     protected $user;
     protected $data;
@@ -21,53 +20,52 @@ class PipelineController extends Controller
         });
     }
 
-    public function pipelineList()
+    public function stageList()
     {
-        $this->data['current_slug'] = 'Pipelines';
-        $this->data['slug']         = 'pipelines';
-        $this->data['pipelines']  = Pipeline::orderBy('id', 'ASC')->paginate(10);
-        return view("pipeline.list", $this->data);
+        $this->data['current_slug'] = 'Stages';
+        $this->data['slug']         = 'stages';
+        $this->data['stages']  = Stage::orderBy('sort', 'ASC')->paginate(10);
+        return view("stage.list", $this->data);
     }
 
-    public function pipelineEdit(Request $request, $id)
+    public function stageAdd(Request $request)
     {
-        $this->data['pipeline'] = Pipeline::where('id', $id)->first();
+        if ($request->isMethod('post')) {
+            $data = Stage::create(['title' => $request->title, 'sort' => 1111]);
+
+            return response(['message' => 'success', 'data' => Stage::where('id', $data->id)->first()]);
+        }
+    }
+
+    public function stageEdit(Request $request, $id)
+    {
+        $this->data['current_slug'] = 'Edit Stage';
+        $this->data['slug'] = 'edit_stage';
+        $this->data['stage'] = Stage::where('id', $id)->first();
 
         if ($request->isMethod('post')) {
-            if (!$this->data['pipeline']) {
-                return redirect()->back()->withError('Pipeline not found.')->withInput();
+            if (!$this->data['stage']) {
+                return redirect()->back()->withError('Stage not found.')->withInput();
             }
-
             if (empty($request->title)) {
                 return redirect()->back()->withError('Title can not be empty.')->withInput();
             }
 
-            Pipeline::whereId($id)->update(['title' => $request->title]);
+            Stage::whereId($id)->update(['title' => $request->title]);
 
-            return response(Pipeline::where('id', $id)->first());
+            return response(Stage::where('id', $id)->first());
         }
     }
-
-    public function pipelineDelete(Request $request, $id)
+    public function stageDelete(Request $request, $id)
     {
-        $this->data['pipeline'] = Pipeline::where('id', $id)->first();
+        $this->data['stage'] = Stage::where('id', $id)->first();
 
         if ($request->isMethod('post')) {
-            if (!$this->data['pipeline']) {
-                return redirect()->back()->withError('Pipeline not found.')->withInput();
+            if (!$this->data['stage']) {
+                return redirect()->back()->withError('Stage not found.')->withInput();
             }
-
-            Pipeline::whereId($id)->delete();
-            return response(['message' => 'success', 'detail' => "Pipeline deleted successfully."]);
-        }
-    }
-
-    public function pipelineAdd(Request $request)
-    {
-        if ($request->isMethod('post')) {
-            $data = Pipeline::create(['company_id' => 1, 'title' => $request->title]);
-
-            return response(['message' => 'success', 'data' => Pipeline::where('id', $data->id)->first()]);
+            Stage::whereId($id)->delete();
+            return response(['message' => 'success', 'detail' => "Stage deleted successfully."]);
         }
     }
 

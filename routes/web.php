@@ -9,19 +9,23 @@ use App\Http\Controllers\DealController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckAdminOwner;
+use App\Http\Middleware\CheckAdminSuperAdmin;
 use App\Http\Middleware\CheckSuperAdmin;
 use App\Http\Middleware\VerifyCsrfToken;
+use App\Http\Controllers\StageController;
 use App\Http\Middleware\CheckSameCompany;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\JotFormController;
 use App\Http\Controllers\PipelineController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\DialogflowController;
 use App\Http\Controllers\RoundRobinController;
 use App\Http\Controllers\CustomFieldController;
-use App\Http\Controllers\DialogflowController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\MagicLinkController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +40,8 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 
 Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::post('verify-2fa', [AuthController::class, 'verify2FA'])->name('verify-2fa');
+Route::post('resend-verification-code', [AuthController::class, 'resendVerificationCode'])->middleware('throttle:3,5'); // Throttle to 3 requests per 5 minutes
 Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
 Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');
@@ -43,12 +49,17 @@ Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPassw
 Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
 Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+
+Route::get('/magic-link/{contact_id}', [MagicLinkController::class, 'generateLink'])->name('magic.link.generate');
+Route::get('/magic-link/view/{token}', [MagicLinkController::class, 'viewLink'])->name('magic.link.view');
+
 Route::post("/chat", [DialogflowController::class, "chat"]);
 
 Route::any('jotform/add', [JotFormController::class, 'addUser'])->name('user.add.jotform')->withoutMiddleware([VerifyCsrfToken::class]);
 
 Route::middleware([CheckStatus::class])->group(function () {
-    Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+
+    Route::get('dashboard', [UserController::class, 'dashboard'])->name('dashboard');
     Route::get('dashboard-sandbox', [UserController::class, 'dashboard_sandbox'])->name('dashboard-sandbox');
     Route::get('deals-sandbox', [DealController::class, 'deals_sandbox'])->name('deals-sandbox');
     Route::get('filter-deals', [DealController::class, 'filter_deals'])->name('filter-deals');
@@ -68,6 +79,10 @@ Route::middleware([CheckStatus::class])->group(function () {
 
     Route::middleware([CheckSuperAdmin::class])->group(function () { // SuperAdmin specific methods
         Route::any('company/add', [CompanyController::class, 'addCompany'])->name('company.add');
+        Route::any('company/deals', [CompanyController::class, 'companyDeals'])->name('company.deals');
+        Route::get('company/deals/exportcsv', [CompanyController::class, 'exportDealsCSV'])->name('company.deals.export.csv');
+        Route::get('company/deals/exportxls', [CompanyController::class, 'exportDealsXLS'])->name('company.deals.export.xls');
+        Route::any('company/deals/{view}', [CompanyController::class, 'companyDealsDetail'])->name('company.deals.detail');
         Route::get('companies', [CompanyController::class, 'listCompany'])->name('company.list');
         Route::any('company/edit/{id}', [CompanyController::class, 'editCompany'])->name('company.edit');
 
@@ -75,7 +90,19 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::any('customfield', [CustomFieldController::class, 'fieldList'])->name('customfield.list');
         Route::any('customfield/edit/{id}', [CustomFieldController::class, 'editField'])->name('customfield.edit');
 
+        
+        Route::get('stages', [StageController::class, 'stageList'])->name('stage.list');
+        Route::post('stage/add', [StageController::class, 'stageAdd'])->name('stage.add');
+        Route::post('stage/edit/{id}', [StageController::class, 'stageEdit'])->name('stage.edit');
+        Route::post('stage/delete/{id}', [StageController::class, 'stageDelete'])->name('stage.delete');
+        
+        Route::get('pipelines', [PipelineController::class, 'pipelineList'])->name('pipeline.list');
+        Route::post('pipeline/add', [PipelineController::class, 'pipelineAdd'])->name('pipeline.add');
+        Route::post('pipeline/edit/{id}', [PipelineController::class, 'pipelineEdit'])->name('pipeline.edit');
+        Route::post('pipeline/delete/{id}', [PipelineController::class, 'pipelineDelete'])->name('pipeline.delete');
+        
         Route::any('pipeline/{action}/{id?}', [PipelineController::class, 'pipelines'])->name('pipeline');
+        Route::any('deals/{view}', [DealController::class, 'dealsList'])->name('deals.list');
 
     });
 
@@ -94,9 +121,7 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::post('contact/{user_id}/deals/updateStage/{id}', [DealController::class, 'dealsUpdateStage'])->name('user.deals.updatestage');
         Route::get('deal/{id}/exportcsv', [DealController::class, 'exportCSV'])->name('deal.export.csv');
         Route::get('deal/{id}/exportxls', [DealController::class, 'exportXLS'])->name('deal.export.xls');
-
         
-
         Route::get('notes/{contact_id}', [NoteController::class, 'listNote'])->name('note.list');
         Route::any('note/add', [NoteController::class, 'addNote'])->name('note.add');
         Route::post('note/edit/{id}', [NoteController::class, 'editNote'])->name('note.edit');
@@ -107,16 +132,10 @@ Route::middleware([CheckStatus::class])->group(function () {
 
     });
 
-    Route::middleware([CheckAdmin::class])->group(function () {
+    Route::middleware([CheckAdminSuperAdmin::class])->group(function () {
         Route::any('roundrobin', [RoundRobinController::class, 'index'])->name('roundrobin');
-
-    });
-
-    Route::middleware([CheckUser::class])->group(function () {
-        // user specific methods
     });
     //notifications
-
     Route::middleware([CheckAdminOwner::class])->group(function () {
         Route::get('notification-settings', [NotificationController::class, 'notificationSettings']);
         Route::put('clear-bell-badge', [NotificationController::class, 'clearBellBadge']);
@@ -124,7 +143,7 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::put('update-notification-setting', [NotificationController::class, 'updateNotificationSetting']);
         Route::post('update-stage-settings-options', [NotificationController::class, 'updateStageSettingsOptions']);
         Route::get('notifications', [NotificationController::class, 'index'])->name('notifications');
-
+        Route::any('roundrobin', [RoundRobinController::class, 'index'])->name('roundrobin');
     });
     Route::prefix('demo')->group(function () {
         Route::get('userlist', [GeneralController::class, 'userList'])->name('userlist');

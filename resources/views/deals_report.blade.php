@@ -72,10 +72,35 @@
 </style>
 @endsection
 @section('content')
+<div class="position-relative  iq-banner ">
+   <div class="iq-navbar-header" style="height: 215px;">
+      <div class="container-fluid iq-container">
+         <div class="row">
+            <div class="col-md-12">
+               <div class="flex-wrap d-flex justify-content-between align-items-center">
+                  <div>
+                     <h1>Deals Report</h1>
+                     <!-- <p>Add new deal.</p> -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="iq-header-img">
+         <img src="{{asset('assets/images/dashboard/top-header.png')}}" alt="header" class="theme-color-default-img img-fluid w-100 h-100 animated-scaleX" loading="lazy">
+         
+      </div>
+   </div>
+</div>
 <div class="content-inner container-fluid pb-0" id="page_layout">
     @include('alert_message')
     <div id="loader" style="display: none;"></div>
-    <div class="d-flex justify-content-between align-items-center flex-wrap mb-4 gap-3">
+    
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="card card-block card-stretch card-height">
+                <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center flex-wrap mb-4 gap-3">
         <div class="d-flex flex-column">
             <h3>Deals Report</h3>
             <p class="text-primary mb-0">Users Count</p>
@@ -107,10 +132,6 @@
         </div>
 
     </div>
-    <div class="row">
-        <div class="col-lg-12 col-md-12">
-            <div class="card card-block card-stretch card-height">
-                <div class="card-body">
                     <div class="table-responsive text-nowrap">
                         <table class="table table-striped">
                             <thead>

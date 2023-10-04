@@ -71,8 +71,11 @@
                         </div>
                         <div class="col">
                            <div class="form-group">
+                              <input type="hidden" name="phone_country_code" id="selected-country-code" value="+1">
                               <label class="form-label" for="phone_number">Phone number:</label>
-                              <input type="number" id="phone_number" class="form-control" name="phone_number" placeholder="123456789" value="{{old('phone_number')}}" required>
+                              <div class="phone-input">
+                                 <input name="phone_number" type="tel" id="phone-number" placeholder="Enter your phone number" class="form-control" required>
+                              </div>
                               @if ($errors->has('phone_number'))
                                  <span class="text-danger">{{ $errors->first('phone_number') }}</span>
                               @endif
@@ -80,7 +83,7 @@
                         </div>
                      </div>
                      <input type="hidden" class="form-control" id="role" name="role" value="user">
-                     <input type="hidden" class="form-control" id="password" name="password" value="{{ Str::random(8) }}">
+                     <input type="hidden" class="form-control" id="password" name="password" value="BCCUSA.com">
                      <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
                      @if (count($custom_fields)>0)
                      <div class="row">

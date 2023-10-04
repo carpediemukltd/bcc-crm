@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Deal;
 use App\Models\Notification;
 use App\Models\NotificationSetting;
 use App\Models\Stage;
@@ -13,6 +14,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use App\Services\TwilioService;
+
 
 class SendNotification implements ShouldQueue
 {
@@ -20,6 +23,7 @@ class SendNotification implements ShouldQueue
 
     private $dataClass;
     public $timeout = 18000;
+
     /**
      * Create a new job instance.
      *
@@ -42,25 +46,41 @@ class SendNotification implements ShouldQueue
         $id   = $this->dataClass['id'];
 
         if ($type == 'contact_added') {
-            $userIds    = NotificationSetting::whereSettingName('notification_contact_added')->where('status', 'enabled')->pluck('user_id');
             $contact    = User::whereId($id)->first();
+            $companyId  = $contact->company_id;
+            $userIds    = NotificationSetting::whereSettingName('notification_contact_added')
+            ->where('status', 'enabled')
+            ->whereIn('user_id', function ($query) use ($companyId) {
+                $query->select('id')
+                    ->from('users')
+                    ->where('company_id', $companyId)
+                    ->whereIn('role', ['admin']);
+            })
+            ->pluck('user_id');
             $message    = "New Contact Named " . $contact->first_name . " has been added.";
-            $targetUrl  =  '/contact/edit/' . $contact->id;
-            $roles      = ['superadmin', 'admin'];
+            $targetUrl  =  '/contact/' . $contact->id . "/details";
+            
         }
         if ($type == 'deal_added') {
-            $stage = Stage::whereId($id)->first();
+            $deal       = Deal::whereId($id)->first(); 
+            $contact    = User::whereId($deal->user_id)->first();
+            $companyId  = $contact->company_id;
+            $stage = Stage::whereId($deal->stage_id)->first();
             $userIds = NotificationSetting::with('detail')
                 ->whereSettingName('notification_specific_deal_stage')
                 ->where('status', 'enabled')
                 ->whereHas('detail', function ($query) use ($stage) {
                     $query->where('stage_id', $stage->id);
                 })
-                ->pluck('user_id');
+                ->whereIn('user_id', function ($query) use ($companyId) {
+                    $query->select('id')
+                        ->from('users')
+                        ->where('company_id', $companyId)
+                        ->whereIn('role', ['admin']);
+                })->pluck('user_id');
 
             $message    = "New deal moved to stage named " . $stage->title;
             $targetUrl  =  '/stages/' . $stage->id;
-            $roles      = ['superadmin', 'admin'];
         }
         if ($type == 'round_robin_owner_added') {
             $userIds = NotificationSetting::whereUserId($id)->whereSettingName('notification_round_robin')
@@ -69,9 +89,8 @@ class SendNotification implements ShouldQueue
 
             $message    = "New contact has been assigned to you!";
             $targetUrl  =  '/roundrobin';
-            $roles = ['owner'];
         }
-        $admins = User::whereIn('role', $roles)->whereIn('id', $userIds)->get();
+        $admins = User::whereIn('id', $userIds)->get();
         if ($admins->count()) {
             foreach ($admins as $admin) {
                 $dataToPost = array();
@@ -95,10 +114,14 @@ class SendNotification implements ShouldQueue
                     $mail->addAddress($admin->email);
                     $mail->isHTML(true);
                     $mail->Subject      = $subject;
-                    $mail->Body         = $message;
+                    $mail->Body         = "BCCUSA CRM - ".$message;
                     $mail->send();
                 } catch (Exception $e) {
                 }
+                //twilio notification
+                $twilioService = app(TwilioService::class);
+                $twilioService->sendSms($admin->phone_number, "BCCUSA CRM - ".$message);
+
             }
         }
     }

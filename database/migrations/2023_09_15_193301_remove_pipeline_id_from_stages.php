@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCompanyIdToUsersTable extends Migration
+class RemovePipelineIdFromStages extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddCompanyIdToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('company_id')->default(0);
+        Schema::table('stages', function (Blueprint $table) {
+            $table->dropColumn('pipeline_id');
         });
     }
 
@@ -25,8 +25,8 @@ class AddCompanyIdToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('company_id');
+        Schema::table('stages', function (Blueprint $table) {
+            $table->unsignedBigInteger('pipeline_id')->after('id');
         });
     }
 }

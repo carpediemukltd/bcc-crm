@@ -26,7 +26,7 @@
       </div>
       <div class="iq-header-img">
          <img src="{{asset('assets/images/dashboard/top-header.png')}}" alt="header" class="theme-color-default-img img-fluid w-100 h-100 animated-scaleX" loading="lazy">
-         
+
       </div>
    </div>
 </div>
@@ -65,16 +65,20 @@
                               <label class="form-label" for="email">Email address:</label>
                               <input type="email" class="form-control" id="email" placeholder="Email address" name="email" value="{{old('email')}}" required>
                               @if ($errors->has('email'))
-                                 <span class="text-danger">{{ $errors->first('email') }}</span>
+                              <span class="text-danger">{{ $errors->first('email') }}</span>
                               @endif
                            </div>
                         </div>
                         <div class="col">
                            <div class="form-group">
+
+                              <input type="hidden" name="phone_country_code" id="selected-country-code" value="+1">
                               <label class="form-label" for="phone_number">Phone number:</label>
-                              <input type="number" id="phone_number" class="form-control" name="phone_number" placeholder="123456789" value="{{old('phone_number')}}" required>
+                              <div class="phone-input">
+                                 <input name="phone_number" type="tel" id="phone-number" placeholder="Enter your phone number" class="form-control" required>
+                              </div>
                               @if ($errors->has('phone_number'))
-                                 <span class="text-danger">{{ $errors->first('phone_number') }}</span>
+                              <span class="text-danger">{{ $errors->first('phone_number') }}</span>
                               @endif
                            </div>
                         </div>
@@ -86,7 +90,7 @@
                               <label class="form-label" for="password">Password:</label>
                               <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
                               @if ($errors->has('password'))
-                                 <span class="text-danger">{{ $errors->first('password') }}</span>
+                              <span class="text-danger">{{ $errors->first('password') }}</span>
                               @endif
                            </div>
                         </div>
@@ -94,37 +98,35 @@
 
                      <div class="row">
                         @if (count($roles)>0)
-                     <input type="hidden" id="roles_count"  name="roles_count" value="{{count($roles)}}">
+                        <input type="hidden" id="roles_count" name="roles_count" value="{{count($roles)}}">
                         <div class="col-6">
                            <div class="form-group">
                               <label class="form-label" for="role">Roles</label>
                               <select class="form-select" id="role" name="role" onchange="toggleRoles()" required>
                                  <option value="">Select</option>
-                              @foreach($roles as $role)
-                                 <option value="{{$role}}" <?=(count($roles)==1)? 'selected="selected"':'' ?>>{{ucfirst($role =='owner'?'Super User':$role)}}</option>
-                              @endforeach
-                           </select>
+                                 @foreach($roles as $role)
+                                 <option value="{{$role}}" <?= (count($roles) == 1) ? 'selected="selected"' : '' ?>>{{ucfirst($role =='owner'?'Super User':$role)}}</option>
+                                 @endforeach
+                              </select>
                            </div>
                         </div>
-                        
-                     @endif
-                     </div>
-                     
-                     <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
-                     @if (count($custom_fields)>0)
-                     <div class="row">
-                         @foreach($custom_fields as $field)        
                         <div class="col-6">
                            <div class="form-group">
-                              <label class="form-label" for="custom_fields[{{$field->id}}]">{{$field->title}}</label>
-                              <input type="text" class="form-control" id="custom_fields[{{$field->id}}]" placeholder="{{$field->title}}" name="custom_fields[{{$field->id}}]">
+                              <label class="form-label" for="role">Company</label>
+                              <select class="form-select" id="company" name="company" required>
+                                 <option value="">Select</option>
+                                 @foreach($companies as $company)
+                                 <option value="{{$company->id}}">{{$company->name}}</option>
+                                 @endforeach
+                              </select>
                            </div>
                         </div>
-                        @endforeach
-                     </div>
-                     @endif
 
-                     <div class="row"><div class="col"><br /></div></div>
+                        @endif
+                     </div>
+                     <div class="row">
+                        <div class="col"><br /></div>
+                     </div>
 
                      <div class="row">
                         <div class="col">
@@ -140,19 +142,17 @@
    </div>
 </div>
 <script type="text/javascript">
-  function toggleRoles(){
-   var roles = $('#role :selected').val();
-   console.log(roles);
-   if(roles=='user'){
-      $('#owner').attr('required','required');
-      console.log('added');
-      $('#owners_list').show();
-   }else {
-      $('#owner').removeAttr('required');
-      $('#owners_list').hide();
-      console.log('removed');
+   function toggleRoles() {
+      var roles = $('#role :selected').val();
+      if (roles == 'user') {
+         $('#owner').attr('required', 'required');
+         $('#owners_list').show();
+      } else {
+         $('#owner').removeAttr('required');
+         $('#owners_list').hide();
+      }
    }
-  }
-   </script>
+</script>
+
 
 @endsection

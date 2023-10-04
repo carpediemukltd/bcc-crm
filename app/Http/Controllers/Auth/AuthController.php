@@ -117,23 +117,6 @@ class AuthController extends Controller
      *
      * @return response()
      */
-    public function dashboard()
-    {
-        $this->data['current_slug'] = 'Dashboard';
-        $this->data['slug']         = 'dashboard';
-        if (Auth::check()) {
-
-            $this->data['slug']     = 'dashboard';
-            $user = auth()->user();
-            if (!$user->hasAnyRole(['admin', 'owner', 'user'])) {
-                $user->assignRole($user->role);
-            }
-            return view('dashboard', $this->data);
-        }
-
-        return redirect("login", $this->data)->withError('Opps! session is timeout plz login again.');
-    }
-
 
     public function create(array $data)
     {

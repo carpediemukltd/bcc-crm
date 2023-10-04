@@ -203,8 +203,7 @@
                                 <div class="form-floating">
                                     <input type="text" class="form-control border_none"
                                         id="show_custom_fields[{{$field->id}}]" value="{{$field->data}}"
-                                        placeholder="{{$field->title}}" name="custom_fields[{{$field->id}}]"
-                                        required="">
+                                        placeholder="{{$field->title}}" name="custom_fields[{{$field->id}}]">
                                     <label for="custom_fields[{{$field->id}}]">{{$field->title}}</label>
                                 </div>
                             </div>

@@ -6,6 +6,7 @@ use App\Helpers\Permissions;
 use App\Jobs\SendNotification;
 use Illuminate\Http\Request;
 use App\Models\RoundRobinSetting;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
@@ -36,16 +37,16 @@ class RoundRobinController extends Controller
         $this->data['slug']         = 'roundrobin';
 
         if ($request->isMethod('put')) {
-
-            $access = Permissions::checkCompany($this->user, $request->company_id);
-            if (!$access) {
-                return redirect(route('dashboard'))->with('error', 'Access Denied.');
-            }
-
             if ($request->round_robin > 0) {
                 foreach ($request->priority as $key => $value) {
+                    if($request->company_id){
+                        $companyid = $request->company_id;
+                    }else{
+                        $user = User::whereId($key)->first();
+                        $companyid = $user->company_id;
+                    }                    
                     RoundRobinSetting::updateOrCreate(
-                        ['company_id' => $request->company_id, 'owner_id' =>  $key],
+                        ['company_id' => $companyid, 'owner_id' =>  $key],
                         ['priority' => $value]
                     );
                     SendNotification::dispatch(['id'=> $key, 'type'=>'round_robin_owner_added']);

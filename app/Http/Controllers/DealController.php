@@ -12,6 +12,7 @@ use App\Models\UserOwner;
 use App\Models\UserDetails;
 
 use App\Models\CustomField;
+use Database\Seeders\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -188,6 +189,7 @@ class DealController extends Controller
 
             $this->data['rs_pipelines'] = Pipeline::getPipelineByUser($id);
             $this->data['rs_stages'] = Stage::orderBy('sort', 'ASC')->get();
+            $this->data['owners'] = User::whereRole('owner')->get();
             return view("deals.add", $this->data);
         }
     } // dealsAdd

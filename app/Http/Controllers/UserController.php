@@ -373,8 +373,11 @@ class UserController extends Controller
         fclose($file);
         return response()->download($path)->deleteFileAfterSend();
     }
-
     public function dashboard_sandbox() {
+        $slug = "dashboard-sandbox";
+        return view('dashboard-sandbox',compact('slug'));
+    }
+    public function dashboard() {
 
         $datesWithWeeks = [];
         $today          = Carbon::today();
@@ -430,8 +433,8 @@ class UserController extends Controller
             if(!$user->hasAnyRole(['admin','owner', 'user'])) {
                 $user->assignRole($user->role);
             }
-            $slug = "dashboard-sandbox";
-            return view('dashboard-sandbox',compact('user_count', 'week_data', 'slug'));
+            $slug = "dashboard";
+            return view('dashboard',compact('user_count', 'week_data', 'slug'));
         
         }
 

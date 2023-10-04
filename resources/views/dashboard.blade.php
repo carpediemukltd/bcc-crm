@@ -509,6 +509,7 @@
       </div>
    </div>
 </div>
+<!-- bcc footer start -->
 <div class="chat-container">
     <div class="chat-icon">Chat</div>
     <div class="chat-window">
@@ -575,7 +576,7 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        const response  = await AsyncAjax("chat", {"message": message, "sessionID": sessionID});
+        const response  = await AsyncAjax("{{url("chat")}}", {"message": message, "sessionID": sessionID});
         messageDiv      = document.createElement('div');
 
         messageDiv.classList.add('message', 'other-message');

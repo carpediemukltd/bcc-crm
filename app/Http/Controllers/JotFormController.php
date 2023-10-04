@@ -79,7 +79,7 @@ class JotFormController extends Controller
                 $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->phonenumber);
             }
             //BCCUSA Apply Now Landing Page Form
-            else if (isset($request->q5_phoneNumber['full'])) {
+            else if (isset($request->q5_phone['full'])) {
                 $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->q5_phoneNumber['full']);
             }
             //BCCUSA Apply Now Landing Page Form
@@ -89,12 +89,12 @@ class JotFormController extends Controller
             $data['owner'] = $this->data['round_robin_owner']->owner_id;
             $user_owner = $data['owner'];
             $user_id = 0;
-            $existing_user = User::where('email', $request->email)->first();
+            $existing_user = User::where('email', $data['email'])->first();
             if ($existing_user) {
                 $user_type = "existing";
                 unset($data['email'], $data['owner']);
-                User::where('email', $request->email)->update($data);
-                $user = User::where('email', $request->email)->first();
+                User::where('email', $existing_user->email)->update($data);
+                $user = User::where('email', $existing_user->email)->first();
                 $user_id = $user->id;
                 // return redirect()->back()->withSuccess('Contact Updated Successfully.');
             } else {

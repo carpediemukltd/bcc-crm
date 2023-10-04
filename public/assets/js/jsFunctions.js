@@ -17,7 +17,7 @@
 
  */
 async function AsyncAjax(sURL, objData = {}, sType = "POST", processData = true, contentType= "application/x-www-form-urlencoded; charset=UTF-8") {
-    const csrfToken = "";//$("meta[name='csrf-token']").attr("content");
+    const csrfToken = $("meta[name='csrf-token']").attr("content");
     let response= {};
     await $.ajax({
         headers     : {"X-CSRF-TOKEN": csrfToken},

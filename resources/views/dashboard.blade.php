@@ -609,7 +609,7 @@
         let currentMonth = String(date.getMonth() + 1).padStart(2, "0");
         let currentYear = date.getFullYear();
 
-        // we will display the date as DD-MM-YYYY 
+        // we will display the date as DD-MM-YYYY
         let currentDate = `${currentYear}-${currentMonth}-${currentDay}`;
 
 
@@ -654,7 +654,7 @@
                 dataType: 'JSON', // The expected data type of the response
                 success: function (response) {
                     // console.table(response);
-    
+
                     let responseData = [
                         response.sun_count,
                         response.mon_count,
@@ -669,7 +669,7 @@
                         name: 'User Count',
                         data: responseData,
                     }]);
-    
+
                     $('#CountUser').text(response.user_count);
                     $("#loader").hide();
                 },
@@ -678,6 +678,41 @@
                     console.log('Error:', textStatus, errorThrown);
                 }
             });
+        }
+    });
+
+    const sessionID = {{rand(999, 99999)}};
+    let firstMessage = true;
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const chatIcon = document.querySelector(".chat-icon");
+        const chatWindow = document.querySelector(".chat-window");
+        let isChatOpen = false;
+        let borderRadius = $(".chat-icon").css("border-radius");
+        chatIcon.addEventListener("click", function () {
+            if(firstMessage)
+                addUserMessage("hi");
+
+            isChatOpen = !isChatOpen;
+            chatWindow.style.display = isChatOpen ? "block" : "none";
+            if(borderRadius == "50px")
+                borderRadius = "0px";
+            else
+                borderRadius = "50px"
+            $(".chat-icon").css({borderRadius: borderRadius})
+
+        });
+    });
+
+    const sendButton = document.getElementById('send-button');
+    const userMessageInput = document.getElementById('user-message');
+    const chatMessages = document.getElementById('chat-messages');
+
+    sendButton.addEventListener('click', () => {
+        const message = userMessageInput.value.trim();
+        if (message !== '') {
+            addUserMessage(message);
+            userMessageInput.value = '';
         }
     });
 

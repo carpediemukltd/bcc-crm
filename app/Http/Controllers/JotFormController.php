@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\User;
 use App\Models\UserOwner;
 use App\Models\UserDetails;
 use App\Models\CustomField;
 use Illuminate\Http\Request;
 use App\Models\RoundRobinSetting;
-use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Permission;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpParser\Node\Stmt\Else_;
 
 class JotFormController extends Controller
 {
@@ -35,188 +31,172 @@ class JotFormController extends Controller
             return $next($request);
         });
     }
-
-    public function addUser(Request $request)
+    public function handleJotformWebhook(Request $request)
     {
-        $this->data['current_slug'] = 'Add Contact';
-        $this->data['slug']         = 'add_user_jotform';
-        $company_id = 1;
-        $data = array();
-        $this->data['round_robin_owner'] =  RoundRobinSetting::RoundRobinOwner($company_id);
-        $user_type = "";
-        if ($request->isMethod('post')) {
-            $data['first_name'] = '';
-            $data['last_name'] = '';
-            if (isset($request->legalbusiness6)) {
-                $name_arr  =  explode(" ", $request->legalbusiness6);
-                if (isset($name_arr[0])) $data['first_name'] = $name_arr[0];
-                if (isset($name_arr[1])) $data['last_name'] = $name_arr[1];
-            } else if (isset($request->full_name)) {
-                $data['first_name'] = $request->full_name['first'];
-                $data['last_name'] = $request->full_name['last'];
-            }
-            //BCCUSA Apply Now Landing Page Form
-            else if (isset($request->name)) {
-                $data['first_name'] = $request->name['first'];
-                $data['last_name'] = $request->name['last'];
-            }
+        // Get the "rawRequest" JSON string from the request data
+        $rawRequest = $request->input('rawRequest');
 
-            if(isset($request->q4_email)){
-                $data['email'] = $request->q4_email;
-            }
-            //BCCUSA Apply Now Landing Page Form
+        // Parse the "rawRequest" JSON string into a PHP array
+        $jsonData = json_decode($rawRequest, true);
 
-            else{
-                $data['email'] = $request->email;
-            }
-            if (isset($request->phoneNumber)) {
-                $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->phoneNumber['full']);
-            } else if (isset($request->phonenumber['full'])) {
-                $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->phonenumber['full']);
-            } else if (isset($request->businessnumber['phone'])) {
-                $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->businessnumber['phone']);
-            } else if (isset($request->phonenumber)) {
-                $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->phonenumber);
-            }
-            //BCCUSA Apply Now Landing Page Form
-            else if (isset($request->phone['full'])) {
-                $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->phone['full']);
-            }
-            //BCCUSA Apply Now Landing Page Form
-
-            $data['role'] = 'user';
-            $data['password'] = Hash::make('asdfasdf');
-            $data['owner'] = $this->data['round_robin_owner']->owner_id;
-            $user_owner = $data['owner'];
-            $user_id = 0;
-            $existing_user = User::where('email', $data['email'])->first();
-            if ($existing_user) {
-                $user_type = "existing";
-                unset($data['email'], $data['owner']);
-                User::where('email', $existing_user->email)->update($data);
-                $user = User::where('email', $existing_user->email)->first();
-                $user_id = $user->id;
-                // return redirect()->back()->withSuccess('Contact Updated Successfully.');
-            } else {
-                $user_type = "new";
-                $user = User::create([
-                    'first_name' => $data['first_name'],
-                    'last_name' => $data['last_name'],
-                    'email' => $data['email'],
-                    'phone_number'  => isset($data['phone_number']) ? $data['phone_number'] : null,
-                    'role' => $data['role'],
-                    'company_id' => $company_id,
-                    'password' => $data['password']
-                ]);
-                $user_id = $user->id;
-                if ($data['role'] == 'user' && $data['owner'] > 0) {
-                    UserOwner::create([
-                        'user_id' => $user->id,
-                        'owner_id' => $user_owner
-                    ]);
-                    RoundRobinSetting::where('company_id', $company_id)->where('owner_id', $user_owner)
-                        ->update(['last_lead' => date("Y-m-d H:i:s")]);
-                    $fields = array();
-                }
-                // return redirect()->back()->withSuccess('Contact Created Successfully.');
-            }
-            if ($user_type == "existing" || $user_type == "new") {
-                if ($request->formID == 232325871332452 || $request->formID == 231903466626459) {
-                    //BCCUSA Preliminary Form (Get Started Now)
-                    $fields = array(
-                        "Legal Business Name" => $request->legalbusiness6,
-                        "Amount Requested" => $request->amountrequested,
-                        "Business Address" => $request->businessaddress['addr_line1'] . " " . $request->businessaddress['addr_line2'],
-                        "Business City" => $request->businessaddress['city'],
-                        "Business State" => $request->businessaddress['state'],
-                        "Business Zip Code" => $request->businessaddress['postal'],
-                        "Business Structure/Type" => $request->businessstructuretype,
-                        "Industry Type" => $request->industrytype,
-                        "Business Start Date" => $request->businessstart63['year'] . "-" . $request->businessstart63['month'] . "-" . $request->businessstart63['day'],
-                        "Monthly Revenue" => $request->monthlyrevenue,
-                        "TaxID Number" => $request->taxid,
-                        "Business Website" => $request->businesswebsite,
-                        "Monthly Business Rent Amount" => $request->businessWebsite97,
-                        "Officer Name" => $request->officerownername['first'] . " " . $request->officerownername['last'],
-                        "Owner Email" => $request->email,
-                        "SSN" => $request->ssn,
-                        "Home Address" => $request->homeaddress['addr_line1'] . " " . $request->homeaddress['addr_line2'],
-                        "Home City" => $request->homeaddress['city'],
-                        "Home State" => $request->homeaddress['state'],
-                        "Home Zip Code" => $request->homeaddress['postal'],
-                        "Date of Birth" => $request->dateof['year'] . "-" . $request->dateof['month'] . "-" . $request->dateof['day'],
-                        "US Citizen" => $request->uscitizen,
-                        "Second Owner Yes/No" => $request->doyou,
-                    );
-                    if (isset($request->doyou) && strtolower($request->doyou) == 'yes') {
-                        $second_owner = array(
-                            "Second Officer Name" => $request->secondofficerowner['first'] . " " . $request->secondofficerowner['last'],
-                            "2nd Officer Email" => $request->email34,
-                            "2nd Officer SSN" => $request->ssn35,
-                            "2nd Officer Home Address" => $request->homeaddress36['addr_line1'] . " " . $request->homeaddress36['addr_line2'],
-                            "2nd Officer Home City" => $request->homeaddress36['city'],
-                            "2nd Officer Home State" => $request->homeaddress36['state'],
-                            "2nd Officer Home Zip Code" => $request->homeaddress36['postal'],
-                            "2nd Officer Date of Birth" => $request->dateof40['year'] . "-" . $request->dateof40['month'] . "-" . $request->dateof40['day'],
-                            "2nd Officer US Citizen" => $request->ownerus81,
-                        );
-                        $fields = array_merge($fields, $second_owner);
-                    }
-                } else if ($request->formID == 232325998161462 || $request->formID == 232286307893464) {
-                    //Preliminary Application BCCUSA-FB Ads
-                    $fields = array(
-                        "Legal Business Name" => $request->legalbusiness6,
-                        "Amount Requested" => $request->amountrequested,
-                        "Business Address" => $request->businessaddress['addr_line1'] . " " . $request->businessaddress['addr_line2'],
-                        "Business City" => $request->businessaddress['city'],
-                        "Business State" => $request->businessaddress['state'],
-                        "Business Zip Code" => $request->businessaddress['postal'],
-                        "Business Structure/Type" => $request->businessstructuretype,
-                        "Industry Type" => $request->industrytype,
-                        "Business Start Date" => $request->businessstart63['year'] . "-" . $request->businessstart63['month'] . "-" . $request->businessstart63['day'],
-                        "Monthly Revenue" => $request->monthlyrevenue,
-                        "TaxID Number" => $request->taxid,
-                        "Business Website" => $request->businesswebsite,
-                        "Monthly Business Rent Amount" => $request->businesswebsite91,
-                        "Officer Name" => $request->officerownername['first'] . " " . $request->officerownername['last'],
-                        "Owner Email" => $request->email24,
-                        "SSN" => $request->ssn,
-                        "Home Address" => $request->homeaddress['addr_line1'] . " " . $request->homeaddress['addr_line2'],
-                        "Home City" => $request->homeaddress['city'],
-                        "Home State" => $request->homeaddress['state'],
-                        "Home Zip Code" => $request->homeaddress['postal'],
-                        "Date of Birth" => $request->dateof['year'] . "-" . $request->dateof['month'] . "-" . $request->dateof['day'],
-                        "US Citizen" => $request->uscitizen,
-                        "Second Officer Name" => $request->secondofficerowner['first'] . " " . $request->secondofficerowner['last'],
-                        "2nd Officer Email" => $request->email34,
-                        "2nd Officer SSN" => $request->ssn35,
-                        "2nd Officer Home Address" => $request->homeaddress36['addr_line1'] . " " . $request->homeaddress36['addr_line2'],
-                        "2nd Officer Home City" => $request->homeaddress36['city'],
-                        "2nd Officer Home State" => $request->homeaddress36['state'],
-                        "2nd Officer Home Zip Code" => $request->homeaddress36['postal'],
-                        "2nd Officer Date of Birth" => $request->dateof40['year'] . "-" . $request->dateof40['month'] . "-" . $request->dateof40['day'],
-                        "2nd Officer US Citizen" => $request->ownerus81,
-                    );
-                } else if ($request->formID == 222756540184053) {
-                    //BCCUSA Apply Now Landing Page Form
-                    $fields = array(
-                        "Legal Business Name" => $request->legal_business,
-                        "Once Approved, Use of Funds" => $request->once_approved,
-                        "Estimated FICO Score" => $request->estimated_fico,
-                        "History Tracking" => serialize(json_decode($request->history_tracking)),
-                    );
-                    //BCCUSA Apply Now Landing Page Form
-                }
-                if (is_array($fields) && count($fields) > 0) {
-                    foreach ($fields as $field => $value) {
-                        if (!empty($value))
-                            self::saveCustomFieldData($user_id, $field, $value);
-                    }
-                }
-            }
-
-            return redirect()->back()->withSuccess('Contact Created Successfully.');
+        // Check if the parsing was successful
+        if ($jsonData === null) {
+            return response()->json(['message' => 'Error parsing rawRequest JSON data'], 400);
         }
+
+        $formId = $request->formID;
+        $fields = array();
+        if ($formId == '222756540184053') {
+
+            // Access and process the specific data you need
+            $firstName = $jsonData['q3_name']['first'];
+            $lastName =  $jsonData['q3_name']['last'];
+            $phone = $jsonData['q5_phone']['full'];
+            $email = $jsonData['q4_email'];
+            $legalBusiness = $jsonData['q6_legal_business'];
+            $useOfFunds = $jsonData['q8_once_approved'];
+            $estimatedFICOScore = $jsonData['q13_estimated_fico'];
+            $historyTracking = $jsonData['q17_history_tracking'];
+
+            $fields = array(
+                "Legal Business Name" => $legalBusiness,
+                "Once Approved, Use of Funds" => $useOfFunds,
+                "Estimated FICO Score" => $estimatedFICOScore,
+                "History Tracking" => serialize($historyTracking),
+            );
+        }
+        if ($formId == '231903466626459') {
+
+            $nameArr =  explode(" ", $jsonData['q6_legalBusiness6']);
+            $firstName  = $nameArr[0] ?? 'Misc';
+            $lastName   = $nameArr[1] ?? 'User';
+            $email      = $jsonData['q10_email'];
+            $phone      = $jsonData['q88_phoneNumber'];
+
+            //other form data
+            $fields = array(
+                "Legal Business Name" => $jsonData['q6_legalBusiness6'],
+                "Amount Requested" => $jsonData['q9_amountRequested'],
+                "Business Address" => $jsonData['q11_businessAddress']['addr_line1'] . " " . $jsonData['q11_businessAddress']['addr_line2'],
+                "Business City" => $jsonData['q11_businessAddress']['city'],
+                "Business State" => $jsonData['q11_businessAddress']['state'],
+                "Business Zip Code" => $jsonData['q11_businessAddress']['postal'],
+                "Business Structure/Type" => $jsonData['q12_businessStructuretype'],
+                "Industry Type" => $jsonData['q14_industryType'],
+                "Business Start Date" => $jsonData['q63_businessStart63']['year'] . "-" . $jsonData['q63_businessStart63']['month'] . "-" . $jsonData['q63_businessStart63']['day'],
+                "Monthly Revenue" => $jsonData['q13_monthlyRevenue'],
+                "TaxID Number" => $jsonData['q17_taxId'],
+                "Business Website" => $jsonData['q78_businessWebsite'],
+                "Monthly Business Rent Amount" => $jsonData['q97_businessWebsite97'],
+                "Officer Name" => $jsonData['q21_officerownerName']['first'] . " " . $jsonData['q21_officerownerName']['last'],
+                "Owner Email" => $jsonData['q10_email'],
+                "SSN" => $jsonData['q25_ssn'],
+                "Home Address" => $jsonData['q26_homeAddress']['addr_line1'] . " " . $jsonData['q26_homeAddress']['addr_line2'],
+                "Home City" => $jsonData['q26_homeAddress']['city'],
+                "Home State" => $jsonData['q26_homeAddress']['state'],
+                "Home Zip Code" => $jsonData['q26_homeAddress']['postal'],
+                "Date of Birth" => $jsonData['q30_dateOf']['year'] . "-" . $jsonData['q30_dateOf']['month'] . "-" . $jsonData['q30_dateOf']['day'],
+                "US Citizen" => $jsonData['q80_usCitizen'],
+                "Second Owner Yes/No" => $jsonData['q120_doYou'],
+            );
+
+            if (isset($jsonData['q120_doYou']) && strtolower($jsonData['q120_doYou']) == 'yes') {
+                $second_owner = array(
+                    "Second Officer Name" => $jsonData['q49_secondOwner']['first'] . " " . $jsonData['q49_secondOwner']['last'],
+                    "2nd Officer Email" => $jsonData['q34_email34'],
+                    "2nd Officer SSN" => $jsonData['q35_ssn35'],
+                    "2nd Officer Home Address" => $jsonData['q36_homeAddress36']['addr_line1'] . " " . $jsonData['q36_homeAddress36']['addr_line2'],
+                    "2nd Officer Home City" => $jsonData['q36_homeAddress36']['city'],
+                    "2nd Officer Home State" => $jsonData['q36_homeAddress36']['state'],
+                    "2nd Officer Home Zip Code" => $jsonData['q36_homeAddress36']['postal'],
+                    "2nd Officer Date of Birth" => $jsonData['q40_dateOf40']['year'] . "-" . $jsonData['q40_dateOf40']['month'] . "-" . $jsonData['q40_dateOf40']['day'],
+                    "2nd Officer US Citizen" => $jsonData['q81_ownerUs81'],
+                );
+                $fields = array_merge($fields, $second_owner);
+            }
+        }
+        if ($formId == '230735614227453') {
+            //Preliminary Application BCCUSA-FB Ads
+
+            $nameArr =  explode(" ", $jsonData['q6_legalBusiness6']);
+            $firstName  = $nameArr[0] ?? 'Misc';
+            $lastName   = $nameArr[1] ?? 'User';
+            $email      = $jsonData['q10_email'];
+            $phone      = $jsonData['q7_businessNumber']['phone'];
+
+            $fields = array(
+                "Legal Business Name" => $jsonData['q6_legalBusiness6'],
+                "Amount Requested" => $jsonData['q9_amountRequested'],
+                "Business Address" => $jsonData['q11_businessAddress']['addr_line1'] . " " . $jsonData['q11_businessAddress']['addr_line2'],
+                "Business City" => $jsonData['q11_businessAddress']['city'],
+                "Business State" => $jsonData['q11_businessAddress']['state'],
+                "Business Zip Code" => $jsonData['q11_businessAddress']['postal'],
+                "Business Structure/Type" => $jsonData['q12_businessStructuretype'],
+                "Industry Type" => $jsonData['q14_industryType'],
+                "Business Start Date" => $jsonData['q63_businessStart63']['year'] . "-" . $jsonData['q63_businessStart63']['month'] . "-" . $jsonData['q63_businessStart63']['day'],
+                "Monthly Revenue" => $jsonData['q13_monthlyRevenue'],
+                "TaxID Number" => $jsonData['q17_taxId'],
+                "Business Website" => $jsonData['q78_businessWebsite'],
+                "Monthly Business Rent Amount" => $jsonData['q91_businessWebsite91'],
+                "Officer Name" => $jsonData['q21_officerownerName']['first'] . " " . $jsonData['q21_officerownerName']['last'],
+                "Owner Email" => $jsonData['q24_email24'],
+                "SSN" => $jsonData['q25_ssn'],
+                "Home Address" => $jsonData['q26_homeAddress']['addr_line1'] . " " . $jsonData['q26_homeAddress']['addr_line2'],
+                "Home City" => $jsonData['q26_homeAddress']['city'],
+                "Home State" => $jsonData['q26_homeAddress']['state'],
+                "Home Zip Code" => $jsonData['q26_homeAddress']['postal'],
+                "Date of Birth" => $jsonData['q30_dateOf']['year'] . "-" . $jsonData['q30_dateOf']['month'] . "-" . $jsonData['q30_dateOf']['day'],
+                "US Citizen" => $jsonData['q80_usCitizen'],
+                "Second Officer Name" => $jsonData['q32_secondOfficerowner']['first'] . " " . $jsonData['q32_secondOfficerowner']['last'],
+                "2nd Officer Email" => $jsonData['q34_email34'],
+                "2nd Officer SSN" => $jsonData['q35_ssn35'],
+                "2nd Officer Home Address" => $jsonData['q36_homeAddress36']['addr_line1'] . " " . $jsonData['q36_homeAddress36']['addr_line2'],
+                "2nd Officer Home City" => $jsonData['q36_homeAddress36']['city'],
+                "2nd Officer Home State" => $jsonData['q36_homeAddress36']['state'],
+                "2nd Officer Home Zip Code" => $jsonData['q36_homeAddress36']['postal'],
+                "2nd Officer Date of Birth" => $jsonData['q40_dateOf40']['year'] . "-" . $jsonData['q40_dateOf40']['month'] . "-" . $jsonData['q40_dateOf40']['day'],
+                "2nd Officer US Citizen" => $jsonData['q81_ownerUs81'],
+            );
+        }
+        //create user & company if do not exist
+        $company = Company::first();
+        if (!$company) {
+            $company = Company::create(['name' => 'BCCUSA']);
+        }
+        $companyId  = $company->id;
+        $this->data['round_robin_owner'] =  RoundRobinSetting::RoundRobinOwner($companyId);
+        $user = User::where('email', $email)->first();
+        $data['password'] = Hash::make('BCCUSA.COM');
+        $data['owner'] = $this->data['round_robin_owner']->owner_id;
+        $user_owner = $data['owner'];
+        if (!$user) {
+            $user = User::create([
+                'first_name'    => $firstName,
+                'last_name'     => $lastName,
+                'email'         => $email,
+                'phone_number'  => $phone,
+                'role'          => 'user',
+                'company_id'    => $companyId,
+                'password'      => Hash::make('BCCUSA.COM')
+            ]);
+            if ($data['owner'] > 0) {
+                UserOwner::create([
+                    'user_id'   => $user->id,
+                    'owner_id'  => $user_owner
+                ]);
+                RoundRobinSetting::where('company_id', $companyId)->where('owner_id', $user_owner)
+                    ->update(['last_lead' => date("Y-m-d H:i:s")]);
+            }
+        }
+        if (is_array($fields) && count($fields) > 0) {
+            foreach ($fields as $field => $value) {
+                if (!empty($value))
+                    self::saveCustomFieldData($user->id, $field, $value);
+            }
+        }
+
+        // For testing, you can return a response
+        return response()->json(['message' => 'Webhook data received and processed successfully']);
     }
 
     private static function saveCustomFieldData($user_id, $field, $data)

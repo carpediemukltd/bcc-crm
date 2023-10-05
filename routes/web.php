@@ -55,8 +55,7 @@ Route::get('/magic-link/view/{token}', [MagicLinkController::class, 'viewLink'])
 
 Route::post("/chat", [DialogflowController::class, "chat"]);
 
-Route::any('jotform/add', [JotFormController::class, 'addUser'])->name('user.add.jotform')->withoutMiddleware([VerifyCsrfToken::class]);
-
+Route::post('jotform-webhook', [JotFormController::class, 'handleJotformWebhook'])->name('handleJotformWebhook')->withoutMiddleware([VerifyCsrfToken::class]);
 Route::middleware([CheckStatus::class])->group(function () {
 
     Route::get('dashboard', [UserController::class, 'dashboard'])->name('dashboard');

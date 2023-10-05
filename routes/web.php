@@ -9,6 +9,7 @@ use App\Http\Controllers\DealController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckAdminOwner;
+use App\Http\Middleware\CheckAdminSuperAdmin;
 use App\Http\Middleware\CheckSuperAdmin;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Controllers\StageController;
@@ -58,7 +59,7 @@ Route::any('jotform/add', [JotFormController::class, 'addUser'])->name('user.add
 
 Route::middleware([CheckStatus::class])->group(function () {
 
-    Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+    Route::get('dashboard', [UserController::class, 'dashboard'])->name('dashboard');
     Route::get('dashboard-sandbox', [UserController::class, 'dashboard_sandbox'])->name('dashboard-sandbox');
     Route::get('deals-sandbox', [DealController::class, 'deals_sandbox'])->name('deals-sandbox');
     Route::get('filter-deals', [DealController::class, 'filter_deals'])->name('filter-deals');
@@ -131,16 +132,10 @@ Route::middleware([CheckStatus::class])->group(function () {
 
     });
 
-    Route::middleware([CheckAdmin::class])->group(function () {
+    Route::middleware([CheckAdminSuperAdmin::class])->group(function () {
         Route::any('roundrobin', [RoundRobinController::class, 'index'])->name('roundrobin');
-
-    });
-
-    Route::middleware([CheckUser::class])->group(function () {
-        // user specific methods
     });
     //notifications
-
     Route::middleware([CheckAdminOwner::class])->group(function () {
         Route::get('notification-settings', [NotificationController::class, 'notificationSettings']);
         Route::put('clear-bell-badge', [NotificationController::class, 'clearBellBadge']);
@@ -148,7 +143,7 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::put('update-notification-setting', [NotificationController::class, 'updateNotificationSetting']);
         Route::post('update-stage-settings-options', [NotificationController::class, 'updateStageSettingsOptions']);
         Route::get('notifications', [NotificationController::class, 'index'])->name('notifications');
-
+        Route::any('roundrobin', [RoundRobinController::class, 'index'])->name('roundrobin');
     });
     Route::prefix('demo')->group(function () {
         Route::get('userlist', [GeneralController::class, 'userList'])->name('userlist');

@@ -3,16 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Deal;
+use App\Models\Documents;
+use App\Models\RequiredDocument;
 use App\Models\User;
-use Google\Cloud\Dialogflow\V2\Intent\TrainingPhrase;
-use Google\Cloud\Dialogflow\V2\Intent\TrainingPhrase\Part;
 use Illuminate\Http\Request;
 use Google\Cloud\Dialogflow\V2\TextInput;
 use Google\Cloud\Dialogflow\V2\QueryInput;
 use Google\Cloud\Dialogflow\V2\SessionsClient;
-use Google\Cloud\Dialogflow\V2\IntentsClient;
-use Google\Cloud\Dialogflow\V2\Intent;
-use Illuminate\Support\Facades\Http;
 
 class DialogflowController extends Controller
 {
@@ -58,23 +55,29 @@ class DialogflowController extends Controller
             "I've come across your application, and its status is currently $sApplicationStatus.",
             "Your application has been found, and it's currently in a $sApplicationStatus condition.","
             I've located your application, and its status is presently marked as $sApplicationStatus.",
-            "Your application has been identified, and it's in a state $sApplicationStatus $sApplicationStatus.",
+            "Your application has been identified, and it's in a state $sApplicationStatus.",
             "I've uncovered your application, and its current status is $sApplicationStatus.",
-            "Your application has been located, and it is presently in a pending status.",
+            "Your application has been located, and it is presently in a $sApplicationStatus status.",
             "I've detected your application, and it's currently in a $sApplicationStatus state."
         ];
 
         $iMessageIndex = rand(0,9);
+        if($sApplicationStatus == "Document Collection")
+            $aReturnMessage[$iMessageIndex] .= "<br>".self::getDocuments($iRecordId);
+
         return self::returnMessage($aReturnMessage[$iMessageIndex]);
     }
     public static function chat(Request $request)
     {
         $sMessage   = $request->message;
         $sSessionID = $request->sessionID;
-
         if(preg_match("/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/", $sMessage))
             if(auth()->user()->email != $sMessage)
-                return ["message" => "Unauthorized email address"];
+                return ["message" => "Unauthorized access to the information"];
+
+        $bCheckAbusive = self::keywordBlock($sMessage);
+        if($bCheckAbusive)
+            return ["message" => $bCheckAbusive];
 
         $objSessionsClient = new SessionsClient([
             'credentials' => public_path(env('GOOGLE_APPLICATION_CREDENTIALS'))
@@ -100,55 +103,57 @@ class DialogflowController extends Controller
     {
         return ["fulfillmentText" => $sReturnMessage];
     }
+    public static function getDocuments($iUserId) : string
+    {
+        $aAllDocuments      = RequiredDocument::listDocuments();
+        $aUploadDocuments   = Documents::getUploadedDocument($iUserId);
 
-    public static function createIntent()
-    {
-        try
-        {
-            self::curl();
-            die();
-//            $intentsClient  = new IntentsClient();
-//            $parent         = "projects/".env("DIALOGFLOW_PROJECTID")."/agent";
-//
-//            $trainingPhrase1 = new TrainingPhrase();
-//            $part1           = new Part();
-//            $trainingPhrase2 = new TrainingPhrase();
-//            $part2           = new Part();
-//
-//            $part1->setText('Training phrase 1');
-//            $trainingPhrase1->setParts([$part1]);
-//            $part2->setText('Training phrase 2');
-//            $trainingPhrase2->setParts([$part2]);
-//
-//            $intent = new Intent([
-//                'display_name' => 'Your Intent Name',
-//                'training_phrases' => [$trainingPhrase1, $trainingPhrase2],
-//            ]);
-//
-//            $response = $intentsClient->createIntent($parent, $intent);
-//            $intentsClient->close();
-//            echo 'Intent created: ' . $response->getName();
-        }
-        catch(\Exception $e)
-        {
-            return $e->getMessage();
-        }
+        $sDocumentMissing = "";
+        foreach($aAllDocuments AS $iKey => $aValues)
+            if (!in_array($aValues["file_group_name"], array_column($aUploadDocuments, 'file_group_name')))
+                $sDocumentMissing .= "<br>".$aValues["document_name"];
+
+        $sReturnMessage = "";
+        if($sDocumentMissing)
+            $sReturnMessage = "You have following missing documents".$sDocumentMissing."<br> Please upload your documents here <a href='http://127.0.0.1:8000/user/documents/view' taget='_blank'>http://127.0.0.1:8000/user/documents/view</a>";
+
+        return $sReturnMessage;
     }
-    private static function curl($sURL = "https://api.rytr.me/v1/languages", $sType = "GET")
+
+    private static function keywordBlock($sString)
     {
-        $aHeaders = [
-            'Authentication: Bearer VNZGDFTF3Y1AGDFO3FNZL',
-            'Content-Type: application/json'
+        $aArrayAbusiveWords = [
+            "fuck",
+            "shit",
+            "cock",
+            "asshole",
+            "prick",
+            "dick",
+            "pussy",
+            "bitch",
+            "cunt",
+            "shmuck",
+            "schmuck",
         ];
 
-        if($sType == "POST")
-            $aResponse = Http::post($sURL, [
-                "headers" => $aHeaders,
-                "data" => []
-            ]);
-        else
-            $aResponse = Http::withHeaders($aHeaders)->get($sURL);
+        $aArrayReturn = [
+            "Kindly refrain from using strong language. It makes it harder for me to help effectively. How can I assist you further?",
+            "I strive to assist best when the language is kept clean. Could you please rephrase? What can I help with?",
+            "To provide the best assistance, I'd appreciate if we could keep our conversation respectful. How may I help you?",
+            "Using fewer expletives helps me understand and assist you better. Is there something specific you'd like to know?",
+            "My ability to help is optimized when the language is kept civil. How can I assist you?",
+            "Let's keep our conversation constructive. Avoiding expletives will help me serve you better. What do you need assistance with?",
+            "I aim to be as helpful as possible, and clean language aids that. Do you have a question for me?",
+            "Respectful dialogue ensures the best assistance from my end. How can I support you further?",
+            "To ensure I understand you clearly, it's best to avoid strong language. How can I help you today?",
+            "Please try to express your thoughts without expletives. It'll help me assist you more effectively. How can I help you?",
+        ];
 
-        print_r(json_decode($aResponse));
+        $sString = strtolower($sString);
+        foreach($aArrayAbusiveWords AS $iKey => $sWOrds)
+            if(strpos($sString, $sWOrds) === 0 || strpos($sString, $sWOrds) !== false)
+                return $aArrayReturn[rand(0,9)];
+
+        return false;
     }
 }

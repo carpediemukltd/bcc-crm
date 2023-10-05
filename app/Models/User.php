@@ -41,6 +41,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    protected $appends = ['full_name'];
 
     public static function getUsers($data)
     {
@@ -89,5 +90,9 @@ class User extends Authenticatable
             'user'  => 'contact',
         ];
         return $valueMap[$value] ?? $value;
+    }
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
     }
 }

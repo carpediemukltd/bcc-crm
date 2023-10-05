@@ -249,7 +249,7 @@
                                        <span class="item-name">Contact List</span>
                                     </a>
                                  </li>
-                                 @if (Auth::user()->role == 'admin')
+                                 @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
                                  <li class="nav-item">
                                     <a class="nav-link <?php if(isset($slug) && $slug == 'roundrobin'){echo 'active';}?>"
                                        href="{{route('roundrobin')}}">

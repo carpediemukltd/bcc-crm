@@ -56,9 +56,9 @@ class JotFormController extends Controller
                 $data['last_name'] = $request->full_name['last'];
             }
             //BCCUSA Apply Now Landing Page Form
-            else if (isset($request->q3_name)) {
-                $data['first_name'] = $request->q3_name['first'];
-                $data['last_name'] = $request->q3_name['last'];
+            else if (isset($request->name)) {
+                $data['first_name'] = $request->name['first'];
+                $data['last_name'] = $request->name['last'];
             }
 
             if(isset($request->q4_email)){
@@ -79,8 +79,8 @@ class JotFormController extends Controller
                 $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->phonenumber);
             }
             //BCCUSA Apply Now Landing Page Form
-            else if (isset($request->q5_phoneNumber['full'])) {
-                $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->q5_phoneNumber['full']);
+            else if (isset($request->phone['full'])) {
+                $data['phone_number'] = preg_replace("/[^0-9]/", '', $request->phone['full']);
             }
             //BCCUSA Apply Now Landing Page Form
 
@@ -89,12 +89,12 @@ class JotFormController extends Controller
             $data['owner'] = $this->data['round_robin_owner']->owner_id;
             $user_owner = $data['owner'];
             $user_id = 0;
-            $existing_user = User::where('email', $request->email)->first();
+            $existing_user = User::where('email', $data['email'])->first();
             if ($existing_user) {
                 $user_type = "existing";
                 unset($data['email'], $data['owner']);
-                User::where('email', $request->email)->update($data);
-                $user = User::where('email', $request->email)->first();
+                User::where('email', $existing_user->email)->update($data);
+                $user = User::where('email', $existing_user->email)->first();
                 $user_id = $user->id;
                 // return redirect()->back()->withSuccess('Contact Updated Successfully.');
             } else {
@@ -103,7 +103,7 @@ class JotFormController extends Controller
                     'first_name' => $data['first_name'],
                     'last_name' => $data['last_name'],
                     'email' => $data['email'],
-                    'phone_number'  => $data['phone_number'],
+                    'phone_number'  => isset($data['phone_number']) ? $data['phone_number'] : null,
                     'role' => $data['role'],
                     'company_id' => $company_id,
                     'password' => $data['password']
@@ -200,10 +200,10 @@ class JotFormController extends Controller
                 } else if ($request->formID == 222756540184053) {
                     //BCCUSA Apply Now Landing Page Form
                     $fields = array(
-                        "Legal Business Name" => $request->q6_legalBusiness,
-                        "Once Approved, Use of Funds" => $request->q8_onceApproved,
-                        "Estimated FICO Score" => $request->q13_estimatedFico,
-                        "History Tracking" => serialize(json_decode($request->q17_typeA17)),
+                        "Legal Business Name" => $request->legal_business,
+                        "Once Approved, Use of Funds" => $request->once_approved,
+                        "Estimated FICO Score" => $request->estimated_fico,
+                        "History Tracking" => serialize(json_decode($request->history_tracking)),
                     );
                     //BCCUSA Apply Now Landing Page Form
                 }

@@ -40,7 +40,21 @@ class DialogflowController extends Controller
     {
         $aUserExists = User::where("email", $aRequestParameters["userApplicationStatus"])->get()->first();
         if(!$aUserExists)
+        {
+            $aArrayNotFound = [
+                "No matching record was located. Kindly confirm that the email address entered matches the one used for your application.",
+                "We couldn't find any records. Please double-check that the email address you've entered is the one you used for your application.",
+                "Your record was not located in our system. Ensure that the email address you're entering is the correct one you used during your application.",
+                "There's no record matching your search. Verify that the email address entered corresponds to the one you utilized for your application.",
+                "We couldn't retrieve any records. Please make sure that the email address you've provided matches the one you employed for your application.",
+                "Record not discovered. Please validate that the email address you've inputted is the same as the one you utilized in your application.",
+                "We couldn't locate any records. Please cross-verify that the email address you've entered is the one associated with your application.",
+                "No record found. Confirm that the email address you are entering is the one you used for your application.",
+                "There is no record matching your query. Ensure that the email address you've entered corresponds to the one used during your application.",
+                "Your record could not be found. Double-check that the email address you're inputting is the same one you used when applying.",
+            ];
             return self::returnMessage("Record not found");
+        }
 
         $iRecordId          = $aUserExists->id;
         $aApplicationStatus = Deal::getApplicationStatus($iRecordId);

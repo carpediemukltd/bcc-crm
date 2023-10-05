@@ -19,7 +19,7 @@ class CreateRequiredDocumentsTable extends Migration
             $table->string("document_type")->nullable();
             $table->string("file_group_name")->nullable();
             $table->tinyInteger("status")->default(1)->nullable()->comment("0 => file inactive not needed, 1 => active required");
-            $table->bigInteger("create_by")->default(0)->nullable()->comment("who added this file requirement");
+            $table->bigInteger("created_by")->default(0)->nullable()->comment("who added this file requirement");
             $table->timestamps();
             $table->index("document_type");
             $table->index("file_group_name");

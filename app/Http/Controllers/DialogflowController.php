@@ -53,7 +53,7 @@ class DialogflowController extends Controller
                 "There is no record matching your query. Ensure that the email address you've entered corresponds to the one used during your application.",
                 "Your record could not be found. Double-check that the email address you're inputting is the same one you used when applying.",
             ];
-            return self::returnMessage("Record not found");
+            return self::returnMessage($aArrayNotFound[rand(0,9)]);
         }
 
         $iRecordId          = $aUserExists->id;

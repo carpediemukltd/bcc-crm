@@ -59,7 +59,7 @@ class DialogflowController extends Controller
         $iRecordId          = $aUserExists->id;
         $aApplicationStatus = Deal::getApplicationStatus($iRecordId);
         if(sizeof($aApplicationStatus) <= 0)
-            return self::returnMessage('Sorry, no application found. If you feel this is in error, please email TeamBccusa@BCCUSA.com and we will provide immediate assistance. If you have no already applied, please apply here <a href="https://bccusa.com/sba-lending/" target="_blank">https://bccusa.com/sba-lending/</a>');
+            return self::returnMessage('Sorry, no application found. If you feel this is in error, please email TeamBccusa@BCCUSA.com and we will provide immediate assistance. If you have no already applied, please apply here <a href="https://bccusa.com/get-started-now/" target="_blank">https://bccusa.com/get-started-now/</a>');
 
         $sApplicationStatus = $aApplicationStatus[0]->title;
         $aReturnMessage = [
@@ -129,7 +129,7 @@ class DialogflowController extends Controller
 
         $sReturnMessage = "";
         if($sDocumentMissing)
-            $sReturnMessage = "You have following missing documents".$sDocumentMissing."<br> Please upload your documents here <a href='http://127.0.0.1:8000/user/documents/view' taget='_blank'>http://127.0.0.1:8000/user/documents/view</a>";
+            $sReturnMessage = "You have following missing documents".$sDocumentMissing."<br> Please upload your documents here <a href='https://dashboard.bccusa.com/user/documents/view' taget='_blank'>https://dashboard.bccusa.com/user/documents/view</a>";
 
         return $sReturnMessage;
     }

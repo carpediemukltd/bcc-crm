@@ -9,7 +9,6 @@ use App\Http\Controllers\DealController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckAdminOwner;
-use App\Http\Middleware\CheckAdminSuperAdmin;
 use App\Http\Middleware\CheckSuperAdmin;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Controllers\StageController;
@@ -19,12 +18,14 @@ use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\JotFormController;
 use App\Http\Controllers\PipelineController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\MagicLinkController;
+use App\Http\Middleware\CheckAdminSuperAdmin;
 use App\Http\Controllers\DialogflowController;
 use App\Http\Controllers\RoundRobinController;
 use App\Http\Controllers\CustomFieldController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ChromeExtensionController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\MagicLinkController;
 
 
 /*

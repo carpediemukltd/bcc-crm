@@ -188,8 +188,8 @@
                         </div>
 
                         <div class="text-center pb-2">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="DeletePipeline();">Delete</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="DeletePipeline();">Yes, Delete it!</button>
                         </div>
 
                     </form>

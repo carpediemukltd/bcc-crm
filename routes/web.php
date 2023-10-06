@@ -37,7 +37,7 @@ use App\Http\Controllers\MagicLinkController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/extension', [ChromeExtensionController::class, 'login'])->name('ext.login');
 Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('verify-2fa', [AuthController::class, 'verify2FA'])->name('verify-2fa');

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DialogflowController;
@@ -14,6 +15,14 @@ use App\Http\Middleware\DialogflowMiddleware;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('login', [AuthController::class, 'postLogin'])->name('login');
+Route::post('generate-verification-code', [AuthController::class, 'generateVerificationCode']);
+Route::post('verify-code', [AuthController::class, 'verifyCode']);
+
+
+Route::group(['middleware' => 'auth:api'], function () {
+
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

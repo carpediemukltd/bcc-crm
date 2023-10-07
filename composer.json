@@ -12,6 +12,7 @@
         "google/cloud-dialogflow": "^1.8",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
+        "laravel/passport": "^10.4",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "paragonie/random_compat": "2.*",

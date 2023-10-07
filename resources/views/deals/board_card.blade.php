@@ -12,7 +12,7 @@
                     <div class="card-body p-0">
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="card">
+                                <div class="card {{ str_replace(" ","-",strtolower($stage->title)) }}">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center justify-content-between">
                                             <h6 class="text-warning mb-0 saddam">{{ $stage->title }}</h6>

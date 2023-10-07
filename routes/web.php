@@ -9,7 +9,6 @@ use App\Http\Controllers\DealController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckAdminOwner;
-use App\Http\Middleware\CheckAdminSuperAdmin;
 use App\Http\Middleware\CheckSuperAdmin;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Controllers\StageController;
@@ -19,12 +18,14 @@ use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\JotFormController;
 use App\Http\Controllers\PipelineController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\MagicLinkController;
+use App\Http\Middleware\CheckAdminSuperAdmin;
 use App\Http\Controllers\DialogflowController;
 use App\Http\Controllers\RoundRobinController;
 use App\Http\Controllers\CustomFieldController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ChromeExtensionController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\MagicLinkController;
 
 
 /*
@@ -37,7 +38,7 @@ use App\Http\Controllers\MagicLinkController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/extension', [ChromeExtensionController::class, 'login'])->name('ext.login');
 Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('verify-2fa', [AuthController::class, 'verify2FA'])->name('verify-2fa');
@@ -55,8 +56,7 @@ Route::get('/magic-link/view/{token}', [MagicLinkController::class, 'viewLink'])
 
 Route::post("/chat", [DialogflowController::class, "chat"]);
 
-Route::any('jotform/add', [JotFormController::class, 'addUser'])->name('user.add.jotform')->withoutMiddleware([VerifyCsrfToken::class]);
-
+Route::post('jotform-webhook', [JotFormController::class, 'handleJotformWebhook'])->name('handleJotformWebhook')->withoutMiddleware([VerifyCsrfToken::class]);
 Route::middleware([CheckStatus::class])->group(function () {
 
     Route::get('dashboard', [UserController::class, 'dashboard'])->name('dashboard');

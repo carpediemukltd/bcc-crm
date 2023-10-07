@@ -40,12 +40,26 @@ class DialogflowController extends Controller
     {
         $aUserExists = User::where("email", $aRequestParameters["userApplicationStatus"])->get()->first();
         if(!$aUserExists)
-            return self::returnMessage("Record not found");
+        {
+            $aArrayNotFound = [
+                "No matching record was located. Kindly confirm that the email address entered matches the one used for your application.",
+                "We couldn't find any records. Please double-check that the email address you've entered is the one you used for your application.",
+                "Your record was not located in our system. Ensure that the email address you're entering is the correct one you used during your application.",
+                "There's no record matching your search. Verify that the email address entered corresponds to the one you utilized for your application.",
+                "We couldn't retrieve any records. Please make sure that the email address you've provided matches the one you employed for your application.",
+                "Record not discovered. Please validate that the email address you've inputted is the same as the one you utilized in your application.",
+                "We couldn't locate any records. Please cross-verify that the email address you've entered is the one associated with your application.",
+                "No record found. Confirm that the email address you are entering is the one you used for your application.",
+                "There is no record matching your query. Ensure that the email address you've entered corresponds to the one used during your application.",
+                "Your record could not be found. Double-check that the email address you're inputting is the same one you used when applying.",
+            ];
+            return self::returnMessage($aArrayNotFound[rand(0,9)]);
+        }
 
         $iRecordId          = $aUserExists->id;
         $aApplicationStatus = Deal::getApplicationStatus($iRecordId);
         if(sizeof($aApplicationStatus) <= 0)
-            return self::returnMessage('Sorry, no application found. If you feel this is in error, please email TeamBccusa@BCCUSA.com and we will provide immediate assistance. If you have no already applied, please apply here <a href="https://bccusa.com/sba-lending/" target="_blank">https://bccusa.com/sba-lending/</a>');
+            return self::returnMessage('Sorry, no application found. If you feel this is in error, please email TeamBccusa@BCCUSA.com and we will provide immediate assistance. If you have no already applied, please apply here <a href="https://bccusa.com/get-started-now/" target="_blank">https://bccusa.com/get-started-now/</a>');
 
         $sApplicationStatus = $aApplicationStatus[0]->title;
         $aReturnMessage = [
@@ -115,7 +129,7 @@ class DialogflowController extends Controller
 
         $sReturnMessage = "";
         if($sDocumentMissing)
-            $sReturnMessage = "You have following missing documents".$sDocumentMissing."<br> Please upload your documents here <a href='http://127.0.0.1:8000/user/documents/view' taget='_blank'>http://127.0.0.1:8000/user/documents/view</a>";
+            $sReturnMessage = "You have following missing documents".$sDocumentMissing."<br> Please upload your documents here <a href='https://dashboard.bccusa.com/user/documents/view' taget='_blank'>https://dashboard.bccusa.com/user/documents/view</a>";
 
         return $sReturnMessage;
     }

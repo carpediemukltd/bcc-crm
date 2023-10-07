@@ -514,11 +514,11 @@
                   <button id="navbar-toggle" class="navbar-toggler" type="button" data-bs-toggle="collapse"
                      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                      aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon">
-                  <span class="navbar-toggler-bar bar1 mt-1"></span>
-                  <span class="navbar-toggler-bar bar2"></span>
-                  <span class="navbar-toggler-bar bar3"></span>
-                  </span>
+                     <span class="navbar-toggler-icon">
+                        <span class="navbar-toggler-bar bar1 mt-1"></span>
+                        <span class="navbar-toggler-bar bar2"></span>
+                        <span class="navbar-toggler-bar bar3"></span>
+                     </span>
                   </button>
                </div>
                <div class="navbar-collapse collapse" id="navbarSupportedContent">

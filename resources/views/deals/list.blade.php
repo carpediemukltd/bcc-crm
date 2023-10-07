@@ -33,7 +33,7 @@
       <div class="row">
          <div class="col-sm-12">
             <div class="card">
-               <div class="card-header d-flex justify-content-between">
+               <div class="card-header d-flex align-items-center justify-content-between">
                   <div class="header-title">
                      <h4 class="card-title">Deals Listing</h4>
                   </div>
@@ -92,7 +92,7 @@
                   </div>
                   </div>
                </div>
-               <div class="card-body px-0">
+               <div class="card-body">
                   <div class="table-responsive">
                      <div id="user-list-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                         <div class="table-responsive my-3">

@@ -1619,4 +1619,6 @@ p.sub_text:after{
 .login-content .resend-code{
   cursor: pointer;
  }
- 
+ .iti.iti--allow-dropdown.iti--separate-dial-code {
+    width: 100%;
+}

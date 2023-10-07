@@ -82,7 +82,7 @@
     <div id="loader" style="display: none;"></div>
     <div class="row">
         <div class="col-lg-12 col-md-12">
-            <div class="card card-block card-stretch card-height">
+            <div class="card card-block card-stretch card-height mb-0">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center flex-wrap mb-2 gap-3">
                         <div class="d-flex flex-column">
@@ -124,7 +124,7 @@
                 </div>
             </div>
          </div>
-      </div>
+      
       <div class="col-lg-6 col-md-12">
          <div class="card card-block card-stretch card-height">
             <div class="card-header">
@@ -445,6 +445,7 @@
                </a>
             </div>
          </div>
+      </div>
       </div>
    </div>
 </div>

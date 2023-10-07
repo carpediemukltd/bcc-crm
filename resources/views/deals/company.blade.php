@@ -8,7 +8,7 @@
                     <div class="col-md-12">
                         <div class="flex-wrap d-flex justify-content-between align-items-center">
                             <div>
-                                <h1>All Deals</h1>
+                                <h1>All Deals </h1>
                                 <p>Experience a simple yet powerful way to build Dashboards.</p>
                             </div>
                         </div>
@@ -28,7 +28,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
-                        <div class="card-header d-flex justify-content-between">
+                        <div class="card-header d-flex mb-4 justify-content-between">
                             <div class="header-title">
                                 <h4 class="card-title">Company Deals Listing</h4>
                             </div>
@@ -125,7 +125,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body pt-0">
+                        <div class="card-body pt-2">
                             <div class="row">
                                 <div class="col-lg-2">
                                     <input type="hidden" id="page_no" name="page_no" value="1" />

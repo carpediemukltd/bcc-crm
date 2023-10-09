@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   $(document).ready(function () {
 
-
     var userData = {
       id: 0,
       name: "",
@@ -10,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     chrome.storage.local.get(['user_data'], function (data) {
-      if (data.user_data.id) {
+      if (data && data.user_data.id) {
         console.log('Login data retrieved:', data);
         userData = {
           id: data.user_data.id,
@@ -23,24 +22,43 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     $('#appendTemplates').click(function () {
-
-      const composeEmailSection = document.querySelector('[role="dialog"]');
-
-      if (composeEmailSection) {
-        const selectDropdown = document.createElement('select');
-        selectDropdown.innerHTML = `
-  <option value="option1">Option 1</option>
-  <option value="option2">Option 2</option>
-  <option value="option3">Option 3</option>
-`;
-
-        // Add event listeners to handle dropdown selection if needed
-
-        // Append the dropdown to the Gmail compose modal
-        composeEmailSection.appendChild(selectDropdown);
+      const dropdown = document.createElement("select");
+      dropdown.id = "myDropdown";
+      
+      const option1 = document.createElement("option");
+      option1.value = "important";
+      option1.textContent = "Important message";
+      
+      const option2 = document.createElement("option");
+      option2.value = "regular";
+      option2.textContent = "Regular message";
+      
+      dropdown.appendChild(option1);
+      dropdown.appendChild(option2);
+      
+      document.getElementById("compose").appendChild(dropdown);
+      
+      dropdown.addEventListener("change", function() {
+        const subject = document.getElementById("subjectBox");
+        subject.value = this.value;
+      });
+      /* function openComposeModal() {
+        chrome.tabs.getSelected(null, tab => {
+          chrome.tabs.executeScript(tab.id, {
+            file: "content_script.js"
+          });
+  
+          chrome.tabs.update(tab.id, {
+            url: "https://mail.google.com/compose?subject=Important%20message&body=This%20is%20an%20important%20message."
+          });
+        });
       }
-    });
 
+      console.log('trying');
+      console.log($("input[name=subjectbox]"));
+      $("input[name=subjectbox]").html("Important message");
+      $("input[name=bodyBox]").val("This is an important message"); */
+    });
 
     function loginSettings() {
       console.log('userData', userData);

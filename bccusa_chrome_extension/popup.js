@@ -1,4 +1,4 @@
-$(document).ready(function () {
+/* $(document).ready(function () {
 
     console.log('ready');
     $('#loginButton').click(function () {
@@ -20,12 +20,7 @@ console.log('asdf');
                 };
                 $('#loginDiv').hide();
                 $('#afterLogin').show();
-                /* 
-                                $('#login_form').css('display', 'none');
-                                $('#logged_in').css('display', 'block');
-                                $('#account_name').html(data.response.name);
-                                $('#account_email').html(data.response.email);
-                */
+                
                 // Save the data to chrome.storage.sync
                 chrome.storage.local.set({ loginData: savedData }, function () {
                     console.log('Login data saved:', savedData);
@@ -37,3 +32,4 @@ console.log('asdf');
         });
     });
 });
+ */

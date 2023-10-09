@@ -25,14 +25,12 @@ class AuthController extends Controller
             return ApiResponse::error($validator->errors()->first(), 400);
         }
         $user = User::where('email', $request->email)->first();
-
         if (!$user) {
             return ApiResponse::error('No user found with the provided Email Address.', 404);
         }
-
-        if ($user->role == 'user' || $user->role == 'contact') {
+        if (!in_array($user->role, ['user', 'contact'])) {
             return ApiResponse::error('No user found with the provided Email Address.', 404);
-        }
+        } 
 
         if ($user->status == 'banned') {
             return ApiResponse::error('You have been blocked by Admin, Please contact Admin.', 403);
@@ -223,7 +221,21 @@ class AuthController extends Controller
         if ($response) {
             return ApiResponse::error($response, 403);
         }
-        
+
         return ApiResponse::success([], 'Code sent successfully.', 200);
+    }
+    public function resendVerificationCode(Request $request){
+        $user = User::where(['email' =>  $request->email])->first();
+        $response = $this->generate2FACode($user);
+            if ($response) {
+                return ApiResponse::error($response, 403);
+            }
+            return ApiResponse::success([], 'Code sent successfully.', 200);
+
+    }
+    public function logout()
+    {
+        auth()->user()->tokens()->where('revoked', false)->update(['revoked' => true]);
+        return ApiResponse::success('Logged out successfully.', 200);
     }
 }

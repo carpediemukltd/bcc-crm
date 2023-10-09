@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\DocumentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DialogflowController;
@@ -18,15 +19,13 @@ use App\Http\Middleware\DialogflowMiddleware;
 Route::post('login', [AuthController::class, 'postLogin'])->name('login');
 Route::post('generate-verification-code', [AuthController::class, 'generateVerificationCode']);
 Route::post('verify-code', [AuthController::class, 'verifyCode']);
-
+Route::post('resend-verification-code', [AuthController::class, 'resendVerificationCode'])->middleware('throttle:3,5'); // Throttle to 3 requests per 5 minutes
 
 Route::group(['middleware' => 'auth:api'], function () {
-
+    Route::resource('documents', DocumentController::class);
+    Route::post('logout', [AuthController::class, 'logout']);
 });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 //Route::middleware([DialogflowMiddleware::class])->group(function (Request $request) {
 //    Route::post("dialogflow", [DialogflowController::class, "index"]);
 //});

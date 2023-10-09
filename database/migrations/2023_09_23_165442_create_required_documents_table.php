@@ -24,7 +24,7 @@ class CreateRequiredDocumentsTable extends Migration
             $table->index("document_type");
             $table->index("file_group_name");
             $table->index("status");
-            $table->index("create_by");
+            $table->index("created_by");
         });
     }
 

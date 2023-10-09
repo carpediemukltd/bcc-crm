@@ -86,7 +86,10 @@
                                  </div>
                               </div>
                               <div class="d-flex justify-content-center">
-                                 <button type="submit" class="btn btn-primary">Sign In</button>
+                                 <button type="submit" class="btn btn-primary" >Sign In
+
+                                 <span id="spiner" class="spinner-border spinner-border-sm hide" role="status" aria-hidden="true"></span>
+                                 </button>
                               </div>
 
                            </form>
@@ -101,7 +104,10 @@
                                     <input id="2fa-code" type="text" class="form-control" name="verification_code" required>
                                  </div>
                                  <div class="group mb-0">
-                                    <input type="submit" class="btn btn-primary mt-2" value="Verify Code">
+                                    <!-- <input type="submit" class="btn btn-primary mt-2" value="Verify Code"> -->
+                                    <button type="submit" class="btn btn-primary mt-2" value="Verify Code">
+                                    <span id="spiner" class="spinner-border spinner-border-sm hide" role="status" aria-hidden="true"></span>
+                                    </button>
                                  </div>
                                  <div class="group mb-3 mt-3">
                                     <p>Didn't receive a code? <b style="cursor: pointer;" class="resend-code">Resend</b></p>
@@ -155,7 +161,7 @@
             $('.alert-danger').hide();
             // Get the form data
             var formData = $(this).serialize();
-
+            $('#spiner').css("display","inline-block");
             // Send an Ajax POST request for initial login
             $.ajax({
                type: 'POST',
@@ -180,10 +186,12 @@
 
                   } else if (response.error) {
                      $('.alert-danger').html('<ul><li>' + response.error + '</li></ul>').show();
+                     $('#spiner').css("display","none");
                   }
                },
                error: function(response) {
                   $('.alert-danger').html('<ul><li>Oops! Something went Wrong.</li></ul>').show();
+                  $('#spiner').css("display","none");
                }
             });
          });
@@ -194,7 +202,7 @@
 
             // Get the form data
             var formData = $(this).serialize();
-
+            $('#spiner').css("display","inline-block");
             // Send an Ajax POST request for 2FA verification
             $.ajax({
                type: 'POST',
@@ -209,6 +217,7 @@
                },
                error: function(response) {
                   $('.alert-danger').html('<ul><li>Oops! Something went Wrong.</li></ul>').show();
+                  $('#spiner').css("display","none");
                }
             });
          });

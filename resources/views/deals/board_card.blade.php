@@ -13,9 +13,9 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card {{ str_replace(" ","-",strtolower($stage->title)) }}">
-                                    <div class="card-body">
+                                    <div class="card-body card_title">
                                         <div class="d-flex align-items-center justify-content-between">
-                                            <h6 class="text-warning mb-0 saddam">{{ $stage->title }}</h6>
+                                            <h6 class="mb-0">{{ $stage->title }}</h6>
                                             {{-- <div class="dropdown">
                                                 <span class="d-flex align-items-center h5 mb-0"
                                                     id="dropdownMenuButton08" role="button"
@@ -85,7 +85,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="group2-wrap">
+                            <div class="group2-wrap card_scroll_view">
                                 <div class="group" id="group{{ $icount }}" data-stage_id="{{ $stage->id }}">
                                     @if (isset($deals))
                                         @foreach ($deals as $deal)

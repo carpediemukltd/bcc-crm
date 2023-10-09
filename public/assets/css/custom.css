@@ -1027,7 +1027,9 @@ div#deals_list span {
 .list-style-one{
   position:relative;
 }
-
+.hide{
+  display: none ;
+}
 .list-style-one li{
   position:relative;
   font-size:16px;
@@ -1621,4 +1623,24 @@ p.sub_text:after{
  }
  .iti.iti--allow-dropdown.iti--separate-dial-code {
     width: 100%;
+}
+.card.in-progreess .card_title{
+  border-top: 2px solid rgb( 182, 96, 224 );
+  border-radius: 3px;
+}
+.card.in-progress .card_title {
+  border-top: 2px solid rgb( 182, 96, 224 );
+  border-radius: 4px;
+}
+.card.complete .card_title{
+  border-top: 2px solid rgb( 15, 157, 159 );
+  border-radius: 4px;
+}
+.card.todo-list .card_title{
+  border-top: 2px solid rgb( 135, 144, 158 );
+  border-radius: 4px;
+}
+.card_scroll_view{
+  max-height: 500px;
+  overflow: auto;
 }

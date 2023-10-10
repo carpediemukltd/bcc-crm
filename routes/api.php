@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DocumentController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DialogflowController;
@@ -23,6 +24,7 @@ Route::post('resend-verification-code', [AuthController::class, 'resendVerificat
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('documents', DocumentController::class);
+    Route::delete('delete-account', [UserController::class, 'deleteAccount']);
     Route::post('logout', [AuthController::class, 'logout']);
 });
 

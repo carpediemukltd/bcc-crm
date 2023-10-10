@@ -13,6 +13,7 @@ use App\Http\Middleware\CheckSuperAdmin;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Controllers\StageController;
 use App\Http\Middleware\CheckSameCompany;
+use App\Http\Middleware\Cors;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\JotFormController;

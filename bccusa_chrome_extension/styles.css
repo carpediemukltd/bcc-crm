@@ -1,0 +1,56 @@
+.card-info h5 a{
+	filter: blur(4px);
+}
+
+
+.card-info .value{
+	filter: blur(4px);
+}
+
+.hl_opportunities--set-header p{
+	filter: blur(4px);
+}
+
+.messages-list--text h4{
+	filter: blur(4px);
+}
+
+.aside-texts-name input{
+	filter: blur(4px);
+}
+
+.aside-texts-infos input{
+	filter: blur(4px);
+}
+
+.hl_conversations--message-header h2 span{
+	filter: blur(4px);
+}
+
+.hl_dashboard--matters-added h3{
+	filter: blur(10px);
+}
+
+.hl_dashboard--matters-added li strong{
+filter: blur(10px);
+}
+
+.hl_dashboard--pipeline-value h3{
+filter: blur(10px);
+}
+
+.hl_dashboard--pipeline-value li strong{
+filter: blur(10px);
+}
+
+.hl_dashboard--conversion-rate h3{
+	filter: blur(10px);
+}
+
+.pmd_dashboard--appointments table tr td{
+	filter: blur(10px);
+}
+
+.highcharts-legend-item{
+	filter: blur(10px);
+} 

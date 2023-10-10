@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "BCC USA",
+  "version": "1.0",
+  "description": "Chrome Extension for BCC-USA CRM.",
+  "content_scripts":[
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js" : ["content.js","jquery.min.js"],
+      "css" : ["styles.css"]
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting",
+    "webNavigation",
+    "webRequest",
+    "tabs"
+  ],
+  "background.service_worker": {
+      "scripts": ["background.js"]
+    },
+    "icons": {
+      "16": "images/bccusa.png",
+      "32": "images/bccusa.png",
+      "48": "images/bccusa.png",
+      "128": "images/bccusa.png"
+    },
+    "action": {
+      "default_icon": {              
+        "16": "images/bccusa.png",   
+        "24": "images/bccusa.png",   
+        "32": "images/bccusa.png"    
+      },
+      "default_title": "Click Me",
+      "default_popup": "popup.html"  
+    }
+}

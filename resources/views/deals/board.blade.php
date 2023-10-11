@@ -118,8 +118,6 @@
                      </div>
                   </div>
                   <div id="deals">
-                                                      
-                  </div>
                   </div>
                </div>
             </div>

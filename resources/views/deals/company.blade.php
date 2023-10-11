@@ -30,7 +30,7 @@
                     <div class="card">
                         <div class="card-header d-flex mb-4 justify-content-between">
                             <div class="header-title">
-                                <h4 class="card-title">Company Deals Listing</h4>
+                                <h4 class="card-title">Company Deals Listing </h4>
                             </div>
 
                             <div class="d-flex justify-content-between">
@@ -126,8 +126,8 @@
                             </div>
                         </div>
                         <div class="card-body pt-2">
-                            <div class="row">
-                                <div class="col-lg-2">
+                            <div class="d-flex">
+                                <div class="stages_view_box">
                                     <input type="hidden" id="page_no" name="page_no" value="1" />
                                     @if (isset($companies))
                                         <div class="form-group w-100">
@@ -143,35 +143,35 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="stages_view_box">
                                     <div class="form-group w-100">
                                         <label class="form-label">Depositing Institution</label>
                                         <input type="text" class="form-control" id="depositing_institution"
                                             name="depositing_institution" placeholder="Depositing Institution" />
                                     </div>
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="stages_view_box">
                                     <div class="form-group w-100">
                                         <label class="form-label">State</label>
                                         <input type="text" class="form-control" id="state" name="state"
                                             placeholder="State" />
                                     </div>
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="stages_view_box">
                                     <div class="form-group w-100">
                                         <label class="form-label">Submitted Bank</label>
                                         <input type="text" class="form-control" id="submitted_bank"
                                             name="submitted_bank" placeholder="Submitted Bank" />
                                     </div>
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="stages_view_box">
                                     <div class="form-group w-100">
                                         <label class="form-label">Sub Type</label>
                                         <input type="text" class="form-control" id="sub_type" name="sub_type"
                                             placeholder="Sub Type" />
                                     </div>
                                 </div>
-                                <div class="col-lg-1">
+                                <div class="stages_view_box">
                                     <div class="form-group w-100">
                                         <label class="form-label">&nbsp;</label>
                                         <div class="d-flex align-items-center justify-content-between">
@@ -190,7 +190,6 @@
                                 </div>
                             </div>
                             <div id="deals">
-
                             </div>
                         </div>
                     </div>

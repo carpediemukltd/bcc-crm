@@ -125,7 +125,7 @@
             </div>
          </div>
       
-      <div class="col-lg-6 col-md-12">
+      <!-- <div class="col-lg-6 col-md-12">
          <div class="card card-block card-stretch card-height">
             <div class="card-header">
                <div class=" d-flex justify-content-between  flex-wrap">
@@ -445,7 +445,7 @@
                </a>
             </div>
          </div>
-      </div>
+      </div> -->
       </div>
    </div>
 </div>

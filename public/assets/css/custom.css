@@ -1644,3 +1644,57 @@ p.sub_text:after{
   max-height: 500px;
   overflow: auto;
 }
+/* different name of satges style start */
+.card.close-to-close .card_title{
+  border-top: 2px solid rgb( 238, 94, 153 );
+  border-radius: 3px;
+}
+.card.funded .card_title {
+  border-top: 2px solid rgb( 182, 96, 224 );
+  border-radius: 4px;
+}
+.card.submitted .card_title{
+  border-top: 2px solid rgb( 15, 157, 159 );
+  border-radius: 4px;
+}
+.card.document-collection .card_title{
+  border-top: 2px solid rgb( 135, 144, 158 );
+  border-radius: 4px;
+}
+.card.did-not-fund .card_title{
+  border-top: 2px solid rgb( 248, 174, 0 );
+  border-radius: 4px;
+}
+.group .card-body.has_shadow{
+border-bottom: 2px solid #000;
+border-bottom-left-radius: 5px;
+border-bottom-right-radius: 5px;
+}
+.dropdown span.h5 {
+  background-color: #d4e2fc;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  border: 2px solid #a0a2a8;
+}
+.dropdown span.h5 svg{
+  fill: #fff;
+  height: 20px;
+  width: 20px;
+  line-height: 14px;
+}
+.card-body .form-control{
+  padding: 10px;
+  font-size: 12px;
+}
+.stages_view_box {
+  width: 100%;
+  margin-right: 10px;
+}
+.d-flex .stages_view_box:last-child{
+  margin-right: 0;
+}
+.stages_view_box .card{
+  margin-bottom: 1em;
+}
+/* different name of stages style end */

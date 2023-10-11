@@ -1,4 +1,5 @@
-<table id="user-list-table" class="table table-striped dataTable no-footer deals-list-table" role="grid" data-toggle="" aria-describedby="user-list-table_info">
+<div class="table-responsive my-3">
+<table id="user-list-table " class="table table-striped dataTable no-footer deals-list-table" role="grid" data-toggle="" aria-describedby="user-list-table_info">
     <thead>
        <tr class="ligth">
           <th class="sorting" tabindex="0" aria-controls="user-list-table">S/No.</th>
@@ -47,6 +48,7 @@
        @endif
     </tbody>
  </table>
+</div>
  <div class="row align-items-center pagination">
     <div class="col-md-6">
        <!-- nothing happend -->

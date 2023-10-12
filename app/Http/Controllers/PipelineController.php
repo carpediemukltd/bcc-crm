@@ -65,6 +65,11 @@ class PipelineController extends Controller
     public function pipelineAdd(Request $request)
     {
         if ($request->isMethod('post')) {
+            
+            if (empty($request->title)) {
+                return redirect()->back()->withError('Title can not be empty.')->withInput();
+            }
+
             $data = Pipeline::create(['company_id' => 1, 'title' => $request->title]);
 
             return response(['message' => 'success', 'data' => Pipeline::where('id', $data->id)->first()]);

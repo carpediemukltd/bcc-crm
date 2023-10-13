@@ -204,7 +204,7 @@ class AuthController extends Controller
             return ApiResponse::error('No user found with the provided Email Address.', 404);
         }
 
-        if ($user->role == 'user' || $user->role == 'contact') {
+        if ($user->role != 'user' || $user->role != 'contact') {
             return ApiResponse::error('No user found with the provided Email Address.', 404);
         }
 

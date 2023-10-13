@@ -204,9 +204,9 @@ class AuthController extends Controller
             return ApiResponse::error('No user found with the provided Email Address.', 404);
         }
 
-        if ($user->role != 'user' || $user->role != 'contact') {
+        if (!in_array($user->role, ['user', 'contact'])) {
             return ApiResponse::error('No user found with the provided Email Address.', 404);
-        }
+        } 
 
         if ($user->status == 'banned') {
             return ApiResponse::error('You have been blocked by Admin, Please contact Admin.', 403);
@@ -251,9 +251,9 @@ class AuthController extends Controller
             return ApiResponse::error('No user found with the provided Email Address.', 404);
         }
 
-        if ($user->role == 'user' || $user->role == 'contact') {
+        if (!in_array($user->role, ['user', 'contact'])) {
             return ApiResponse::error('No user found with the provided Email Address.', 404);
-        }
+        } 
 
         if ($user->status == 'banned') {
             return ApiResponse::error('You have been blocked by Admin, Please contact Admin.', 403);

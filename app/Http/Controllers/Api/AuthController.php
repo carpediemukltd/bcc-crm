@@ -11,6 +11,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use Twilio\Rest\Client;
 use Validator;
 use App\Services\ApiResponse;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -58,12 +59,13 @@ class AuthController extends Controller
                 // User info
                 $token = auth()->user()->createToken('CRM')->accessToken;
                 $data = [
-                    'user_id'       => auth()->user()->id,
-                    'email'         => auth()->user()->email,
-                    'first_name'    => auth()->user()->first_name,
-                    'last_name'     => auth()->user()->last_name,
-                    'require_2FA'   => false,
-                    'token'         => $token
+                    'user_id'               => auth()->user()->id,
+                    'email'                 => auth()->user()->email,
+                    'first_name'            => auth()->user()->first_name,
+                    'last_name'             => auth()->user()->last_name,
+                    'require_2FA'           => false,
+                    'token'                 => $token,
+                    'is_first_time_login'   => $user->first_time_login == '1'?true:false
                 ];
             }
 
@@ -233,9 +235,45 @@ class AuthController extends Controller
             return ApiResponse::success([], 'Code sent successfully.', 200);
 
     }
+    public function resetPassword(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email'             => 'required|email',
+            'password'          => 'required|min:6', // You might want to add a minimum length for the password.
+            'confirm_password'  => 'required|same:password', // Ensure 'confirm_password' matches 'password'.
+        ]);
+        
+        if ($validator->fails()) {
+            return ApiResponse::error($validator->errors()->first(), 400);
+        }
+        $user = User::where('email', $request->email)->first();        
+
+        if (!$user) {
+            return ApiResponse::error('No user found with the provided Email Address.', 404);
+        }
+
+        if ($user->role == 'user' || $user->role == 'contact') {
+            return ApiResponse::error('No user found with the provided Email Address.', 404);
+        }
+
+        if ($user->status == 'banned') {
+            return ApiResponse::error('You have been blocked by Admin, Please contact Admin.', 403);
+        }
+
+        if ($user->status == 'inactive') {
+            return ApiResponse::error('Your account is inactive, Please contact Admin.', 403);
+        }
+
+        if ($user->status == 'deleted') {
+            return ApiResponse::error('This account has been deleted earlier.', 403);
+        }
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return ApiResponse::success([],'Password reset successfully.', 200);
+
+    }
     public function logout()
     {
         auth()->user()->tokens()->where('revoked', false)->update(['revoked' => true]);
-        return ApiResponse::success('Logged out successfully.', 200);
+        return ApiResponse::success([],'Logged out successfully.', 200);
     }
 }

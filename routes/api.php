@@ -21,10 +21,12 @@ Route::post('login', [AuthController::class, 'postLogin'])->name('login');
 Route::post('generate-verification-code', [AuthController::class, 'generateVerificationCode']);
 Route::post('verify-code', [AuthController::class, 'verifyCode']);
 Route::post('resend-verification-code', [AuthController::class, 'resendVerificationCode'])->middleware('throttle:3,5'); // Throttle to 3 requests per 5 minutes
+Route::put('reset-password', [AuthController::class, 'resetPassword']);
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('documents', DocumentController::class);
     Route::delete('delete-account', [UserController::class, 'deleteAccount']);
+    Route::put('profile-update', [UserController::class, 'profileUpdate']);
     Route::post('logout', [AuthController::class, 'logout']);
 });
 

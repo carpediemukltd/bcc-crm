@@ -84,6 +84,20 @@
                                     </i>
                                     <span>Bank Portal</span>
                                 </a>
+                                <a class="" href="javascript:void(0);" id="send_documents_toggle">
+                                    <i class="user_icon icon">
+                                        <svg width="22" class="icon-22" viewBox="0 0 22 22" fill="currentColor"
+                                             xmlns="">
+                                            <path opacity="0.4"
+                                                  d="M21.9999 15.9402C21.9999 18.7302 19.7599 20.9902 16.9699 21.0002H16.9599H7.04991C4.26991 21.0002 1.99991 18.7502 1.99991 15.9602V15.9502C1.99991 15.9502 2.00591 11.5242 2.01391 9.29821C2.01491 8.88021 2.49491 8.64621 2.82191 8.90621C5.19791 10.7912 9.44691 14.2282 9.49991 14.2732C10.2099 14.8422 11.1099 15.1632 12.0299 15.1632C12.9499 15.1632 13.8499 14.8422 14.5599 14.2622C14.6129 14.2272 18.7669 10.8932 21.1789 8.97721C21.5069 8.71621 21.9889 8.95021 21.9899 9.36721C21.9999 11.5762 21.9999 15.9402 21.9999 15.9402Z"
+                                                  fill="currentColor"></path>
+                                            <path
+                                                d="M21.476 5.6736C20.61 4.0416 18.906 2.9996 17.03 2.9996H7.05001C5.17401 2.9996 3.47001 4.0416 2.60401 5.6736C2.41001 6.0386 2.50201 6.4936 2.82501 6.7516L10.25 12.6906C10.77 13.1106 11.4 13.3196 12.03 13.3196C12.034 13.3196 12.037 13.3196 12.04 13.3196C12.043 13.3196 12.047 13.3196 12.05 13.3196C12.68 13.3196 13.31 13.1106 13.83 12.6906L21.255 6.7516C21.578 6.4936 21.67 6.0386 21.476 5.6736Z"
+                                                fill="currentColor"></path>
+                                        </svg>
+                                    </i>
+                                    <span>Send Documents</span>
+                                </a>
                             </div>
                         </div>
                         <ul class="d-flex nav nav-pills mb-0 text-center profile-tab" data-toggle="slider-tab"
@@ -640,7 +654,7 @@
          </button>
        </div>
        <div class="modal-body" id="modalBody">
-      
+
 
        </div>
        {{-- <div class="modal-footer">
@@ -650,6 +664,42 @@
      </div>
    </div>
  </div>
+<div class="modal modal-sm" tabindex="-1" role="dialog" id="sendDocuments">
+    <div class="modal-dialog" role="document" style="max-width: 100%;margin-right: 0;margin-left: 0;">
+        <div class="modal-content" style="width: 142%;">
+            <div class="modal-header" >
+                {{-- <h5 class="modal-title">Modal title</h5> --}}
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" >
+                <div class="row">
+                    <div class="col-md-8 offset-2 mb-4">
+                        <div class="response-send-email-notification"></div>
+                        <select name="bank_users" id="bank_users" class="form-control" multiple>
+                            <option value="" disabled>Select Bank User</option>
+                            @foreach($bankusers as $bank_user)
+                                <option value="{{$bank_user->id}}">
+                                    {{$bank_user->first_name. " ".$bank_user->last_name. " ".$bank_user->email}}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 offset-2">
+                        <button disabled type="button" class="btn btn-primary" id="send_email_notification"><i class="fa fa-envelope"></i> Send Email Notification</button>
+                    </div>
+                </div>
+            </div>
+{{--            <div class="modal-footer">--}}
+{{--              <button type="button" class="btn btn-primary" id="send_email_notification"><i class="fa fa-envelope"></i> Send Email Notification</button>--}}
+{{--              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--}}
+{{--            </div>--}}
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     /* function listNotes(){
       $('#notes').html('Loading...');
@@ -665,7 +715,7 @@
          // $('#TestModal').modal('show');
          var userid     = $(this).data("userid");
          var contact_id = $(this).data("contact_id");
-         var url = '{{ url("magic-link") }}/'+contact_id; 
+         var url = '{{ url("magic-link") }}/'+contact_id;
 
          console.log(url);
          $.ajax({
@@ -675,7 +725,7 @@
                // $("#loader").show();
             },
             dataType: 'JSON', // The expected data type of the response
-            success: function (response) {  
+            success: function (response) {
 
                var data = `<iframe src="https://dashboard.bccusa.com/documents/view/`+response.contact_id+`?token=`+response.token+`&hide-header=true" width="70%" height="800"></iframe>`;
                $('#modalBody').append(data);
@@ -689,7 +739,51 @@
             }
          });
       });
+
+       $('#bank_users').on('change', function (e) {
+           if($(this).val() != ''){
+               $("#send_email_notification").prop("disabled", false);
+           }
+       });
+
+      $("#send_documents_toggle").click(function(){
+          $('#sendDocuments').modal('show');
+      })
+
+       $("#send_email_notification").click(function(){
+           $("#send_email_notification").prop("disabled", true);
+           $.post({
+               url: '{{route('user.sendEmailNotification')}}',
+               data: {
+                   bank_users: $('#bank_users').val(),
+                   user_id: '{{$id}}',
+                   '_token': '{{csrf_token()}}',
+                   url: "https://dashboard.bccusa.com/user/documents/view/{{$id}}?username={{$user->username}}&email={{$user->email}}"
+               },
+               success: function (response){
+                   $("#send_email_notification").prop("disabled", false);
+                   var html = '<div class="alert alert-success">' +
+                       '<p>Email send successfully</p>' +
+                       '</div>';
+                   $(".response-send-email-notification").html(html)
+                   setTimeout(stopTimer, 5000);
+               },
+               error: function(XMLHttpRequest, textStatus, errorThrown) {
+                   $("#send_email_notification").prop("disabled", false);
+                   var html = '<div class="alert danger">' +
+                       '<p>Something went wrong</p>' +
+                       '</div>';
+                   $(".response-send-email-notification").html(html)
+                   setTimeout(stopTimer, 5000);
+               }
+           })
+       })
    });
+
+    function stopTimer() {
+        $(".response-send-email-notification").hide()
+        $(".response-send-email-notification").html('')
+    }
    function saveNote() {
       var contact_id = $('#contact_id').val();
       var note = $('#note').val();

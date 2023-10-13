@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use App\Models\User;
 use App\Models\Deal;
+use App\Models\UserAssignBankUser;
 use App\Models\UserOwner;
 use App\Models\UserDetails;
 use App\Helpers\Permissions;
@@ -14,12 +15,14 @@ use App\Models\CustomField;
 use Illuminate\Http\Request;
 use App\Models\RoundRobinSetting;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Carbon\Carbon;
+use Mail;
 
 class UserController extends Controller
 {
@@ -52,8 +55,8 @@ class UserController extends Controller
                 'two_factor_enabled'    => $request->has('two_factor') ? '1' : '0',
             ];
             if($request->has('two_factor')){
-                $update_data['two_factor_type'] = $request->two_factor_type; 
-            } 
+                $update_data['two_factor_type'] = $request->two_factor_type;
+            }
             if ($request->password && !$request->confirm_password) {
                 return redirect()->back()->withError('Confirm password is required.')->withInput();
             } else if ($request->password && ($request->password != $request->confirm_password)) {
@@ -72,7 +75,7 @@ class UserController extends Controller
 
     public function addUser(Request $request)
     {
-        
+
         $this->data['current_slug'] = 'Add Contact';
         $this->data['slug']         = 'add_user';
         $user = auth()->user();
@@ -149,8 +152,8 @@ class UserController extends Controller
             }
         } else if ($request->isMethod('get')) {
             $this->data['roles']     = array_diff($this->data['roles'], ['user']);
-            $this->data['companies'] = Company::whereStatus('active')->get(); 
-            return view($request->type == 'admin' ? 'user.add-admin' : 'user.add', $this->data);          
+            $this->data['companies'] = Company::whereStatus('active')->get();
+            return view($request->type == 'admin' ? 'user.add-admin' : 'user.add', $this->data);
         }
     }
 
@@ -215,6 +218,7 @@ class UserController extends Controller
             }
             return redirect(route('user.details', $id))->withSuccess('Contact Update Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
+            $this->data['bankusers'] = User::whereRole('bank')->get();
             return view("user.details", $this->data);
         }
     } // userDetails
@@ -389,7 +393,7 @@ class UserController extends Controller
         $lastFriday    = Carbon::now()->previous('Friday');
         $lastSaturday  = Carbon::now()->previous('Saturday');
 
-        
+
         for ($i = 6; $i >= 0; $i--) {
             $date = $today->subDays($i);
             $datesWithWeeks[] = [
@@ -405,13 +409,13 @@ class UserController extends Controller
         $thursday   = $lastThursday->toDateString();
         $friday     = $lastFriday->toDateString();
         $saturday   = $lastSaturday->toDateString();
-        
+
         if(Auth::check()) {
-            
+
             $current_date = date('Y-m-d');
             $last_7_date  = date('Y-m-d', strtotime('-7 days'));
             $user_count   = User::where('id', '!=', 1)->where('created_at', '>=', $last_7_date)->where('created_at', '<=', $current_date)->count();
-        
+
             $sun_count   = User::whereDate('created_at', $sunday)->count();
             $mon_count   = User::whereDate('created_at', $monday)->count();
             $tue_count   = User::whereDate('created_at', $tuesday)->count();
@@ -435,7 +439,7 @@ class UserController extends Controller
             }
             $slug = "dashboard";
             return view('dashboard',compact('user_count', 'week_data', 'slug'));
-        
+
         }
 
         return redirect("login", $this->data)->withError('Opps! session is timeout plz login again.');
@@ -447,18 +451,18 @@ class UserController extends Controller
         $Date1 = rtrim(date('Y-m-d', strtotime($dates[0])));
         $Date2 = ltrim(date('Y-m-d', strtotime($dates[1])));
 
-        
+
         // Declare an empty array
         $dateRange = [];
-        
+
         // Use strtotime function
         $Variable1 = strtotime($Date1);
         $Variable2 = strtotime($Date2);
-        
+
         // Use for loop to store dates into array
         // 86400 sec = 24 hrs = 60*60*24 = 1 day
         for ($currentDate = $Variable1; $currentDate <= $Variable2; $currentDate += (86400)) {
-                                            
+
             $Store = date('Y-m-d', $currentDate);
             $dateRange[] = $Store;
         }
@@ -480,7 +484,7 @@ class UserController extends Controller
         $sat_name = date('D', strtotime($saturday));
 
         $user_count   = User::where('id', '!=', 1)->where('created_at', '>=', $Date1)->where('created_at', '<=', $Date2)->count();
-        
+
         $sun_count   = User::whereDate('created_at', $sunday)->count();
         $mon_count   = User::whereDate('created_at', $monday)->count();
         $tue_count   = User::whereDate('created_at', $tuesday)->count();
@@ -510,7 +514,55 @@ class UserController extends Controller
 
 
         return response()->json($week_data);
-        
+
     }
-    
+
+    public function sendEmailNotification(Request $request)
+    {
+        $validator = Validator::make($request->all(),
+            [
+                "bank_users" => "required|array|min:1",
+                "bank_users.*" => "required|distinct|min:1|exists:users,id",
+                'user_id' => 'required|exists:users,id',
+                'url' => 'required|url',
+            ],
+            [
+                'bank_users.required' => 'Bank user(s) are required',
+                'bank_users.array' => 'Bank user(s) must be array',
+                'bank_users.min' => 'Minimum one bank users is required',
+                'bank_users.*.required' => 'Bank user(s) are required',
+                'bank_users.*.min' => 'Minimum one bank users is required',
+                'bank_users.*.exists' => 'Bank user not found',
+                'user_id.required' => 'User id is required',
+                'user_id.exists' => 'User not found',
+                'url.required' => 'User url is required',
+                'url.url' => 'User url must be valid url',
+            ]);
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'error' => $validator->errors()], 403);
+        }
+
+        foreach ($request->bank_users as $bank_user) {
+            if(UserAssignBankUser::whereBankUserIdAndUserId($bank_user,$request->user_id)->count()  == 0){
+                $user_assigned_bank_user = new UserAssignBankUser();
+                $user_assigned_bank_user->bank_user_id = $bank_user;
+                $user_assigned_bank_user->user_id = $request->user_id;
+                $user_assigned_bank_user->url = $request->url;
+                $user_assigned_bank_user->create_by = auth()->user()->id;
+                $user_assigned_bank_user->save();
+            }
+        }
+
+        foreach ($request->bank_users as $bank_user) {
+            $bank_user_data = User::whereId($bank_user)->first();
+            Mail::send('email.sendDocuments', ['first_name' => $bank_user_data->first_name,'url' => $request->url], function($message) use($bank_user_data){
+                $message->to($bank_user_data->email);
+                $message->subject('BCCUSA: New Client File Received!');
+            });
+        }
+
+        return response()->json(['success' => true, 'message' => 'Email sent successfully']);
+    }
+
 }

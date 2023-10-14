@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DocumentController;
+use App\Http\Controllers\Api\EmailTemplateController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,7 @@ Route::post('generate-verification-code', [AuthController::class, 'generateVerif
 Route::post('verify-code', [AuthController::class, 'verifyCode']);
 Route::post('resend-verification-code', [AuthController::class, 'resendVerificationCode'])->middleware('throttle:3,5'); // Throttle to 3 requests per 5 minutes
 Route::put('reset-password', [AuthController::class, 'resetPassword']);
+Route::resource('email-templates', EmailTemplateController::class);
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('documents', DocumentController::class);

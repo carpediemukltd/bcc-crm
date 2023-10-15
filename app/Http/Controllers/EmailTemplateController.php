@@ -21,8 +21,8 @@ class EmailTemplateController extends Controller
 
     public function emailTemplateList()
     {
-        $this->data['current_slug'] = 'Email Template';
-        $this->data['slug']         = 'email_template';
+        $this->data['current_slug'] = 'Email Templates';
+        $this->data['slug']         = 'email_templates';
         $this->data['data']  = EmailTemplate::orderBy('id', 'ASC')->get();
         return view("email_template.list", $this->data);
     }

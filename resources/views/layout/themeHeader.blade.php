@@ -651,3 +651,29 @@
          </nav>
          <!--Nav End-->
       </div>
+      <!-- custom sub header start -->
+      <nav class="navbar navbar-expand-lg navbar-dark custom_sub_header bg-dark" aria-label="Main navigation">
+         <div class="container-fluid py-2 px-4">
+                  
+            <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+                  <span class="navbar-toggler-bar bar1 mt-1"></span>
+                  <span class="navbar-toggler-bar bar2"></span>
+                  <span class="navbar-toggler-bar bar3"></span>
+                  </span>
+            </button>
+
+            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
+                     <li class="nav-item">
+                        <h3 class="card-title">Search bar Results:</h3>
+                     </li>
+                  </ul>
+                  <form class="d-flex">
+                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                     <button class="btn btn-primary" type="submit" fdprocessedid="611m3">Search</button>
+                  </form>
+            </div>
+         </div>
+      </nav>
+      <!-- custom sub header end -->

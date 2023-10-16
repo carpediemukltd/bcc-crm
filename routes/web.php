@@ -65,7 +65,7 @@ Route::middleware([CheckStatus::class])->group(function () {
     Route::get('deals-sandbox', [DealController::class, 'deals_sandbox'])->name('deals-sandbox');
     Route::get('filter-deals', [DealController::class, 'filter_deals'])->name('filter-deals');
     Route::get('sandbox-daterange', [UserController::class, 'sandbox_daterange'])->name('sandbox-daterange');
-
+    Route::get('searching-bar', [GeneralController::class, 'searchingBar'])->name('searching-bar');
 
     Route::get('privacy', [GeneralController::class, 'privacySetting'])->name('privacy');
     Route::get('help', [GeneralController::class, 'help'])->name('help');

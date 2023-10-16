@@ -1714,3 +1714,14 @@ p.sub_text:after{
     background-color: #fff;
     border-color: #FFF;
 }
+.nav-item .card-title{
+  color: #ffff;
+  font-size: 16px;
+}
+.custom_sub_header.bg-dark{
+  background-color: #538c71d4 !important;
+}
+.custom_sub_header.bg-dark .btn.btn-primary {
+  background-color: #dfa247;
+  border-color: #dfa247;
+}

@@ -1666,16 +1666,18 @@ p.sub_text:after{
   border-radius: 4px;
 }
 .group .card-body.has_shadow{
-border-bottom: 2px solid #000;
-border-bottom-left-radius: 5px;
-border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.card.submitted + .group2-wrap .card-body.has_shadow{
+  border-bottom: 2px solid #0f9d9f;
 }
 .dropdown span.h5 {
-  background-color: #d4e2fc;
+  background-color: #fff;
   border-radius: 50%;
   height: 20px;
   width: 20px;
-  border: 2px solid #a0a2a8;
+  border:2px solid #00562c;
 }
 .dropdown span.h5 svg{
   fill: #fff;
@@ -1698,3 +1700,17 @@ border-bottom-right-radius: 5px;
   margin-bottom: 1em;
 }
 /* different name of stages style end */
+.stages_view_box p.card-text b {
+  font-weight: normal;
+}
+.stages_view_box p.card-text {
+  margin-bottom: 5px;
+}
+.stages_view_box .card-body p b{
+  color: #000;
+}
+.iq-container .btn-soft-light{
+  color: #00562c !important;
+    background-color: #fff;
+    border-color: #FFF;
+}

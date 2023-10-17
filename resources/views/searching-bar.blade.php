@@ -25,7 +25,20 @@
       </div>
    </div>
 </div> -->
-
+<!-- search filter start-->
+<div id="search_filder" class="d-flex shadow-sm search_filder_holder">
+    <span>Filter by:</span>
+    <ul class="">
+    <li><a href="#">Adele</a></li>
+    <li><a href="#">Agnes</a></li>
+    <li><a href="#">Billy</a></li>
+    <li><a href="#">Bob</a></li>
+    <li><a href="#">Calvin</a></li>
+    <li><a href="#">Christina</a></li>
+    <li><a href="#">Cindy</a></li>
+    </ul>
+</div>
+<!-- search filter end-->
 <div class="content-inner container-fluid pb-0" id="page_layout">
    <div class="row">
       <div class="col-lg-12">

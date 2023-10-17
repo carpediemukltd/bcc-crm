@@ -106,7 +106,7 @@
                                  <span class="item-name">Dashboard</span>
                               </a>
                            </li>
-                           <li class="nav-item">
+                           <!-- <li class="nav-item">
                               <a class="nav-link <?php if(isset($slug) && $slug == 'dashboard-sandbox'){echo 'active';}?>"
                                  href="{{url('dashboard-sandbox')}}">
                                  <i class="icon">
@@ -122,7 +122,7 @@
                                  </i>
                                  <span class="item-name">Dashboard Sandbox</span>
                               </a>
-                           </li>
+                           </li> -->
                            <li class="nav-item iq-responsive-menu d-block">
                               <a class="nav-link <?php if(isset($slug) && $slug == 'dashboard-sandbox'){echo 'active';}?>" aria-current="page"
                                  href="#sidebar-user">
@@ -525,6 +525,31 @@
                </div>
                <div class="navbar-collapse collapse" id="navbarSupportedContent">
                   <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
+                     <li class="nav-item dropdown border-end pe-3 d-none d-xl-block">
+                        <div class="form-group input-group mb-0 search-input">
+                           <input type="text" class="form-control" placeholder="Search..." fdprocessedid="l5a9mq">
+                           <span class="input-group-text">
+                              <svg class="icon-20" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                 <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </svg>
+                           </span>
+                        </div>
+                        <!-- search filter start-->
+                        <div id="search_filder" class="d-flex shadow-sm search_filder_holder">
+                           <span>Filter by:</span>
+                           <ul class="">
+                              <li><a href="#">Adele</a></li>
+                              <li><a href="#">Agnes</a></li>
+                              <li><a href="#">Billy</a></li>
+                              <li><a href="#">Bob</a></li>
+                              <li><a href="#">Calvin</a></li>
+                              <li><a href="#">Christina</a></li>
+                              <li><a href="#">Cindy</a></li>
+                           </ul>
+                        </div>
+                        <!-- search filter end-->
+                     </li>
                      <!-- <li class="nav-item dropdown pe-3 d-none d-xl-block">
                         <div class="form-group input-group mb-0 search-input">
                            <input type="text" class="form-control" placeholder="Search...">
@@ -646,13 +671,15 @@
                         </ul>
                      </li>
                   </ul>
+                  
                </div>
             </div>
          </nav>
+         
          <!--Nav End-->
       </div>
       <!-- custom sub header start -->
-      <nav class="navbar navbar-expand-lg navbar-dark custom_sub_header bg-dark" aria-label="Main navigation">
+      <!-- <nav class="navbar navbar-expand-lg navbar-dark custom_sub_header bg-dark" aria-label="Main navigation">
          <div class="container-fluid py-2 px-4">
                   
             <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
@@ -675,5 +702,5 @@
                   </form>
             </div>
          </div>
-      </nav>
+      </nav> -->
       <!-- custom sub header end -->

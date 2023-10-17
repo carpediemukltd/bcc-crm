@@ -1432,7 +1432,7 @@ p.sub_text:after{
   display: none !important;
 }
 .custom-notification-badge{
-	position: absolute;
+	  position: absolute;
     top: -5px;
     right: -1px;
     height: 23px;
@@ -1444,7 +1444,7 @@ p.sub_text:after{
     font-size: 13px;
     z-index: 1000;
     border: 2px solid;
-	box-shadow: rgba(0, 0, 0, 0.06) 0px 4px 20px 1px, rgba(0, 0, 0, 0.08) 0px 1px 4px;
+	  box-shadow: rgba(0, 0, 0, 0.06) 0px 4px 20px 1px, rgba(0, 0, 0, 0.08) 0px 1px 4px;
  }
 .notification_listing_color_unread{
   background-color: #f8f8ff;
@@ -1711,8 +1711,8 @@ p.sub_text:after{
 }
 .iq-container .btn-soft-light{
   color: #00562c !important;
-    background-color: #fff;
-    border-color: #FFF;
+  background-color: #fff;
+  border-color: #FFF;
 }
 .nav-item .card-title{
   color: #ffff;
@@ -1724,4 +1724,50 @@ p.sub_text:after{
 .custom_sub_header.bg-dark .btn.btn-primary {
   background-color: #dfa247;
   border-color: #dfa247;
+}
+.view_documents_portal{
+  max-width: 100%;
+}
+.view_documents_portal iframe{
+  width: 100%;
+  height: 100vh;
+}
+div#user_details_view {
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+div#user_edit_view {
+  height: 500px;
+  overflow: auto;
+  overflow-x: hidden;
+}
+.iq-nav-menu>li>a .icon{
+  display: none;
+}
+.iq-nav-menu>li>a{
+  font-weight: normal;
+}
+.navbar-collapse{
+  flex-grow: inherit;
+}
+.search_filder_holder{
+  display: block;
+  position: absolute;
+    width: 800px;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    right: 0;
+    padding: 10px;
+    text-align: right;
+    justify-content:space-between
+}
+.search_filder_holder ul{
+  padding: 0;
+  margin: 0;
+}
+.search_filder_holder ul li{
+  display: inline-block;
+  margin-right: 10px;
 }

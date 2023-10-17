@@ -631,22 +631,17 @@
     </div>
 </div>
 <div class="modal" tabindex="-1" role="dialog" id="TestModal">
-   <div class="modal-dialog" role="document" style="max-width: 100%;margin-right: none;margin-left: none;">
-     <div class="modal-content" style="width: 142%;">
-       <div class="modal-header" >
-         {{-- <h5 class="modal-title">Modal title</h5> --}}
-         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-         </button>
-       </div>
+   <div class="modal-dialog view_documents_portal" role="document">
+     <div class="modal-content">
+       
        <div class="modal-body" id="modalBody">
       
 
        </div>
-       {{-- <div class="modal-footer">
-         <button type="button" class="btn btn-primary">Save changes</button>
-         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-       </div> --}}
+       <div class="modal-footer">
+         <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+         <button type="button" id="close_view_portal" class="btn btn-secondary" data-dismiss="modal">Close</button>
+       </div>
      </div>
    </div>
  </div>
@@ -680,6 +675,7 @@
                var data = `<iframe src="https://dashboard.bccusa.com/documents/view/`+response.contact_id+`?token=`+response.token+`&hide-header=true" width="70%" height="800"></iframe>`;
                $('#modalBody').append(data);
                $('#TestModal').modal('show');
+               
                // console.table(response);
                // $("#loader").hide();
             },
@@ -689,6 +685,9 @@
             }
          });
       });
+      $(document).on('click', '#close_view_portal', function(){
+        $('#TestModal').modal('hide');
+    });
    });
    function saveNote() {
       var contact_id = $('#contact_id').val();

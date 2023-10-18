@@ -1714,6 +1714,9 @@ p.sub_text:after{
   background-color: #fff;
   border-color: #FFF;
 }
+.iq-container .btn-soft-light:hover{
+  color: #fff !important;
+}
 .nav-item .card-title{
   color: #ffff;
   font-size: 16px;

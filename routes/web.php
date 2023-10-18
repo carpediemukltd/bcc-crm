@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Middleware\Cors;
 use App\Http\Middleware\CheckUser;
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckStatus;
-use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DealController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\UserController;
@@ -13,7 +14,6 @@ use App\Http\Middleware\CheckSuperAdmin;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Controllers\StageController;
 use App\Http\Middleware\CheckSameCompany;
-use App\Http\Middleware\Cors;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\JotFormController;
@@ -25,6 +25,7 @@ use App\Http\Controllers\DialogflowController;
 use App\Http\Controllers\RoundRobinController;
 use App\Http\Controllers\CustomFieldController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\ChromeExtensionController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\SearchController;
@@ -39,7 +40,7 @@ use App\Http\Controllers\SearchController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/extension', [ChromeExtensionController::class, 'login'])->name('ext.login');
+// Route::get('/extension', [ChromeExtensionController::class, 'login'])->name('ext.login');
 Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('verify-2fa', [AuthController::class, 'verify2FA'])->name('verify-2fa');
@@ -100,6 +101,11 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::post('pipeline/add', [PipelineController::class, 'pipelineAdd'])->name('pipeline.add');
         Route::post('pipeline/edit/{id}', [PipelineController::class, 'pipelineEdit'])->name('pipeline.edit');
         Route::post('pipeline/delete/{id}', [PipelineController::class, 'pipelineDelete'])->name('pipeline.delete');
+
+        Route::get('email_templates', [EmailTemplateController::class, 'emailTemplateList'])->name('email_template.list');
+        Route::post('email_template/add', [EmailTemplateController::class, 'emailTemplateAdd'])->name('email_template.add');
+        Route::post('email_template/edit/{id}', [EmailTemplateController::class, 'emailTemplateEdit'])->name('email_template.edit');
+        Route::post('email_template/delete/{id}', [EmailTemplateController::class, 'emailTemplateDelete'])->name('email_template.delete');
         
         Route::any('pipeline/{action}/{id?}', [PipelineController::class, 'pipelines'])->name('pipeline');
         Route::any('deals/{view}', [DealController::class, 'dealsList'])->name('deals.list');

@@ -1714,6 +1714,9 @@ p.sub_text:after{
   background-color: #fff;
   border-color: #FFF;
 }
+.iq-container .btn-soft-light:hover{
+  color: #fff !important;
+}
 .nav-item .card-title{
   color: #ffff;
   font-size: 16px;
@@ -1782,4 +1785,18 @@ div#user_edit_view {
 }
 .cursor-pointer{
   cursor: pointer;
+}
+.email_template_holder .save_new{
+  position: relative;
+  top: 5px;
+}
+.email_template_holder .delete_row_btn{
+  padding: 0;
+  background-color: inherit;
+  color: #c03221;
+  border: none;
+}
+.single-sub-heading{
+  position: relative;
+  top:30px;
 }

@@ -1772,4 +1772,31 @@ div#user_edit_view {
 .search_filder_holder ul li{
   display: inline-block;
   margin-right: 10px;
+  border: 1px solid #9b9b95;
+  color: black;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.search_filder_holder ul .active-filter{
+  background-color: #156a3b;
+  color: white;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+.email_template_holder .save_new{
+  position: relative;
+  top: 5px;
+}
+.email_template_holder .delete_row_btn{
+  padding: 0;
+  background-color: inherit;
+  color: #c03221;
+  border: none;
+}
+.single-sub-heading{
+  position: relative;
+  top:30px;
 }

@@ -563,7 +563,7 @@
                   <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
                      <li class="nav-item dropdown border-end pe-3 d-none d-xl-block">
                         <div class="form-group input-group mb-0 search-input">
-                           <input type="text" class="form-control" placeholder="Search..." fdprocessedid="l5a9mq">
+                           <input id="search-header" type="text" class="form-control" placeholder="Search..." fdprocessedid="l5a9mq">
                            <span class="input-group-text">
                               <svg class="icon-20" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                  <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
@@ -573,48 +573,7 @@
                         </div>
                         
                      </li>
-                     <!-- <li class="nav-item dropdown pe-3 d-none d-xl-block">
-                        <div class="form-group input-group mb-0 search-input">
-                           <input type="text" class="form-control" placeholder="Search...">
-                           <span class="input-group-text">
-                              <svg class="icon-20" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                 xmlns="">
-                                 <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round"></circle>
-                                 <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round"></path>
-                              </svg>
-                           </span>
-                        </div>
-                        </li> -->
-                     <!-- <li class="nav-item dropdown iq-responsive-menu border-end d-block d-xl-none">
-                        <div class="btn btn-sm bg-body" id="navbarDropdown-search-11" role="button" data-bs-toggle="dropdown"
-                           aria-expanded="false">
-                           <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="">
-                              <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5"
-                                 stroke-linecap="round" stroke-linejoin="round"></circle>
-                              <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5"
-                                 stroke-linecap="round" stroke-linejoin="round"></path>
-                           </svg>
-                        </div>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-search-11"
-                           style="width: 25rem;">
-                           <li class="px-3 py-0">
-                              <div class="form-group input-group mb-0">
-                                 <input type="text" class="form-control" placeholder="Search...">
-                                 <span class="input-group-text">
-                                    <svg class="icon-20" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                       xmlns="">
-                                       <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5"
-                                          stroke-linecap="round" stroke-linejoin="round"></circle>
-                                       <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5"
-                                          stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </svg>
-                                 </span>
-                              </div>
-                           </li>
-                        </ul>
-                        </li> -->
+                  
                      <li class="nav-item dropdown notification_view">
                         @if($notificationService::recent()['bell_notification_count'])
                            @if($notificationService::recent()['bell_notification_count'] > 99)

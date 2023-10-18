@@ -106,6 +106,23 @@
                                  <span class="item-name">Dashboard</span>
                               </a>
                            </li>
+                           <!-- <li class="nav-item">
+                              <a class="nav-link <?php if(isset($slug) && $slug == 'dashboard-sandbox'){echo 'active';}?>"
+                                 href="{{url('dashboard-sandbox')}}">
+                                 <i class="icon">
+                                    <svg width="20" class="icon-20" height="20" viewBox="0 0 24 24" fill="none"
+                                       xmlns="">
+                                       <path
+                                          d="M11.997 15.1746C7.684 15.1746 4 15.8546 4 18.5746C4 21.2956 7.661 21.9996 11.997 21.9996C16.31 21.9996 19.994 21.3206 19.994 18.5996C19.994 15.8786 16.334 15.1746 11.997 15.1746Z"
+                                          fill="currentColor"></path>
+                                       <path opacity="0.4"
+                                          d="M11.9971 12.5838C14.9351 12.5838 17.2891 10.2288 17.2891 7.29176C17.2891 4.35476 14.9351 1.99976 11.9971 1.99976C9.06008 1.99976 6.70508 4.35476 6.70508 7.29176C6.70508 10.2288 9.06008 12.5838 11.9971 12.5838Z"
+                                          fill="currentColor"></path>
+                                    </svg>
+                                 </i>
+                                 <span class="item-name">Dashboard Sandbox</span>
+                              </a>
+                           </li> -->
                            <li class="nav-item iq-responsive-menu d-block">
                               <a class="nav-link <?php if(isset($slug) && $slug == 'dashboard-sandbox'){echo 'active';}?>" aria-current="page"
                                  href="#sidebar-user">
@@ -129,23 +146,7 @@
 
                               </a>
                               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-search-11" style="width: 15rem;">
-                                 <li class="nav-item">
-                                    <a class="nav-link <?php if(isset($slug) && $slug == 'dashboard-sandbox'){echo 'active';}?>"
-                                       href="{{url('dashboard-sandbox')}}">
-                                       <i class="icon">
-                                          <svg width="20" class="icon-20" height="20" viewBox="0 0 24 24" fill="none"
-                                             xmlns="">
-                                             <path
-                                                d="M11.997 15.1746C7.684 15.1746 4 15.8546 4 18.5746C4 21.2956 7.661 21.9996 11.997 21.9996C16.31 21.9996 19.994 21.3206 19.994 18.5996C19.994 15.8786 16.334 15.1746 11.997 15.1746Z"
-                                                fill="currentColor"></path>
-                                             <path opacity="0.4"
-                                                d="M11.9971 12.5838C14.9351 12.5838 17.2891 10.2288 17.2891 7.29176C17.2891 4.35476 14.9351 1.99976 11.9971 1.99976C9.06008 1.99976 6.70508 4.35476 6.70508 7.29176C6.70508 10.2288 9.06008 12.5838 11.9971 12.5838Z"
-                                                fill="currentColor"></path>
-                                          </svg>
-                                       </i>
-                                       <span class="item-name">Dashboard Sandbox</span>
-                                    </a>
-                                 </li>
+                                 
                                  <li class="nav-item">
                                     <a class="nav-link <?php if(isset($slug) && $slug == 'deals-sandbox'){echo 'active';}?>"
                                        href="{{url('deals-sandbox')}}">
@@ -467,6 +468,11 @@
                            <li class="nav-item iq-responsive-menu d-block">
                               <a class="nav-link <?php if(isset($_GET['type']) && $_GET['type'] == 'admin'){echo 'active';} ?>" aria-current="page"
                                  href="#">
+                                 <i class="icon">
+                                 <svg fill="none" class="icon-20" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M16.1583 8.23285C16.1583 10.5825 14.2851 12.4666 11.949 12.4666C9.61292 12.4666 7.73974 10.5825 7.73974 8.23285C7.73974 5.88227 9.61292 4 11.949 4C14.2851 4 16.1583 5.88227 16.1583 8.23285ZM11.949 20C8.51785 20 5.58809 19.456 5.58809 17.2802C5.58809 15.1034 8.49904 14.5396 11.949 14.5396C15.3802 14.5396 18.31 15.0836 18.31 17.2604C18.31 19.4362 15.399 20 11.949 20ZM17.9571 8.30922C17.9571 9.50703 17.5998 10.6229 16.973 11.5505C16.9086 11.646 16.9659 11.7748 17.0796 11.7946C17.2363 11.8216 17.3984 11.8369 17.5631 11.8414C19.2062 11.8846 20.6809 10.821 21.0883 9.21974C21.6918 6.84123 19.9198 4.7059 17.6634 4.7059C17.4181 4.7059 17.1835 4.73201 16.9551 4.77884C16.9238 4.78605 16.8907 4.80046 16.8728 4.82838C16.8513 4.8626 16.8674 4.90853 16.8889 4.93825C17.5667 5.8938 17.9571 7.05918 17.9571 8.30922ZM20.6782 13.5126C21.7823 13.7296 22.5084 14.1727 22.8093 14.8166C23.0636 15.3453 23.0636 15.9586 22.8093 16.4864C22.349 17.4851 20.8654 17.8058 20.2887 17.8886C20.1696 17.9066 20.0738 17.8031 20.0864 17.6833C20.3809 14.9157 18.0377 13.6035 17.4315 13.3018C17.4055 13.2883 17.4002 13.2676 17.4028 13.255C17.4046 13.246 17.4154 13.2316 17.4351 13.2289C18.7468 13.2046 20.1571 13.3847 20.6782 13.5126ZM6.43711 11.8413C6.60186 11.8368 6.76304 11.8224 6.92063 11.7945C7.03434 11.7747 7.09165 11.6459 7.02718 11.5504C6.4004 10.6228 6.04313 9.50694 6.04313 8.30913C6.04313 7.05909 6.43353 5.89371 7.11135 4.93816C7.13284 4.90844 7.14806 4.86251 7.12746 4.82829C7.10956 4.80127 7.07553 4.78596 7.04509 4.77875C6.81586 4.73192 6.58127 4.70581 6.33593 4.70581C4.07951 4.70581 2.30751 6.84114 2.91191 9.21965C3.31932 10.8209 4.79405 11.8845 6.43711 11.8413ZM6.59694 13.2545C6.59962 13.268 6.59425 13.2878 6.56918 13.3022C5.9621 13.6039 3.61883 14.9161 3.91342 17.6827C3.92595 17.8034 3.83104 17.9061 3.71195 17.889C3.13531 17.8061 1.65163 17.4855 1.19139 16.4867C0.936203 15.9581 0.936203 15.3457 1.19139 14.817C1.49225 14.1731 2.21752 13.73 3.32156 13.512C3.84358 13.385 5.25294 13.2049 6.5656 13.2292C6.5853 13.2319 6.59515 13.2464 6.59694 13.2545Z" fill="currentColor"></path>
+                                 </svg>
+                                 </i>
                                  <span class="item-name">Admin Console</span>
                                  <i class="right-icon">
                                     <svg xmlns="" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
@@ -474,48 +480,19 @@
                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                                     </svg>
                                  </i>
-
                               </a>
                               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-search-11" style="width: 15rem;">
                                  <li class="nav-item">
                                     <a class="nav-link <?php if(isset($_GET['type']) && $_GET['type'] == 'admin'){echo 'active';} ?>" href="{{ route('user.add', ['type' => 'admin']) }}">
                                        <i class="icon">
-                                          <svg width="20" class="icon-20" height="20" viewBox="0 0 24 24" fill="none"
-                                             xmlns="">
-                                             <path
-                                                d="M11.997 15.1746C7.684 15.1746 4 15.8546 4 18.5746C4 21.2956 7.661 21.9996 11.997 21.9996C16.31 21.9996 19.994 21.3206 19.994 18.5996C19.994 15.8786 16.334 15.1746 11.997 15.1746Z"
-                                                fill="currentColor"></path>
-                                             <path opacity="0.4"
-                                                d="M11.9971 12.5838C14.9351 12.5838 17.2891 10.2288 17.2891 7.29176C17.2891 4.35476 14.9351 1.99976 11.9971 1.99976C9.06008 1.99976 6.70508 4.35476 6.70508 7.29176C6.70508 10.2288 9.06008 12.5838 11.9971 12.5838Z"
-                                                fill="currentColor"></path>
-                                          </svg>
+                                       <svg fill="none" class="icon-20" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                          <path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 12.5537C12.2546 12.5537 14.4626 10.3171 14.4626 7.52684C14.4626 4.73663 12.2546 2.5 9.5 2.5C6.74543 2.5 4.53737 4.73663 4.53737 7.52684C4.53737 10.3171 6.74543 12.5537 9.5 12.5537ZM9.5 15.0152C5.45422 15.0152 2 15.6621 2 18.2464C2 20.8298 5.4332 21.5 9.5 21.5C13.5448 21.5 17 20.8531 17 18.2687C17 15.6844 13.5668 15.0152 9.5 15.0152ZM19.8979 9.58786H21.101C21.5962 9.58786 22 9.99731 22 10.4995C22 11.0016 21.5962 11.4111 21.101 11.4111H19.8979V12.5884C19.8979 13.0906 19.4952 13.5 18.999 13.5C18.5038 13.5 18.1 13.0906 18.1 12.5884V11.4111H16.899C16.4027 11.4111 16 11.0016 16 10.4995C16 9.99731 16.4027 9.58786 16.899 9.58786H18.1V8.41162C18.1 7.90945 18.5038 7.5 18.999 7.5C19.4952 7.5 19.8979 7.90945 19.8979 8.41162V9.58786Z" fill="currentColor"></path>
+                                       </svg>
                                        </i>
                                        <span class="item-name">Add Admin / Super User</span>
                                     </a>
                                  </li>
-                                 <li class="nav-item">
-                                    <a class="nav-link <?php if(isset($slug) && $slug == 'pipelines'){echo 'active';}?>"
-                                       href="{{ route('pipeline.list')}}">
-                                       <i class="icon">
-                                          <svg width="20" class="icon-20" height="20" viewBox="0 0 24 24" fill="none"
-                                             xmlns="">
-                                             <path opacity="0.4"
-                                                d="M16.6756 2H7.33333C3.92889 2 2 3.92889 2 7.33333V16.6667C2 20.0711 3.92889 22 7.33333 22H16.6756C20.08 22 22 20.0711 22 16.6667V7.33333C22 3.92889 20.08 2 16.6756 2Z"
-                                                fill="currentColor"></path>
-                                             <path
-                                                d="M7.36866 9.3689C6.91533 9.3689 6.54199 9.74223 6.54199 10.2045V17.0756C6.54199 17.5289 6.91533 17.9022 7.36866 17.9022C7.83088 17.9022 8.20421 17.5289 8.20421 17.0756V10.2045C8.20421 9.74223 7.83088 9.3689 7.36866 9.3689Z"
-                                                fill="currentColor"></path>
-                                             <path
-                                                d="M12.0352 6.08887C11.5818 6.08887 11.2085 6.4622 11.2085 6.92442V17.0755C11.2085 17.5289 11.5818 17.9022 12.0352 17.9022C12.4974 17.9022 12.8707 17.5289 12.8707 17.0755V6.92442C12.8707 6.4622 12.4974 6.08887 12.0352 6.08887Z"
-                                                fill="currentColor"></path>
-                                             <path
-                                                d="M16.6398 12.9956C16.1775 12.9956 15.8042 13.3689 15.8042 13.8312V17.0756C15.8042 17.5289 16.1775 17.9023 16.6309 17.9023C17.0931 17.9023 17.4664 17.5289 17.4664 17.0756V13.8312C17.4664 13.3689 17.0931 12.9956 16.6398 12.9956Z"
-                                                fill="currentColor"></path>
-                                          </svg>
-                                       </i>
-                                       <span class="item-name">Pipelines</span>
-                                    </a>
-                                 </li>
+                                 
                                  <li class="nav-item">
                                     <a class="nav-link <?php if(isset($slug) && $slug == 'stages'){echo 'active';}?>"
                                        href="{{ route('stage.list')}}">
@@ -541,7 +518,30 @@
                                  </li>
 
                               </ul>
-                           </li>      
+                           </li> 
+                           <li class="nav-item">
+                              <a class="nav-link <?php if(isset($slug) && $slug == 'pipelines'){echo 'active';}?>"
+                                 href="{{ route('pipeline.list')}}">
+                                 <i class="icon">
+                                    <svg width="20" class="icon-20" height="20" viewBox="0 0 24 24" fill="none"
+                                       xmlns="">
+                                       <path opacity="0.4"
+                                          d="M16.6756 2H7.33333C3.92889 2 2 3.92889 2 7.33333V16.6667C2 20.0711 3.92889 22 7.33333 22H16.6756C20.08 22 22 20.0711 22 16.6667V7.33333C22 3.92889 20.08 2 16.6756 2Z"
+                                          fill="currentColor"></path>
+                                       <path
+                                          d="M7.36866 9.3689C6.91533 9.3689 6.54199 9.74223 6.54199 10.2045V17.0756C6.54199 17.5289 6.91533 17.9022 7.36866 17.9022C7.83088 17.9022 8.20421 17.5289 8.20421 17.0756V10.2045C8.20421 9.74223 7.83088 9.3689 7.36866 9.3689Z"
+                                          fill="currentColor"></path>
+                                       <path
+                                          d="M12.0352 6.08887C11.5818 6.08887 11.2085 6.4622 11.2085 6.92442V17.0755C11.2085 17.5289 11.5818 17.9022 12.0352 17.9022C12.4974 17.9022 12.8707 17.5289 12.8707 17.0755V6.92442C12.8707 6.4622 12.4974 6.08887 12.0352 6.08887Z"
+                                          fill="currentColor"></path>
+                                       <path
+                                          d="M16.6398 12.9956C16.1775 12.9956 15.8042 13.3689 15.8042 13.8312V17.0756C15.8042 17.5289 16.1775 17.9023 16.6309 17.9023C17.0931 17.9023 17.4664 17.5289 17.4664 17.0756V13.8312C17.4664 13.3689 17.0931 12.9956 16.6398 12.9956Z"
+                                          fill="currentColor"></path>
+                                    </svg>
+                                 </i>
+                                 <span class="item-name">Pipelines</span>
+                              </a>
+                           </li>     
                            @endif()
                            @endif
                         </ul>
@@ -552,57 +552,28 @@
                   <button id="navbar-toggle" class="navbar-toggler" type="button" data-bs-toggle="collapse"
                      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                      aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon">
-                  <span class="navbar-toggler-bar bar1 mt-1"></span>
-                  <span class="navbar-toggler-bar bar2"></span>
-                  <span class="navbar-toggler-bar bar3"></span>
-                  </span>
+                     <span class="navbar-toggler-icon">
+                        <span class="navbar-toggler-bar bar1 mt-1"></span>
+                        <span class="navbar-toggler-bar bar2"></span>
+                        <span class="navbar-toggler-bar bar3"></span>
+                     </span>
                   </button>
                </div>
                <div class="navbar-collapse collapse" id="navbarSupportedContent">
                   <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
-                     <!-- <li class="nav-item dropdown pe-3 d-none d-xl-block">
+                     <li class="nav-item dropdown border-end pe-3 d-none d-xl-block">
                         <div class="form-group input-group mb-0 search-input">
-                           <input type="text" class="form-control" placeholder="Search...">
+                           <input id="search-header" type="text" class="form-control" placeholder="Search..." fdprocessedid="l5a9mq">
                            <span class="input-group-text">
-                              <svg class="icon-20" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                 xmlns="">
-                                 <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round"></circle>
-                                 <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round"></path>
+                              <svg class="icon-20" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                 <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                               </svg>
                            </span>
                         </div>
-                        </li> -->
-                     <!-- <li class="nav-item dropdown iq-responsive-menu border-end d-block d-xl-none">
-                        <div class="btn btn-sm bg-body" id="navbarDropdown-search-11" role="button" data-bs-toggle="dropdown"
-                           aria-expanded="false">
-                           <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="">
-                              <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5"
-                                 stroke-linecap="round" stroke-linejoin="round"></circle>
-                              <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5"
-                                 stroke-linecap="round" stroke-linejoin="round"></path>
-                           </svg>
-                        </div>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-search-11"
-                           style="width: 25rem;">
-                           <li class="px-3 py-0">
-                              <div class="form-group input-group mb-0">
-                                 <input type="text" class="form-control" placeholder="Search...">
-                                 <span class="input-group-text">
-                                    <svg class="icon-20" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                       xmlns="">
-                                       <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5"
-                                          stroke-linecap="round" stroke-linejoin="round"></circle>
-                                       <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" stroke-width="1.5"
-                                          stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </svg>
-                                 </span>
-                              </div>
-                           </li>
-                        </ul>
-                        </li> -->
+                        
+                     </li>
+                  
                      <li class="nav-item dropdown notification_view">
                         @if($notificationService::recent()['bell_notification_count'])
                            @if($notificationService::recent()['bell_notification_count'] > 99)
@@ -682,8 +653,36 @@
                         </ul>
                      </li>
                   </ul>
+                  
                </div>
             </div>
          </nav>
+         
          <!--Nav End-->
       </div>
+      <!-- custom sub header start -->
+      <!-- <nav class="navbar navbar-expand-lg navbar-dark custom_sub_header bg-dark" aria-label="Main navigation">
+         <div class="container-fluid py-2 px-4">
+                  
+            <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+                  <span class="navbar-toggler-bar bar1 mt-1"></span>
+                  <span class="navbar-toggler-bar bar2"></span>
+                  <span class="navbar-toggler-bar bar3"></span>
+                  </span>
+            </button>
+
+            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
+                     <li class="nav-item">
+                        <h3 class="card-title">Search bar Results:</h3>
+                     </li>
+                  </ul>
+                  <form class="d-flex">
+                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                     <button class="btn btn-primary" type="submit" fdprocessedid="611m3">Search</button>
+                  </form>
+            </div>
+         </div>
+      </nav> -->
+      <!-- custom sub header end -->

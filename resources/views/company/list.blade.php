@@ -45,7 +45,7 @@
                             </svg> Export XLS</a>
                   </div>
                </div>
-               <div class="card-body px-0">
+               <div class="card-body">
                   <div class="table-responsive">
                      <div id="user-list-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                         <!-- date range start -->

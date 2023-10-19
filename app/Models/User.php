@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
-
+use App\Services\FileStorageService;
 
 class User extends Authenticatable
 {
@@ -43,6 +43,22 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     protected $appends = ['full_name'];
+
+    public function getConsentSignImageAttribute($key){
+        return $this->getS3Url($key);
+    }
+    private function getS3Url($key)
+    {
+        $fileStorageService = new FileStorageService(env('FILESYSTEM_DRIVER'));
+        $storageServiceName = $fileStorageService->getStorageServiceName($key);
+        switch ($storageServiceName) {
+            case 's3':
+                return $fileStorageService->getTemporaryUrl($key);
+                break;
+            default:
+            return URL("uploads/documents")."/".$key;
+        }
+    }
 
     public static function getUsers($data)
     {

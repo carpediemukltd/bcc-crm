@@ -65,7 +65,8 @@ class AuthController extends Controller
                     'last_name'             => auth()->user()->last_name,
                     'require_2FA'           => false,
                     'token'                 => $token,
-                    'is_first_time_login'   => $user->first_time_login == '1'?true:false
+                    'is_first_time_login'   => $user->first_time_login == '1'?true:false,
+                    'consent_content'       => 'I understand by clicking the "Submit" button I am providing consent to contact via personal cell phone, business cell phone and business e-mail address and hereby consent to the receipt of correspondence/messages regarding transactions with BCCUSA and/or its affiliates on either medium. I also hereby consent to the receipt of text messages and push notifications if utilizing the mobile application knowing that msg. and data rates may apply. I understand that consent to receive texts is not a condition of approval. I can expect approx. 10 msgs./month. I certify that all the information contained herein is complete, true and accurate.'
                 ];
             }
 

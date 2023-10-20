@@ -961,23 +961,22 @@
          // If an active filter exists, add its id to the data object
          requestData.filter = activeFilter.id;
       }
+      $(".contacts-html").html('');
+      $(".companies-html").html('');
+      $(".deals-html").html('');
+      $(".pipelines-html").html('');
+      $(".stages-html").html('');
 
       // Perform an AJAX post call with the searchValue using jQuery
       if (searchValue) {
          $.ajax({
             url: '/search',
             type: 'POST',
-            data:requestData,
+            data: requestData,
             headers: {
                'X-CSRF-TOKEN': csrfToken
             },
             success: function(response) {
-               $(".contacts-html").html('');
-               $(".companies-html").html('');
-               $(".deals-html").html('');
-               $(".pipelines-html").html('');
-               $(".stages-html").html('');
-
                $(".contacts-html").append(response.contacts);
                $(".deals-html").append(response.deals);
                $(".pipelines-html").append(response.pipelines);

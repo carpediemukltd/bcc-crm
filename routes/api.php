@@ -28,6 +28,7 @@ Route::resource('email-templates', EmailTemplateController::class);
 Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('documents', DocumentController::class);
     Route::delete('delete-account', [UserController::class, 'deleteAccount']);
+    Route::get('deals', [UserController::class, 'deals']);
     Route::post('profile-update', [UserController::class, 'profileUpdate']);
     Route::post('logout', [AuthController::class, 'logout']);
 });

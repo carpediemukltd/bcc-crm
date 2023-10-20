@@ -86,7 +86,7 @@ Route::middleware([CheckStatus::class])->group(function () {
             Route::any('customfield', [CustomFieldController::class, 'fieldList'])->name('customfield.list');
             Route::any('customfield/edit/{id}', [CustomFieldController::class, 'editField'])->name('customfield.edit');
         });
-        Route::middleware(['auth', 'log_user_activity:customers:add'])->group(function () {
+        Route::middleware(['auth', 'log_user_activity'])->group(function () {
 
             Route::any('pipeline/{action}/{id?}', [PipelineController::class, 'pipelines'])->name('pipeline');
         });

@@ -95,9 +95,10 @@
                                                 <th class="sorting" tabindex="0" aria-controls="user-list-table">User</th>
                                                 <th class="sorting" tabindex="0" aria-controls="user-list-table">Action</th>
                                                 <th class="sorting" tabindex="0" aria-controls="user-list-table">Module</th>
+                                                <th class="sorting" tabindex="0" aria-controls="user-list-table">Record ID</th>
                                                 <th class="sorting" tabindex="0" aria-controls="user-list-table">Detail</th>
                                                 <th class="sorting" tabindex="0" aria-controls="user-list-table">Created at</th>
-                                                <th style="min-width: 100px" class="sorting" tabindex="0" aria-controls="user-list-table">Actions</th>
+                                                <!-- <th style="min-width: 100px" class="sorting" tabindex="0" aria-controls="user-list-table">Actions</th> -->
                                             </tr>
                                         </thead>
                                         <tbody>

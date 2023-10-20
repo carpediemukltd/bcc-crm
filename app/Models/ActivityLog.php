@@ -13,6 +13,7 @@ class ActivityLog extends Model
         'action',
         'entity',
         'data',
+        'module_id',
     ];
    
     

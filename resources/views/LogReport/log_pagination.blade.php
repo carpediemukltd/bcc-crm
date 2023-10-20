@@ -9,9 +9,10 @@
     @endforeach
     <td class="sorting" tabindex="0" aria-controls="user-list-table">{{$acc->action}}</td>
     <td class="sorting" tabindex="0" aria-controls="user-list-table">{{$acc->entity}}</td>
+    <td class="sorting" tabindex="0" aria-controls="user-list-table">{{$acc->module_id}}</td>
     <td class="sorting" tabindex="0" aria-controls="user-list-table">{{$acc->data}}</td>
     <td class="sorting" tabindex="0" aria-controls="user-list-table">{{$acc->created_at}}</td>
-    <td style="min-width: 100px" class="sorting" tabindex="0" aria-controls="user-list-table">Actions</td>
+
 </tr>
 @endforeach
 

@@ -258,7 +258,7 @@ class DealController extends Controller
             Deal::where('id', $id)->update([
                 'stage_id' => $request->stage_id,
             ]);
-
+            SendNotification::dispatch(['id'=> $id, 'type'=> 'deal_stage_changed']);
             return redirect(route('user.deals', [$user_id, 'listing']))->withSuccess('Deal Update Successfully.')->withInput();
         }
     }

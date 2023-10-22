@@ -91,12 +91,12 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::any('customfield', [CustomFieldController::class, 'fieldList'])->name('customfield.list');
         Route::any('customfield/edit/{id}', [CustomFieldController::class, 'editField'])->name('customfield.edit');
 
-        
+
         Route::get('stages', [StageController::class, 'stageList'])->name('stage.list');
         Route::post('stage/add', [StageController::class, 'stageAdd'])->name('stage.add');
         Route::post('stage/edit/{id}', [StageController::class, 'stageEdit'])->name('stage.edit');
         Route::post('stage/delete/{id}', [StageController::class, 'stageDelete'])->name('stage.delete');
-        
+
         Route::get('pipelines', [PipelineController::class, 'pipelineList'])->name('pipeline.list');
         Route::post('pipeline/add', [PipelineController::class, 'pipelineAdd'])->name('pipeline.add');
         Route::post('pipeline/edit/{id}', [PipelineController::class, 'pipelineEdit'])->name('pipeline.edit');
@@ -106,7 +106,7 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::post('email_template/add', [EmailTemplateController::class, 'emailTemplateAdd'])->name('email_template.add');
         Route::post('email_template/edit/{id}', [EmailTemplateController::class, 'emailTemplateEdit'])->name('email_template.edit');
         Route::post('email_template/delete/{id}', [EmailTemplateController::class, 'emailTemplateDelete'])->name('email_template.delete');
-        
+
         Route::any('pipeline/{action}/{id?}', [PipelineController::class, 'pipelines'])->name('pipeline');
         Route::any('deals/{view}', [DealController::class, 'dealsList'])->name('deals.list');
 
@@ -119,6 +119,7 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::get('contacts', [UserController::class, 'userList'])->name('user.list');
         Route::any('contact/edit/{id}', [UserController::class, 'editUser'])->name('user.edit');
         Route::any('contact/{id}/details', [UserController::class, 'userDetails'])->name('user.details');
+        Route::post('send-email-notification', [UserController::class, 'sendEmailNotification'])->name('user.sendEmailNotification');
 
         Route::any('contact/{id}/deals/add', [DealController::class, 'dealsAdd'])->name('user.deals.add');
         Route::any('contact/{user_id}/deals/edit/{id}', [DealController::class, 'dealsEdit'])->name('user.deals.edit');
@@ -127,7 +128,7 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::post('contact/{user_id}/deals/updateStage/{id}', [DealController::class, 'dealsUpdateStage'])->name('user.deals.updatestage');
         Route::get('deal/{id}/exportcsv', [DealController::class, 'exportCSV'])->name('deal.export.csv');
         Route::get('deal/{id}/exportxls', [DealController::class, 'exportXLS'])->name('deal.export.xls');
-        
+
         Route::get('notes/{contact_id}', [NoteController::class, 'listNote'])->name('note.list');
         Route::any('note/add', [NoteController::class, 'addNote'])->name('note.add');
         Route::post('note/edit/{id}', [NoteController::class, 'editNote'])->name('note.edit');

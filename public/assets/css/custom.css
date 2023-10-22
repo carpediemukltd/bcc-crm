@@ -1027,7 +1027,9 @@ div#deals_list span {
 .list-style-one{
   position:relative;
 }
-
+.hide{
+  display: none ;
+}
 .list-style-one li{
   position:relative;
   font-size:16px;
@@ -1430,7 +1432,7 @@ p.sub_text:after{
   display: none !important;
 }
 .custom-notification-badge{
-	position: absolute;
+	  position: absolute;
     top: -5px;
     right: -1px;
     height: 23px;
@@ -1442,7 +1444,7 @@ p.sub_text:after{
     font-size: 13px;
     z-index: 1000;
     border: 2px solid;
-	box-shadow: rgba(0, 0, 0, 0.06) 0px 4px 20px 1px, rgba(0, 0, 0, 0.08) 0px 1px 4px;
+	  box-shadow: rgba(0, 0, 0, 0.06) 0px 4px 20px 1px, rgba(0, 0, 0, 0.08) 0px 1px 4px;
  }
 .notification_listing_color_unread{
   background-color: #f8f8ff;
@@ -1619,3 +1621,182 @@ p.sub_text:after{
 .login-content .resend-code{
   cursor: pointer;
  }
+ .iti.iti--allow-dropdown.iti--separate-dial-code {
+    width: 100%;
+}
+.card.in-progreess .card_title{
+  border-top: 2px solid rgb( 182, 96, 224 );
+  border-radius: 3px;
+}
+.card.in-progress .card_title {
+  border-top: 2px solid rgb( 182, 96, 224 );
+  border-radius: 4px;
+}
+.card.complete .card_title{
+  border-top: 2px solid rgb( 15, 157, 159 );
+  border-radius: 4px;
+}
+.card.todo-list .card_title{
+  border-top: 2px solid rgb( 135, 144, 158 );
+  border-radius: 4px;
+}
+.card_scroll_view{
+  max-height: 500px;
+  overflow: auto;
+}
+/* different name of satges style start */
+.card.close-to-close .card_title{
+  border-top: 2px solid rgb( 238, 94, 153 );
+  border-radius: 3px;
+}
+.card.funded .card_title {
+  border-top: 2px solid rgb( 182, 96, 224 );
+  border-radius: 4px;
+}
+.card.submitted .card_title{
+  border-top: 2px solid rgb( 15, 157, 159 );
+  border-radius: 4px;
+}
+.card.document-collection .card_title{
+  border-top: 2px solid rgb( 135, 144, 158 );
+  border-radius: 4px;
+}
+.card.did-not-fund .card_title{
+  border-top: 2px solid rgb( 248, 174, 0 );
+  border-radius: 4px;
+}
+.group .card-body.has_shadow{
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.card.submitted + .group2-wrap .card-body.has_shadow{
+  border-bottom: 2px solid #0f9d9f;
+}
+.dropdown span.h5 {
+  background-color: #fff;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  border:2px solid #00562c;
+}
+.dropdown span.h5 svg{
+  fill: #fff;
+  height: 20px;
+  width: 20px;
+  line-height: 14px;
+}
+.card-body .form-control{
+  padding: 10px;
+  font-size: 12px;
+}
+.stages_view_box {
+  width: 100%;
+  margin-right: 10px;
+}
+.d-flex .stages_view_box:last-child{
+  margin-right: 0;
+}
+.stages_view_box .card{
+  margin-bottom: 1em;
+}
+/* different name of stages style end */
+.stages_view_box p.card-text b {
+  font-weight: normal;
+}
+.stages_view_box p.card-text {
+  margin-bottom: 5px;
+}
+.stages_view_box .card-body p b{
+  color: #000;
+}
+.iq-container .btn-soft-light{
+  color: #00562c !important;
+  background-color: #fff;
+  border-color: #FFF;
+}
+.iq-container .btn-soft-light:hover{
+  color: #fff !important;
+}
+.nav-item .card-title{
+  color: #ffff;
+  font-size: 16px;
+}
+.custom_sub_header.bg-dark{
+  background-color: #538c71d4 !important;
+}
+.custom_sub_header.bg-dark .btn.btn-primary {
+  background-color: #dfa247;
+  border-color: #dfa247;
+}
+.view_documents_portal{
+  max-width: 100%;
+}
+.view_documents_portal iframe{
+  width: 100%;
+  height: 100vh;
+}
+div#user_details_view {
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+div#user_edit_view {
+  height: 500px;
+  overflow: auto;
+  overflow-x: hidden;
+}
+.iq-nav-menu>li>a .icon{
+  display: none;
+}
+.iq-nav-menu>li>a{
+  font-weight: normal;
+}
+.navbar-collapse{
+  flex-grow: inherit;
+}
+.search_filder_holder{
+  display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    right: 0;
+    padding: 20px 30px;
+    text-align: right;
+    justify-content:space-between
+}
+.search_filder_holder ul{
+  padding: 0;
+  margin: 0;
+}
+.search_filder_holder ul li{
+  display: inline-block;
+  margin-right: 10px;
+  border: 1px solid #9b9b95;
+  color: black;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.search_filder_holder ul .active-filter{
+  background-color: #156a3b;
+  color: white;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+.email_template_holder .save_new{
+  position: relative;
+  top: 5px;
+}
+.email_template_holder .delete_row_btn{
+  padding: 0;
+  background-color: inherit;
+  color: #c03221;
+  border: none;
+}
+.single-sub-heading{
+  position: relative;
+  top:30px;
+}

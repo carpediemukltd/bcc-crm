@@ -49,13 +49,14 @@
                      <input type="hidden" name="company_id" value="{{$user->company_id}}" />
                      @foreach($settings as $setting)
                      <div class="row">
-                         <div class="col">
+                         <!-- <div class="col">
                              <div class="form-group">
-                                 <label class="form-label">{{$setting->first_name}} {{$setting->last_name}}</label>
+                                 
                            </div>
-                        </div>
-                        <div class="col">
+                        </div> -->
+                        <div class="col-lg-6">
                            <div class="form-group">
+                           <label class="form-label">{{$setting->first_name}} {{$setting->last_name}}</label>
                               <select class="form-select" id="priority[{{$setting->id}}]" name="priority[{{$setting->id}}]">
                                  <option value="low" <?php if($setting->priority == 'low'){echo 'selected';}?>>Low Priority</option>
                                  <option value="high" <?php if($setting->priority == 'high'){echo 'selected';}?>>High Priority</option>

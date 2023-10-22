@@ -78,4 +78,7 @@
    public function dealsboardview(){
       return view('dealsboardview');
    }
+   public function searchingBar(){
+      return view('searching-bar');
+   }
  }

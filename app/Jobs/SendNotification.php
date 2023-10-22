@@ -90,6 +90,12 @@ class SendNotification implements ShouldQueue
             $message    = "New contact has been assigned to you!";
             $targetUrl  =  '/roundrobin';
         }
+        if($type == 'deal_stage_changed'){
+            $deal       = Deal::whereId($id)->with('stage')->first();
+            $message    = "You Deal ".$deal->title." has been moved to status: ".$deal->stage->title;
+            $targetUrl  =  'dashboard';
+            $userIds  = [$deal->user_id];
+        }
         $admins = User::whereIn('id', $userIds)->get();
         if ($admins->count()) {
             foreach ($admins as $admin) {

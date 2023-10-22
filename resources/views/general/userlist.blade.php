@@ -231,7 +231,8 @@
                                     </td>
                                  </tr>
                                  <tr class="odd">
-                                    <td class="text-center sorting_1"><img class="bg-soft-primary rounded img-fluid avatar-40 me-3" src="../../assets/images/shapes/05.png" alt="profile" loading="lazy"></td>
+                                    <td class="text-center sorting_1">
+                                       <img class="bg-soft-primary rounded img-fluid avatar-40 me-3" src="../../assets/images/shapes/05.png" alt="profile" loading="lazy"></td>
                                     <td>Lynn Guini</td>
                                     <td>+27 2563 456 589</td>
                                     <td>lynnguini@gmail.com</td>

@@ -41,7 +41,7 @@
             <form action="{{route('company.add')}}" method="POST">
                @csrf
                <div class="row">
-                  <div class="col">
+                  <div class="col-lg-6">
                      <div class="form-group">
                         <label class="form-label" for="title">Company Name</label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Company Name" value="{{old('name')}}" required>
@@ -97,12 +97,12 @@
                   </div>
                </div>
                <div class="row">
-                  <div class="col">
+                  <div class="col-lg-6">
                      <div class="form-group">
                         <input type="hidden" name="phone_country_code" id="selected-country-code" value="+1">
                         <label class="form-label" for="phone_number">Phone number:</label>
                         <div class="phone-input">
-                           <input name="phone_number" type="tel" id="phone-number" placeholder="Enter your phone number" class="form-control" required>
+                           <input name="phone_number" class="form-control" type="tel" id="phone-number" placeholder="Enter your phone number" class="form-control" required>
                         </div>
                         @if ($errors->has('phone_number'))
                            <span class="text-danger">{{ $errors->first('phone_number') }}</span>

@@ -53,6 +53,7 @@ class AuthController extends Controller
                     'first_name'    => auth()->user()->first_name,
                     'last_name'     => auth()->user()->last_name,
                     'require_2FA'   => true,
+                    'profile_image' => auth()->user()->profile_image
                 ];
                 return ApiResponse::success($data, 'Requires 2FA', 200);
             } else {
@@ -63,6 +64,7 @@ class AuthController extends Controller
                     'email'                 => auth()->user()->email,
                     'first_name'            => auth()->user()->first_name,
                     'last_name'             => auth()->user()->last_name,
+                    'profile_image'         => auth()->user()->profile_image,
                     'require_2FA'           => false,
                     'token'                 => $token,
                     'is_first_time_login'   => $user->first_time_login == '1'?true:false,
@@ -94,14 +96,14 @@ class AuthController extends Controller
 
                 // $mail->SMTPDebug = 3;                      //Enable verbose debug output
                 $mail->isSMTP();                                            //Send using SMTP
-                $mail->Host       = 'smtp.sendgrid.net';                     //Set the SMTP server to send through
+                $mail->Host       = env('MAIL_HOST');                     //Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-                $mail->Username   = 'apikey';                     //SMTP username
-                $mail->Password   = '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';                                //SMTP password
-                $mail->SMTPSecure = 'ssl';              //Enable implicit TLS encryption
-                $mail->Port       = 465;
+                $mail->Username   = env('MAIL_USERNAME');                     //SMTP username
+                $mail->Password   = env('MAIL_PASSWORD');                                //SMTP password
+                $mail->SMTPSecure = env('MAIL_ENCRYPTION');              //Enable implicit TLS encryption
+                $mail->Port       = env('MAIL_PORT');
 
-                $mail->setFrom('info@bccsba.com');
+                $mail->setFrom(env('MAIL_FROM_ADDRESS'));
                 $mail->isHTML(true); //Set email format to HTML
 
                 $mail->Subject = 'BCC CRM 2FA Verification Code';
@@ -178,6 +180,7 @@ class AuthController extends Controller
                     'email'         => auth()->user()->email,
                     'first_name'    => auth()->user()->first_name,
                     'last_name'     => auth()->user()->last_name,
+                    'profile_image' => auth()->user()->profile_image,
                     'require_2FA'   => false,
                     'token'         => $token
                 ];

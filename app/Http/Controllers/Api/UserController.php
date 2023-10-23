@@ -28,7 +28,7 @@ class UserController extends Controller
     {
         if ($request->hasFile('consent_sign_file')) {
             $validator = Validator::make($request->all(), [
-                'consent_sign_file'              => 'file|mimes:pdf,jpeg,png,jpg, JPEG, PNG, JPG, MPEG, heif, heic, heif-sequence, heic-sequence', // File validation for PDF and images
+                'consent_sign_file' => 'file|mimes:pdf,jpeg,png,jpg, JPEG, PNG, JPG, MPEG, heif, heic, heif-sequence, heic-sequence', // File validation for PDF and images
             ]);
 
             if ($validator->fails()) {
@@ -45,6 +45,42 @@ class UserController extends Controller
             $url = Storage::disk('s3')->url($path);
             auth()->user()->update(['consent_sign_image' => $url]);
         }
+        if ($request->hasFile('profile_image')) {
+            $validator = Validator::make($request->all(), [
+                'profile_image' => 'file|mimes:pdf,jpeg,png,jpg, JPEG, PNG, JPG, MPEG, heif, heic, heif-sequence, heic-sequence', // File validation for PDF and images
+            ]);
+
+            if ($validator->fails()) {
+                return ApiResponse::error($validator->errors()->first(), 400);
+            }
+
+            $image = $request->file('profile_image');
+
+            // Get the current year and month
+            $year   = now()->year;
+            $month  = now()->format('m');
+
+            // Create the directory if it doesn't exist
+            $directory = public_path("profile/$year/$month");
+            if (!file_exists($directory)) {
+                mkdir($directory, 0755, true);
+            }
+
+            // Generate a unique filename for the uploaded image
+            $filename = uniqid() . '.' . $image->getClientOriginalExtension();
+
+            // Move the uploaded file to the dynamic directory
+            $image->move($directory, $filename);
+
+            // At this point, the image has been uploaded to public/profile/year/month/filename
+
+            // You can store the path or filename in your database if needed.
+            $filePath = "profile/$year/$month/$filename";
+            auth()->user()->update(['profile_image' => $filePath]);
+
+        }
+
+
         if ($request->has('first_time_login')) {
             // Set the authenticated user's 'first_time_login' attribute to 0
             auth()->user()->update(['first_time_login' => '0']);
@@ -62,7 +98,7 @@ class UserController extends Controller
     {
         $query = Deal::where('user_id', auth()->user()->id)->with('stage');
         if (request()->has('stage')) {
-            if(!Stage::where('id', request('stage'))->first()){
+            if (!Stage::where('id', request('stage'))->first()) {
                 return ApiResponse::error('Invalid Stage Selection.', 400);
             }
             $query->where('stage_id', request('stage'));

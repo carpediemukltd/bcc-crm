@@ -100,13 +100,14 @@
                                  {{ csrf_field() }}
                                  <input type="hidden" name="email" value="">
                                  <input type="hidden" name="password" value="">
-                                 <div class="group">
+                                 <div class="group mb-2">
                                     <label for="2fa-code" class="label">2FA Code</label>
                                     <input id="2fa-code" type="text" class="form-control" name="verification_code" required>
                                  </div>
                                  <div class="group mb-0">
                                     <!-- <input type="submit" class="btn btn-primary mt-2" value="Verify Code"> -->
                                     <button type="submit" class="btn btn-primary mt-2" value="Verify Code">
+                                       Verify Code
                                     <span id="spiner" class="spinner-border spinner-border-sm hide" role="status" aria-hidden="true"></span>
                                     </button>
                                  </div>
@@ -198,6 +199,7 @@
          });
 
          $('#2fa-verification-form').submit(function(event) {
+            //$('#spiner').css("display","inline-block");
             // Prevent the default form submission
             event.preventDefault();
 
@@ -212,6 +214,7 @@
                success: function(response) {
                   if (response.error) {
                      $('.alert-danger').html('<ul><li>' + response.error + '</li></ul>').show();
+                     $('#spiner').css("display","none");
                   } else {
                      window.location.href = 'dashboard';
                   }

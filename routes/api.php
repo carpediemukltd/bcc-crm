@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\EmailTemplateController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::delete('delete-account', [UserController::class, 'deleteAccount']);
     Route::get('deals', [UserController::class, 'deals']);
     Route::post('profile-update', [UserController::class, 'profileUpdate']);
+    Route::get('notifications', [NotificationController::class, 'index']); 
+    Route::put('clear-bell-badge', [NotificationController::class, 'clearBellBadge']);
+    Route::put('notification-mark-read/{id?}', [NotificationController::class, 'notificationMarkRead']);
     Route::post('logout', [AuthController::class, 'logout']);
 });
 

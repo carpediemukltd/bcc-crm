@@ -112,4 +112,11 @@ class User extends Authenticatable
     {
         return $this->first_name . ' ' . $this->last_name;
     }
+    public function getProfileImageAttribute($key){
+        if($key){
+            return env('APP_URL').$key;
+        }
+        //if no any image is set 
+        return env('APP_URL')."placeholder-profile.png";
+    }
 }

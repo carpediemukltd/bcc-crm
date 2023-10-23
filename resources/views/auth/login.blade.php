@@ -18,6 +18,7 @@
    <link rel="stylesheet" href="{{asset('assets/css/pro.min.css?v=3.0.0')}}" />
    <!-- Custom Css -->
    <link rel="stylesheet" href="{{asset('assets/css/custom.min.css?v=3.0.0')}}" />
+   <link rel="stylesheet" href="{{asset('assets/css/crm_responsiveness.css')}}" />
    <!-- Dark Css -->
    <link rel="stylesheet" href="{{asset('assets/css/dark.min.css?v=3.0.0')}}" />
    <!-- Customizer Css -->

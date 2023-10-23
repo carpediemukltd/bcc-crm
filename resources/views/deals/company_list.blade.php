@@ -25,7 +25,7 @@
                 <td>{{$rec->company_name}}</td>
                 {{-- <td>{{$rec->pipeline}}</td> --}}
                 <td>
-                   <div class="form-group mb-0">
+                   <div class="form-group mb-0" style="width: 150px;">
                       <select class="form-select" id="stage_id_{{$rec->id}}" name="stage_id_{{$rec->id}}" onchange="UpdateDealStage({{$rec->user_id}},{{$rec->id}});">
                          @foreach($stages as $stage)
                             <option value="{{$stage['id']}}" @if($stage['id']==$rec->stage_id) selected=selected @endif>{{$stage['title']}}</option>

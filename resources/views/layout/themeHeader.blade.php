@@ -30,6 +30,7 @@
       <link rel="stylesheet" href="{{asset('assets/css/dark.min.css?v=3.0.0')}}" />
       <!-- Customizer Css -->
       <link rel="stylesheet" href="{{asset('assets/css/customizer.min.css?v=3.0.0')}}" />
+      <link rel="stylesheet" href="{{asset('assets/css/crm_responsiveness.css')}}" />
       <!-- RTL Css -->
       <!-- <link rel="stylesheet" href="{{asset('assets/css/rtl.min.css?v=3.0.0')}}" /> -->
       <!-- Google Font -->
@@ -47,7 +48,7 @@
 
       @yield('css')
    </head>
-   <body class="dual-compact light theme-default theme-with-animation card-default theme-color-default">
+   <body class="dual-compact light crm_dashboard_view theme-default theme-with-animation card-default theme-color-default">
       <!-- loader Start -->
       <?php $notificationService = app('App\Services\NotificationService');
     ?>
@@ -561,7 +562,7 @@
                </div>
                <div class="navbar-collapse collapse" id="navbarSupportedContent">
                   <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
-                     <li class="nav-item dropdown border-end pe-3 d-none d-xl-block">
+                     <li class="nav-item dropdown border-end pe-3 d-xl-block">
                         <div class="form-group input-group mb-0 search-input">
                            <input id="search-header" type="text" class="form-control" placeholder="Search..." fdprocessedid="l5a9mq">
                            <span class="input-group-text">

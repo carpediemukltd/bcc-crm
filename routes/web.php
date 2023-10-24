@@ -106,7 +106,6 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::post('email_template/add', [EmailTemplateController::class, 'emailTemplateAdd'])->name('email_template.add');
         Route::post('email_template/edit/{id}', [EmailTemplateController::class, 'emailTemplateEdit'])->name('email_template.edit');
         Route::post('email_template/delete/{id}', [EmailTemplateController::class, 'emailTemplateDelete'])->name('email_template.delete');
-
         Route::any('pipeline/{action}/{id?}', [PipelineController::class, 'pipelines'])->name('pipeline');
         Route::any('deals/{view}', [DealController::class, 'dealsList'])->name('deals.list');
 

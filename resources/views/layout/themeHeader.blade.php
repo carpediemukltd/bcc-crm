@@ -30,6 +30,7 @@
       <link rel="stylesheet" href="{{asset('assets/css/dark.min.css?v=3.0.0')}}" />
       <!-- Customizer Css -->
       <link rel="stylesheet" href="{{asset('assets/css/customizer.min.css?v=3.0.0')}}" />
+      <link rel="stylesheet" href="{{asset('assets/css/crm_responsiveness.css')}}" />
       <!-- RTL Css -->
       <!-- <link rel="stylesheet" href="{{asset('assets/css/rtl.min.css?v=3.0.0')}}" /> -->
       <!-- Google Font -->
@@ -47,7 +48,7 @@
 
       @yield('css')
    </head>
-   <body class="dual-compact light theme-default theme-with-animation card-default theme-color-default">
+   <body class="dual-compact light crm_dashboard_view theme-default theme-with-animation card-default theme-color-default">
       <!-- loader Start -->
       <?php $notificationService = app('App\Services\NotificationService');
     ?>
@@ -106,6 +107,32 @@
                                  <span class="item-name">Dashboard</span>
                               </a>
                            </li>
+                           @if (Auth::user()->role == 'superadmin')
+                            
+                           <li class="nav-item">
+                              <a class="nav-link <?php if(isset($slug) && $slug == 'pipelines'){echo 'active';}?>"
+                                 href="{{ route('pipeline.list')}}">
+                                 <i class="icon">
+                                    <svg width="20" class="icon-20" height="20" viewBox="0 0 24 24" fill="none"
+                                       xmlns="">
+                                       <path opacity="0.4"
+                                          d="M16.6756 2H7.33333C3.92889 2 2 3.92889 2 7.33333V16.6667C2 20.0711 3.92889 22 7.33333 22H16.6756C20.08 22 22 20.0711 22 16.6667V7.33333C22 3.92889 20.08 2 16.6756 2Z"
+                                          fill="currentColor"></path>
+                                       <path
+                                          d="M7.36866 9.3689C6.91533 9.3689 6.54199 9.74223 6.54199 10.2045V17.0756C6.54199 17.5289 6.91533 17.9022 7.36866 17.9022C7.83088 17.9022 8.20421 17.5289 8.20421 17.0756V10.2045C8.20421 9.74223 7.83088 9.3689 7.36866 9.3689Z"
+                                          fill="currentColor"></path>
+                                       <path
+                                          d="M12.0352 6.08887C11.5818 6.08887 11.2085 6.4622 11.2085 6.92442V17.0755C11.2085 17.5289 11.5818 17.9022 12.0352 17.9022C12.4974 17.9022 12.8707 17.5289 12.8707 17.0755V6.92442C12.8707 6.4622 12.4974 6.08887 12.0352 6.08887Z"
+                                          fill="currentColor"></path>
+                                       <path
+                                          d="M16.6398 12.9956C16.1775 12.9956 15.8042 13.3689 15.8042 13.8312V17.0756C15.8042 17.5289 16.1775 17.9023 16.6309 17.9023C17.0931 17.9023 17.4664 17.5289 17.4664 17.0756V13.8312C17.4664 13.3689 17.0931 12.9956 16.6398 12.9956Z"
+                                          fill="currentColor"></path>
+                                    </svg>
+                                 </i>
+                                 <span class="item-name">Pipelines</span>
+                              </a>
+                           </li>     
+                           @endif
                            <!-- <li class="nav-item">
                               <a class="nav-link <?php if(isset($slug) && $slug == 'dashboard-sandbox'){echo 'active';}?>"
                                  href="{{url('dashboard-sandbox')}}">
@@ -518,31 +545,8 @@
                                  </li>
 
                               </ul>
-                           </li> 
-                           <li class="nav-item">
-                              <a class="nav-link <?php if(isset($slug) && $slug == 'pipelines'){echo 'active';}?>"
-                                 href="{{ route('pipeline.list')}}">
-                                 <i class="icon">
-                                    <svg width="20" class="icon-20" height="20" viewBox="0 0 24 24" fill="none"
-                                       xmlns="">
-                                       <path opacity="0.4"
-                                          d="M16.6756 2H7.33333C3.92889 2 2 3.92889 2 7.33333V16.6667C2 20.0711 3.92889 22 7.33333 22H16.6756C20.08 22 22 20.0711 22 16.6667V7.33333C22 3.92889 20.08 2 16.6756 2Z"
-                                          fill="currentColor"></path>
-                                       <path
-                                          d="M7.36866 9.3689C6.91533 9.3689 6.54199 9.74223 6.54199 10.2045V17.0756C6.54199 17.5289 6.91533 17.9022 7.36866 17.9022C7.83088 17.9022 8.20421 17.5289 8.20421 17.0756V10.2045C8.20421 9.74223 7.83088 9.3689 7.36866 9.3689Z"
-                                          fill="currentColor"></path>
-                                       <path
-                                          d="M12.0352 6.08887C11.5818 6.08887 11.2085 6.4622 11.2085 6.92442V17.0755C11.2085 17.5289 11.5818 17.9022 12.0352 17.9022C12.4974 17.9022 12.8707 17.5289 12.8707 17.0755V6.92442C12.8707 6.4622 12.4974 6.08887 12.0352 6.08887Z"
-                                          fill="currentColor"></path>
-                                       <path
-                                          d="M16.6398 12.9956C16.1775 12.9956 15.8042 13.3689 15.8042 13.8312V17.0756C15.8042 17.5289 16.1775 17.9023 16.6309 17.9023C17.0931 17.9023 17.4664 17.5289 17.4664 17.0756V13.8312C17.4664 13.3689 17.0931 12.9956 16.6398 12.9956Z"
-                                          fill="currentColor"></path>
-                                    </svg>
-                                 </i>
-                                 <span class="item-name">Pipelines</span>
-                              </a>
-                           </li>     
-                           @endif()
+                           </li>    
+                           @endif
                            @endif
                         </ul>
                      </div>
@@ -561,7 +565,7 @@
                </div>
                <div class="navbar-collapse collapse" id="navbarSupportedContent">
                   <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
-                     <li class="nav-item dropdown border-end pe-3 d-none d-xl-block">
+                     <li class="nav-item dropdown border-end pe-3 d-xl-block">
                         <div class="form-group input-group mb-0 search-input">
                            <input id="search-header" type="text" class="form-control" placeholder="Search..." fdprocessedid="l5a9mq">
                            <span class="input-group-text">

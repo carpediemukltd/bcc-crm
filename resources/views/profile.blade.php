@@ -25,7 +25,6 @@
       </div>
       <div class="iq-header-img">
          <img src="{{asset('assets/images/dashboard/top-header.png')}}" alt="header" class="theme-color-default-img img-fluid w-100 h-100 animated-scaleX" loading="lazy">
-
       </div>
    </div>
 </div>
@@ -76,7 +75,7 @@
                         </div>
                      </div>
 
-                     <div class="row">
+                     <div class="row mb-3">
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="password">Password:</label>
@@ -99,8 +98,7 @@
                      <div class="row">
 
                         <div class="col-lg-3">
-                           <div class="form-group  p-0 mb-3">
-                              <br>
+                           <div class="form-group  p-0 mb-0">
                               <label for="toggle2FA">Enable 2FA</label>
                               <label class="switch">
                                  <input type="checkbox" id="toggle2FA" name="two_factor" {{ auth()->user()->two_factor_enabled ? 'checked' : '' }}>
@@ -109,13 +107,11 @@
                            </div>
                         </div>
                         <div id="twoFactorType" class="{{ auth()->user()->two_factor_enabled ? 'col-lg-3' : 'col-lg-3 display-none' }}">
-                           <div class="form-group p-0 mb-3">
-                              <br>
+                           <div class="form-group p-0 mb-0">
                               <select name="two_factor_type" class="form-control">
                                  <option value="email" {{ auth()->user()->two_factor_type === 'email' ? 'selected' : '' }}>Email</option>
                                  <option value="phone" {{ auth()->user()->two_factor_type === 'phone' ? 'selected' : '' }}>Phone Number</option>
                               </select>
-
                            </div>
                         </div>
                      </div>

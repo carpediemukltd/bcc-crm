@@ -57,8 +57,7 @@
                                     </a>
                                     <a class="" href="tel:{{$user->phone_number}}">
                                         <i class="user_icon icon">
-                                            <svg fill="none" xmlns="http://www.w3.org/2000/svg" width="22"
-                                                 class="icon-22"
+                                            <svg fill="none" xmlns="http://www.w3.org/2000/svg" width="22" class="icon-22"
                                                  height="22" viewBox="0 0 22 22">
                                                 <path
                                                     d="M14.4183 5.49C13.9422 5.40206 13.505 5.70586 13.4144 6.17054C13.3238 6.63522 13.6285 7.08891 14.0916 7.17984C15.4859 7.45166 16.5624 8.53092 16.8353 9.92995V9.93095C16.913 10.3337 17.2675 10.6265 17.6759 10.6265C17.7306 10.6265 17.7854 10.6215 17.8412 10.6115C18.3043 10.5186 18.609 10.0659 18.5184 9.60018C18.1111 7.51062 16.5027 5.89672 14.4183 5.49Z"
@@ -108,8 +107,7 @@
                                         aria-selected="false">Meetings</a>
                                 </li> -->
                                 <li class="nav-item">
-                                    <a class="nav-link active show" data-bs-toggle="tab" href="#profile-activity"
-                                       role="tab"
+                                    <a class="nav-link active show" data-bs-toggle="tab" href="#profile-activity" role="tab"
                                        aria-selected="false">Activity</a>
                                 </li>
                                 <!-- <li class="nav-item">
@@ -172,8 +170,7 @@
                                 <div class="row">
                                     <div class="col text-right">
                                         <button type="button" class="btn btn-primary contact_view_btn"
-                                                onclick="myFunction()">Edit
-                                        </button>
+                                                onclick="myFunction()">Edit</button>
                                     </div>
                                 </div>
                             </form>
@@ -194,15 +191,13 @@
                                 <div class="col-sm-6 col-md-12">
                                     <div class="form-floating">
                                         <input type="text" class="form-control border_none" id="last_name"
-                                               placeholder="Last Name" name="last_name" value="{{$user->last_name}}"
-                                               required>
+                                               placeholder="Last Name" name="last_name" value="{{$user->last_name}}" required>
                                         <label for="last_name">Last Name</label>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-12">
                                     <div class="form-floating">
-                                        <input class="form-control border_none" id="email" type="text"
-                                               placeholder="Email"
+                                        <input class="form-control border_none" id="email" type="text" placeholder="Email"
                                                name="email" value="{{$user->email}}" disabled>
                                         <label for="email">Email</label>
                                     </div>
@@ -210,8 +205,7 @@
                                 <div class="col-md-12 ">
                                     <div class="form-floating">
                                         <input type="text" class="form-control border_none" id="phone_number"
-                                               placeholder="Phone number" name="phone_number"
-                                               value="{{$user->phone_number}}">
+                                               placeholder="Phone number" name="phone_number" value="{{$user->phone_number}}">
                                         <label for="phone_number">Phone number</label>
                                     </div>
                                 </div>
@@ -223,8 +217,7 @@
                                             <div class="form-floating">
                                                 <input type="text" class="form-control border_none"
                                                        id="show_custom_fields[{{$field->id}}]" value="{{$field->data}}"
-                                                       placeholder="{{$field->title}}"
-                                                       name="custom_fields[{{$field->id}}]">
+                                                       placeholder="{{$field->title}}" name="custom_fields[{{$field->id}}]">
                                                 <label for="custom_fields[{{$field->id}}]">{{$field->title}}</label>
                                             </div>
                                         </div>
@@ -283,8 +276,7 @@
                                             <h6 class="float-left mb-1">Dev Meetup</h6>
                                             <small class="float-right mt-1">20 November 2019</small>
                                             <div class="d-inline-block w-100">
-                                                <p>Bonbon macaroon jelly beans <a href="#">gummi bears</a>gummi bears
-                                                    jelly
+                                                <p>Bonbon macaroon jelly beans <a href="#">gummi bears</a>gummi bears jelly
                                                     lollipop apple</p>
                                                 <div class="iq-media-group iq-media-group-1">
                                                     <a href="#" class="iq-media-1">
@@ -517,13 +509,12 @@
                                         <div class="row">
                                             <div class="col">
                                                 <button type="submit" class="btn btn-primary"
-                                                        onclick="saveNote();">Save
-                                                </button>
+                                                        onclick="saveNote();">Save</button>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
-                                <br/>
+                                <br />
                                 <div class="mt-2">
                                     <div id="notes">
                                         @include('note.list')
@@ -544,11 +535,9 @@
                                     <div class="d-flex align-items-center">
                                         <h4 class="card-title">Deals ({{@count($deals)}})</h4>
                                         <div class="dropdown-indicator-icon">
-                                            <svg height="12" class="private-icon-caret"
-                                                 xmlns="http://www.w3.org/2000/svg"
+                                            <svg height="12" class="private-icon-caret" xmlns="http://www.w3.org/2000/svg"
                                                  viewBox="0 0 11.5 21.1" width="5">
-                                                <path class="private-icon-caret__inner" d="M2 2l7.5 8.5-7.4 8.6"
-                                                      fill="none"
+                                                <path class="private-icon-caret__inner" d="M2 2l7.5 8.5-7.4 8.6" fill="none"
                                                       stroke="#00a4bd" stroke-linecap="round" stroke-linejoin="round"
                                                       stroke-width="4"></path>
                                             </svg>
@@ -567,7 +556,7 @@
                                                 @endforeach
                                             @endif
                                         </div>
-                                        <br style="clear: both"/>
+                                        <br style="clear: both" />
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{route('user.deals', [$user->id,'listing'])}}"
                                                data-bs-toggle="" aria-expanded="false">
@@ -619,12 +608,10 @@
                                     <div class="d-flex align-items-center">
                                         <h4 class="card-title">View Documents</h4>
                                         <div class="dropdown-indicator-icon">
-                                            <svg height="12" class="private-icon-caret"
-                                                 xmlns="http://www.w3.org/2000/svg"
+                                            <svg height="12" class="private-icon-caret" xmlns="http://www.w3.org/2000/svg"
                                                  viewBox="0 0 11.5 21.1" width="5">
                                                 <title></title>
-                                                <path class="private-icon-caret__inner" d="M2 2l7.5 8.5-7.4 8.6"
-                                                      fill="none"
+                                                <path class="private-icon-caret__inner" d="M2 2l7.5 8.5-7.4 8.6" fill="none"
                                                       stroke="#00a4bd" stroke-linecap="round" stroke-linejoin="round"
                                                       stroke-width="4"></path>
                                             </svg>
@@ -641,8 +628,7 @@
                                                 <div class="d-flex align-items-center"><span class="nav-link-text">View BCC
                                                         Portal</span></div>
                                             </a> --}}
-                                            <a class="nav-link" data-userid="{{Auth::user()->id}}"
-                                               data-contact_id="{{$user->id}}"
+                                            <a class="nav-link" data-userid="{{Auth::user()->id}}" data-contact_id="{{$user->id}}"
                                                href="javascript:;"
                                                data-bs-toggle="" aria-expanded="false" id="viewBCCPortal">
                                                 <div class="d-flex align-items-center"><span class="nav-link-text">View BCC
@@ -668,8 +654,7 @@
                 </div>
                 <div class="modal-footer">
                     <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-                    <button type="button" id="close_view_portal" class="btn btn-secondary" data-dismiss="modal">Close
-                    </button>
+                    <button type="button" id="close_view_portal" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -677,13 +662,13 @@
     <div class="modal modal-sm" tabindex="-1" role="dialog" id="sendDocuments">
         <div class="modal-dialog" role="document" style="max-width: 100%;margin-right: 0;margin-left: 0;">
             <div class="modal-content" style="width: 142%;">
-                <div class="modal-header">
+                <div class="modal-header" >
                     {{-- <h5 class="modal-title">Modal title</h5> --}}
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" >
                     <div class="row">
                         <div class="col-md-8 offset-2 mb-4">
                             <div class="response-send-email-notification"></div>
@@ -699,9 +684,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8 offset-2">
-                            <button disabled type="button" class="btn btn-primary" id="send_email_notification"><i
-                                    class="fa fa-envelope"></i> Send Email Notification
-                            </button>
+                            <button disabled type="button" class="btn btn-primary" id="send_email_notification"><i class="fa fa-envelope"></i> Send Email Notification</button>
                         </div>
                     </div>
                 </div>
@@ -722,12 +705,12 @@
           }
         });
    } */
-        $(document).ready(function () {
-            $(document).on('click', '#viewBCCPortal', function () {
+        $(document).ready(function(){
+            $(document).on('click', '#viewBCCPortal', function(){
                 // $('#TestModal').modal('show');
-                var userid = $(this).data("userid");
+                var userid     = $(this).data("userid");
                 var contact_id = $(this).data("contact_id");
-                var url = '{{ url("magic-link") }}/' + contact_id;
+                var url = '{{ url("magic-link") }}/'+contact_id;
 
                 console.log(url);
                 $.ajax({
@@ -739,7 +722,7 @@
                     dataType: 'JSON', // The expected data type of the response
                     success: function (response) {
 
-                        var data = `<iframe src="https://dashboard.bccusa.com/documents/view/` + response.contact_id + `?token=` + response.token + `&hide-header=true" width="70%" height="800"></iframe>`;
+                        var data = `<iframe src="https://dashboard.bccusa.com/documents/view/`+response.contact_id+`?token=`+response.token+`&hide-header=true" width="70%" height="800"></iframe>`;
                         $('#modalBody').append(data);
                         $('#TestModal').modal('show');
 
@@ -751,9 +734,6 @@
                         console.log('Error:', textStatus, errorThrown);
                     }
                 });
-            });
-            $(document).on('click', '#close_view_portal', function () {
-                $('#TestModal').modal('hide');
             });
 
             $('#bank_users').on('change', function (e) {
@@ -794,14 +774,15 @@
                     }
                 })
             })
+            $(document).on('click', '#close_view_portal', function(){
+                $('#TestModal').modal('hide');
+            });
         });
-
 
         function stopTimer() {
             $(".response-send-email-notification").hide()
             $(".response-send-email-notification").html('')
         }
-
         function saveNote() {
             var contact_id = $('#contact_id').val();
             var note = $('#note').val();

@@ -38,7 +38,7 @@
             <div class="card">
                <div class="card-header align-items-center d-flex justify-content-between">
                   <div class="header-title">
-                     <h4 class="card-title">Contact List</h4>
+                     <h4 class="card-title">Contact List </h4>
                   </div>
                   <div>
                      <a href="javascript:void(0);" class="btn btn-sm btn-primary" onclick="ExportData('csv');"> <svg width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

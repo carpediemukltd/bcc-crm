@@ -1,0 +1,8 @@
+@media screen and (max-width: 767px) {
+    section.login-content{
+        height: 100vh;
+    }
+    .nav .search-input {
+        width: 100%;
+    }
+  }

@@ -12,8 +12,8 @@ class NotificationController extends Controller
 {
     public function index(Request $request)
     {
-        $limit  = $request->limit??10;
-        $offset = $request->offset??0;
+        $limit  = $request->limit ?? 10;
+        $offset = $request->offset ?? 0;
         $data   = Notification::whereUserId(auth()->user()->id)->limit($limit)->offset($offset)->orderBy('created_at', 'desc')->get();
         return ApiResponse::success($data, '', 200);
     }
@@ -26,12 +26,17 @@ class NotificationController extends Controller
     {
         $query = Notification::byUserId(auth()->user()->id);
         if ($id) {
-            $query->whereId($id)->markAsRead();
-            $message = 'Notification marked as read.';
+            $notification = $query->find($id);
+            if ($notification) {
+                $notification->markAsRead();
+                return ApiResponse::success([], 'Notification marked as read.', 200);
+            } else {
+                return ApiResponse::error('Notification not found.', 404);
+            }
         } else {
             $query->markAsRead();
-            $message = 'Notifications marked as read.';
+            return ApiResponse::success([], 'Notifications marked as read.', 200);
         }
-        return ApiResponse::success([], $message, 200);
+       
     }
 }

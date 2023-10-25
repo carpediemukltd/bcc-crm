@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use App\Services\ApiResponse;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -32,10 +34,11 @@ class Handler extends ExceptionHandler
      *
      * @return void
      */
-    public function register()
+    public function render($request, Throwable $e)
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
+        if ($e instanceof AuthenticationException) {
+            return ApiResponse::error('Unauthorized.', 401);
+        }
+        return parent::render($request, $e);
     }
 }

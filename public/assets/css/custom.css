@@ -1737,12 +1737,12 @@ p.sub_text:after{
   height: 100vh;
 }
 div#user_details_view {
-  max-height: 500px;
+  max-height: 540px;
   overflow-y: auto;
   overflow-x: hidden;
 }
 div#user_edit_view {
-  height: 500px;
+  height: 540px;
   overflow: auto;
   overflow-x: hidden;
 }

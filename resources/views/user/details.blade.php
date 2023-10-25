@@ -251,9 +251,9 @@
                                     <h4 class="card-title">Activity</h4>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <div
-                                    class="iq-timeline0 m-0 d-flex align-items-center justify-content-between position-relative">
+                            <div class="card-body" style="min-height: 580px;">
+                                There is no Activity
+                                <!-- <div class="iq-timeline0 m-0 d-flex align-items-center justify-content-between position-relative">
                                     <ul class="list-inline p-0 m-0">
                                         <li>
                                             <div class="timeline-dots timeline-dot1 border-primary text-primary"></div>
@@ -308,7 +308,7 @@
                                             </div>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     <!-- <div id="profile-friends" class="tab-pane fade">

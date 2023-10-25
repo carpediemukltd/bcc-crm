@@ -66,11 +66,16 @@
                                             <tbody id="control-group">
                                                 @if (isset($data))
                                                     @foreach ($data as $rec)
+                                                    <?php
+                                                        
+                                                        $body = str_replace('<br />',"\n",$rec->body);
+                                                    ?>
                                                         <tr class="odd" id="{{ $rec->id }}">
-                                                            <td style="widh:60%;">
-                                                                <div id="show_text_{{ $rec->id }}">{{ $rec->subject }}
+                                                            <td style="width:60% !important;">
+                                                                <div id="show_text_{{ $rec->id }}" style="font-size:16px !important;font-color:black !important;">{{ $rec->subject }}
                                                                 </div>
-                                                                <div id="show_text2_{{ $rec->id }}">{{ $rec->body }}
+                                                                <br />
+                                                                <div id="show_text2_{{ $rec->id }}">{!! $rec->body !!}
                                                                 </div>
                                                                 <div id="show_edit_text_{{ $rec->id }}"
                                                                     style="display: none;">
@@ -78,7 +83,7 @@
                                                                         id="data_subject_{{ $rec->id }}"
                                                                         name="data_subject_{{ $rec->id }}"
                                                                         value="{{ $rec->subject }}" /><br />
-                                                                    <textarea class="form-control" name="data_body_{{ $rec->id }}" id="data_body_{{ $rec->id }}">{{ $rec->body }}</textarea>
+                                                                    <textarea class="form-control" name="data_body_{{ $rec->id }}" id="data_body_{{ $rec->id }}" rows="6" cols="30">{{ $body }}</textarea>
                                                                 </div>
                                                                 <div id="loading_{{ $rec->id }}"
                                                                     style="display: none;">

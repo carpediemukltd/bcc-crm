@@ -77,6 +77,7 @@ class UserController extends Controller
             // You can store the path or filename in your database if needed.
             $filePath = "profile/$year/$month/$filename";
             auth()->user()->update(['profile_image' => $filePath]);
+            $data['profile_image'] = env('APP_URL').$filePath;
 
         }
 
@@ -92,7 +93,7 @@ class UserController extends Controller
             auth()->user()->update(['last_name' => $request->first_name]);
         }
 
-        return ApiResponse::success([], 'Profile updated successfully.', 200);
+        return ApiResponse::success($data??[], 'Profile updated successfully.', 200);
     }
     public function deals()
     {

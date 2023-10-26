@@ -52,6 +52,7 @@ class EmailTemplateController extends Controller
         $this->data['EmailTemplate'] = EmailTemplate::where('id', $id)->first();
 
         if ($request->isMethod('post')) {
+            
             if (!$this->data['EmailTemplate']) {
                 return redirect()->back()->withError('Email Template not found.')->withInput();
             }

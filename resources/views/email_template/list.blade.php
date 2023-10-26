@@ -66,16 +66,18 @@
                                             <tbody id="control-group">
                                                 @if (isset($data))
                                                     @foreach ($data as $rec)
-                                                    <?php
-                                                        
-                                                        $body = str_replace('<br />',"\n",$rec->body);
-                                                    ?>
+                                                        <?php
+                                                        $body = str_replace('<br />', "\n", $rec->body);
+                                                        ?>
                                                         <tr class="odd" id="{{ $rec->id }}">
                                                             <td style="width:60% !important;">
-                                                                <div id="show_text_{{ $rec->id }}" style="font-size:16px !important;font-color:black !important;">{{ $rec->subject }}
+                                                                <div id="show_text_{{ $rec->id }}"
+                                                                    style="font-size:16px !important;font-color:black !important;">
+                                                                    {{ $rec->subject }}
                                                                 </div>
                                                                 <br />
-                                                                <div id="show_text2_{{ $rec->id }}">{!! $rec->body !!}
+                                                                <div id="show_text2_{{ $rec->id }}">
+                                                                    {!! $rec->body !!}
                                                                 </div>
                                                                 <div id="show_edit_text_{{ $rec->id }}"
                                                                     style="display: none;">
@@ -83,7 +85,8 @@
                                                                         id="data_subject_{{ $rec->id }}"
                                                                         name="data_subject_{{ $rec->id }}"
                                                                         value="{{ $rec->subject }}" /><br />
-                                                                    <textarea class="form-control" name="data_body_{{ $rec->id }}" id="data_body_{{ $rec->id }}" rows="6" cols="30">{{ $body }}</textarea>
+                                                                    <textarea class="form-control" name="data_body_{{ $rec->id }}" id="data_body_{{ $rec->id }}" rows="6"
+                                                                        cols="30">{{ $body }}</textarea>
                                                                 </div>
                                                                 <div id="loading_{{ $rec->id }}"
                                                                     style="display: none;">
@@ -185,7 +188,7 @@
             </div>
         </div>
     </div>
-   
+
     <script type="text/javascript">
         function showEditOption(id) {
             $('#show_text_' + id).hide();
@@ -208,11 +211,13 @@
         function saveEdited(id) {
             var subject = $('#data_subject_' + id).val();
             var body = $('#data_body_' + id).val();
-            if (subject=='' || subject=='undefined'){
-                alert('Please enter the subject.'); return false;
+            if (subject == '' || subject == 'undefined') {
+                alert('Please enter the subject.');
+                return false;
             }
-            if (body=='' || body=='undefined'){
-                alert('Please enter the body.'); return false;
+            if (body == '' || body == 'undefined') {
+                alert('Please enter the body.');
+                return false;
             }
             if (subject !== '' && body !== '') {
                 $('#loading_' + id).html($('#show_loading').html());
@@ -253,11 +258,13 @@
         function saveNew(id) {
             var subject = $('#data_subject_' + id).val();
             var body = $('#data_body_' + id).val();
-            if (subject=='' || subject=='undefined'){
-                alert('Please enter the subject.'); return false;
+            if (subject == '' || subject == 'undefined') {
+                alert('Please enter the subject.');
+                return false;
             }
-            if (body=='' || body=='undefined'){
-                alert('Please enter the body.'); return false;
+            if (body == '' || body == 'undefined') {
+                alert('Please enter the body.');
+                return false;
             }
             if (subject !== '' && body !== '') {
                 $('#loading_' + id).html($('#show_loading').html());
@@ -277,8 +284,9 @@
                         $('#show_edit_text_' + id).val(res.title);
                         $('#show_edit_text_' + id).hide();
                         $('#save_rights_' + id).hide();
-                        if (res.message == 'success'){
-                            $('#loading_' + id).html('<br /><b>Email Template saved successfully, loading the page...</b>');
+                        if (res.message == 'success') {
+                            $('#loading_' + id).html(
+                                '<br /><b>Email Template saved successfully, loading the page...</b>');
                             location.reload();
                         } else {
                             $('#loading_' + id).html('<br /><b>Error Occurred, please try again later.</b>');
@@ -296,8 +304,11 @@
         $('.addClickrBtn').click(function() {
             var c = $('#control-group tr:last').attr('id');
             c = parseInt(c) + 1;
-            var tr = '<tr id="' + c + '"><td><div><input type="text" placeholder="New Subject" id="data_subject_' + c +
-                '" name="data_subject_' + c + '" class="form-control" required><br /><textarea class="form-control" name="data_body_' + c +'" id="data_body_' + c +'"></textarea></div><br /><div id="loading_' + c +
+            var tr = '<tr id="' + c + '"><td><div><input type="text" placeholder="New Subject" id="data_subject_' +
+                c +
+                '" name="data_subject_' + c +
+                '" class="form-control" required><br /><textarea class="form-control" name="data_body_' + c +
+                '" id="data_body_' + c + '"></textarea></div><br /><div id="loading_' + c +
                 '" style="display: none;"></div></td><td>';
             tr += '<a href="javascript:void(0)" onclick="saveNew(' + c + ');">';
             tr +=
@@ -313,8 +324,8 @@
             });
         });
 
-        function DeleteConfirm(id,subject) {
-            r = confirm('Are you sure you want to delete the following template?'+"\n"+subject);
+        function DeleteConfirm(id, subject) {
+            r = confirm('Are you sure you want to delete the following template?' + "\n" + subject);
             if (r) {
                 $('#loading_' + id).html($('#show_loading').html());
                 $('#loading_' + id).show();

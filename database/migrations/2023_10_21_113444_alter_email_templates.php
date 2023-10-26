@@ -17,6 +17,7 @@ class AlterEmailTemplates extends Migration
             $table->string('subject', 255)->change();
             $table->string('body', 9999)->change();
         });
+        
     }
 
     /**

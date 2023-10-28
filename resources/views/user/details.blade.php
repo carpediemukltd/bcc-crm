@@ -1,6 +1,28 @@
 @extends('layout.appTheme')
 @section('content')
+    <link rel="stylesheet" href="{{asset('assets/css/jquery.mentiony.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <style>
+        textarea {width: 100%}
+        .mentiony-container, .mentiony-content{width: 100%!important;}
+        .demo-item{ height: 300px;}
+        .demo-item .demo, .demo-item .demo > *{ height: 100%; }
+        .demo-item .code, .demo-item .code > *{ height: 100%; }
+        .demo-item .code, .demo-item .code > pre > code{ padding: 0; background: none }
+        .demo-item .code > pre > code{
+            width: 999px !important;
+            display: block;
+        }
+        pre.prettyprint {
+            background-color: #693d3d!important;
+        }
 
+        .note_highlight{
+            border: 2px solid #eb3484 !important;
+            border-radius: 10px !important;
+            box-shadow: 2px 2px 2px #eecaca !important;
+        }
+    </style>
     <div class="position-relative  iq-banner ">
         <div class="iq-navbar-header" style="height: 215px;">
             <div class="container-fluid iq-container">
@@ -712,7 +734,6 @@
                 var contact_id = $(this).data("contact_id");
                 var url = '{{ url("magic-link") }}/'+contact_id;
 
-                console.log(url);
                 $.ajax({
                     method: 'GET',
                     url: url,
@@ -731,7 +752,6 @@
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         // This function is executed if there's an error in the request
-                        console.log('Error:', textStatus, errorThrown);
                     }
                 });
             });
@@ -786,6 +806,11 @@
         function saveNote() {
             var contact_id = $('#contact_id').val();
             var note = $('#note').val();
+            var mentionLinks = $('.mention-area a');
+            // Collect all values of the data-item-id attribute into an array
+            var metionItemIds = mentionLinks.map(function() {
+                return $(this).data('item-id');
+            }).get();
             if (note !== '') {
                 $('#show_loading').show();
                 $.post({
@@ -794,11 +819,13 @@
                     data: {
                         _token: "{{ csrf_token() }}",
                         contact_id: contact_id,
-                        note: note
+                        note: note,
+                        mentions: metionItemIds
                     },
                     success: function (res) {
                         $('#show_loading').hide();
                         $('#note').val('');
+                        $('#note').next('.mentiony-content').text('');
                         $('#notes').html(res);
                     }
                 });
@@ -808,6 +835,7 @@
         function showEditNote(id, user_id) {
             $('#show_note_' + id).hide();
             $('#show_edit_note_' + id).show();
+            $('#show_edit_note_' + id+' .mentiony-content').html($('#show_edit_note_' + id+' .notes_field').text());
             $('#note_rights_' + id).hide();
             $('#note_save_rights_' + id).show();
             $('#l_' + id).hide();
@@ -824,6 +852,11 @@
         function saveEditNote(id, user_id) {
             var contact_id = $('#contact_id').val();
             var note = $('#note_' + id).val();
+            var mentionLinks = $('.mention-area a');
+            // Collect all values of the data-item-id attribute into an array
+            var metionItemIds = mentionLinks.map(function() {
+                return $(this).data('item-id');
+            }).get();
             if (note !== '') {
                 $('#l_' + id).html($('#show_loading').html());
                 $('#l_' + id).show();
@@ -837,7 +870,8 @@
                         id: id,
                         contact_id: contact_id,
                         user_id: user_id,
-                        note: note
+                        note: note,
+                        mentions: metionItemIds
                     },
                     success: function (res) {
                         $('#notes').html(res);
@@ -891,5 +925,110 @@
             }
         }
 
+    </script>
+    <script src="{{asset('assets/js/jquery.mentiony.js')}}" defer></script>
+    <script>
+        $(document).ready(function(){
+            // $('textarea[name="note"]').mentiony({
+            //     onDataRequest: function (mode, keyword, onDataRequestCompleteCallback) {
+            //
+            //         var data = [
+            //             { id:1, name:'Nguyen Luat', info: 'waleed@gmail.com', href: 'http://a.co/id'},
+            //             { id:2, name:'Dinh Luat', href: 'http://a.co/id'},
+            //             { id:3, name:'Max Luat', href: 'http://a.co/id'},
+            //             { id:4, name:'John Neo', href: 'http://a.co/id'},
+            //             { id:5, name:'John Dinh', href: 'http://a.co/id'},
+            //             { id:6, name:'Test User', href: 'http://a.co/id'},
+            //             { id:7, name:'Test User 2', href: 'http://a.co/id'},
+            //             { id:8, name:'No Test', href: 'http://a.co/id'},
+            //             { id:9, name:'The User Foo', href: 'http://a.co/id'},
+            //             { id:10, name:'Foo Bar', href: 'http://a.co/id'},
+            //         ];
+            //
+            //         data = jQuery.grep(data, function( item ) {
+            //             return item.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1;
+            //         });
+            //
+            //         // Call this to populate mention.
+            //         onDataRequestCompleteCallback.call(this, data);
+            //     },
+            //     timeOut: 0,
+            //     debug: 1,
+            // });
+
+            $('.notes_field').mentiony({
+                onDataRequest: function (mode, keyword, onDataRequestCompleteCallback) {
+                    var mentionLinks = $('.mention-area a');
+                    // Collect all values of the data-item-id attribute into an array
+                    var itemIds = mentionLinks.map(function() {
+                        return $(this).data('item-id');
+                    }).get();
+                    $.post({
+                        url: '{{route('search.user.to.mention')}}',
+                        data: {
+                            '_token': '{{csrf_token()}}',
+                            keyword: keyword,
+                            skip_ids: itemIds
+                        },
+                        success: function (response) {
+                            var data = response.users.map(function(user){
+                                return {id: user.id, name: user.first_name+" "+user.last_name, info: user.email, href: '#'}
+                            })
+
+                            // NOTE: Assuming this filter process was done on server-side
+                            // data = jQuery.grep(data, function( item ) {
+                            //     return item.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1;
+                            // });
+                            // End server-side
+
+                            // Call this to populate mention.
+                            onDataRequestCompleteCallback.call(this, data);
+                        }
+                    });
+
+                },
+                timeOut: 500, // Timeout to show mention after press @
+                debug: 1, // show debug info
+            });
+
+            var hash = window.location.hash;
+            // Check if the hash exists and it matches the ID of any tab
+            if (hash && hash.includes('profile-notes')) {
+                // Remove the "active" class from all tabs
+                $('.nav-link').removeClass('active show').prop('aria-selected',false).prop('tabindex', '-1');
+
+                // Add the "active" class to the corresponding tab link
+                $('a[href="#profile-notes"]').trigger('click')
+
+                $('.tab-pane').removeClass('active show')
+                // Show the corresponding tab content
+                $('#profile-notes').addClass('active show');
+            }
+
+            // Get the URL
+            var url = window.location.href;
+
+            // Extract the value of the "note" parameter
+            var noteValue = getParameterByName('note', url);
+            if (noteValue !== null) {
+                $('html, body').animate({
+                    scrollTop: $('#show_note_'+noteValue).offset().top
+                }, 1000, function() {
+                    // After scrolling is complete, add the highlight class
+                    $('#show_note_'+noteValue).parent().addClass("note_highlight");
+
+                });
+            }
+
+            // Function to get parameter value by name from URL
+            function getParameterByName(name, url) {
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
+        })
     </script>
 @endsection

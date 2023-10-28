@@ -120,6 +120,9 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::any('contact/{id}/details', [UserController::class, 'userDetails'])->name('user.details');
         Route::post('send-email-notification', [UserController::class, 'sendEmailNotification'])->name('user.sendEmailNotification');
 
+        // Search for user for mention
+        Route::post('search-user-to-mention', [UserController::class, 'searchUserToMention'])->name('search.user.to.mention');
+
         Route::any('contact/{id}/deals/add', [DealController::class, 'dealsAdd'])->name('user.deals.add');
         Route::any('contact/{user_id}/deals/edit/{id}', [DealController::class, 'dealsEdit'])->name('user.deals.edit');
         Route::get('contact/{id}/pipeline/{pipeline_id}/deals/board_cards', [DealController::class, 'userDealsBoardCards'])->name('user.deals.board_cards');

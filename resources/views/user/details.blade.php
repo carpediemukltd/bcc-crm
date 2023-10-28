@@ -780,7 +780,6 @@
         });
 
         function stopTimer() {
-            $(".response-send-email-notification").hide()
             $(".response-send-email-notification").html('')
         }
         function saveNote() {

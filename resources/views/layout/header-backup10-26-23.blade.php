@@ -73,8 +73,21 @@
                   </div>
                   <!--logo End-->
                </a>
+               <!-- <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
+                  <i class="icon d-flex">
+                     <svg class="icon-20" width="20" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" />
+                     </svg>
+                  </i>
+                  </div> -->
                <div class="d-flex align-items-center justify-content-between product-offcanvas">
-                 
+                  <!-- <div class="breadcrumb-title border-end me-3 pe-3 d-none d-xl-block">
+                     <small class="mb-0 text-capitalize">
+                        @if(isset($current_slug))
+                           {{$current_slug}}
+                        @endif
+                     </small>
+                     </div> -->
                   <div class="offcanvas offcanvas-end shadow-none iq-product-menu-responsive" tabindex="-1" id="offcanvasBottom">
                      <div class="offcanvas-body">
                         <ul class="iq-nav-menu list-unstyled">
@@ -138,8 +151,7 @@
                               </a>
                            </li> -->
                            <li class="nav-item iq-responsive-menu d-block">
-                              <a class="nav-link <?php if(isset($slug) && $slug == 'dashboard-sandbox'){echo 'active';}?>" 
-                              aria-current="page"
+                              <a class="nav-link <?php if(isset($slug) && $slug == 'dashboard-sandbox'){echo 'active';}?>" aria-current="page"
                                  href="#sidebar-user">
                                  <i class="icon">
                                     <svg width="20" class="icon-20" viewBox="0 0 24 24" fill="none" xmlns="">
@@ -160,7 +172,7 @@
                                  </i>
 
                               </a>
-                              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-search-11" >
+                              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-search-11" style="width: 15rem;">
                                  
                                  <li class="nav-item">
                                     <a class="nav-link <?php if(isset($slug) && $slug == 'deals-sandbox'){echo 'active';}?>"
@@ -224,7 +236,7 @@
                                  </i>
                               </a>
                               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-search-11"
-                                 >
+                                 style="width: 15rem;">
                                  <li class="nav-item">
                                     <a class="nav-link <?php if(isset($slug) && $slug == 'add_user' && !isset($_GET['type'])){echo 'active';}?>"
                                        href="{{route('user.add')}}">
@@ -316,7 +328,7 @@
                                  </i>
                               </a>
                               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-search-11"
-                                 >
+                                 style="width: 15rem;">
                                  <li class="nav-item">
                                     <a class="nav-link <?php if(isset($slug) && $slug == 'add_field'){echo 'active';}?>"
                                        href="{{route('customfield.add')}}">
@@ -380,7 +392,7 @@
                                  </i>
                               </a>
                               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-search-11"
-                                 >
+                                 style="width: 15rem;">
                                  <li class="nav-item">
                                     <a class="nav-link <?php if(isset($slug) && $slug == 'add_company'){echo 'active';}?>"
                                        href="{{ route('company.add')}}">
@@ -462,7 +474,7 @@
                                  </i>
                               </a>
                               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-search-11"
-                                 >
+                                 style="width: 15rem;">
                                  <li class="nav-item">
                                     <a class="nav-link <?php if(isset($slug) && $slug == 'email_templates'){echo 'active';}?>"
                                        href="{{ route('email_template.list')}}" >
@@ -496,7 +508,7 @@
                                     </svg>
                                  </i>
                               </a>
-                              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-search-11" >
+                              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-search-11" style="width: 15rem;">
                                  <li class="nav-item">
                                     <a class="nav-link <?php if(isset($_GET['type']) && $_GET['type'] == 'admin'){echo 'active';} ?>" href="{{ route('user.add', ['type' => 'admin']) }}">
                                        <i class="icon">
@@ -651,4 +663,29 @@
          
          <!--Nav End-->
       </div>
-      
+      <!-- custom sub header start -->
+      <!-- <nav class="navbar navbar-expand-lg navbar-dark custom_sub_header bg-dark" aria-label="Main navigation">
+         <div class="container-fluid py-2 px-4">
+                  
+            <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+                  <span class="navbar-toggler-bar bar1 mt-1"></span>
+                  <span class="navbar-toggler-bar bar2"></span>
+                  <span class="navbar-toggler-bar bar3"></span>
+                  </span>
+            </button>
+
+            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
+                     <li class="nav-item">
+                        <h3 class="card-title">Search bar Results:</h3>
+                     </li>
+                  </ul>
+                  <form class="d-flex">
+                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                     <button class="btn btn-primary" type="submit" fdprocessedid="611m3">Search</button>
+                  </form>
+            </div>
+         </div>
+      </nav> -->
+      <!-- custom sub header end -->

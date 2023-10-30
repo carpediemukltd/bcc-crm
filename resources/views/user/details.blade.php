@@ -505,7 +505,7 @@
                             <div class="card-body">
                                 <div class="mt-2">
                                     <h6 class="mb-1">Add Note</h6>
-                                    <form action="{{ route('note.add') }}" method="POST" onsubmit="return false;">
+                                    <form action="{{ route('note.add') }}" id="note_form" method="POST" onsubmit="return false;">
                                         @csrf
                                         <div class="row">
                                             <div class="col">
@@ -806,7 +806,7 @@
         function saveNote() {
             var contact_id = $('#contact_id').val();
             var note = $('#note').val();
-            var mentionLinks = $('.mention-area a');
+            var mentionLinks = $('#note_form .mention-area a');
             // Collect all values of the data-item-id attribute into an array
             var metionItemIds = mentionLinks.map(function() {
                 return $(this).data('item-id');
@@ -827,6 +827,7 @@
                         $('#note').val('');
                         $('#note').next('.mentiony-content').text('');
                         $('#notes').html(res);
+                        applyMentionyToNotesFields();
                     }
                 });
             }
@@ -852,9 +853,8 @@
         function saveEditNote(id, user_id) {
             var contact_id = $('#contact_id').val();
             var note = $('#note_' + id).val();
-            var mentionLinks = $('.mention-area a');
             // Collect all values of the data-item-id attribute into an array
-            var metionItemIds = mentionLinks.map(function() {
+            var  metionItemIds = $('#show_edit_note_' + id).find('[data-item-id]').map(function() {
                 return $(this).data('item-id');
             }).get();
             if (note !== '') {
@@ -875,6 +875,7 @@
                     },
                     success: function (res) {
                         $('#notes').html(res);
+                        applyMentionyToNotesFields();
                     },
                     error: function (res) {
                         if (res.responseJSON.error_msg) {
@@ -905,6 +906,7 @@
                     },
                     success: function (res) {
                         $('#notes').html(res);
+                        applyMentionyToNotesFields();
                     }
                 });
             }
@@ -928,47 +930,14 @@
     </script>
     <script src="{{asset('assets/js/jquery.mentiony.js')}}" defer></script>
     <script>
-        $(document).ready(function(){
-            // $('textarea[name="note"]').mentiony({
-            //     onDataRequest: function (mode, keyword, onDataRequestCompleteCallback) {
-            //
-            //         var data = [
-            //             { id:1, name:'Nguyen Luat', info: 'waleed@gmail.com', href: 'http://a.co/id'},
-            //             { id:2, name:'Dinh Luat', href: 'http://a.co/id'},
-            //             { id:3, name:'Max Luat', href: 'http://a.co/id'},
-            //             { id:4, name:'John Neo', href: 'http://a.co/id'},
-            //             { id:5, name:'John Dinh', href: 'http://a.co/id'},
-            //             { id:6, name:'Test User', href: 'http://a.co/id'},
-            //             { id:7, name:'Test User 2', href: 'http://a.co/id'},
-            //             { id:8, name:'No Test', href: 'http://a.co/id'},
-            //             { id:9, name:'The User Foo', href: 'http://a.co/id'},
-            //             { id:10, name:'Foo Bar', href: 'http://a.co/id'},
-            //         ];
-            //
-            //         data = jQuery.grep(data, function( item ) {
-            //             return item.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1;
-            //         });
-            //
-            //         // Call this to populate mention.
-            //         onDataRequestCompleteCallback.call(this, data);
-            //     },
-            //     timeOut: 0,
-            //     debug: 1,
-            // });
-
+        function applyMentionyToNotesFields() {
             $('.notes_field').mentiony({
                 onDataRequest: function (mode, keyword, onDataRequestCompleteCallback) {
-                    var mentionLinks = $('.mention-area a');
-                    // Collect all values of the data-item-id attribute into an array
-                    var itemIds = mentionLinks.map(function() {
-                        return $(this).data('item-id');
-                    }).get();
                     $.post({
                         url: '{{route('search.user.to.mention')}}',
                         data: {
                             '_token': '{{csrf_token()}}',
                             keyword: keyword,
-                            skip_ids: itemIds
                         },
                         success: function (response) {
                             var data = response.users.map(function(user){
@@ -988,8 +957,13 @@
 
                 },
                 timeOut: 500, // Timeout to show mention after press @
-                debug: 1, // show debug info
+                debug: 0, // show debug info
             });
+        }
+        $(document).ready(function(){
+            $('.container').on('input', '.notes_field', function() {
+
+            })
 
             var hash = window.location.hash;
             // Check if the hash exists and it matches the ID of any tab
@@ -1029,6 +1003,9 @@
                 if (!results[2]) return '';
                 return decodeURIComponent(results[2].replace(/\+/g, " "));
             }
+
+            applyMentionyToNotesFields();
         })
+
     </script>
 @endsection

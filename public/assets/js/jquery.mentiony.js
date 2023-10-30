@@ -619,7 +619,7 @@ var tmpEle = null;
                 level = 'log';
             }
             if (settings.debug === 1) {
-                eval("console." + level + "(inputId, prefix ? prefix + ':' : '', msg);");
+                // eval("console." + level + "(inputId, prefix ? prefix + ':' : '', msg);");
             }
         }
 

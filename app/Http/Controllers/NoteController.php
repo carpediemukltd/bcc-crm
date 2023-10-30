@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Note;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -65,7 +66,14 @@ class NoteController extends Controller
                     $mentions = $request->input('mentions');
                     foreach ($mentions as $mention){
                         $user = User::whereId($mention)->first();
-                        Mail::send('email.mentionEmail', ['first_name' => $user->first_name, 'update' => false,'url' => route('user.details', $request->contact_id)."#profile-notes?note=$note->id"], function($message) use($user){
+                        Mail::send('email.mentionEmail', [
+                            'note' => $note->note,
+                            'sender_full_name' => $this->user->first_name. " ".$this->user->last_name,
+                            'url' => route('user.details', $request->contact_id)."#profile-notes?note=$note->id",
+                            'mention' => $user->first_name.' '.$user->last_name,
+                            'companies' => Company::whereId($user->company_id)->get(),
+                            'email' => $user->email
+                        ], function($message) use($user){
                             $message->to($user->email);
                             $message->subject('BCCUSA: Admin has mention you in a contact!');
                         });
@@ -111,7 +119,14 @@ class NoteController extends Controller
                 $mentions = $request->input('mentions');
                 foreach ($mentions as $mention){
                     $user = User::whereId($mention)->first();
-                    Mail::send('email.mentionEmail', ['first_name' => $user->first_name, 'update' => true,'url' => route('user.details', $request->contact_id)."#profile-notes?note=$note->id"], function($message) use($user){
+                    Mail::send('email.mentionEmail', [
+                        'note' => $request->note,
+                        'sender_full_name' => $this->user->first_name. " ".$this->user->last_name,
+                        'url' => route('user.details', $request->contact_id)."#profile-notes?note=$note->id",
+                        'mention' => $user->first_name.' '.$user->last_name,
+                        'companies' => Company::whereId($user->company_id)->get(),
+                        'email' => $user->email
+                    ], function($message) use($user){
                         $message->to($user->email);
                         $message->subject('BCCUSA: Admin has mention you in a contact!');
                     });

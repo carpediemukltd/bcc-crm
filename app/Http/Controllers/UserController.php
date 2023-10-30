@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DocumentManager;
 use App\Models\Note;
 use App\Models\User;
 use App\Models\Deal;
@@ -106,7 +107,9 @@ class UserController extends Controller
                 'phone_number' => 'required',
                 'role' => 'required',
                 'email' => 'required|email|unique:users',
-                'password' => 'required|min:6'
+                'password' => 'required|min:6',
+                'document_types' => 'required|array|min:1',
+                'document_types.*' => 'exists:document_managers,id',
             ]);
             $data = $request->all();
 
@@ -138,6 +141,8 @@ class UserController extends Controller
                     }
                 }
 
+                $new_user->documentManagers()->attach($request->document_types);
+
                 if ($data['role'] == 'contact' || $data['role'] == 'user') {
                     UserOwner::create([
                         'user_id' => $new_user->id,
@@ -153,6 +158,7 @@ class UserController extends Controller
         } else if ($request->isMethod('get')) {
             $this->data['roles']     = array_diff($this->data['roles'], ['user']);
             $this->data['companies'] = Company::whereStatus('active')->get();
+            $this->data['documents'] = DocumentManager::get();
             return view($request->type == 'admin' ? 'user.add-admin' : 'user.add', $this->data);
         }
     }

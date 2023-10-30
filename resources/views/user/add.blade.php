@@ -26,7 +26,7 @@
       </div>
       <div class="iq-header-img">
          <img src="{{asset('assets/images/dashboard/top-header.png')}}" alt="header" class="theme-color-default-img img-fluid w-100 h-100 animated-scaleX" loading="lazy">
-         
+
       </div>
    </div>
 </div>
@@ -82,12 +82,27 @@
                            </div>
                         </div>
                      </div>
+                      <row>
+                          <div class="col">
+                              <div class="form-group">
+                                  <label class="form-label" for="email">Document Types:</label>
+                                  <select name="document_types[]" id="document_types" multiple class="form-control">
+                                      @foreach($documents as $document)
+                                        <option value="{{$document->id}}">{{$document->title}}</option>
+                                      @endforeach
+                                  </select>
+                                  @if ($errors->has('document_types'))
+                                      <span class="text-danger">{{ $errors->first('document_types') }}</span>
+                                  @endif
+                              </div>
+                          </div>
+                      </row>
                      <input type="hidden" class="form-control" id="role" name="role" value="user">
                      <input type="hidden" class="form-control" id="password" name="password" value="BCCUSA.com">
                      <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
                      @if (count($custom_fields)>0)
                      <div class="row">
-                         @foreach($custom_fields as $field)        
+                         @foreach($custom_fields as $field)
                         <div class="col-6">
                            <div class="form-group">
                               <label class="form-label" for="custom_fields[{{$field->id}}]">{{$field->title}}</label>

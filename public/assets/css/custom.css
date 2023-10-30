@@ -1804,3 +1804,62 @@ div#user_edit_view {
 .crm_dashboard_view .iti--allow-dropdown input, .crm_dashboard_view .iti--allow-dropdown input[type=tel], .crm_dashboard_view .iti--allow-dropdown input[type=text], .crm_dashboard_view .iti--separate-dial-code input, .crm_dashboard_view .iti--separate-dial-code input[type=tel], .crm_dashboard_view .iti--separate-dial-code input[type=text]{
   padding-left: 62px;
 }
+.sample-tamplate-holder {
+  background-color: #efefef;
+  margin: 0 auto;
+  width: 70%;
+  padding: 40px 80px 70px;
+  text-align: center;
+}
+.sample-tamplate-holder h2 {
+  margin: 10px 0 20px 0;
+  /* border-top: 1px solid #01582e; */
+  display: inline-block;
+  /* border-bottom: 1px solid #01582e; */
+  padding: 10px 0;
+  font-size: 26px;
+}
+.sample-tamplate-holder .user-name{
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin:0 0 30px 0;
+  display: block;
+}
+.sample-tamplate-description{
+  background-color: #fff;
+  padding: 40px;
+}
+.sample-tamplate-description .user-list-view .img-holder{
+  float: left;
+  margin-right: 20px;
+}
+.sample-tamplate-description .user-list-view .img-holder img{
+  width: 200px;
+  border: 1px solid #efefef;
+  padding: 20px;
+}
+.sample-tamplate-description .user-list-view .text-holder{
+  text-align: left;
+  overflow: hidden;
+}
+.sample-tamplate-description .user-list-view .text-holder h3{
+  font-size: 20px;
+}
+.sample-tamplate-description .user-list-view .text-holder a{
+  display: block;
+  font-weight: bold;
+  font-size: 12px;
+}
+.sample-tamplate-description .user-list-view {
+  display: inline-block;
+  width: 100%;
+  margin-bottom:20px ;
+}
+.sample-tamplate-description .user-redirect-btn a{
+  display: inline-block;
+  background-color: #000;
+  padding: 10px 30px;
+  color: #fff;
+  border-radius: 5px;
+}

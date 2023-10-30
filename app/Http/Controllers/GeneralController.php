@@ -14,7 +14,9 @@
    
    
 
-
+   public function sampleTemplate(){
+      return view('sampletemplate');
+   }
    public function userList(){
       return view('general.userlist');
    }

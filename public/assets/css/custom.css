@@ -1863,3 +1863,6 @@ div#user_edit_view {
   color: #fff;
   border-radius: 5px;
 }
+.nav .search-input{
+  width: calc(14.5rem + 5vw);
+}

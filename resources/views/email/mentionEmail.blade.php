@@ -59,10 +59,12 @@
                             <div class="user-list-view" style="margin-bottom: 20px;display: inline-block;width: 100%;">
                                 <div class="text-holder">
                                     <h3 style="font-size: 16px;margin: 0;">{{$company->name}}</h3>
-{{--                                    <a href="#" style="display: block;font-size: 12px;text-decoration: none">Company--}}
-{{--                                        OnBoard IT Tech</a>--}}
-{{--                                    <a href="#" style="display: block;font-size: 12px;text-decoration: none">+ 3333 5555--}}
-{{--                                        8776</a>--}}
+                                    @if($legal_business_name != null)
+                                    <a href="#" style="display: block;font-size: 12px;text-decoration: none">{{$legal_business_name}}</a>
+                                    @endif
+                                    @if($phone != null)
+                                    <a href="#" style="display: block;font-size: 12px;text-decoration: none">{{$phone}}</a>
+                                    @endif
                                 </div>
                             </div>
                         </td>

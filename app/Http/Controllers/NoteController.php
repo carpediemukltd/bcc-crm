@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\CustomField;
 use App\Models\Note;
 use App\Models\User;
+use App\Models\UserDetails;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -66,13 +68,23 @@ class NoteController extends Controller
                     $mentions = $request->input('mentions');
                     foreach ($mentions as $mention){
                         $user = User::whereId($mention)->first();
+                        $custom_field = CustomField::whereTitle('Legal Business Name')->first();
+                        $legal_business_name = null;
+                        if($custom_field){
+                            $user_details = UserDetails::whereCustomFieldIdAndUserId($custom_field->id, $user->id)->first();
+                            if($user_details){
+                                $legal_business_name = $user_details->data;
+                            }
+                        }
                         Mail::send('email.mentionEmail', [
                             'note' => $note->note,
                             'sender_full_name' => $this->user->first_name. " ".$this->user->last_name,
                             'url' => route('user.details', $request->contact_id)."#profile-notes?note=$note->id",
                             'mention' => $user->first_name.' '.$user->last_name,
                             'companies' => Company::whereId($user->company_id)->get(),
-                            'email' => $user->email
+                            'email' => $user->email,
+                            'phone' => $user->phone_number,
+                            'legal_business_name' => $legal_business_name
                         ], function($message) use($user){
                             $message->to($user->email);
                             $message->subject('BCCUSA: Admin has mention you in a contact!');

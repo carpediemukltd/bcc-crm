@@ -769,7 +769,7 @@
                                  </li>
                                  <li class="nav-item">
                                     <a href="">
-                                    <i class="icon" >
+                                       <i class="icon" >
                                           <svg width="20" class="icon-20" viewBox="0 0 24 24" fill="currentColor"
                                              xmlns="">
                                              <path opacity="0.4"
@@ -780,7 +780,8 @@
                                                 fill="currentColor" />
                                           </svg>
                                        </i>   
-                                    Admin List</a>
+                                       <span class="item-name">Admin List</span>
+                                    </a>
                                  </li>
                               </ul>
                            </li>    
@@ -900,26 +901,24 @@
          </nav>
          
          <!--Nav End-->
-         <!-- search-->
+         <!-- start search-->
          <div id="search-container" style="display: none;">
             <!-- search filter start-->
             <div id="search_filder" class="d-flex shadow-sm search_filder_holder">
                <span>Search Results for: <b><span class="search-results-for"></span></b></span>
                <ul>
-                     <span>Filter by: &nbsp;</span>
-                     <li class="cursor-pointer filter-tag" id="contacts">Contacts</li>
-                     <li class="cursor-pointer filter-tag" id="deals">Deals</li>
-                     <li class="cursor-pointer filter-tag" id="companies">Companies</li>
-                     <li class="cursor-pointer filter-tag" id="stages">Stages</li>
-                     <li class="cursor-pointer filter-tag" id="pipelines">Pipelines</li>
-                     <span class="cursor-pointer remove-search">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                           <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm3.293-13.293a.999.999 0 0 0-1.414 0L12 10.586 9.707 8.293a.999.999 0 1 0-1.414 1.414L10.586 12l-2.293 2.293a.999.999 0 1 0 1.414 1.414L12 13.414l2.293 2.293a.999.999 0 1 0 1.414-1.414L13.414 12l2.293-2.293a.999.999 0 0 0 0-1.414z"/>
-                        </svg>
-                     </span>
-
+                  <span>Filter by: &nbsp;</span>
+                  <li class="cursor-pointer filter-tag" id="contacts">Contacts</li>
+                  <li class="cursor-pointer filter-tag" id="deals">Deals</li>
+                  <li class="cursor-pointer filter-tag" id="companies">Companies</li>
+                  <li class="cursor-pointer filter-tag" id="stages">Stages</li>
+                  <li class="cursor-pointer filter-tag" id="pipelines">Pipelines</li>
+                  <span class="cursor-pointer remove-search">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm3.293-13.293a.999.999 0 0 0-1.414 0L12 10.586 9.707 8.293a.999.999 0 1 0-1.414 1.414L10.586 12l-2.293 2.293a.999.999 0 1 0 1.414 1.414L12 13.414l2.293 2.293a.999.999 0 1 0 1.414-1.414L13.414 12l2.293-2.293a.999.999 0 0 0 0-1.414z"/>
+                     </svg>
+                  </span>
                </ul>
-               
             </div>
             <!-- search filter end-->
             <div class="content-inner container-fluid pb-0">
@@ -1160,6 +1159,6 @@
                </div>
             </div>
          </div>
-      <!-- end search -->
+         <!-- end search -->
 
       </div>

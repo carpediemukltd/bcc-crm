@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Permissions;
 use App\Jobs\SendNotification;
+use App\Models\Activity;
 use App\Models\User;
 use App\Models\Deal;
 use App\Models\Stage;
@@ -150,7 +151,9 @@ class DealController extends Controller
     }
 
     public function dealsAdd(Request $request, $id)
-    {
+    {   
+
+        
         $access = Permissions::checkUserAccess($this->user, $id);
         if (!$access) {
             return redirect(route('dashboard'))->with('error', 'Access Denied.');
@@ -169,6 +172,13 @@ class DealController extends Controller
                 'state' => $request->state,
                 'submitted_bank' => $request->submitted_bank,
                 'sub_type' => $request->sub_type,
+            ]);
+
+            $activity = Activity::create([
+                'moduleName' => 'Deal',
+                'user_id' => auth()->id(),
+                'contact_id' => $id
+               
             ]);
 
             if ($request->custom_fields_count > 0) {
@@ -244,6 +254,8 @@ class DealController extends Controller
 
     public function dealsUpdateStage(Request $request, $user_id, $id)
     {
+
+       
         $access = Permissions::checkUserAccess($this->user, $user_id);
         if (!$access) {
             return redirect(route('dashboard'))->with('error', 'Access Denied.');
@@ -258,6 +270,17 @@ class DealController extends Controller
             Deal::where('id', $id)->update([
                 'stage_id' => $request->stage_id,
             ]);
+
+            $satgeName = Stage::where('id',$request->stage_id)->get();
+
+            $activity = Activity::create([
+                'moduleName' => 'Stage',
+                'user_id' => auth()->id(),
+                'contact_id' => $user_id,
+                'details' =>$satgeName[0]->title
+               
+            ]);
+
             SendNotification::dispatch(['id'=> $id, 'type'=> 'deal_stage_changed']);
             return redirect(route('user.deals', [$user_id, 'listing']))->withSuccess('Deal Update Successfully.')->withInput();
         }

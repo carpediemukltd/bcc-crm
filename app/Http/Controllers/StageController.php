@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\Stage;
 use App\Models\Pipeline;
 use Illuminate\Http\Request;
@@ -30,8 +31,18 @@ class StageController extends Controller
 
     public function stageAdd(Request $request)
     {
+
+
+        // dd("abc");
         if ($request->isMethod('post')) {
             $data = Stage::create(['title' => $request->title, 'sort' => 1111]);
+
+            // $activity = Activity::create([
+            //     'moduleName' => 'Stage',
+            //     'user_id' => auth()->id(),
+            //     'contact_id' => $data->id
+               
+            // ]);
 
             return response(['message' => 'success', 'data' => Stage::where('id', $data->id)->first()]);
         }
@@ -52,6 +63,8 @@ class StageController extends Controller
             }
 
             Stage::whereId($id)->update(['title' => $request->title]);
+
+           
 
             return response(Stage::where('id', $id)->first());
         }

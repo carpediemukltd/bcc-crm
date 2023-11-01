@@ -10,10 +10,13 @@ use App\Models\UserOwner;
 use App\Models\UserDetails;
 use App\Helpers\Permissions;
 use App\Jobs\SendNotification;
+use App\Models\Activity;
 use App\Models\Company;
 use App\Models\CustomField;
+use App\Models\Documents;
 use Illuminate\Http\Request;
 use App\Models\RoundRobinSetting;
+use App\Models\Stage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
@@ -75,7 +78,7 @@ class UserController extends Controller
 
     public function addUser(Request $request)
     {
-
+       
         $this->data['current_slug'] = 'Add Contact';
         $this->data['slug']         = 'add_user';
         $user = auth()->user();
@@ -119,6 +122,14 @@ class UserController extends Controller
                     'role' => $data['role'],
                     'company_id' => $company_id,
                     'password' => Hash::make($data['password'])
+                ]);
+
+
+                $activity = Activity::create([
+                    'moduleName' => 'Contact',
+                    'user_id' => auth()->id(),
+                    'contact_id' => $new_user->id
+                   
                 ]);
 
                 if ($data['role'] == 'owner')
@@ -185,15 +196,19 @@ class UserController extends Controller
     }
 
     public function userDetails(Request $request, $id)
-    {
+    {   
+
+
+        
+       
         $this->data['current_slug']  = 'Contact Details';
         $this->data['slug']          = 'user_details';
-        $access = Permissions::checkUserAccess($this->user, $id);
-        if (!$access) {
-            return redirect(route('dashboard'))->with('error', 'Access Denied.');
-        } elseif ($access->role != 'contact') {
-            return redirect(route('dashboard'))->with('error', 'Access Denied to User.');
-        }
+        // $access = Permissions::checkUserAccess($this->user, $id);
+        // if (!$access) {
+        //     return redirect(route('dashboard'))->with('error', 'Access Denied.');
+        // } elseif ($access->role != 'contact') {
+        //     return redirect(route('dashboard'))->with('error', 'Access Denied to User.');
+        // }
         $this->data['id'] = $id;
         $this->data['user'] = User::where('id', $id)->first();
         $this->data['notes'] = Note::getNotesByUser($id);
@@ -201,6 +216,9 @@ class UserController extends Controller
         $this->data['custom_fields'] =  CustomField::getDataByUser($id);
 
         if ($request->isMethod('put')) {
+
+
+           
             $update_data = [
                 'first_name'   => $request->first_name,
                 'last_name'    => $request->last_name,
@@ -210,16 +228,40 @@ class UserController extends Controller
             User::whereId($id)->update($update_data);
             if ($request->custom_fields_count > 0) {
                 foreach ($request->custom_fields as $key => $value) {
-                    UserDetails::updateOrCreate(
+                   $abc =  UserDetails::updateOrCreate(
                         ['user_id' => $id, 'deal_id' => 0, 'custom_field_id' => $key],
                         ['data' => $value]
                     );
                 }
             }
+
+
+            $activity = Activity::create([
+                'moduleName' => 'Custom Field',
+                'user_id' => auth()->id(),
+                'contact_id' =>$id
+               
+            ]);
+
+
+            // dd($request, $id , $abc);
             return redirect(route('user.details', $id))->withSuccess('Contact Update Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
+
+            $activity = Activity::where('contact_id',$id)->get();
+            $userRecord = User::all();
+            $document = Documents::where('user_id',$id)->get();
+            $customFieldDetails = UserDetails::where('user_id',$id)->get();
+            $customField = CustomField::all();
+            $deal = Deal::where('user_id',$id)->get();
+            $stage = Stage::all();
+
+            
+
+            
+
             $this->data['bankusers'] = User::whereRole('bank')->get();
-            return view("user.details", $this->data);
+            return view("user.details", $this->data,compact('activity','userRecord','document','customFieldDetails','customField','deal','stage'));
         }
     } // userDetails
 

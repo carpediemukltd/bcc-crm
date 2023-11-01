@@ -23,6 +23,7 @@
       <td>{{date('Y-m-d', strtotime($rec_user->created_at))}}</td>
       <td>
         
+      @if($rec_user->role == 'contact')
          <div class="flex align-items-center list-user-action">
             <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-original-title="Details" href="{{route('user.details', $rec_user->id)}}" aria-label="Details" data-bs-original-title="Details">
                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,6 +34,9 @@
                </svg>
             </a>
          </div>
+         @else
+         &nbsp;
+         @endif
         
       </td>
       <td>

@@ -203,12 +203,12 @@ class UserController extends Controller
        
         $this->data['current_slug']  = 'Contact Details';
         $this->data['slug']          = 'user_details';
-        // $access = Permissions::checkUserAccess($this->user, $id);
-        // if (!$access) {
-        //     return redirect(route('dashboard'))->with('error', 'Access Denied.');
-        // } elseif ($access->role != 'contact') {
-        //     return redirect(route('dashboard'))->with('error', 'Access Denied to User.');
-        // }
+        $access = Permissions::checkUserAccess($this->user, $id);
+        if (!$access) {
+            return redirect(route('dashboard'))->with('error', 'Access Denied.');
+        } elseif ($access->role != 'contact') {
+            return redirect(route('dashboard'))->with('error', 'Access Denied to User.');
+        }
         $this->data['id'] = $id;
         $this->data['user'] = User::where('id', $id)->first();
         $this->data['notes'] = Note::getNotesByUser($id);

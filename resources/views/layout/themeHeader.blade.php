@@ -650,5 +650,268 @@
          </nav>
          
          <!--Nav End-->
+         <!-- search-->
+         <div id="search-container" style="display: none;">
+            <!-- search filter start-->
+            <div id="search_filder" class="d-flex shadow-sm search_filder_holder">
+               <span>Search Results for: <b><span class="search-results-for"></span></b></span>
+               <ul>
+                     <span>Filter by: &nbsp;</span>
+                     <li class="cursor-pointer filter-tag" id="contacts">Contacts</li>
+                     <li class="cursor-pointer filter-tag" id="deals">Deals</li>
+                     <li class="cursor-pointer filter-tag" id="companies">Companies</li>
+                     <li class="cursor-pointer filter-tag" id="stages">Stages</li>
+                     <li class="cursor-pointer filter-tag" id="pipelines">Pipelines</li>
+                     <span class="cursor-pointer remove-search">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                           <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm3.293-13.293a.999.999 0 0 0-1.414 0L12 10.586 9.707 8.293a.999.999 0 1 0-1.414 1.414L10.586 12l-2.293 2.293a.999.999 0 1 0 1.414 1.414L12 13.414l2.293 2.293a.999.999 0 1 0 1.414-1.414L13.414 12l2.293-2.293a.999.999 0 0 0 0-1.414z"/>
+                        </svg>
+                     </span>
+
+               </ul>
+               
+            </div>
+            <!-- search filter end-->
+            <div class="content-inner container-fluid pb-0">
+               <div class="row contacts-row">
+                     <div class="col-lg-12">
+                        <div class="card">
+                           <div class="card-header d-flex justify-content-between">
+                                 <div class="header-title">
+                                    <h4 class="card-title">Contacts</h4>
+                                 </div>
+                           </div>
+                           <div class="card-body">
+                                 <div class="table-responsive">
+                                    <div class="dataTables_wrapper">
+                                       <form action="#" method="POST" enctype="multipart/form-data">
+
+                                             <div class="table-responsive">
+                                                <div id="user-list-table_wrapper" class="dataTables_wrapper">
+                                                   <div class="table-responsive">
+                                                         <table class="table">
+                                                            <thead>
+                                                               <tr class="ligth">
+                                                                     <th class="sorting sorting_asc" tabindex="0"
+                                                                        aria-controls="user-list-table" rowspan="1" colspan="1"
+                                                                        aria-sort="ascending"
+                                                                        aria-label="Sr: activate to sort column descending">Name
+                                                                     </th>
+                                                                     <th class="sorting" tabindex="0"
+                                                                        aria-controls="user-list-table" rowspan="1" colspan="1"
+                                                                        aria-label="Title: activate to sort column ascending">
+                                                                        Phone</th>
+                                                                     <th class="sorting" tabindex="0"
+                                                                        aria-controls="user-list-table" rowspan="1" colspan="1"
+                                                                        aria-label="Type: activate to sort column ascending">
+                                                                        Email</th>
+                                                                     <th class="sorting" tabindex="0"
+                                                                        aria-controls="user-list-table" rowspan="1" colspan="1"
+                                                                        aria-label="Type: activate to sort column ascending">
+                                                                        Status</th>
+                                                                     <th style="min-width: 100px" class="sorting" tabindex="0"
+                                                                        aria-controls="user-list-table" rowspan="1" colspan="1"
+                                                                        aria-label="Action: activate to sort column ascending">
+                                                                        Details</th>
+                                                               </tr>
+                                                            </thead>
+                                                            <tbody class="ui-sortable contacts-html">
+                                                            </tbody>
+                                                         </table>
+                                                   </div>
+                                                </div>
+                                             </div>
+
+                                       </form>
+                                    </div>
+                                 </div>
+
+                           </div>
+                        </div>
+                     </div>
+               </div>
+               <div class="row deals-row">
+                     <div class="col-lg-12">
+                        <div class="card">
+                           <div class="card-header d-flex justify-content-between">
+                                 <div class="header-title">
+                                    <h4 class="card-title">Deals</h4>
+                                 </div>
+                           </div>
+                           <div class="card-body">
+                                 <div class="table-responsive">
+                                    <div id="" class="dataTables_wrapper">
+                                       <form action="#" method="POST" enctype="multipart/form-data">
+
+                                             <div class="table-responsive">
+                                                <div id="user-list-table_wrapper" class="dataTables_wrapper">
+                                                   <div class="table-responsive">
+                                                         <table class="table">
+                                                            <thead>
+                                                               <tr class="ligth">
+                                                                     <th class="sorting sorting_asc" tabindex="0"
+                                                                        aria-controls="user-list-table" rowspan="1" colspan="1"
+                                                                        aria-sort="ascending"
+                                                                        aria-label="Sr: activate to sort column descending">Name
+                                                                     </th>
+                                                                     <th style="min-width: 100px" class="sorting" tabindex="0"
+                                                                        aria-controls="user-list-table" rowspan="1" colspan="1"
+                                                                        aria-label="Action: activate to sort column ascending">
+                                                                        Action</th>
+                                                               </tr>
+                                                            </thead>
+                                                            <tbody class="ui-sortable deals-html">
+                                                            </tbody>
+                                                         </table>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                       </form>
+                                    </div>
+                                 </div>
+
+                           </div>
+                        </div>
+                     </div>
+               </div>
+               <div class="row companies-row">
+                     <div class="col-lg-12">
+                        <div class="card">
+                           <div class="card-header d-flex justify-content-between">
+                                 <div class="header-title">
+                                    <h4 class="card-title">Companies</h4>
+                                 </div>
+                           </div>
+                           <div class="card-body">
+                                 <div class="table-responsive">
+                                    <div id="" class="dataTables_wrapper">
+                                       <form action="#" method="POST" enctype="multipart/form-data">
+
+                                             <div class="table-responsive">
+                                                <div id="user-list-table_wrapper" class="dataTables_wrapper">
+                                                   <div class="table-responsive">
+                                                         <table class="table">
+                                                            <thead>
+                                                               <tr class="ligth">
+                                                                     <th class="sorting sorting_asc" tabindex="0"
+                                                                        aria-controls="user-list-table" rowspan="1" colspan="1"
+                                                                        aria-sort="ascending"
+                                                                        aria-label="Sr: activate to sort column descending">Name
+                                                                     </th>
+                                                                     <th class="sorting" tabindex="0"
+                                                                        aria-controls="user-list-table" rowspan="1" colspan="1"
+                                                                        aria-label="Title: activate to sort column ascending">
+                                                                        Status</th>
+                                                                     <th style="min-width: 100px" class="sorting" tabindex="0"
+                                                                        aria-controls="user-list-table" rowspan="1" colspan="1"
+                                                                        aria-label="Action: activate to sort column ascending">
+                                                                        Action</th>
+                                                               </tr>
+                                                            </thead>
+                                                            <tbody class="ui-sortable companies-html">
+                                                            </tbody>
+                                                         </table>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                       </form>
+                                    </div>
+                                 </div>
+
+                           </div>
+                        </div>
+                     </div>
+               </div>
+               <div class="row stages-row">
+                     <div class="col-lg-12">
+                        <div class="card">
+                           <div class="card-header d-flex justify-content-between">
+                                 <div class="header-title">
+                                    <h4 class="card-title">Stages</h4>
+                                 </div>
+                           </div>
+                           <div class="card-body">
+                                 <div class="table-responsive">
+                                    <div id="" class="dataTables_wrapper">
+                                       <form action="#" method="POST" enctype="multipart/form-data">
+
+                                             <div class="table-responsive">
+                                                <div id="user-list-table_wrapper" class="dataTables_wrapper">
+                                                   <div class="table-responsive">
+                                                         <table class="table">
+                                                            <thead>
+                                                               <tr class="ligth">
+                                                                     <th class="sorting sorting_asc" tabindex="0"
+                                                                        aria-controls="user-list-table" rowspan="1" colspan="1"
+                                                                        aria-sort="ascending"
+                                                                        aria-label="Sr: activate to sort column descending">Name
+                                                                     </th>
+                                                                     <th style="min-width: 100px" class="sorting" tabindex="0"
+                                                                        aria-controls="user-list-table" rowspan="1" colspan="1"
+                                                                        aria-label="Action: activate to sort column ascending">
+                                                                        Action</th>
+                                                               </tr>
+                                                            </thead>
+                                                            <tbody class="ui-sortable stages-html">
+                                                            </tbody>
+                                                         </table>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                       </form>
+                                    </div>
+                                 </div>
+
+                           </div>
+                        </div>
+                     </div>
+               </div>
+               <div class="row pipelines-row">
+                     <div class="col-lg-12">
+                        <div class="card">
+                           <div class="card-header d-flex justify-content-between">
+                                 <div class="header-title">
+                                    <h4 class="card-title">Pipelines</h4>
+                                 </div>
+                           </div>
+                           <div class="card-body">
+                                 <div class="table-responsive">
+                                    <div id="" class="dataTables_wrapper">
+                                       <form action="#" method="POST" enctype="multipart/form-data">
+
+                                             <div class="table-responsive">
+                                                <div id="user-list-table_wrapper" class="dataTables_wrapper">
+                                                   <div class="table-responsive">
+                                                         Name <table class="table">
+                                                            <thead>
+                                                               <tr class="ligth">
+                                                                     <th class="sorting sorting_asc" tabindex="0"
+                                                                        aria-controls="user-list-table" rowspan="1" colspan="1"
+                                                                        aria-sort="ascending"
+                                                                        aria-label="Sr: activate to sort column descending">Name
+                                                                     </th>
+                                                                     <th style="min-width: 100px" class="sorting" tabindex="0"
+                                                                        aria-controls="user-list-table" rowspan="1" colspan="1"
+                                                                        aria-label="Action: activate to sort column ascending">
+                                                                        Action</th>
+                                                               </tr>
+                                                            </thead>
+                                                            <tbody class="ui-sortable pipelines-html">
+                                                            </tbody>
+                                                         </table>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                       </form>
+                                    </div>
+                                 </div>
+
+                           </div>
+                        </div>
+                     </div>
+               </div>
+            </div>
+         </div>
+      <!-- end search -->
+
       </div>
-      

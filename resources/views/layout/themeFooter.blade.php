@@ -939,11 +939,6 @@
    });
 </script>
 <script>
-   document.getElementById('search-header').addEventListener('focus', function() {
-      if (window.location.href.indexOf('/search') === -1) {
-         window.location.href = '/search';
-      }
-   });
 
    document.getElementById('search-header').addEventListener('input', function() {
       // Get the value entered into the search input
@@ -951,6 +946,12 @@
       var csrfToken = $('meta[name="csrf-token"]').attr('content');
       var activeFilter = document.querySelector('.active-filter');
       $(".search-results-for").html(searchValue);
+       // Hide the content-inner div and show the search-container
+      $(".content-inner").hide();
+      $("#search-container").show();
+      $("#search-container .content-inner").show();
+      
+
 
       // Initialize an empty data object
       var requestData = {
@@ -988,11 +989,18 @@
                console.error('AJAX request failed');
             }
          });
+      }else{
+         $("#search-container").hide();
+         $(".content-inner").show();
       }
    });
 
    // Event listener for each tag
    $("#contacts, #deals, #stages, #companies, #pipelines").click(function() {
+       // Hide the content-inner div and show the search-container
+      $(".content-inner").hide();
+      $("#search-container").show();
+      $("#search-container .content-inner").show();
       var selectedFilter = $(this).attr("id");
       var searchValue = $("#search-header").val();
       var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -1005,6 +1013,11 @@
       $(".pipelines-row").hide();
       $("." + selectedFilter + '-row').show();
       $(".search-results-for").html(searchValue);
+
+      if(!searchValue){
+         $("#search-container").hide();
+         $(".content-inner").show();
+      }
 
       // Make the AJAX request with the selected tag
       $.ajax({
@@ -1035,6 +1048,12 @@
             console.error('AJAX request failed');
          }
       });
+   });
+   $(".remove-search").click(function(){
+      $("#search-container").hide();
+      $(".content-inner").show();
+      $("#search-header").val('');
+
    });
 </script>
 

@@ -54,10 +54,10 @@
    @endforeach
 
    <tr>
-      <td colspan="7" align="center">
+      <td colspan="8" align="center">
          {!! $users->links('user.custom_pagination') !!}
       </td>
    </tr>
 @else 
-   <tr><td colspan="7">No records found</td></tr>
+   <tr><td colspan="8">No records found</td></tr>
 @endif

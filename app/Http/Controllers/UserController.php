@@ -240,15 +240,26 @@ class UserController extends Controller
             return redirect(route('dashboard'))->with('error', 'Access Denied.');
         }
         $this->data['id'] = $id;
-        $this->data['user'] = User::where(['id' => $id])->first();
+        $this->data['user'] = User::with(['DocumentManagers' => function($query){
+            $query->select('id');
+        }])->where(['id' => $id])->first();
         $this->data['custom_fields'] =  CustomField::getDataByUser($id);
 
         if ($request->isMethod('put')) {
+
+            $request->validate([
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'phone_number' => 'required',
+                'document_types' => 'required|array|min:1',
+                'document_types.*' => 'exists:document_managers,id',
+            ]);
+
             $update_data = [
                 'first_name'   => $request->first_name,
                 'last_name'    => $request->last_name,
                 'phone_number' => $request->phone_country_code." ".$request->phone_number,
-                'status'       => $request->status
+                'status'       => $request->status,
             ];
 
             if ($request->password && strlen($request->password) < 6) {
@@ -265,8 +276,14 @@ class UserController extends Controller
                     );
                 }
             }
+
+            $user = User::whereId($id)->first();
+            $user->documentManagers()->sync($request->document_types);
+
             return redirect(url('contacts'))->withSuccess('Contact Updated Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
+            $this->data['documents'] = DocumentManager::get();
+            $this->data['selected_documents'] = $this->data['user']->DocumentManagers;
             return view("user.edit", $this->data);
         }
     } // editUser

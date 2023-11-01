@@ -16,9 +16,8 @@ class CreateDocumentManagersTable extends Migration
         Schema::create('document_managers', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->enum('type',['jotform', 'template'])->nullable();
-            $table->longText('value')->nullable();
-            $table->longText('description')->nullable();
+            $table->string('key_name');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

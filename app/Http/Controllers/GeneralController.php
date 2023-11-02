@@ -14,7 +14,9 @@
    
    
 
-
+   public function adminList(){
+      return view('adminlist');
+   }
    public function userList(){
       return view('general.userlist');
    }

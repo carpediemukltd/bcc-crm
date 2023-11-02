@@ -86,15 +86,11 @@
                                     </a>
                                     <a class="" href="javascript:void(0);" id="send_documents_toggle">
                                         <i class="user_icon icon">
-                                            <svg width="22" class="icon-22" viewBox="0 0 22 22" fill="currentColor"
-                                                 xmlns="">
-                                                <path opacity="0.4"
-                                                      d="M21.9999 15.9402C21.9999 18.7302 19.7599 20.9902 16.9699 21.0002H16.9599H7.04991C4.26991 21.0002 1.99991 18.7502 1.99991 15.9602V15.9502C1.99991 15.9502 2.00591 11.5242 2.01391 9.29821C2.01491 8.88021 2.49491 8.64621 2.82191 8.90621C5.19791 10.7912 9.44691 14.2282 9.49991 14.2732C10.2099 14.8422 11.1099 15.1632 12.0299 15.1632C12.9499 15.1632 13.8499 14.8422 14.5599 14.2622C14.6129 14.2272 18.7669 10.8932 21.1789 8.97721C21.5069 8.71621 21.9889 8.95021 21.9899 9.36721C21.9999 11.5762 21.9999 15.9402 21.9999 15.9402Z"
-                                                      fill="currentColor"></path>
-                                                <path
-                                                    d="M21.476 5.6736C20.61 4.0416 18.906 2.9996 17.03 2.9996H7.05001C5.17401 2.9996 3.47001 4.0416 2.60401 5.6736C2.41001 6.0386 2.50201 6.4936 2.82501 6.7516L10.25 12.6906C10.77 13.1106 11.4 13.3196 12.03 13.3196C12.034 13.3196 12.037 13.3196 12.04 13.3196C12.043 13.3196 12.047 13.3196 12.05 13.3196C12.68 13.3196 13.31 13.1106 13.83 12.6906L21.255 6.7516C21.578 6.4936 21.67 6.0386 21.476 5.6736Z"
-                                                    fill="currentColor"></path>
-                                            </svg>
+                                        <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                             <path opacity="0.4" d="M18.8088 9.021C18.3573 9.021 17.7592 9.011 17.0146 9.011C15.1987 9.011 13.7055 7.508 13.7055 5.675V2.459C13.7055 2.206 13.5036 2 13.253 2H7.96363C5.49517 2 3.5 4.026 3.5 6.509V17.284C3.5 19.889 5.59022 22 8.16958 22H16.0463C18.5058 22 20.5 19.987 20.5 17.502V9.471C20.5 9.217 20.299 9.012 20.0475 9.013C19.6247 9.016 19.1177 9.021 18.8088 9.021Z" fill="currentColor"></path>
+                                             <path opacity="0.4" d="M16.0842 2.56737C15.7852 2.25637 15.2632 2.47037 15.2632 2.90137V5.53837C15.2632 6.64437 16.1742 7.55437 17.2802 7.55437C17.9772 7.56237 18.9452 7.56437 19.7672 7.56237C20.1882 7.56137 20.4022 7.05837 20.1102 6.75437C19.0552 5.65737 17.1662 3.69137 16.0842 2.56737Z" fill="currentColor"></path>
+                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M8.97398 11.3877H12.359C12.77 11.3877 13.104 11.0547 13.104 10.6437C13.104 10.2327 12.77 9.89868 12.359 9.89868H8.97398C8.56298 9.89868 8.22998 10.2327 8.22998 10.6437C8.22998 11.0547 8.56298 11.3877 8.97398 11.3877ZM8.97408 16.3819H14.4181C14.8291 16.3819 15.1631 16.0489 15.1631 15.6379C15.1631 15.2269 14.8291 14.8929 14.4181 14.8929H8.97408C8.56308 14.8929 8.23008 15.2269 8.23008 15.6379C8.23008 16.0489 8.56308 16.3819 8.97408 16.3819Z" fill="currentColor"></path>
+                                          </svg>
                                         </i>
                                         <span>Send Documents</span>
                                     </a>
@@ -654,44 +650,33 @@
                 </div>
                 <div class="modal-footer">
                     <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-                    <button type="button" id="close_view_portal" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="close_view_portal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal modal-sm" tabindex="-1" role="dialog" id="sendDocuments">
-        <div class="modal-dialog" role="document" style="max-width: 100%;margin-right: 0;margin-left: 0;">
-            <div class="modal-content" style="width: 142%;">
-                <div class="modal-header" >
-                    {{-- <h5 class="modal-title">Modal title</h5> --}}
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" >
-                    <div class="row">
-                        <div class="col-md-8 offset-2 mb-4">
-                            <div class="response-send-email-notification"></div>
-                            <select name="bank_users" id="bank_users" class="form-control" multiple>
-                                <option value="" disabled>Select Bank User</option>
-                                @foreach($bankusers as $bank_user)
-                                    <option value="{{$bank_user->id}}">
-                                        {{$bank_user->first_name. " ".$bank_user->last_name. " ".$bank_user->email}}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-8 offset-2">
-                            <button disabled type="button" class="btn btn-primary" id="send_email_notification"><i class="fa fa-envelope"></i> Send Email Notification</button>
-                        </div>
+    <div class="modal" tabindex="-1" role="dialog" id="sendDocuments">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="response-send-email-notification"></div>
+                    <div class="form-group">
+                        <label for="">Bank Documents</label>
+                        <select name="bank_users" id="bank_users" class="form-control" multiple>
+                            <option value="" disabled>Select Bank User</option>
+                            @foreach($bankusers as $bank_user)
+                                <option value="{{$bank_user->id}}">
+                                    {{$bank_user->first_name. " ".$bank_user->last_name. " ".$bank_user->email}}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
-                {{--            <div class="modal-footer">--}}
-                {{--              <button type="button" class="btn btn-primary" id="send_email_notification"><i class="fa fa-envelope"></i> Send Email Notification</button>--}}
-                {{--              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--}}
-                {{--            </div>--}}
+                <div class="modal-footer">
+                <button disabled type="button" class="btn btn-primary" id="send_email_notification"><i class="fa fa-envelope"></i> Send Email Notification</button>
+                    <!-- <button type="button" class="btn btn-primary" id="send_email_notification"><i class="fa fa-envelope"></i> Send Email Notification</button> -->
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>

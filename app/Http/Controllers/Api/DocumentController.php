@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use App\Jobs\PostFilesToOcrolus;
 use App\Services\ApiResponse;
 use App\Models\Documents;
 use Illuminate\Http\Request;
@@ -108,19 +109,7 @@ class DocumentController extends Controller
         $fileData = $request->file('file'); // Get the uploaded file
         $fileName = $fileData->getClientOriginalName();
 
-        $allowedFileGroupNames = [
-            'Past_6_Months_of_Bank_Statements',
-            'Past_3_Years_of_Personal_&_Corporate_Tax_Returns',
-            'Miscellaneous_&_Formation_Documents'
-        ];
-
-        $existingDoc = Documents::where('user_id', auth()->user()->id)
-            ->where('file_name', $fileName)
-            ->whereNotNull('ocrolus_book_uuid')
-            ->where(function ($query) use ($allowedFileGroupNames) {
-                $query->whereIn('file_group_name', $allowedFileGroupNames)
-                    ->orWhere('file_group_name', 'regexp', '/^\d{4}_Year-to-date_\(or_within_60_days_max\)_/');
-            })->first();
+        $existingDoc = Documents::where('user_id', auth()->user()->id)->where('file_name', $fileName)->first();
         if ($existingDoc) {
             return ApiResponse::error('Duplicate File, please choose different.', 409); // HTTP status code 409 for conflict
         }
@@ -142,13 +131,13 @@ class DocumentController extends Controller
             ]);
 
             //add to ocrolus
-            // if (in_array($fileGroupName, array(
-            //   'Past_6_Months_of_Bank_Statements',
-            //   'Past_3_Years_of_Personal_&_Corporate_Tax_Returns',
-            //   'Miscellaneous_&_Formation_Documents'
-            // )) || preg_match('/^\d{4}_Year-to-date_\(or_within_60_days_max\)_/', $fileGroupName)) {
-            //   PostFilesToOcrolus::dispatch($doc);
-            // }
+            if (in_array($fileGroupName, array(
+              'Past_6_Months_of_Bank_Statements',
+              'Past_3_Years_of_Personal_&_Corporate_Tax_Returns',
+              'Miscellaneous_&_Formation_Documents'
+            )) || preg_match('/^\d{4}_Year-to-date_\(or_within_60_days_max\)_/', $fileGroupName)) {
+              PostFilesToOcrolus::dispatch($doc);
+            }
             $data['document_path'] = $url;
 
             return ApiResponse::success($data, 'Document uploaded successfully.', 200);

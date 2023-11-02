@@ -34,12 +34,21 @@ class ForgotPasswordController extends Controller
        */
       public function submitForgetPasswordForm(Request $request)
       {
-          $request->validate([
-            //'title' => 'required|unique:posts|max:255',
-            // 'author.name' => 'required',
-            // 'author.description' => 'required',
-              'email' => 'required|email|exists:users',
-          ]);
+        $request->validate([
+          'email' => [
+              'required',
+              'email',
+              function ($attribute, $value, $fail) {
+                  // Custom query to check if the user exists and has an "active" status
+                  $user = User::where('email', $value)->where('status', 'active')->first();
+      
+                  if (!$user) {
+                      $fail('The selected email is invalid or the user is not active.');
+                  }
+              },
+          ],
+      ]);
+      
 
             // if ($validator->fails()) {
             //     return redirect('post/create')->withErrors($validator)->withInput();
@@ -59,7 +68,7 @@ class ForgotPasswordController extends Controller
               $message->subject('Reset Password');
           });
   
-          return back()->with('message', 'We have e-mailed your password reset link!');
+          return back()->with('success', 'We have e-mailed your password reset link!');
       }
       /**
        * Write code on Method

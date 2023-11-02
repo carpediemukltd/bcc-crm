@@ -61,7 +61,7 @@ class UserController extends Controller
             $month  = now()->format('m');
 
             // Create the directory if it doesn't exist
-            $directory = public_path("profile/$year/$month");
+            $directory = public_path("profile_images/$year/$month");
             if (!file_exists($directory)) {
                 mkdir($directory, 0755, true);
             }
@@ -75,7 +75,7 @@ class UserController extends Controller
             // At this point, the image has been uploaded to public/profile/year/month/filename
 
             // You can store the path or filename in your database if needed.
-            $filePath = "profile/$year/$month/$filename";
+            $filePath = "profile_images/$year/$month/$filename";
             auth()->user()->update(['profile_image' => $filePath]);
             $data['profile_image'] = env('APP_URL').$filePath;
 

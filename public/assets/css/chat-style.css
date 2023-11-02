@@ -9,13 +9,9 @@
 .chat-icon {
     background-color: #c15516;
     color: white;
-    padding: 10px !important;
+    padding: 10px 40px;
     border-radius: 50px;
     cursor: pointer;
-    height: 50px !important;
-    width: 50px !important;
-    text-align: center;
-    line-height: 30px;
 }
 
 .chat-window {

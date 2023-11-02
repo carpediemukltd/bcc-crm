@@ -231,7 +231,27 @@ class AuthController extends Controller
         return ApiResponse::success([], 'Code sent successfully.', 200);
     }
     public function resendVerificationCode(Request $request){
-        $user = User::where(['email' =>  $request->email])->first();
+        $user = User::where(['email' =>  $request->email])->first();    
+        if (!$user) {
+            return ApiResponse::error('No user found with the provided Email Address.', 404);
+        }
+
+        if (!in_array($user->role, ['user', 'contact'])) {
+            return ApiResponse::error('No user found with the provided Email Address.', 404);
+        } 
+
+        if ($user->status == 'banned') {
+            return ApiResponse::error('You have been blocked by Admin, Please contact Admin.', 403);
+        }
+
+        if ($user->status == 'inactive') {
+            return ApiResponse::error('Your account is inactive, Please contact Admin.', 403);
+        }
+
+        if ($user->status == 'deleted') {
+            return ApiResponse::error('This account has been deleted earlier.', 403);
+        }
+
         $response = $this->generate2FACode($user);
             if ($response) {
                 return ApiResponse::error($response, 403);

@@ -573,11 +573,11 @@ class UserController extends Controller
                     ->orWhere('first_name', 'LIKE', $keyword.'%')
                     ->orWhere('last_name', 'LIKE', $keyword.'%')
                     ->orwhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", [$keyword.'%']);
-            });
-//                ->where(function($query) use ($keyword) {
-//                    $query->where('role', '=', 'admin')
+            })
+                ->where(function($query) use ($keyword) {
+                    $query->whereIn('role', ['superadmin', 'admin']);
 //                    ->whereIn('company_id', ['0','1']);
-//                });
+                });
         });
 
         if ($request->has('skip_ids')) {

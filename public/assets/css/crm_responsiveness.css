@@ -5,4 +5,10 @@
     .nav .search-input {
         width: 100%;
     }
+    .border-end{
+        border: none !important;
+    }
+    .d-flex.justify-content-between .d-flex {
+        width: 100%;
+    }
   }

@@ -5,10 +5,10 @@
     @else
         @foreach ($notes as $note)
             <div class="nav-item mb-3 p-3" style="border: 1px solid #eee; border-radius:3px; ">
-                <div id="show_note_{{ $note->id }}">{{ $note->note }}</div>
+                <div id="show_note_{{ $note->id }}">{!! $note->note !!}</div>
                 <div id="show_edit_note_{{ $note->id }}" style="display: none;">
                     <textarea type="text" class="form-control notes_field" id="note_{{ $note->id }}" name="note_{{ $note->id }}"
-                        placeholder="Note">{{ $note->note }}</textarea>
+                        placeholder="Note">{!! $note->note !!}</textarea>
                 </div>
                 <br />
                 <div id="l_{{ $note->id }}" style="display: none;">

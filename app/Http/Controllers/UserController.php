@@ -565,4 +565,27 @@ class UserController extends Controller
         return response()->json(['success' => true, 'message' => 'Email sent successfully']);
     }
 
+    public function searchUserToMention(Request $request){
+        $keyword = $request->keyword;
+        $query = User::where(function($query) use ($keyword) {
+            $query->where(function($query) use ($keyword) {
+                $query->where('email', 'LIKE', $keyword.'%')
+                    ->orWhere('first_name', 'LIKE', $keyword.'%')
+                    ->orWhere('last_name', 'LIKE', $keyword.'%')
+                    ->orwhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", [$keyword.'%']);
+            })
+                ->where(function($query) use ($keyword) {
+                    $query->whereIn('role', ['superadmin', 'admin']);
+//                    ->whereIn('company_id', ['0','1']);
+                });
+        });
+
+        if ($request->has('skip_ids')) {
+            $skipIds = $request->input('skip_ids');
+            $query->whereNotIn('id', $skipIds);
+        }
+
+        $users = $query->select('id', 'role', 'first_name', 'last_name', 'email', DB::raw("CONCAT(first_name, ' ', last_name) AS fullname"))->get();
+        return response()->json(['users' => $users]);
+    }
 }

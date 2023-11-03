@@ -8,6 +8,7 @@ use App\Services\ApiResponse;
 use App\Models\Documents;
 use Illuminate\Http\Request;
 use Validator;
+use Illuminate\Support\Facades\App;
 
 
 class DocumentController extends Controller
@@ -131,13 +132,16 @@ class DocumentController extends Controller
             ]);
 
             //add to ocrolus
-            if (in_array($fileGroupName, array(
-              'Past_6_Months_of_Bank_Statements',
-              'Past_3_Years_of_Personal_&_Corporate_Tax_Returns',
-              'Miscellaneous_&_Formation_Documents'
-            )) || preg_match('/^\d{4}_Year-to-date_\(or_within_60_days_max\)_/', $fileGroupName)) {
-              PostFilesToOcrolus::dispatch($doc);
-            }
+            if (App::environment('production')) {
+                // Only run this code in the production environment
+                if (in_array($fileGroupName, array(
+                    'Past_6_Months_of_Bank_Statements',
+                    'Past_3_Years_of_Personal_&_Corporate_Tax_Returns',
+                    'Miscellaneous_&_Formation_Documents'
+                )) || preg_match('/^\d{4}_Year-to-date_\(or_within_60_days_max\)_/', $fileGroupName)) {
+                    PostFilesToOcrolus::dispatch($doc);
+                }
+            }            
             $data['document_path'] = $url;
 
             return ApiResponse::success($data, 'Document uploaded successfully.', 200);

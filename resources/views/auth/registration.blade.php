@@ -3,15 +3,15 @@
    <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title data-setting="app_name" data-rightJoin=" Pro | Responsive Bootstrap 5 Admin Dashboard Template">Registeration</title>
+      <title data-setting="app_name" data-rightJoin=" | Lendotics">Registeration</title>
       <meta name="description" content="">
-      <meta name="keywords" content="BCC CRM">
-      <meta name="author" content="Carpe Diem">
+      <meta name="keywords" content="Lendotics">
+      <meta name="author" content="Lendotics">
       <meta name="DC.title" content="">
       <!-- Library / Plugin Css Build -->
       <link rel="shortcut icon" href="{{asset('assets/images/bcc-favicon.png')}}" />
       <link rel="stylesheet" href="{{asset('assets/css/core/libs.min.css')}}" />
-      <!-- BCC CRM Design System Css -->
+      <!-- Lendotics Design System Css -->
       <link rel="stylesheet" href="{{asset('assets/css/hope-ui.min.css?v=3.0.0')}}" />
       <link rel="stylesheet" href="{{asset('assets/css/pro.min.css?v=3.0.0')}}" />
       <!-- Custom Css -->
@@ -56,7 +56,7 @@
                                  <!--logo End-->                              
                               </a>
                               <h2 class="mb-2 text-center">Sign Up</h2>
-                              <p class="text-center">Create your BCC CRM account.</p>
+                              <p class="text-center">Create your Lendotics account.</p>
                               <form action="{{ route('register.post') }}" method="POST">
                                  @csrf
                                  <div class="row">

@@ -148,7 +148,7 @@ class AuthController extends Controller
         ]);
         if ($user->two_factor_type == 'email') {
             try {
-                $templateBody = "<p>BCC CRM Verification Code: <b>" . $code . "</b> </p>";
+                $templateBody = "<p>Lendotics Verification Code: <b>" . $code . "</b> </p>";
 
                 $mail = new PHPMailer(true);
 
@@ -164,7 +164,7 @@ class AuthController extends Controller
                 $mail->setFrom(env('MAIL_FROM_ADDRESS'));
                 $mail->isHTML(true); //Set email format to HTML
 
-                $mail->Subject = 'BCC CRM 2FA Verification Code';
+                $mail->Subject = 'Lendotics 2FA Verification Code';
 
                 $mail->addAddress($user->email); //Name is optional
                 $mail->Body    = $templateBody;
@@ -174,7 +174,7 @@ class AuthController extends Controller
             }
         }
         if ($user->two_factor_type == 'phone') {
-            $message            = 'Your BCC CRM Verification Code is: ' . $code;
+            $message            = 'Your Lendotics Verification Code is: ' . $code;
             $twilioPhoneNumber  = env('TWILIO_NUMBER');
             $twilioSid          = env('TWILIO_SID');
             $twilioToken        = env('TWILIO_AUTH_TOKEN');

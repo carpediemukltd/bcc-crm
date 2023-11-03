@@ -116,7 +116,7 @@
             return {
             "setting": {
                 "app_name": {
-                    "value": "BCC CRM"
+                    "value": "Lendotics CRM"
                 },
                 "theme_scheme_direction": {
                     "value": "ltr"
@@ -179,7 +179,7 @@
             return {
             "setting": {
                 "app_name": {
-                    "value": "BCC CRM"
+                    "value": "Lendotics CRM"
                 },
                 "theme_scheme_direction": {
                     "value": "ltr"
@@ -239,7 +239,7 @@
             return {
             "setting": {
                 "app_name": {
-                    "value": "BCC CRM"
+                    "value": "Lendotics CRM"
                 },
                 "theme_scheme_direction": {
                     "value": "ltr"

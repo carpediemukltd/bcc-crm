@@ -7,11 +7,11 @@
          @if(isset($current_slug))
          {{$current_slug}} |
          @endif
-         BCC CRM
+         Lendotics
       </title>
       <meta name="description" content="">
-      <meta name="keywords" content="BCC CRM">
-      <meta name="author" content="Carpe Diem">
+      <meta name="keywords" content="Lendotics">
+      <meta name="author" content="Lendotics">
       <meta name="DC.title" content="">
       <!-- Favicon -->
       <link rel="shortcut icon" href="{{asset('assets/images/bcc-favicon.png')}}" />

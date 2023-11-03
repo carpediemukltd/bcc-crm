@@ -29,7 +29,7 @@ class AuthController extends Controller
         if (!$user) {
             return ApiResponse::error('No user found with the provided Email Address.', 404);
         }
-        if (!in_array($user->role, ['user', 'contact'])) {
+        if (!in_array($user->role, ['user', 'contact', 'admin', 'superadmin'])) {
             return ApiResponse::error('No user found with the provided Email Address.', 404);
         } 
 
@@ -208,7 +208,7 @@ class AuthController extends Controller
             return ApiResponse::error('No user found with the provided Email Address.', 404);
         }
 
-        if (!in_array($user->role, ['user', 'contact'])) {
+        if (!in_array($user->role, ['user', 'contact', 'admin', 'superadmin'])) {
             return ApiResponse::error('No user found with the provided Email Address.', 404);
         } 
 
@@ -236,7 +236,7 @@ class AuthController extends Controller
             return ApiResponse::error('No user found with the provided Email Address.', 404);
         }
 
-        if (!in_array($user->role, ['user', 'contact'])) {
+        if (!in_array($user->role, ['user', 'contact', 'admin', 'superadmin'])) {
             return ApiResponse::error('No user found with the provided Email Address.', 404);
         } 
 
@@ -275,7 +275,7 @@ class AuthController extends Controller
             return ApiResponse::error('No user found with the provided Email Address.', 404);
         }
 
-        if (!in_array($user->role, ['user', 'contact'])) {
+        if (!in_array($user->role, ['user', 'contact', 'admin', 'superadmin'])) {
             return ApiResponse::error('No user found with the provided Email Address.', 404);
         } 
 

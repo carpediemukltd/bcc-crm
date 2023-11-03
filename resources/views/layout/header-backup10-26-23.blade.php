@@ -7,11 +7,11 @@
          @if(isset($current_slug))
          {{$current_slug}} |
          @endif
-         BCC CRM
+         Lendotics CRM
       </title>
       <meta name="description" content="">
-      <meta name="keywords" content="BCC CRM">
-      <meta name="author" content="Carpe Diem">
+      <meta name="keywords" content="Lendotics">
+      <meta name="author" content="Lendotics">
       <meta name="DC.title" content="">
       <!-- Favicon -->
       <link rel="shortcut icon" href="{{asset('assets/images/bcc-favicon.png')}}" />
@@ -20,7 +20,7 @@
       <!-- Flatpickr css -->
       <link rel="stylesheet" href="{{asset('assets/vendor/flatpickr/dist/flatpickr.min.css')}}" />
       <link rel="stylesheet" href="{{asset('assets/vendor/sheperd/dist/css/sheperd.css')}}">
-      <!-- BCC Design System Css -->
+      <!-- Lendotics Design System Css -->
       <link rel="stylesheet" href="{{asset('assets/css/hope-ui.min.css?v=3.0.0')}}" />
       <link rel="stylesheet" href="{{asset('assets/css/pro.min.css?v=3.0.0')}}" />
       <!-- Custom Css -->

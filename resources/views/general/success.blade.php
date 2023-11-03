@@ -3,10 +3,10 @@
    <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title data-setting="app_name" data-rightJoin=" BCC CRM">Success</title>
+      <title data-setting="app_name" data-rightJoin=" | Lendotics">Success</title>
       <meta name="description" content="">
-      <meta name="keywords" content="BCC CRM">
-      <meta name="author" content="Carpe Diem">
+      <meta name="keywords" content="Lendotics">
+      <meta name="author" content="Lendotics">
       <meta name="DC.title" content="">
       
       <link rel="shortcut icon" href="{{asset('assets/images/bcc-favicon.png')}}" />
@@ -65,7 +65,7 @@
                               </div>
                            </div>
                            <!--logo End-->                           
-                           <h4 class="logo-title ms-3 mb-0" data-setting="app_name">BCC CRM</h4>
+                           <h4 class="logo-title ms-3 mb-0" data-setting="app_name">Lendotics</h4>
                         </a>
                         <img src="{{asset('assets/images/auth/mail.png')}}" class="img-fluid" width="80" alt="">
                         <h2 class="mt-3 mb-0">Success !</h2>

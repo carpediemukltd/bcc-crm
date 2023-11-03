@@ -77,7 +77,7 @@
       app_name: {
         target: '[data-setting="app_name"]',
         type: "text",
-        value: "BCC CRM",
+        value: "Lendotics CRM",
       },
       theme_scheme_direction: {
         target: "html",

@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
 use App\Services\FileStorageService;
+use DateTime;
 
 class User extends Authenticatable
 {
@@ -42,7 +43,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    protected $appends = ['full_name'];
+    protected $appends = ['full_name', 'formatted_created_at'];
 
     public function getConsentSignImageAttribute($key){
         return $this->getS3Url($key);
@@ -62,7 +63,7 @@ class User extends Authenticatable
 
     public static function getUsers($data)
     {
-        $users = User::whereIn('role', $data['roles'])->where('users.id', '!=', $data['user_id'])
+        $users = User::with('company')->whereIn('role', $data['roles'])->where('users.id', '!=', $data['user_id'])
             ->when(($data['company_id'] > 0), function ($q) use ($data) {
                 $q->where('company_id', '=', $data['company_id']);
             })
@@ -119,4 +120,13 @@ class User extends Authenticatable
         //if no any image is set 
         return env('APP_URL')."placeholder-profile.png";
     }
+    public function getFormattedCreatedAtAttribute(){
+        $createdAt = new DateTime($this->created_at);
+        return $createdAt->format('j F, Y');
+    }
+    public function company()
+    {
+        return $this->belongsTo(company::class, 'company_id');
+    }
+
 }

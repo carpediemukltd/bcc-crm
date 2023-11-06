@@ -260,7 +260,7 @@
                                             <h6 class="float-left mb-1">Contact Created</h6>
                                             @foreach($activity as $activeities)
                                             @if($activeities->moduleName == 'Contact')
-                                            <small class="float-right mt-1">Time : {{$activeities->created_at}}</small>
+                                            <small class="float-right mt-1">Time : {{date('d-m-Y h:m:s', strtotime($activeities->created_at));}}</small>
                                                 @foreach($userRecord as $userrecord)
                                                 @if($activeities->user_id == $userrecord->id)
                                                 <div class="d-inline-block w-100">
@@ -276,7 +276,7 @@
                                             <h6 class="float-left mb-1">Deal Created</h6>
                                             @foreach($activity as $activeities)
                                             @if($activeities->moduleName == 'Deal')
-                                            <small class="float-right mt-1">Time : {{$activeities->created_at}}</small>
+                                            <small class="float-right mt-1">Time : {{date('d-m-Y h:m:s', strtotime($activeities->created_at));}} </small>
                                                 @foreach($userRecord as $userrecord)
                                                 @if($activeities->user_id == $userrecord->id)
                                                 <div class="d-inline-block w-100">
@@ -293,7 +293,7 @@
                                             <h6 class="float-left mb-1">Stage moves</h6>
                                             @foreach($activity as $activeities)
                                                 @if($activeities->moduleName == 'Stage')
-                                                <small class="float-right mt-1">Time : {{$activeities->created_at}}</small>
+                                                <small class="float-right mt-1">Time : {{date('d-m-Y h:m:s', strtotime($activeities->created_at));}} </small>
                                                     @foreach($userRecord as $userrecord)
                                                         @if($activeities->user_id == $userrecord->id)
                                                         <div class="d-inline-block w-100">
@@ -317,7 +317,7 @@
                                             <h6 class="float-left mb-1">Custom Field</h6>
                                             @foreach($activity as $activeities)
                                             @if($activeities->moduleName == 'Custom Field')
-                                            <small class="float-right mt-1">Time : {{$activeities->created_at}}</small>
+                                            <small class="float-right mt-1">Time : {{date('d-m-Y h:m:s', strtotime($activeities->created_at));}}</small>
                                                 @foreach($userRecord as $userrecord)
                                                     @if($activeities->user_id == $userrecord->id)
                                                     <div class="d-inline-block w-100">
@@ -349,7 +349,7 @@
                                             <h6 class="float-left mb-1">Document Uploaded</h6>
                                             @foreach($document as $document)
                                            
-                                            <small class="float-right mt-1">Time : {{$document->created_at}}</small>
+                                            <small class="float-right mt-1">Time : {{date('d-m-Y h:m:s', strtotime($document->created_at));}} </small>
                                                
                                                 <div class="d-inline-block w-100">
                                                     <small class="float-right mt-1">Document : {{$document->file_name}} </small>

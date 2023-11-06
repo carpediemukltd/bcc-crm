@@ -39,7 +39,8 @@ class EmailTemplateController extends Controller
                 return redirect()->back()->withError('Body can not be empty.')->withInput();
             }
 
-            $data = EmailTemplate::create(['subject' => $request->subject, 'body' => $request->body]);
+            $body = str_replace("\n", '<br />', $request->body);
+            $data = EmailTemplate::create(['subject' => $request->subject, 'body' => $body]);
 
             return response(['message' => 'success', 'data' => EmailTemplate::where('id', $data->id)->first()]);
         }
@@ -62,7 +63,8 @@ class EmailTemplateController extends Controller
                 return redirect()->back()->withError('Body can not be empty.')->withInput();
             }
 
-            EmailTemplate::whereId($id)->update(['subject' => $request->subject, 'body' => $request->body]);
+            $body = str_replace("\n", '<br />', $request->body);
+            EmailTemplate::whereId($id)->update(['subject' => $request->subject, 'body' => $body]);
 
             return response(EmailTemplate::where('id', $id)->first());
         }

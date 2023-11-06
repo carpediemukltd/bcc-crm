@@ -81,7 +81,7 @@
                                                                         id="data_subject_{{ $rec->id }}"
                                                                         name="data_subject_{{ $rec->id }}"
                                                                         value="{{ $rec->subject }}" /><br />
-                                                                    <textarea class="form-control" name="data_body_{{ $rec->id }}" id="data_body_{{ $rec->id }}" rows="6" cols="30">{{ $rec->body }}</textarea>
+                                                                    <textarea class="form-control" name="data_body_{{ $rec->id }}" id="data_body_{{ $rec->id }}" rows="6" cols="30">{{ $body }}</textarea>
                                                                 </div>
                                                                 <div id="loading_{{ $rec->id }}"
                                                                     style="display: none;">

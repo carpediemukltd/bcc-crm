@@ -111,7 +111,7 @@ class UserController extends Controller
                 'password' => 'required|min:6',
             ];
 
-            if($request->type != 'admin'){
+            if (in_array($request->role, ['user', 'contact'])) {
                 $validate['document_types'] = 'required|array|min:1';
                 $validate['document_types.*'] = 'exists:document_managers,id';
             }
@@ -147,7 +147,10 @@ class UserController extends Controller
                     }
                 }
 
-                $new_user->documentManagers()->attach($request->document_types);
+                if (in_array($request->role, ['user', 'contact'])) {
+                    $new_user->documentManagers()->attach($request->document_types);
+                }
+
 
                 if ($data['role'] == 'contact' || $data['role'] == 'user') {
                     UserOwner::create([
@@ -259,10 +262,11 @@ class UserController extends Controller
                 'phone_number' => 'required',
             ];
 
-            if($this->data['user']->role != 'admin'){
+            if (in_array($this->data['user']->role, ['user', 'contact'])){
                 $validate['document_types'] = 'required|array|min:1';
                 $validate['document_types.*'] = 'exists:document_managers,id';
             }
+
             $request->validate($validate);
             $update_data = [
                 'first_name'   => $request->first_name,
@@ -286,7 +290,8 @@ class UserController extends Controller
                 }
             }
 
-            if($request->type != 'admin'){
+
+            if(in_array($this->data['user']->role, ['user', 'contact'])){
                 $user = User::whereId($id)->first();
                 $user->documentManagers()->sync($request->document_types);
             }

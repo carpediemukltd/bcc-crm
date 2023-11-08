@@ -101,16 +101,22 @@ class UserController extends Controller
             if (!in_array($request->role, $roles)) {
                 return redirect()->back()->with('error', 'You\'ve selected an invalid role.')->withInput();
             }
-            $request->validate([
+
+            $validate = [
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'phone_number' => 'required',
                 'role' => 'required',
                 'email' => 'required|email|unique:users',
                 'password' => 'required|min:6',
-                'document_types' => 'required|array|min:1',
-                'document_types.*' => 'exists:document_managers,id',
-            ]);
+            ];
+
+            if (in_array($request->role, ['user', 'contact'])) {
+                $validate['document_types'] = 'required|array|min:1';
+                $validate['document_types.*'] = 'exists:document_managers,id';
+            }
+
+            $request->validate($validate);
             $data = $request->all();
 
             if ($data) {
@@ -141,7 +147,10 @@ class UserController extends Controller
                     }
                 }
 
-                $new_user->documentManagers()->attach($request->document_types);
+                if (in_array($request->role, ['user', 'contact'])) {
+                    $new_user->documentManagers()->attach($request->document_types);
+                }
+
 
                 if ($data['role'] == 'contact' || $data['role'] == 'user') {
                     UserOwner::create([
@@ -247,14 +256,18 @@ class UserController extends Controller
 
         if ($request->isMethod('put')) {
 
-            $request->validate([
+            $validate = [
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'phone_number' => 'required',
-                'document_types' => 'required|array|min:1',
-                'document_types.*' => 'exists:document_managers,id',
-            ]);
+            ];
 
+            if (in_array($this->data['user']->role, ['user', 'contact'])){
+                $validate['document_types'] = 'required|array|min:1';
+                $validate['document_types.*'] = 'exists:document_managers,id';
+            }
+
+            $request->validate($validate);
             $update_data = [
                 'first_name'   => $request->first_name,
                 'last_name'    => $request->last_name,
@@ -277,8 +290,11 @@ class UserController extends Controller
                 }
             }
 
-            $user = User::whereId($id)->first();
-            $user->documentManagers()->sync($request->document_types);
+
+            if(in_array($this->data['user']->role, ['user', 'contact'])){
+                $user = User::whereId($id)->first();
+                $user->documentManagers()->sync($request->document_types);
+            }
 
             return redirect(url('contacts'))->withSuccess('Contact Updated Successfully.')->withInput();
         } else if ($request->isMethod('get')) {

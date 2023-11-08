@@ -253,6 +253,9 @@ class UserController extends Controller
             $document = Documents::where('user_id',$id)->get();
             $customFieldDetails = UserDetails::where('user_id',$id)->get();
             $customField = CustomField::all();
+
+
+            // dd($customFieldDetails , $customField);
             $deal = Deal::where('user_id',$id)->get();
             $stage = Stage::all();
 

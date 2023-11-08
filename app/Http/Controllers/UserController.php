@@ -101,16 +101,22 @@ class UserController extends Controller
             if (!in_array($request->role, $roles)) {
                 return redirect()->back()->with('error', 'You\'ve selected an invalid role.')->withInput();
             }
-            $request->validate([
+
+            $validate = [
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'phone_number' => 'required',
                 'role' => 'required',
                 'email' => 'required|email|unique:users',
                 'password' => 'required|min:6',
-                'document_types' => 'required|array|min:1',
-                'document_types.*' => 'exists:document_managers,id',
-            ]);
+            ];
+
+            if($request->type != 'admin'){
+                $validate['document_types'] = 'required|array|min:1';
+                $validate['document_types.*'] = 'exists:document_managers,id';
+            }
+
+            $request->validate($validate);
             $data = $request->all();
 
             if ($data) {

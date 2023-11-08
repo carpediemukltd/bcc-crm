@@ -7,7 +7,7 @@
          @if(isset($current_slug))
             {{$current_slug}} | 
          @endif 
-         BCC CRM
+         Lendotics
       </title>
       <!-- Favicon -->
       <link rel="shortcut icon" href="{{asset('assets/images/bcc-logo.png')}}" />
@@ -16,7 +16,7 @@
       <!-- Flatpickr css -->
       <link rel="stylesheet" href="{{asset('assets/vendor/flatpickr/dist/flatpickr.min.css')}}" />
       <link rel="stylesheet" href="{{asset('assets/vendor/sheperd/dist/css/sheperd.css')}}">
-      <!-- BCC Design System Css -->
+      <!-- Lendotics Design System Css -->
       <link rel="stylesheet" href="{{asset('assets/css/hope-ui.min.css?v=3.0.0')}}" />
       <link rel="stylesheet" href="{{asset('assets/css/pro.min.css?v=3.0.0')}}" />
       <!-- Custom Css -->
@@ -64,7 +64,7 @@
                   </div>
                </div> -->
                <!--logo End-->            
-               <h4 class="logo-title" data-setting="app_name">BCC CRM</h4>
+               <h4 class="logo-title" data-setting="app_name">Lendotics</h4>
             </a>
             <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
                <i class="icon">
@@ -3097,7 +3097,7 @@
                      </div>
                   </div> -->
                   <!--logo End-->         
-                  <h4 class="logo-title d-block d-xl-none" data-setting="app_name">BCC CRM</h4>
+                  <h4 class="logo-title d-block d-xl-none" data-setting="app_name">Lendotics</h4>
                </a>
                <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
                   <i class="icon d-flex">

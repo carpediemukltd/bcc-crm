@@ -25,7 +25,7 @@
       </div>
       <div class="iq-header-img">
       <img src="{{asset('assets/images/dashboard/top-header.png')}}" alt="header" class="theme-color-default-img img-fluid w-100 h-100 animated-scaleX" loading="lazy">
-         
+
       </div>
    </div>
 </div>
@@ -76,7 +76,29 @@
                             </div>
                         </div>
                      </div>
-
+                      <div class="row">
+                          <div class="col">
+                              <div class="form-group">
+                                  <label class="form-label" for="email">Document Types:</label>
+                                  <select name="document_types[]" id="document_types" multiple class="form-control">
+                                      @php
+                                          $already_selected_documents = []
+                                      @endphp
+                                      @foreach($selected_documents as $selected_document)
+                                          @php
+                                              $already_selected_documents[] = $selected_document->id;
+                                          @endphp
+                                      @endforeach
+                                      @foreach($documents as $document)
+                                          <option value="{{$document->id}}" {{in_array($document->id, $already_selected_documents) ? 'selected' : ''}}>{{$document->title}}</option>
+                                      @endforeach
+                                  </select>
+                                  @if ($errors->has('document_types'))
+                                      <span class="text-danger">{{ $errors->first('document_types') }}</span>
+                                  @endif
+                              </div>
+                          </div>
+                      </div>
                      <div class="row">
                         <div class="col">
                            <div class="form-group">
@@ -98,7 +120,7 @@
 
                      @if (count($custom_fields)>0)
                      <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
-                     
+
                      <div class="row">
                      @foreach($custom_fields as $field)
                         <div class="col-6">
@@ -109,7 +131,7 @@
                         </div>
                         @endforeach
                      </div>
-                     
+
                      @endif
 
                      <div class="row">

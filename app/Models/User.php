@@ -117,8 +117,12 @@ class User extends Authenticatable
         if($key){
             return env('APP_URL').$key;
         }
-        //if no any image is set 
+        //if no any image is set
         return env('APP_URL')."placeholder-profile.png";
+    }
+    public function documentManagers()
+    {
+        return $this->belongsToMany(DocumentManager::class);
     }
     public function getFormattedCreatedAtAttribute(){
         $createdAt = new DateTime($this->created_at);

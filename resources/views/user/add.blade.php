@@ -82,21 +82,25 @@
                            </div>
                         </div>
                      </div>
-                      <row>
+                      <div class="row">
                           <div class="col">
+                              <label class="form-label" for="email">Document Types:</label>
                               <div class="form-group">
-                                  <label class="form-label" for="email">Document Types:</label>
-                                  <select name="document_types[]" id="document_types" multiple class="form-control">
-                                      @foreach($documents as $document)
-                                        <option value="{{$document->id}}">{{$document->title}}</option>
-                                      @endforeach
-                                  </select>
+                                  <div class="row">
+                                  @foreach($documents as $document)
+                                      <div class="col-md-4">
+                                          <label class="checkbox-inline">
+                                              <input type="checkbox" name="document_types[]" value="{{$document->id}}"> {{$document->title}}
+                                          </label>
+                                      </div>
+                                  @endforeach
                                   @if ($errors->has('document_types'))
                                       <span class="text-danger">{{ $errors->first('document_types') }}</span>
                                   @endif
+                                  </div>
                               </div>
                           </div>
-                      </row>
+                      </div>
                      <input type="hidden" class="form-control" id="role" name="role" value="user">
                      <input type="hidden" class="form-control" id="password" name="password" value="BCCUSA.com">
                      <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">

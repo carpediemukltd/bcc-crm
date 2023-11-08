@@ -76,33 +76,35 @@
                             </div>
                         </div>
                      </div>
-                      <div class="row">
-                          <div class="col">
-                              <label class="form-label" for="email">Document Types:</label>
-                              <div class="form-group">
-                                  <div class="row">
-                                      @php
-                                          $already_selected_documents = []
-                                      @endphp
-                                      @foreach($selected_documents as $selected_document)
+                      @if($user->role != 'admin')
+                          <div class="row">
+                              <div class="col">
+                                  <label class="form-label" for="email"> Document Types:</label>
+                                  <div class="form-group">
+                                      <div class="row">
                                           @php
-                                              $already_selected_documents[] = $selected_document->id;
+                                              $already_selected_documents = []
                                           @endphp
-                                      @endforeach
-                                      @foreach($documents as $document)
-                                          <div class="col-md-4">
-                                              <label class="checkbox-inline">
-                                                  <input type="checkbox" name="document_types[]" value="{{$document->id}}" {{in_array($document->id, $already_selected_documents) ? 'checked' : ''}}> {{$document->title}}
-                                              </label>
-                                          </div>
-                                      @endforeach
-                                      @if ($errors->has('document_types'))
-                                          <span class="text-danger">{{ $errors->first('document_types') }}</span>
-                                      @endif
+                                          @foreach($selected_documents as $selected_document)
+                                              @php
+                                                  $already_selected_documents[] = $selected_document->id;
+                                              @endphp
+                                          @endforeach
+                                          @foreach($documents as $document)
+                                              <div class="col-md-4">
+                                                  <label class="checkbox-inline">
+                                                      <input type="checkbox" name="document_types[]" value="{{$document->id}}" {{in_array($document->id, $already_selected_documents) ? 'checked' : ''}}> {{$document->title}}
+                                                  </label>
+                                              </div>
+                                          @endforeach
+                                          @if ($errors->has('document_types'))
+                                              <span class="text-danger">{{ $errors->first('document_types') }}</span>
+                                          @endif
+                                      </div>
                                   </div>
                               </div>
                           </div>
-                      </div>
+                      @endif
                      <div class="row">
                         <div class="col">
                            <div class="form-group">

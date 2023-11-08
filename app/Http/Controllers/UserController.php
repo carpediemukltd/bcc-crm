@@ -253,14 +253,17 @@ class UserController extends Controller
 
         if ($request->isMethod('put')) {
 
-            $request->validate([
+            $validate = [
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'phone_number' => 'required',
-                'document_types' => 'required|array|min:1',
-                'document_types.*' => 'exists:document_managers,id',
-            ]);
+            ];
 
+            if($this->data['user']->role != 'admin'){
+                $validate['document_types'] = 'required|array|min:1';
+                $validate['document_types.*'] = 'exists:document_managers,id';
+            }
+            $request->validate($validate);
             $update_data = [
                 'first_name'   => $request->first_name,
                 'last_name'    => $request->last_name,
@@ -283,8 +286,10 @@ class UserController extends Controller
                 }
             }
 
-            $user = User::whereId($id)->first();
-            $user->documentManagers()->sync($request->document_types);
+            if($request->type != 'admin'){
+                $user = User::whereId($id)->first();
+                $user->documentManagers()->sync($request->document_types);
+            }
 
             return redirect(url('contacts'))->withSuccess('Contact Updated Successfully.')->withInput();
         } else if ($request->isMethod('get')) {

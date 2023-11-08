@@ -78,9 +78,9 @@
                      </div>
                       <div class="row">
                           <div class="col">
+                              <label class="form-label" for="email">Document Types:</label>
                               <div class="form-group">
-                                  <label class="form-label" for="email">Document Types:</label>
-                                  <select name="document_types[]" id="document_types" multiple class="form-control">
+                                  <div class="row">
                                       @php
                                           $already_selected_documents = []
                                       @endphp
@@ -90,12 +90,16 @@
                                           @endphp
                                       @endforeach
                                       @foreach($documents as $document)
-                                          <option value="{{$document->id}}" {{in_array($document->id, $already_selected_documents) ? 'selected' : ''}}>{{$document->title}}</option>
+                                          <div class="col-md-4">
+                                              <label class="checkbox-inline">
+                                                  <input type="checkbox" name="document_types[]" value="{{$document->id}}" {{in_array($document->id, $already_selected_documents) ? 'checked' : ''}}> {{$document->title}}
+                                              </label>
+                                          </div>
                                       @endforeach
-                                  </select>
-                                  @if ($errors->has('document_types'))
-                                      <span class="text-danger">{{ $errors->first('document_types') }}</span>
-                                  @endif
+                                      @if ($errors->has('document_types'))
+                                          <span class="text-danger">{{ $errors->first('document_types') }}</span>
+                                      @endif
+                                  </div>
                               </div>
                           </div>
                       </div>

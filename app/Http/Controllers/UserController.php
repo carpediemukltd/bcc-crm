@@ -79,7 +79,7 @@ class UserController extends Controller
 
     public function addUser(Request $request)
     {
-       
+
         $this->data['current_slug'] = 'Add Contact';
         $this->data['slug']         = 'add_user';
         $user = auth()->user();
@@ -138,7 +138,7 @@ class UserController extends Controller
                     'moduleName' => 'Contact',
                     'user_id' => auth()->id(),
                     'contact_id' => $new_user->id
-                   
+
                 ]);
 
                 if ($data['role'] == 'owner')
@@ -178,7 +178,27 @@ class UserController extends Controller
         } else if ($request->isMethod('get')) {
             $this->data['roles']     = array_diff($this->data['roles'], ['user']);
             $this->data['companies'] = Company::whereStatus('active')->get();
-            $this->data['documents'] = DocumentManager::get();
+            $documents = DocumentManager::get();
+            $sortedDocuments = $documents->sort(function ($a, $b) {
+                // Custom sorting function
+                $pattern = '/^\d+/'; // Regular expression to match numbers at the beginning of the title
+
+                // Extract numbers from the beginning of the titles
+                preg_match($pattern, $a->title, $matchesA);
+                preg_match($pattern, $b->title, $matchesB);
+
+                // Compare titles using natural order comparison
+                if (!empty($matchesA) && empty($matchesB)) {
+                    return 1; // Move titles starting with numbers to the end
+                } elseif (empty($matchesA) && !empty($matchesB)) {
+                    return -1; // Keep other titles at the beginning
+                } else {
+                    return strnatcasecmp($a->title, $b->title);
+                }
+            });
+
+            $sortedDocumentsArray = $sortedDocuments->values()->all();
+            $this->data['documents'] = $sortedDocumentsArray;
             return view($request->type == 'admin' ? 'user.add-admin' : 'user.add', $this->data);
         }
     }
@@ -211,11 +231,11 @@ class UserController extends Controller
     }
 
     public function userDetails(Request $request, $id)
-    {   
+    {
 
 
-        
-       
+
+
         $this->data['current_slug']  = 'Contact Details';
         $this->data['slug']          = 'user_details';
         $access = Permissions::checkUserAccess($this->user, $id);
@@ -233,7 +253,7 @@ class UserController extends Controller
         if ($request->isMethod('put')) {
 
 
-           
+
             $update_data = [
                 'first_name'   => $request->first_name,
                 'last_name'    => $request->last_name,
@@ -255,7 +275,7 @@ class UserController extends Controller
                 'moduleName' => 'Custom Field',
                 'user_id' => auth()->id(),
                 'contact_id' =>$id
-               
+
             ]);
 
 
@@ -274,9 +294,9 @@ class UserController extends Controller
             $deal = Deal::where('user_id',$id)->get();
             $stage = Stage::all();
 
-            
 
-            
+
+
 
             $this->data['bankusers'] = User::whereRole('bank')->get();
             return view("user.details", $this->data,compact('activity','userRecord','document','customFieldDetails','customField','deal','stage'));
@@ -343,7 +363,27 @@ class UserController extends Controller
 
             return redirect(url('contacts'))->withSuccess('Contact Updated Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
-            $this->data['documents'] = DocumentManager::get();
+            $documents = DocumentManager::get();
+            $sortedDocuments = $documents->sort(function ($a, $b) {
+                // Custom sorting function
+                $pattern = '/^\d+/'; // Regular expression to match numbers at the beginning of the title
+
+                // Extract numbers from the beginning of the titles
+                preg_match($pattern, $a->title, $matchesA);
+                preg_match($pattern, $b->title, $matchesB);
+
+                // Compare titles using natural order comparison
+                if (!empty($matchesA) && empty($matchesB)) {
+                    return 1; // Move titles starting with numbers to the end
+                } elseif (empty($matchesA) && !empty($matchesB)) {
+                    return -1; // Keep other titles at the beginning
+                } else {
+                    return strnatcasecmp($a->title, $b->title);
+                }
+            });
+
+            $sortedDocumentsArray = $sortedDocuments->values()->all();
+            $this->data['documents'] = $sortedDocumentsArray;
             $this->data['selected_documents'] = $this->data['user']->DocumentManagers;
             return view("user.edit", $this->data);
         }

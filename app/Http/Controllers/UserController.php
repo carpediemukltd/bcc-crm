@@ -518,9 +518,9 @@ class UserController extends Controller
                 "sat_count" => $sat_count,
             ];
             $user = auth()->user();
-            /* if(!$user->hasAnyRole(['admin','owner', 'user'])) {
+            if(!$user->hasAnyRole(['admin','owner', 'user'])) {
                 $user->assignRole($user->role);
-            } */
+            }
             $slug = "dashboard";
             return view('dashboard',compact('user_count', 'week_data', 'slug'));
 

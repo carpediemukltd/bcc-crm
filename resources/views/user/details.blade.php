@@ -270,63 +270,114 @@
                                 </div>
                             </div>
                             <div class="card-body" style="min-height: 580px;">
-                                There is no Activity
-                                <!-- <div class="iq-timeline0 m-0 d-flex align-items-center justify-content-between position-relative">
+                                <!-- There is no Activity -->
+                                <div class="iq-timeline0 m-0 d-flex align-items-center justify-content-between position-relative">
                                     <ul class="list-inline p-0 m-0">
                                         <li>
                                             <div class="timeline-dots timeline-dot1 border-primary text-primary"></div>
-                                            <h6 class="float-left mb-1">Client Login</h6>
-                                            <small class="float-right mt-1">24 November 2019</small>
-                                            <div class="d-inline-block w-100">
-                                                <p>Bonbon macaroon jelly beans gummi bears jelly lollipop apple</p>
-                                            </div>
+                                            <h6 class="float-left mb-1">Contact Created</h6>
+                                            @foreach($activity as $activeities)
+                                            @if($activeities->moduleName == 'Contact')
+                                            <small class="float-right mt-1">Time : {{date('d-m-Y h:i:s', strtotime($activeities->created_at));}}</small>
+                                                @foreach($userRecord as $userrecord)
+                                                @if($activeities->user_id == $userrecord->id)
+                                                <div class="d-inline-block w-100">
+                                                    <small class="float-right mt-1">Created By : {{$userrecord->first_name}} {{$userrecord->last_name}}</small>
+                                                </div>
+                                                @endif
+                                                @endforeach
+                                            @endif
+                                            @endforeach
                                         </li>
                                         <li>
                                             <div class="timeline-dots timeline-dot1 border-success text-success"></div>
-                                            <h6 class="float-left mb-1">Scheduled Maintenance</h6>
-                                            <small class="float-right mt-1">23 November 2019</small>
-                                            <div class="d-inline-block w-100">
-                                                <p>Bonbon macaroon jelly beans gummi bears jelly lollipop apple</p>
-                                            </div>
+                                            <h6 class="float-left mb-1">Deal Created</h6>
+                                            @foreach($activity as $activeities)
+                                            @if($activeities->moduleName == 'Deal')
+                                            <small class="float-right mt-1">Time : {{date('d-m-Y h:i:s', strtotime($activeities->created_at));}} </small>
+                                                @foreach($userRecord as $userrecord)
+                                                @if($activeities->user_id == $userrecord->id)
+                                                <div class="d-inline-block w-100">
+                                                    <small class="float-right mt-1">Created By : {{$userrecord->first_name}} {{$userrecord->last_name}}</small>
+                                                </div>
+                                                @endif
+                                                @endforeach
+                                            @endif
+                                            @endforeach
+                                            
                                         </li>
                                         <li>
                                             <div class="timeline-dots timeline-dot1 border-danger text-danger"></div>
-                                            <h6 class="float-left mb-1">Dev Meetup</h6>
-                                            <small class="float-right mt-1">20 November 2019</small>
-                                            <div class="d-inline-block w-100">
-                                                <p>Bonbon macaroon jelly beans <a href="#">gummi bears</a>gummi bears jelly
-                                                    lollipop apple</p>
-                                                <div class="iq-media-group iq-media-group-1">
-                                                    <a href="#" class="iq-media-1">
-                                                        <div class="icon iq-icon-box-3 rounded-pill">SP</div>
-                                                    </a>
-                                                    <a href="#" class="iq-media-1">
-                                                        <div class="icon iq-icon-box-3 rounded-pill">PP</div>
-                                                    </a>
-                                                    <a href="#" class="iq-media-1">
-                                                        <div class="icon iq-icon-box-3 rounded-pill">MM</div>
-                                                    </a>
-                                                </div>
-                                            </div>
+                                            <h6 class="float-left mb-1">Stage moves</h6>
+                                            @foreach($activity as $activeities)
+                                                @if($activeities->moduleName == 'Stage')
+                                                <small class="float-right mt-1">Time : {{date('d-m-Y h:i:s', strtotime($activeities->created_at));}} </small>
+                                                    @foreach($userRecord as $userrecord)
+                                                        @if($activeities->user_id == $userrecord->id)
+                                                        <div class="d-inline-block w-100">
+                                                            <small class="float-right mt-1">Created By : {{$userrecord->first_name}} {{$userrecord->last_name}}</small>
+                                                        </div>
+
+                                                        <div class="d-inline-block w-100">
+                                                            <small class="float-right mt-1">Stage Name : {{$activeities->details}} </small>
+                                                        </div>
+                                                        @endif
+                                                    @endforeach
+                                               
+                                                @endif
+                                            @endforeach
+
                                         </li>
                                         <li>
                                             <div class="timeline-dots timeline-dot1 border-primary text-primary"></div>
-                                            <h6 class="float-left mb-1">Client Call</h6>
-                                            <small class="float-right mt-1">19 November 2019</small>
-                                            <div class="d-inline-block w-100">
-                                                <p>Bonbon macaroon jelly beans gummi bears jelly lollipop apple</p>
-                                            </div>
+                                            <h6 class="float-left mb-1">Custom Field</h6>
+                                            @foreach($activity as $activeities)
+                                            @if($activeities->moduleName == 'Custom Field')
+                                            <small class="float-right mt-1">Time : {{date('d-m-Y h:i:s', strtotime($activeities->created_at));}}</small>
+                                                @foreach($userRecord as $userrecord)
+                                                    @if($activeities->user_id == $userrecord->id)
+                                                    <div class="d-inline-block w-100">
+                                                        <small class="float-right mt-1">Created By : {{$userrecord->first_name}} {{$userrecord->last_name}}</small>
+                                                    </div>
+                                                    @endif
+                                                    @endforeach
+                                               
+                                            @endif
+                                            @endforeach
+
+                                            @foreach($customFieldDetails as $customFieldDetails)
+                                                @foreach($customField as $customFields)
+                                                    @if( $customFields->id == $customFieldDetails->custom_field_id )
+                                                    
+                                                    <div class="d-inline-block w-100">
+                                                            <small class="float-right mt-1">Title : {{$customFields->title }}</small>
+                                                            <small class="float-right mt-1">Data : {{$customFieldDetails->data}}</small>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+
+                                            @endforeach
+
                                         </li>
+
+                                      
                                         <li>
                                             <div class="timeline-dots timeline-dot1 border-warning text-warning"></div>
-                                            <h6 class="float-left mb-1">Mega event</h6>
-                                            <small class="float-right mt-1">15 November 2019</small>
-                                            <div class="d-inline-block w-100">
-                                                <p>Bonbon macaroon jelly beans gummi bears jelly lollipop apple</p>
-                                            </div>
+                                            <h6 class="float-left mb-1">Document Uploaded</h6>
+                                            @foreach($document as $document)
+                                           
+                                            <small class="float-right mt-1">Time : {{date('d-m-Y h:i:s', strtotime($document->created_at));}} </small>
+                                               
+                                                <div class="d-inline-block w-100">
+                                                    <small class="float-right mt-1">Document : {{$document->file_name}} </small>
+                                                    <small class="float-right mt-1">URl : {{$document->file_path}}</small>
+                                                </div>
+                                               
+                                           
+                                            @endforeach
                                         </li>
                                     </ul>
-                                </div> -->
+                                </div>
                             </div>
                         </div>
                     <!-- <div id="profile-friends" class="tab-pane fade">

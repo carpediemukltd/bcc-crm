@@ -1886,3 +1886,18 @@ div#user_edit_view {
   position: relative;
   top: -3px;
 }
+.accordion .accordion-item .accordion-header{
+  background-color: #efefef;
+}
+.add-clicker-btns{
+  align-items: center;
+}
+.add-clicker-btns a{
+  position: relative;
+  top: 2px;
+}
+.add-clicker-btns button{
+  border: none;
+  background-color: inherit;
+  color: #065930;
+}

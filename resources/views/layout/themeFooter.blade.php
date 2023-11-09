@@ -791,7 +791,7 @@
 
 <script src="{{asset('assets/vendor/sortable/Sortable.min.js')}}"></script>
 <script src="{{asset('assets/js/plugins/kanban.js')}}"></script>
-<script src="{{asset('assets/js/latest-cdn/intlTelInput-jquery.min.js.js')}}"></script>
+<script src="{{asset('assets/js/latest-cdn/intlTelInput-jquery.min.js')}}"></script>
 
 
 

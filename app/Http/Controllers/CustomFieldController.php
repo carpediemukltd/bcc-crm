@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\CustomField;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -52,6 +53,13 @@ class CustomFieldController extends Controller
                     'sort'  => $sort,
                     'visible'  => $visible
                 ]);
+
+                // $activity = Activity::create([
+                //     'moduleName' => 'Stage',
+                //     'user_id' => auth()->id(),
+                //     // 'contact_id' => $data->id
+                   
+                // ]);
                 return redirect(url('customfield'))->withSuccess('Custom Field Created Successfully.')->withInput();
             }
         } else if ($request->isMethod('get')) {

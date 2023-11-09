@@ -106,7 +106,7 @@ body {
   --bs-primary-shade-80: #0c112e;
   --bs-primary-shade-60: #17235d;
   --bs-primary-shade-40: #23348b;
-  --bs-primary-shade-20: #2e46ba;
+  --bs-primary-shade-20: #00572b;
   --bs-primary-tint-90: #ebeefd;
   --bs-primary-tint-80: #d8ddfa;
   --bs-primary-tint-60: #b0bcf6;
@@ -191,7 +191,7 @@ body {
   --bs-border-radius-2xl: 2rem;
   --bs-border-radius-pill: 50rem;
   --bs-link-color: #00562c;
-  --bs-link-hover-color: #2e46ba;
+  --bs-link-hover-color: #00572b;
   --bs-code-color: #d63384;
   --bs-highlight-bg: #fce1d1;
 }
@@ -3543,10 +3543,10 @@ textarea.form-control-lg {
   --bs-btn-border-color: #00562c;
   --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg: #314ac5;
-  --bs-btn-hover-border-color: #2e46ba;
+  --bs-btn-hover-border-color: #00572b;
   --bs-btn-focus-shadow-rgb: 88, 112, 235;
   --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #2e46ba;
+  --bs-btn-active-bg: #00572b;
   --bs-btn-active-border-color: #2c41ae;
   --bs-btn-active-shadow: 0 0px 0px rgba(0, 0, 0, 0);
   --bs-btn-disabled-color: #fff;
@@ -4361,7 +4361,7 @@ textarea.form-control-lg {
   --bs-nav-link-padding-y: 0.5rem;
   --bs-nav-link-font-weight: ;
   --bs-nav-link-color: #00562c;
-  --bs-nav-link-hover-color: #2e46ba;
+  --bs-nav-link-hover-color: #00572b;
   --bs-nav-link-disabled-color: #adb5bd;
   display: -webkit-box;
   display: -webkit-flex;
@@ -8191,7 +8191,7 @@ textarea.form-control-lg {
   color: #00562c !important;
 }
 .link-primary:hover, .link-primary:focus {
-  color: #2e46ba !important;
+  color: #00572b !important;
 }
 
 .link-secondary {
@@ -13785,10 +13785,10 @@ textarea.form-control-lg {
   --bs-btn-border-color: #00562c;
   --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg: #314ac5;
-  --bs-btn-hover-border-color: #2e46ba;
+  --bs-btn-hover-border-color: #00572b;
   --bs-btn-focus-shadow-rgb: 88, 112, 235;
   --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #2e46ba;
+  --bs-btn-active-bg: #00572b;
   --bs-btn-active-border-color: #2c41ae;
   --bs-btn-active-shadow: 0 0px 0px rgba(0, 0, 0, 0);
   --bs-btn-disabled-color: #fff;

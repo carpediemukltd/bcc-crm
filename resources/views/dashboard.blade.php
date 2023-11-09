@@ -6,12 +6,12 @@
         left: 50%;
         top: 50%;
         z-index: 1;
-        width: 60px;
-        height: 60px;
+        width: 120px;
+        height: 120px;
         margin: -76px 0 0 -76px;
-        border: 6px solid #f3f3f3;
+        border: 16px solid #f3f3f3;
         border-radius: 50%;
-        border-top: 6px solid #00562c;
+        border-top: 16px solid #3498db;
         -webkit-animation: spin 2s linear infinite;
         animation: spin 2s linear infinite;
     }
@@ -77,10 +77,9 @@
 </style>
 @endsection
 @section('content')
-<div id="loader" style="display: none;"></div>
 <div class="content-inner container-fluid pb-0" id="page_layout">
     @include('alert_message')
-    
+    <div id="loader" style="display: none;"></div>
     <div class="row">
         <div class="col-lg-12 col-md-12">
             <div class="card card-block card-stretch card-height mb-0">

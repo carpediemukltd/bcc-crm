@@ -8,6 +8,7 @@
                     <div class="flex-wrap d-flex justify-content-between align-items-center">
                         <div>
                             <h1>Notification Setting</h1>
+                            <p>Experience a simple yet powerful way to build Dashboards.</p>
                         </div>
                     </div>
                 </div>

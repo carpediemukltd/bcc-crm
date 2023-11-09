@@ -34,17 +34,17 @@
       <!-- RTL Css -->
       <!-- <link rel="stylesheet" href="{{asset('assets/css/rtl.min.css?v=3.0.0')}}" /> -->
       <!-- Google Font -->
-      <script type="text/javascript" src="{{asset('assets/js/latest-cdn/jquery.min.js')}}"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
       <script type="text/javascript" src="{{asset('assets/js/jsFunctions.js?v=1.0')}}"></script>
-      <script type="text/javascript" src="{{asset('assets/js/latest-cdn/moment.min.js')}}"></script>
-      <script type="text/javascript" src="{{asset('assets/js/latest-cdn/daterangepicker.min.js')}}" defer></script>
-      <link rel="stylesheet" type="text/css" href="{{asset('assets/css/daterangepicker.css')}}" />
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" defer></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
        <link href="{{asset('assets/css/chat-style.css')}}" rel="stylesheet" />
       <meta name="csrf-token" content="{{ csrf_token() }}">
-      <link rel="stylesheet" href="{{asset('assets/css/intlTelInput.min.css')}}">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
 
       @yield('css')
    </head>
@@ -55,7 +55,7 @@
       <div id="loading">
          <div class="loader simple-loader">
             <div class="loader-body">
-               <img id="loading-image" src="{{asset('assets/images/loader.webp')}}" alt="" class="light-loader img-fluid w-25" width="200" height="200">
+               <img id="loading-image" src="{{asset('assets/images/loader.webp')}}" alt="loader" class="light-loader img-fluid w-25" width="200" height="200">
             </div>
          </div>
       </div>
@@ -68,7 +68,7 @@
                   <!--Logo start-->
                   <div class="logo-main">
                      <div class="logo-normal">
-                        <img src="{{asset('assets/images/bcc-update-logo.png')}}" alt="">
+                        <img src="{{asset('assets/images/bcc-update-logo.png')}}" alt="" style="width:100px">
                      </div>
                   </div>
                   <!--logo End-->
@@ -95,7 +95,7 @@
                               </a>
                            </li>
                            <!-- sales menu start -->
-                           <li class="nav-item <?php if(isset($slug) && in_array($slug, ['deals_company', 'stages', 'roundrobin', 'companies', 'list_company', 'edit_company', 'add_company','pipelines', 'add_user', 'user_list', 'edit_user', 'user_details', 'user_deals', 'user_add_deal', 'user_edit_deal']) && !isset($_GET['type'])){echo 'active';}?>">
+                           <li class="nav-item">
                               <a class="nav-link menu-arrow justify-content-start" data-bs-toggle="collapse" href="#allPagesData3" role="button" aria-expanded="false" aria-controls="allPagesData3">
                                  <!-- <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path opacity="0.4" d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2" fill="currentColor"></path>
@@ -247,7 +247,7 @@
                                  <!-- companies start -->
                                  @if (Auth::user()->role == 'superadmin')
                                  <li class="nav-item dropdown iq-responsive-menu d-block">
-                                    <a class="nav-link <?php if(isset($slug) && in_array($slug, ['companies', 'list_company', 'edit_company', 'add_company', 'deals_company'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
+                                    <a class="nav-link <?php if(isset($slug) && in_array($slug, ['companies', 'list_company', 'edit_company', 'add_company'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
                                        aria-expanded="false" href="#sidebar-companies">
                                        <i class="icon" >
                                           <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -387,7 +387,7 @@
                            </li>
                            <!-- sales menu end -->
                            <!-- customization dropdown start -->
-                           <li class="nav-item <?php if(isset($slug) && in_array($slug, ['email_templates', 'add_field', 'field_list', 'edit_field'])){echo 'active';}?>   ">
+                           <li class="nav-item">
                               <a class="nav-link menu-arrow justify-content-start" data-bs-toggle="collapse" href="#allPagesData" role="button" aria-expanded="false" aria-controls="allPagesData">
                                  <!-- <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path opacity="0.4" d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2" fill="currentColor"></path>

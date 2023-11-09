@@ -30,9 +30,9 @@ class DocumentController extends Controller
 
         if(count($user->documentManagers) === 0){
             $all_doc_type  = [
-                "expedited_products" => [
-                    "Completed_Application" => [], "Past_6_Months_of_Bank_Statements" => [], "Driver's_License" => []
-                ],
+//                "expedited_products" => [
+//                    "Completed_Application" => [], "Past_6_Months_of_Bank_Statements" => [], "Driver's_License" => []
+//                ],
                 "sba_products" => [
                     "Completed_Application" => [], "Past_6_Months_of_Bank_Statements" => [], "Past_3_Years_of_Personal_&_Corporate_Tax_Returns" => [],
                     $yearToDateProfitLoss => [],  $yearToDateProfitBalanceSheet => [], "Completed_Debt_Schedule" => [],
@@ -41,9 +41,9 @@ class DocumentController extends Controller
             ];
         }else{
             $all_doc_type = [
-                "expedited_products" => [
-                    "Completed_Application" => [], "Past_6_Months_of_Bank_Statements" => [], "Driver's_License" => []
-                ],
+//                "expedited_products" => [
+//                    "Completed_Application" => [], "Past_6_Months_of_Bank_Statements" => [], "Driver's_License" => []
+//                ],
             ];
 
             foreach($user->documentManagers as $documentManager){
@@ -98,7 +98,10 @@ class DocumentController extends Controller
             }
         }
 
-        $data['doc_type_title'] = ['expedited_products' => 'Expedited Products', 'sba_products' => 'SBA Products'];
+        $data['doc_type_title'] = [
+//            'expedited_products' => 'Expedited Products',
+            'sba_products' => 'SBA Products'
+        ];
         $data['all_documents'] = $all_doc_type;
         $data['content'] = $content;
         $data['ocrolus_csv_path'] = $ocrolusCSV;
@@ -171,7 +174,7 @@ class DocumentController extends Controller
                 )) || preg_match('/^\d{4}_Year-to-date_\(or_within_60_days_max\)_/', $fileGroupName)) {
                     PostFilesToOcrolus::dispatch($doc);
                 }
-            }            
+            }
             $data['document_path'] = $url;
 
             return ApiResponse::success($data, 'Document uploaded successfully.', 200);

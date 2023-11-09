@@ -10,9 +10,6 @@
       </ul>
       <div class="right-panel">
          ©2023 <span>BCC, CRM</span>
-         <!-- , Developed
-         
-         by <a href="https://carpediem.team/" target="_blank">Carpediem</a>. -->
       </div>
    </div>
 </footer>
@@ -761,8 +758,8 @@
 <script src="{{asset('assets/js/core/libs.min.js')}}"></script>
 <!-- Plugin Scripts -->
 <!-- Tour plugin Start -->
-<script src="{{asset('assets/vendor/sheperd/dist/js/sheperd.min.js')}}"></script>
-<script src="{{asset('assets//js/plugins/tour.js')}}" defer></script>
+<!-- <script src="{{asset('assets/vendor/sheperd/dist/js/sheperd.min.js')}}"></script> -->
+<!-- <script src="{{asset('assets//js/plugins/tour.js')}}" defer></script> -->
 <!-- Flatpickr Script -->
 <script src="{{asset('assets/vendor/flatpickr/dist/flatpickr.min.js')}}"></script>
 <script src="{{asset('assets/js/plugins/flatpickr.js')}}" defer></script>
@@ -778,7 +775,7 @@
 <!-- Settings Script -->
 <script src="{{asset('assets/js/iqonic-script/setting.min.js')}}"></script>
 <!-- Settings Init Script -->
-<script src="{{asset('assets/js/setting-init.js')}}"></script>
+<!-- <script src="{{asset('assets/js/setting-init.js')}}"></script> -->
 <!-- External Library Bundle Script -->
 <script src="{{asset('assets/js/core/external.min.js')}}"></script>
 <!-- Widgetchart Script -->
@@ -789,12 +786,12 @@
 <!-- Hopeui Script -->
 <script src="{{asset('assets/js/hope-ui.js?v=3.0.0')}}" defer></script>
 <script src="{{asset('assets/js/hope-uipro.js?v=3.0.0')}}" defer></script>
-<script src="{{asset('assets/js/sidebar.js?v=3.0.0')}}" defer></script>
-<script src="{{asset('assets/js/solid-icon-search-filter.js')}}"></script>
+<!-- <script src="{{asset('assets/js/sidebar.js?v=3.0.0')}}" defer></script> -->
+<!-- <script src="{{asset('assets/js/solid-icon-search-filter.js')}}"></script> -->
 
 <script src="{{asset('assets/vendor/sortable/Sortable.min.js')}}"></script>
 <script src="{{asset('assets/js/plugins/kanban.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput-jquery.min.js"></script>
+<script src="{{asset('assets/js/latest-cdn/intlTelInput-jquery.min.js.js')}}"></script>
 
 
 

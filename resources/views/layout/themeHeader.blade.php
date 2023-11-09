@@ -34,17 +34,17 @@
       <!-- RTL Css -->
       <!-- <link rel="stylesheet" href="{{asset('assets/css/rtl.min.css?v=3.0.0')}}" /> -->
       <!-- Google Font -->
-      <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+      <script type="text/javascript" src="{{asset('assets/js/latest-cdn/jquery.min.js')}}"></script>
       <script type="text/javascript" src="{{asset('assets/js/jsFunctions.js?v=1.0')}}"></script>
-      <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" defer></script>
-      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+      <script type="text/javascript" src="{{asset('assets/js/latest-cdn/moment.min.js')}}"></script>
+      <script type="text/javascript" src="{{asset('assets/js/latest-cdn/daterangepicker.min.js')}}" defer></script>
+      <link rel="stylesheet" type="text/css" href="{{asset('assets/css/daterangepicker.css')}}" />
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
        <link href="{{asset('assets/css/chat-style.css')}}" rel="stylesheet" />
       <meta name="csrf-token" content="{{ csrf_token() }}">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+      <link rel="stylesheet" href="{{asset('assets/css/intlTelInput.min.css')}}">
 
       @yield('css')
    </head>
@@ -55,7 +55,7 @@
       <div id="loading">
          <div class="loader simple-loader">
             <div class="loader-body">
-               <img id="loading-image" src="{{asset('assets/images/loader.webp')}}" alt="loader" class="light-loader img-fluid w-25" width="200" height="200">
+               <img id="loading-image" src="{{asset('assets/images/loader.webp')}}" alt="" class="light-loader img-fluid w-25" width="200" height="200">
             </div>
          </div>
       </div>
@@ -68,7 +68,7 @@
                   <!--Logo start-->
                   <div class="logo-main">
                      <div class="logo-normal">
-                        <img src="{{asset('assets/images/bcc-update-logo.png')}}" alt="" style="width:100px">
+                        <img src="{{asset('assets/images/bcc-update-logo.png')}}" alt="">
                      </div>
                   </div>
                   <!--logo End-->

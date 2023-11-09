@@ -8,7 +8,6 @@
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
                      <h1>Edit Contact</h1>
-                     <p>You can edit this contact.</p>
                   </div>
                   <div>
                      <!-- <a href="" class="btn btn-link btn-soft-light">
@@ -35,112 +34,125 @@
       <div class="row">
          <div class="col-lg-12">
             <div class="card">
-               <div class="card-header d-flex justify-content-between">
+               <!-- <div class="card-header d-flex justify-content-between">
                   <div class="header-title">
-                     <h4 class="card-title">Edit Form</h4>
+                     <h4 class="card-title"></h4>
                   </div>
-               </div>
+               </div> -->
                <div class="card-body">
-                  <form action="{{route('user.edit', $user->id)}}" method="POST">
-                     @method('PUT')
-                     @csrf
-                     <div class="row">
-                        <div class="col">
-                           <div class="form-group">
-                              <label class="form-label" for="first_name">First name:</label>
-                              <input type="text" class="form-control" id="first_name" placeholder="First name" value="{{$user->first_name}}" name="first_name" required>
-                           </div>
-                        </div>
-                        <div class="col">
-                           <div class="form-group">
-                              <label class="form-label" for="last_name">Last name:</label>
-                              <input type="text" class="form-control" id="last_name" placeholder="Last name" value="{{$user->last_name}}" name="last_name" required>
-                           </div>
-                        </div>
-                     </div>
-
-                     <div class="row">
-                        <div class="col">
-                           <div class="form-group">
-                              <label class="form-label" for="email">Email address:</label>
-                              <input type="email" class="form-control" id="email" value="{{$user->email}}" disabled>
-                           </div>
-                        </div>
-                        <div class="col">
-                           <div class="form-group">
-                              <input type="hidden" name="phone_country_code" id="selected-country-code" >
-                              <label class="form-label" for="phone_number">Phone number:</label>
-                              <div class="phone-input">
-                                 <input value="{{$user->phone_number}}" name="phone_number" type="tel" id="phone-number" placeholder="Enter your phone number" class="form-control" required>
-                              </div>
-                            </div>
-                        </div>
-                     </div>
-                      <div class="row">
-                          <div class="col">
+                  <div class="accordion custom-accordion" id="edit-form-accordion">
+                     <div class="accordion-item">
+                        <h5 class="accordion-header" id="custom-headingOne">
+                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#custom-collapseOne" aria-expanded="false" aria-controls="custom-collapseOne" fdprocessedid="934s1d">
+                           Edit Form
+                           </button>
+                        </h5>
+                        <div id="custom-collapseOne" class="accordion-collapse collapse" aria-labelledby="custom-headingOne" data-bs-parent="#edit-form-accordion" style="">
+                           <div class="accordion-body">
+                           <form action="{{route('user.edit', $user->id)}}" method="POST">
+                        @method('PUT')
+                        @csrf
+                        <div class="row">
+                           <div class="col">
                               <div class="form-group">
-                                  <label class="form-label" for="email">Document Types:</label>
-                                  <select name="document_types[]" id="document_types" multiple class="form-control">
-                                      @php
-                                          $already_selected_documents = []
-                                      @endphp
-                                      @foreach($selected_documents as $selected_document)
-                                          @php
-                                              $already_selected_documents[] = $selected_document->id;
-                                          @endphp
-                                      @endforeach
-                                      @foreach($documents as $document)
-                                          <option value="{{$document->id}}" {{in_array($document->id, $already_selected_documents) ? 'selected' : ''}}>{{$document->title}}</option>
-                                      @endforeach
-                                  </select>
-                                  @if ($errors->has('document_types'))
-                                      <span class="text-danger">{{ $errors->first('document_types') }}</span>
-                                  @endif
+                                 <label class="form-label" for="first_name">First name:</label>
+                                 <input type="text" class="form-control" id="first_name" placeholder="First name" value="{{$user->first_name}}" name="first_name" required>
                               </div>
-                          </div>
-                      </div>
-                     <div class="row">
-                        <div class="col">
-                           <div class="form-group">
-                              <label class="form-label" for="password">Password:</label>
-                              <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                           </div>
+                           <div class="col">
+                              <div class="form-group">
+                                 <label class="form-label" for="last_name">Last name:</label>
+                                 <input type="text" class="form-control" id="last_name" placeholder="Last name" value="{{$user->last_name}}" name="last_name" required>
+                              </div>
                            </div>
                         </div>
-                        <div class="col">
-                           <div class="form-group">
-                              <label class="form-label" for="status">Status:</label>
-                              <select class="form-select" id="status" name="status">
-                                 @foreach($all_status as $rec_status)
-                                    <option value="{{$rec_status}}" <?php if($rec_status == $user->status){echo 'selected';}?>>{{ucfirst($rec_status)}}</option>
-                                 @endforeach
-                              </select>
+
+                        <div class="row">
+                           <div class="col">
+                              <div class="form-group">
+                                 <label class="form-label" for="email">Email address:</label>
+                                 <input type="email" class="form-control" id="email" value="{{$user->email}}" disabled>
+                              </div>
+                           </div>
+                           <div class="col">
+                              <div class="form-group">
+                                 <input type="hidden" name="phone_country_code" id="selected-country-code" >
+                                 <label class="form-label" for="phone_number">Phone number:</label>
+                                 <div class="phone-input">
+                                    <input value="{{$user->phone_number}}" name="phone_number" type="tel" id="phone-number" placeholder="Enter your phone number" class="form-control" required>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col">
+                                 <div class="form-group">
+                                    <label class="form-label" for="email">Document Types:</label>
+                                    <select name="document_types[]" id="document_types" multiple class="form-control">
+                                       @php
+                                             $already_selected_documents = []
+                                       @endphp
+                                       @foreach($selected_documents as $selected_document)
+                                             @php
+                                                $already_selected_documents[] = $selected_document->id;
+                                             @endphp
+                                       @endforeach
+                                       @foreach($documents as $document)
+                                             <option value="{{$document->id}}" {{in_array($document->id, $already_selected_documents) ? 'selected' : ''}}>{{$document->title}}</option>
+                                       @endforeach
+                                    </select>
+                                    @if ($errors->has('document_types'))
+                                       <span class="text-danger">{{ $errors->first('document_types') }}</span>
+                                    @endif
+                                 </div>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col">
+                              <div class="form-group">
+                                 <label class="form-label" for="password">Password:</label>
+                                 <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                              </div>
+                           </div>
+                           <div class="col">
+                              <div class="form-group">
+                                 <label class="form-label" for="status">Status:</label>
+                                 <select class="form-select" id="status" name="status">
+                                    @foreach($all_status as $rec_status)
+                                       <option value="{{$rec_status}}" <?php if($rec_status == $user->status){echo 'selected';}?>>{{ucfirst($rec_status)}}</option>
+                                    @endforeach
+                                 </select>
+                              </div>
+                           </div>
+                        </div>
+
+                        @if (count($custom_fields)>0)
+                        <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
+
+                        <div class="row">
+                        @foreach($custom_fields as $field)
+                           <div class="col-6">
+                              <div class="form-group">
+                                 <label class="form-label">{{$field->title}}</label>
+                                 <input type="text" class="form-control" id="custom_fields[{{$field->id}}]" name="custom_fields[{{$field->id}}]" value="{{$field->data}}" placeholder="{{$field->title}}" name="custom_fields[{{$field->id}}]">
+                              </div>
+                           </div>
+                           @endforeach
+                        </div>
+
+                        @endif
+
+                        <div class="row">
+                           <div class="col">
+                              <button type="submit" class="btn btn-primary">Update</button>
+                              <a href="{{ route('user.list') }}" class="btn btn-danger">Cancel</a>
+                           </div>
+                        </div>
+                     </form>
                            </div>
                         </div>
                      </div>
-
-                     @if (count($custom_fields)>0)
-                     <input type="hidden" id="custom_fields_count"  name="custom_fields_count" value="{{count($custom_fields)}}">
-
-                     <div class="row">
-                     @foreach($custom_fields as $field)
-                        <div class="col-6">
-                           <div class="form-group">
-                              <label class="form-label">{{$field->title}}</label>
-                              <input type="text" class="form-control" id="custom_fields[{{$field->id}}]" name="custom_fields[{{$field->id}}]" value="{{$field->data}}" placeholder="{{$field->title}}" name="custom_fields[{{$field->id}}]">
-                           </div>
-                        </div>
-                        @endforeach
-                     </div>
-
-                     @endif
-
-                     <div class="row">
-                        <div class="col">
-                           <button type="submit" class="btn btn-primary">Update</button>
-                           <a href="{{ route('user.list') }}" class="btn btn-danger">Cancel</a>
-                        </div>
-                     </div>
-                  </form>
+                  </div>
                </div>
             </div>
          </div>

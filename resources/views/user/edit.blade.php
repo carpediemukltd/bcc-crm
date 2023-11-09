@@ -39,7 +39,7 @@
                   </div>
                   </div> -->
                <div class="card-body">
-                  
+
                   <form action="{{route('user.edit', $user->id)}}" method="POST">
                      @method('PUT')
                      @csrf
@@ -131,29 +131,6 @@
                         <div class="row">
                            <div class="col">
                               <div class="form-group">
-                                 <label class="form-label" for="email">Document Types:</label>
-                                 <select name="document_types[]" class="form-control" id="document_types" multiple class="form-control">
-                                 @php
-                                 $already_selected_documents = []
-                                 @endphp
-                                 @foreach($selected_documents as $selected_document)
-                                 @php
-                                 $already_selected_documents[] = $selected_document->id;
-                                 @endphp
-                                 @endforeach
-                                 @foreach($documents as $document)
-                                 <option value="{{$document->id}}" {{in_array($document->id, $already_selected_documents) ? 'selected' : ''}}>{{$document->title}}</option>
-                                 @endforeach
-                                 </select>
-                                 @if ($errors->has('document_types'))
-                                 <span class="text-danger">{{ $errors->first('document_types') }}</span>
-                                 @endif
-                              </div>
-                           </div>
-                        </div>
-                        <div class="row">
-                           <div class="col">
-                              <div class="form-group">
                                  <label class="form-label" for="password">Password:</label>
                                  <input type="password" class="form-control" id="password" placeholder="Password" name="password">
                               </div>
@@ -197,7 +174,7 @@
                            </div>
                         </div>
                         <!-- custim field collapse start -->
-                        
+
                         <div class="row">
                            <div class="col">
                               <button type="submit" class="btn btn-primary">Update</button>

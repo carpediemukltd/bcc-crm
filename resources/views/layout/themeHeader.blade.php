@@ -95,7 +95,7 @@
                               </a>
                            </li>
                            <!-- sales menu start -->
-                           <li class="nav-item">
+                           <li class="nav-item <?php if(isset($slug) && in_array($slug, ['deals_company', 'stages', 'roundrobin', 'companies', 'list_company', 'edit_company', 'add_company','pipelines', 'add_user', 'user_list', 'edit_user', 'user_details', 'user_deals', 'user_add_deal', 'user_edit_deal']) && !isset($_GET['type'])){echo 'active';}?>">
                               <a class="nav-link menu-arrow justify-content-start" data-bs-toggle="collapse" href="#allPagesData3" role="button" aria-expanded="false" aria-controls="allPagesData3">
                                  <!-- <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path opacity="0.4" d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2" fill="currentColor"></path>
@@ -247,7 +247,7 @@
                                  <!-- companies start -->
                                  @if (Auth::user()->role == 'superadmin')
                                  <li class="nav-item dropdown iq-responsive-menu d-block">
-                                    <a class="nav-link <?php if(isset($slug) && in_array($slug, ['companies', 'list_company', 'edit_company', 'add_company'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
+                                    <a class="nav-link <?php if(isset($slug) && in_array($slug, ['companies', 'list_company', 'edit_company', 'add_company', 'deals_company'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
                                        aria-expanded="false" href="#sidebar-companies">
                                        <i class="icon" >
                                           <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -387,7 +387,7 @@
                            </li>
                            <!-- sales menu end -->
                            <!-- customization dropdown start -->
-                           <li class="nav-item">
+                           <li class="nav-item <?php if(isset($slug) && in_array($slug, ['email_templates', 'add_field', 'field_list', 'edit_field'])){echo 'active';}?>   ">
                               <a class="nav-link menu-arrow justify-content-start" data-bs-toggle="collapse" href="#allPagesData" role="button" aria-expanded="false" aria-controls="allPagesData">
                                  <!-- <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path opacity="0.4" d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2" fill="currentColor"></path>

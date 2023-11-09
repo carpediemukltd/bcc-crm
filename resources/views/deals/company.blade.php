@@ -134,7 +134,7 @@
                         <div class="form-group w-100">
                            <label class="form-label">Select Company</label>
                            <div class="d-flex align-items-center justify-content-between">
-                              <select class="form-control" id="companies" name="companies">
+                              <select class="form-control" id="companies_list" name="companies_list">
                                  <option value="0">All</option>
                                  @foreach ($companies as $company)
                                  <option value="{{ $company->id }}">{{ $company->name }}</option>
@@ -189,7 +189,7 @@
                         </div>
                      </div>
                   </div>
-                  <div id="deals">
+                  <div id="deals_view">
                   </div>
                </div>
             </div>
@@ -199,7 +199,7 @@
 </div>
 <script type="text/javascript">
    $(document).ready(function() {
-       $('#companies').change(function() {
+       $('#companies_list').change(function() {
            $('#page_no').val(1);
            getDeals(1);
        });
@@ -226,16 +226,17 @@
    }
    
    function triggerGetDeals() {
-       $('#companies').trigger('change');
+       $('#companies_list').trigger('change');
    }
    
    function getDeals(page_no) {
-       var company_id = $('#companies').val();
+       var company_id = $('#companies_list').val();
        var depositing_institution = $('#depositing_institution').val();
        var state = $('#state').val();
        var submitted_bank = $('#submitted_bank').val();
        var sub_type = $('#sub_type').val();
-       $('#deals').html('Loading...');
+       $('#deals_view').html('Loading...');
+       $('#deals_view').show();
        $('#page_no').val(page_no);
        var url = "{{ route('company.deals.detail', ':deals_view') }}";
        url = url.replace(':deals_view', dealsView);
@@ -255,17 +256,18 @@
            },
            success: function(res) {
                $('#show_loading').hide();
-               $('#deals').html(res);
+               $('#deals_view').html(res);
+               $('#deals_view').show();
            },
            error: function(res) {
                $('#show_loading').hide();
-               $('#deals').html('Something went wrong...');
+               $('#deals_view').html('Something went wrong...');
            }
        });
    }
    
    function ExportData(type) {
-       var company_id = $('#companies').val();
+       var company_id = $('#companies_list').val();
        var depositing_institution = $('#depositing_institution').val();
        var state = $('#state').val();
        var submitted_bank = $('#submitted_bank').val();

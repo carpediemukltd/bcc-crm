@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Deal;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\DB;
 
 class Pipeline extends Model
 {
@@ -20,6 +21,7 @@ class Pipeline extends Model
     {
         $data = Pipeline::join('users', function ($join) {
             $join->on('users.company_id', '=', 'pipelines.company_id');
+            $join->on('users.company_id', '>', DB::raw(0));
         })
         ->where('users.id', $user_id)
         ->select('pipelines.*')

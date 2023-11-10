@@ -95,7 +95,7 @@
                               </a>
                            </li>
                            <!-- sales menu start -->
-                           <li class="nav-item">
+                           <li class="nav-item <?php if(isset($slug) && in_array($slug, ['deals_company', 'stages', 'roundrobin', 'companies', 'list_company', 'edit_company', 'add_company','pipelines', 'add_user', 'user_list', 'edit_user', 'user_details', 'user_deals', 'user_add_deal', 'user_edit_deal']) && !isset($_GET['type'])){echo 'active';}?>">
                               <a class="nav-link menu-arrow justify-content-start" data-bs-toggle="collapse" href="#allPagesData3" role="button" aria-expanded="false" aria-controls="allPagesData3">
                                  <!-- <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path opacity="0.4" d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2" fill="currentColor"></path>
@@ -137,31 +137,6 @@
                                  </li>     
                                  @endif
                                  <!-- pipeline start -->
-                                 <!-- deals start -->
-                                 <li class="nav-item">
-                                    <a class="nav-link <?php if(isset($slug) && $slug == 'deals-sandbox'){echo 'active';}?>"
-                                       href="{{url('deals-sandbox')}}">
-                                       <i class="icon">
-                                          <svg width="20" class="icon-20" height="20" viewBox="0 0 24 24" fill="none"
-                                             xmlns="">
-                                             <path opacity="0.4"
-                                                d="M16.6756 2H7.33333C3.92889 2 2 3.92889 2 7.33333V16.6667C2 20.0711 3.92889 22 7.33333 22H16.6756C20.08 22 22 20.0711 22 16.6667V7.33333C22 3.92889 20.08 2 16.6756 2Z"
-                                                fill="currentColor"></path>
-                                             <path
-                                                d="M7.36866 9.3689C6.91533 9.3689 6.54199 9.74223 6.54199 10.2045V17.0756C6.54199 17.5289 6.91533 17.9022 7.36866 17.9022C7.83088 17.9022 8.20421 17.5289 8.20421 17.0756V10.2045C8.20421 9.74223 7.83088 9.3689 7.36866 9.3689Z"
-                                                fill="currentColor"></path>
-                                             <path
-                                                d="M12.0352 6.08887C11.5818 6.08887 11.2085 6.4622 11.2085 6.92442V17.0755C11.2085 17.5289 11.5818 17.9022 12.0352 17.9022C12.4974 17.9022 12.8707 17.5289 12.8707 17.0755V6.92442C12.8707 6.4622 12.4974 6.08887 12.0352 6.08887Z"
-                                                fill="currentColor"></path>
-                                             <path
-                                                d="M16.6398 12.9956C16.1775 12.9956 15.8042 13.3689 15.8042 13.8312V17.0756C15.8042 17.5289 16.1775 17.9023 16.6309 17.9023C17.0931 17.9023 17.4664 17.5289 17.4664 17.0756V13.8312C17.4664 13.3689 17.0931 12.9956 16.6398 12.9956Z"
-                                                fill="currentColor"></path>
-                                          </svg>
-                                       </i>
-                                       <span class="item-name">Deals</span>
-                                    </a>
-                                 </li>
-                                 <!-- deals end -->
                                  <!-- contact start -->
                                  @if (Auth::user()->role == 'superadmin' || Auth::user()->role == 'admin' || Auth::user()->role == 'owner')
                                  <li class="nav-item dropdown iq-responsive-menu d-block">
@@ -247,7 +222,7 @@
                                  <!-- companies start -->
                                  @if (Auth::user()->role == 'superadmin')
                                  <li class="nav-item dropdown iq-responsive-menu d-block">
-                                    <a class="nav-link <?php if(isset($slug) && in_array($slug, ['companies', 'list_company', 'edit_company', 'add_company'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
+                                    <a class="nav-link <?php if(isset($slug) && in_array($slug, ['companies', 'list_company', 'edit_company', 'add_company', 'deals_company'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
                                        aria-expanded="false" href="#sidebar-companies">
                                        <i class="icon" >
                                           <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -387,7 +362,7 @@
                            </li>
                            <!-- sales menu end -->
                            <!-- customization dropdown start -->
-                           <li class="nav-item">
+                           <li class="nav-item <?php if(isset($slug) && in_array($slug, ['email_templates', 'add_field', 'field_list', 'edit_field'])){echo 'active';}?>">
                               <a class="nav-link menu-arrow justify-content-start" data-bs-toggle="collapse" href="#allPagesData" role="button" aria-expanded="false" aria-controls="allPagesData">
                                  <!-- <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path opacity="0.4" d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2" fill="currentColor"></path>

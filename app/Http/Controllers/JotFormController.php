@@ -50,7 +50,7 @@ class JotFormController extends Controller
 
         $formId      = $request->formID;
         $fields      = array();
-        $hasDealData = false; 
+        $hasDealData = false;
         if ($formId == '222756540184053') {
 
             // Access and process the specific data you need
@@ -165,7 +165,7 @@ class JotFormController extends Controller
             );
         }
         //create user & company if do not exist
-        $company = Company::whereName('BCCUSA')->first();
+        $company = Company::first();
         if (!$company) {
             $company = Company::create(['name' => 'BCCUSA']);
         }
@@ -204,10 +204,10 @@ class JotFormController extends Controller
         if ($hasDealData) {
             $pipeline = Pipeline::firstOrNew(['company_id' => $companyId], ['title' => $company->name]);
             $pipeline->save();
-        
+
             $owner = User::whereRole('owner')->orderBy('id', 'ASC')->whereCompanyId($companyId)->first();
             $stage = Stage::whereTitle('Document Collection')->firstOr(Stage::orderBy('id', 'ASC')->first());
-        
+
             // Create deal
             $dealData = [
                 'title' => $jsonData['q6_legalBusiness6'] ?? $user->first_name,
@@ -222,9 +222,9 @@ class JotFormController extends Controller
                 'submitted_bank' => 'unknown',
                 'sub_type' => 'unknown',
             ];
-        
+
             Deal::create($dealData);
-        
+
             // Create activity
             Activity::create([
                 'moduleName'    => 'Deal',
@@ -232,7 +232,7 @@ class JotFormController extends Controller
                 'contact_id'    => $user->id,
             ]);
         }
-        
+
 
         // For testing, you can return a response
         return response()->json(['message' => 'Webhook data received and processed successfully']);

@@ -362,6 +362,7 @@
                            </li>
                            <!-- sales menu end -->
                            <!-- customization dropdown start -->
+                           @if (Auth::user()->role == 'superadmin')
                            <li class="nav-item <?php if(isset($slug) && in_array($slug, ['email_templates', 'add_field', 'field_list', 'edit_field'])){echo 'active';}?>">
                               <a class="nav-link menu-arrow justify-content-start" data-bs-toggle="collapse" href="#allPagesData" role="button" aria-expanded="false" aria-controls="allPagesData">
                                  <!-- <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -377,7 +378,7 @@
                                  </i>
                               </a>
                               <ul class="iq-header-sub-menu list-unstyled collapse" id="allPagesData">
-                                 @if (Auth::user()->role == 'superadmin')
+                                
                                  <li class="nav-item dropdown iq-responsive-menu d-block">
                                     <a class="nav-link <?php if(isset($slug) && in_array($slug, ['add_field', 'field_list', 'edit_field'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
                                        aria-expanded="false" href="#sidebar-custon-fields">
@@ -457,9 +458,9 @@
                                        <span class="item-name"> Email Templates List</span>
                                     </a>
                                  </li>
-                                 @endif
                               </ul>
                            </li>
+                           @endif()
                            <!-- customization dropdown end -->
                            <!-- <li class="nav-item">
                               <a class="nav-link <?php if(isset($slug) && $slug == 'dashboard-sandbox'){echo 'active';}?>"

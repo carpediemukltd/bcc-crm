@@ -107,7 +107,7 @@ class DocumentController extends Controller
         $data['ocrolus_csv_path'] = $ocrolusCSV;
         $data['showMenu'] = 1;
         $data['ocrolusCSVPath'] = 1;
-        $data['sba_products_templates'] = array('Personal_Financial_Statement'=> env('APP_URL').'BCCUSA_PersonalFinancialStatement_2023.pdf');
+        $data['sba_products_templates'] = array('Personal_Financial_Statement'=> 'https://dashboard.bccusa.com/BCCUSA_PersonalFinancialStatement_2023.pdf');
         return ApiResponse::success($data, '', 200);
     }
 

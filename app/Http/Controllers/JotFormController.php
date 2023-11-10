@@ -18,23 +18,7 @@ use Illuminate\Support\Facades\Hash;
 
 class JotFormController extends Controller
 {
-    protected $user;
-    protected $data;
-    protected $company_id = 0;
-
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            $this->user = Auth::user();
-            $this->data['user'] = $this->user;
-            if (Auth::user()) {
-                if ($this->user->role != 'superadmin') {
-                    $this->company_id = $this->user->company_id;
-                }
-            }
-            return $next($request);
-        });
-    }
+   
     public function handleJotformWebhook(Request $request)
     {
         // Get the "rawRequest" JSON string from the request data
@@ -170,11 +154,8 @@ class JotFormController extends Controller
             $company = Company::create(['name' => 'BCCUSA']);
         }
         $companyId  = $company->id;
-        $this->data['round_robin_owner'] =  RoundRobinSetting::RoundRobinOwner($companyId);
         $user = User::where('email', $email)->first();
         $data['password'] = Hash::make('BCCUSA.COM');
-        $data['owner'] = $this->data['round_robin_owner']->owner_id;
-        $user_owner = $data['owner'];
         if (!$user) {
             $user = User::create([
                 'first_name'    => $firstName,
@@ -185,14 +166,6 @@ class JotFormController extends Controller
                 'company_id'    => $companyId,
                 'password'      => Hash::make('BCCUSA.COM')
             ]);
-            if ($data['owner'] > 0) {
-                UserOwner::create([
-                    'user_id'   => $user->id,
-                    'owner_id'  => $user_owner
-                ]);
-                RoundRobinSetting::where('company_id', $companyId)->where('owner_id', $user_owner)
-                    ->update(['last_lead' => date("Y-m-d H:i:s")]);
-            }
         }
         if (is_array($fields) && count($fields) > 0) {
             foreach ($fields as $field => $value) {

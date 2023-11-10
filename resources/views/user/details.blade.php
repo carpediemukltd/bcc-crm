@@ -55,6 +55,7 @@
     </div>
     <div class="content-inner container-fluid pb-0" id="page_layout">
         <div class="row">
+            @include('alert_message')
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">

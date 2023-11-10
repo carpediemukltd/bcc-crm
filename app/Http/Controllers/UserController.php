@@ -273,7 +273,9 @@ class UserController extends Controller
             return redirect(route('dashboard'))->with('error', 'Access Denied to User.');
         }
         $this->data['id'] = $id;
-        $this->data['user'] = User::where('id', $id)->first();
+        $this->data['user'] = User::with(['DocumentManagers' => function($query){
+            $query->select('id');
+        }])->where(['id' => $id])->first();
         $this->data['notes'] = Note::getNotesByUser($id);
         $this->data['deals'] = Deal::getDealsByUser($id, 0);
         $this->data['custom_fields'] =  CustomField::getDataByUser($id);
@@ -310,22 +312,38 @@ class UserController extends Controller
             // dd($request, $id , $abc);
             return redirect(route('user.details', $id))->withSuccess('Contact Update Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
-
             $activity = Activity::where('contact_id',$id)->get();
             $userRecord = User::all();
             $document = Documents::where('user_id',$id)->get();
             $customFieldDetails = UserDetails::where('user_id',$id)->get();
             $customField = CustomField::all();
 
-
             // dd($customFieldDetails , $customField);
             $deal = Deal::where('user_id',$id)->get();
             $stage = Stage::all();
 
+            $documents = DocumentManager::get();
+            $sortedDocuments = $documents->sort(function ($a, $b) {
+                // Custom sorting function
+                $pattern = '/^\d+/'; // Regular expression to match numbers at the beginning of the title
 
+                // Extract numbers from the beginning of the titles
+                preg_match($pattern, $a->title, $matchesA);
+                preg_match($pattern, $b->title, $matchesB);
 
+                // Compare titles using natural order comparison
+                if (!empty($matchesA) && empty($matchesB)) {
+                    return 1; // Move titles starting with numbers to the end
+                } elseif (empty($matchesA) && !empty($matchesB)) {
+                    return -1; // Keep other titles at the beginning
+                } else {
+                    return strnatcasecmp($a->title, $b->title);
+                }
+            });
 
-
+            $sortedDocumentsArray = $sortedDocuments->values()->all();
+            $this->data['documents'] = $sortedDocumentsArray;
+            $this->data['selected_documents'] = $this->data['user']->DocumentManagers;
             $this->data['bankusers'] = User::whereRole('bank')->get();
             return view("user.details", $this->data,compact('activity','userRecord','document','customFieldDetails','customField','deal','stage'));
         }
@@ -806,5 +824,69 @@ class UserController extends Controller
             return view('admin.admin_pagination', $this->data)->render();
         else
             return view("admin.list", $this->data);
+    }
+
+    public function updateDocumentManager(Request $request, $id){
+        $validate = [
+            'document_types' => 'required|array|min:1',
+            'document_types.*' => 'exists:document_managers,id'
+        ];
+
+        $request->validate($validate);
+
+        $this->data['user'] = User::with(['DocumentManagers' => function($query){
+            $query->select('id');
+        }])->where(['id' => $id])->first();
+
+        $old_documents = [];
+        foreach($this->data['user']->DocumentManagers as $documentManager){
+            $old_documents[] = $documentManager->id;
+        }
+
+        $new_document = [];
+        foreach($request->document_types as $document_type){
+            if(!in_array($document_type,$old_documents)){
+                $new_document[] = $document_type;
+            }
+        }
+
+        if(count($new_document) > 0){
+            $user = User::whereId($id)->first();
+            $user->documentManagers()->sync($request->document_types);
+            try{
+                $documents = DocumentManager::whereIn('id', $new_document)->get();
+                Mail::send('email.userDocumentsSelectionUpdate', [
+                    'first_name' => $user->first_name,
+                    'documents' => $documents
+                ], function($message) use($user){
+                    $message->to($user->email);
+                    $message->subject('Request for new documents');
+                });
+
+                $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
+                foreach ($documents as $document){
+                    $message .= $document->title.",";
+                }
+
+                $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
+                $twilioPhoneNumber  = env('TWILIO_NUMBER');
+                $twilioSid          = env('TWILIO_SID');
+                $twilioToken        = env('TWILIO_AUTH_TOKEN');
+                $client             = new Client($twilioSid, $twilioToken);
+                // Remove spaces from the phone number
+                $toPhoneNumber = str_replace(' ', '', $user->phone_number);
+                $client->messages->create(
+                    $toPhoneNumber,
+                    [
+                        'from' => $twilioPhoneNumber,
+                        'body' => $message,
+                    ]
+                );
+            } catch(\Exception $ex){
+                echo $ex->getMessage();
+            }
+        }
+
+        return back()->withSuccess('Documents updated Successfully.');
     }
 }

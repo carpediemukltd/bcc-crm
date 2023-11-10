@@ -179,8 +179,10 @@ class JotFormController extends Controller
             $pipeline->save();
 
             $owner = User::whereRole('owner')->orderBy('id', 'ASC')->whereCompanyId($companyId)->first();
-            $stage = Stage::whereTitle('Document Collection')->firstOr(Stage::orderBy('id', 'ASC')->first());
-
+            $stage = Stage::where('title', 'Document Collection')->first();
+            if(!$stage){
+                $stage = Stage::orderBy('id', 'ASC')->first();
+            }
             // Create deal
             $dealData = [
                 'title' => $jsonData['q6_legalBusiness6'] ?? $user->first_name,
@@ -188,7 +190,7 @@ class JotFormController extends Controller
                 'pipeline_id' => $pipeline->id,
                 'stage_id' => $stage->id,
                 'amount' => $jsonData['q9_amountRequested'],
-                'deal_owner' => $owner->full_name,
+                'deal_owner' => $owner->first_name??$user->first_name,
                 'lead_source' => 'contact',
                 'depositing_institution' => 'unknown',
                 'state' => $jsonData['q11_businessAddress']['state'] ?? 'unknown',

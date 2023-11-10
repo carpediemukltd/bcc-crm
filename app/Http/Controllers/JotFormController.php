@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\Company;
 use App\Models\User;
 use App\Models\UserOwner;
 use App\Models\UserDetails;
 use App\Models\CustomField;
+use App\Models\Deal;
+use App\Models\Pipeline;
 use Illuminate\Http\Request;
 use App\Models\RoundRobinSetting;
+use App\Models\Stage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -44,8 +48,9 @@ class JotFormController extends Controller
             return response()->json(['message' => 'Error parsing rawRequest JSON data'], 400);
         }
 
-        $formId = $request->formID;
-        $fields = array();
+        $formId      = $request->formID;
+        $fields      = array();
+        $hasDealData = false; 
         if ($formId == '222756540184053') {
 
             // Access and process the specific data you need
@@ -114,6 +119,7 @@ class JotFormController extends Controller
                 );
                 $fields = array_merge($fields, $second_owner);
             }
+            $hasDealData = true;
         }
         if ($formId == '230735614227453') {
             //Preliminary Application BCCUSA-FB Ads
@@ -159,7 +165,7 @@ class JotFormController extends Controller
             );
         }
         //create user & company if do not exist
-        $company = Company::first();
+        $company = Company::whereName('BCCUSA')->first();
         if (!$company) {
             $company = Company::create(['name' => 'BCCUSA']);
         }
@@ -194,6 +200,39 @@ class JotFormController extends Controller
                     self::saveCustomFieldData($user->id, $field, $value);
             }
         }
+        //add deal
+        if ($hasDealData) {
+            $pipeline = Pipeline::firstOrNew(['company_id' => $companyId], ['title' => $company->name]);
+            $pipeline->save();
+        
+            $owner = User::whereRole('owner')->orderBy('id', 'ASC')->whereCompanyId($companyId)->first();
+            $stage = Stage::whereTitle('Document Collection')->firstOr(Stage::orderBy('id', 'ASC')->first());
+        
+            // Create deal
+            $dealData = [
+                'title' => $jsonData['q6_legalBusiness6'] ?? $user->first_name,
+                'user_id' => $user->id,
+                'pipeline_id' => $pipeline->id,
+                'stage_id' => $stage->id,
+                'amount' => $jsonData['q9_amountRequested'],
+                'deal_owner' => $owner->full_name,
+                'lead_source' => 'contact',
+                'depositing_institution' => 'unknown',
+                'state' => $jsonData['q11_businessAddress']['state'] ?? 'unknown',
+                'submitted_bank' => 'unknown',
+                'sub_type' => 'unknown',
+            ];
+        
+            Deal::create($dealData);
+        
+            // Create activity
+            Activity::create([
+                'moduleName'    => 'Deal',
+                'user_id'       => $owner->id,
+                'contact_id'    => $user->id,
+            ]);
+        }
+        
 
         // For testing, you can return a response
         return response()->json(['message' => 'Webhook data received and processed successfully']);

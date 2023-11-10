@@ -118,6 +118,10 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::get('contacts', [UserController::class, 'userList'])->name('user.list');
         Route::any('contact/edit/{id}', [UserController::class, 'editUser'])->name('user.edit');
         Route::any('contact/{id}/details', [UserController::class, 'userDetails'])->name('user.details');
+
+        //update document manager
+        Route::post('update-document-manager/{id}', [UserController::class, 'updateDocumentManager'])->name('document.manager.update');
+
         Route::post('send-email-notification', [UserController::class, 'sendEmailNotification'])->name('user.sendEmailNotification');
 
         // Search for user for mention

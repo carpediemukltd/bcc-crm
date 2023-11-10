@@ -98,7 +98,7 @@
                      <div class="accordion custom-accordion mb-3" id="CustomAccordionExample">
                         <div class="accordion-item">
                            <h5 class="accordion-header" id="custom-headingOne">
-                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#custom-collapseOne" aria-expanded="true" aria-controls="custom-collapseOne" fdprocessedid="4wodn">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#custom-collapseOne" aria-expanded="true" aria-controls="custom-collapseOne" fdprocessedid="4wodn">
                               Add Custom Fields
                               </button>
                            </h5>

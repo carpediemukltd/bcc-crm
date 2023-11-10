@@ -13,16 +13,16 @@
         setting_options = selectTheme(theme)
     }
 
-    document.addEventListener('sidebar_show', function (value) {
-        const sidebar = document.querySelector('[data-toggle="main-sidebar"]')
-        if (value.detail.value.length > 0) {
-            sidebar.classList.remove('sidebar')
-        } else {
-            if (!sidebar.classList.contains('sidebar')) {
-                sidebar.classList.add('sidebar')
-            }
-        }
-    })
+    // document.addEventListener('sidebar_show', function (value) {
+    //     const sidebar = document.querySelector('[data-toggle="main-sidebar"]')
+    //     if (value.detail.value.length > 0) {
+    //         sidebar.classList.remove('sidebar')
+    //     } else {
+    //         if (!sidebar.classList.contains('sidebar')) {
+    //             sidebar.classList.add('sidebar')
+    //         }
+    //     }
+    // })
 
     const setting = (window.IQSetting = new IQSetting(setting_options));
 
@@ -307,28 +307,28 @@
     // function for get google font api https://www.googleapis.com/webfonts/v1/webfonts?key=
     let fontList
     let apiCall = false
-    let api = document.querySelector('meta[name="google_font_api"]').getAttribute('content')
-    const url = `https://www.googleapis.com/webfonts/v1/webfonts?key=${api}&sort=popularity`;
-    function getGoogleFonts(){
-        fetch(url).then(response => response.json())
-        .then(data => {
-            apiCall = true
-            // select2 options add
-            fontList = data.items.map(font => {
-                return {
-                    id: font.family,
-                    text: font.family,
-                }
-            })
-            $('[data-select="font"]').select2({
-                data: fontList
-            })
-        })
-    }
-    $('#settingbutton').on('click', function (e) {
-        if(!apiCall) {
-            getGoogleFonts()
-        }
-    })
+    //let api = document.querySelector('meta[name="google_font_api"]').getAttribute('content')
+    // const url = `https://www.googleapis.com/webfonts/v1/webfonts?key=${api}&sort=popularity`;
+    // function getGoogleFonts(){
+    //     fetch(url).then(response => response.json())
+    //     .then(data => {
+    //         apiCall = true
+    //         // select2 options add
+    //         fontList = data.items.map(font => {
+    //             return {
+    //                 id: font.family,
+    //                 text: font.family,
+    //             }
+    //         })
+    //         $('[data-select="font"]').select2({
+    //             data: fontList
+    //         })
+    //     })
+    // }
+    // $('#settingbutton').on('click', function (e) {
+    //     if(!apiCall) {
+    //         getGoogleFonts()
+    //     }
+    // })
 
 })();

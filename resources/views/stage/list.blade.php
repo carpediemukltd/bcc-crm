@@ -9,18 +9,7 @@
                         <div class="flex-wrap d-flex justify-content-between align-items-center">
                             <div>
                                 <h1>All Stages</h1>
-                                <p>Experience a simple yet powerful way to build Dashboards.</p>
                             </div>
-                            {{-- <div>
-                                <a href="{{ route('stage.add') }}" class="btn btn-link btn-soft-light">
-                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg" class="icon-28">
-                                        <path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </svg>
-                                    Add New Stage
-                                </a>
-                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -94,7 +83,7 @@
                                                                             fill="currentColor"></path>
                                                                     </svg>
                                                                 </a>
-                                                                <a class="nav-link" href="#" >
+                                                                <!-- <a class="nav-link" href="#" >
                                                                     <i class="icon">
                                                                     <svg class="icon-10" width="10" viewBox="0 0 24 24" fill="currentColor" xmlns="">
                                                                         <g>
@@ -102,7 +91,7 @@
                                                                         </g>
                                                                     </svg>
                                                                     </i>
-                                                                </a>
+                                                                </a> -->
                                                                 <a href="javascript:void(0)"
                                                                     onclick="DeleteConfirm('{{ $rec->id }}','{{ $rec->title }}');">
                                                                     <svg fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -276,7 +265,7 @@
                         $('#show_edit_text_' + id).hide();
                         $('#save_rights_' + id).hide();
                         $('#loading_' + id).html(
-                            '<br /><b>Pipeline saved successfully, loading the page...</b>');
+                            '<br /><b style="color:#065930">Pipeline saved successfully</b>');
                         if (res.message == 'success') location.reload();
                     },
                     error: function(res) {
@@ -292,15 +281,15 @@
             var c = $('#control-group tr:last').attr('id');
             c = parseInt(c) + 1;
             var tr = '<tr id="' + c + '"><td><div><input type="text" placeholder="New Stage" id="stage_' + c +
-                '" name="stage_' + c + '" class="form-control" required></div><br /><div id="loading_' + c +
-                '" style="display: none;"></div></td><td>';
+                '" name="stage_' + c + '" class="form-control" required></div><div id="loading_' + c +
+                '" style="display: none;"></div></td><td class="text-center"> <div class="add-clicker-btns d-flex justify-content">';
             tr += '<a href="javascript:void(0)" onclick="saveNew(' + c + ');">';
             tr +=
                 '<svg fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-32" width="32" height="32" viewBox="0 0 32 32"><path d="M21.4354 2.58198C20.9352 2.0686 20.1949 1.87734 19.5046 2.07866L3.408 6.75952C2.6797 6.96186 2.16349 7.54269 2.02443 8.28055C1.88237 9.0315 2.37858 9.98479 3.02684 10.3834L8.0599 13.4768C8.57611 13.7939 9.24238 13.7144 9.66956 13.2835L15.4329 7.4843C15.723 7.18231 16.2032 7.18231 16.4934 7.4843C16.7835 7.77623 16.7835 8.24935 16.4934 8.55134L10.72 14.3516C10.2918 14.7814 10.2118 15.4508 10.5269 15.9702L13.6022 21.0538C13.9623 21.6577 14.5826 22 15.2628 22C15.3429 22 15.4329 22 15.513 21.9899C16.2933 21.8893 16.9135 21.3558 17.1436 20.6008L21.9156 4.52479C22.1257 3.84028 21.9356 3.09537 21.4354 2.58198Z" fill="currentColor"></path></svg>';
             tr += '</a>';
             tr +=
-                '<button type="button" class="btn btn-danger btn-sm btn-danger delete_row_btn" style="float:right;"><span class="btn-inner"><svg fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.67 1.99927H16.34C19.73 1.99927 22 4.37927 22 7.91927V16.0903C22 19.6203 19.73 21.9993 16.34 21.9993H7.67C4.28 21.9993 2 19.6203 2 16.0903V7.91927C2 4.37927 4.28 1.99927 7.67 1.99927ZM15.01 14.9993C15.35 14.6603 15.35 14.1103 15.01 13.7703L13.23 11.9903L15.01 10.2093C15.35 9.87027 15.35 9.31027 15.01 8.97027C14.67 8.62927 14.12 8.62927 13.77 8.97027L12 10.7493L10.22 8.97027C9.87 8.62927 9.32 8.62927 8.98 8.97027C8.64 9.31027 8.64 9.87027 8.98 10.2093L10.76 11.9903L8.98 13.7603C8.64 14.1103 8.64 14.6603 8.98 14.9993C9.15 15.1693 9.38 15.2603 9.6 15.2603C9.83 15.2603 10.05 15.1693 10.22 14.9993L12 13.2303L13.78 14.9993C13.95 15.1803 14.17 15.2603 14.39 15.2603C14.62 15.2603 14.84 15.1693 15.01 14.9993Z" fill="currentColor" /></svg></span></button>';
-            tr += '</td></tr>';
+                '<button type="button" class="btn-sm delete_row_btn"><span class="btn-inner"><svg fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.67 1.99927H16.34C19.73 1.99927 22 4.37927 22 7.91927V16.0903C22 19.6203 19.73 21.9993 16.34 21.9993H7.67C4.28 21.9993 2 19.6203 2 16.0903V7.91927C2 4.37927 4.28 1.99927 7.67 1.99927ZM15.01 14.9993C15.35 14.6603 15.35 14.1103 15.01 13.7703L13.23 11.9903L15.01 10.2093C15.35 9.87027 15.35 9.31027 15.01 8.97027C14.67 8.62927 14.12 8.62927 13.77 8.97027L12 10.7493L10.22 8.97027C9.87 8.62927 9.32 8.62927 8.98 8.97027C8.64 9.31027 8.64 9.87027 8.98 10.2093L10.76 11.9903L8.98 13.7603C8.64 14.1103 8.64 14.6603 8.98 14.9993C9.15 15.1693 9.38 15.2603 9.6 15.2603C9.83 15.2603 10.05 15.1693 10.22 14.9993L12 13.2303L13.78 14.9993C13.95 15.1803 14.17 15.2603 14.39 15.2603C14.62 15.2603 14.84 15.1693 15.01 14.9993Z" fill="currentColor" /></svg></span></button>';
+            tr += '</div></td></tr>';
             $('#control-group').append(tr);
 
             $('.delete_row_btn').click(function() {

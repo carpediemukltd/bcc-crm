@@ -761,8 +761,8 @@
 <script src="{{asset('assets/js/core/libs.min.js')}}"></script>
 <!-- Plugin Scripts -->
 <!-- Tour plugin Start -->
-<script src="{{asset('assets/vendor/sheperd/dist/js/sheperd.min.js')}}"></script>
-<script src="{{asset('assets//js/plugins/tour.js')}}" defer></script>
+<!-- <script src="{{asset('assets/vendor/sheperd/dist/js/sheperd.min.js')}}"></script>
+<script src="{{asset('assets//js/plugins/tour.js')}}" defer></script> -->
 <!-- Flatpickr Script -->
 <script src="{{asset('assets/vendor/flatpickr/dist/flatpickr.min.js')}}"></script>
 <script src="{{asset('assets/js/plugins/flatpickr.js')}}" defer></script>
@@ -790,7 +790,7 @@
 <script src="{{asset('assets/js/hope-ui.js?v=3.0.0')}}" defer></script>
 <script src="{{asset('assets/js/hope-uipro.js?v=3.0.0')}}" defer></script>
 <script src="{{asset('assets/js/sidebar.js?v=3.0.0')}}" defer></script>
-<script src="{{asset('assets/js/solid-icon-search-filter.js')}}"></script>
+<!-- <script src="{{asset('assets/js/solid-icon-search-filter.js')}}"></script> -->
 
 <script src="{{asset('assets/vendor/sortable/Sortable.min.js')}}"></script>
 <script src="{{asset('assets/js/plugins/kanban.js')}}"></script>

@@ -27,6 +27,7 @@ use Spatie\Permission\Models\Permission;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Carbon\Carbon;
 use Mail;
+use Twilio\Rest\Client;
 
 class UserController extends Controller
 {
@@ -101,6 +102,7 @@ class UserController extends Controller
         $roles = Permissions::getSubRoles($this->user);
         $this->data['roles'] = $roles;
         if ($request->isMethod('post')) {
+//            echo in_array($request->role, ['user', 'contact']);exit;
             if (!in_array($request->role, $roles)) {
                 return redirect()->back()->with('error', 'You\'ve selected an invalid role.')->withInput();
             }
@@ -160,6 +162,32 @@ class UserController extends Controller
 
                 if (in_array($request->role, ['user', 'contact'])) {
                     $new_user->documentManagers()->attach($request->document_types);
+                    try{
+                        Mail::send('email.newRegistration', [
+                            'first_name' => $new_user->first_name,
+                            'documents' => DocumentManager::whereIn('id', $request->document_types)->get()
+                        ], function($message) use($new_user){
+                            $message->to($new_user->email);
+                            $message->subject('Welcome to BCCUSA');
+                        });
+
+                        $message            = "Hi $new_user->first_name, Your secure login to the BCCUSA bank portal has been created! It is accessible here: ".route('login').". Your email address is your login and your password is BCCUSA.com until you login and change it. Please upload all requested documents securely via our portal. Reply STOP to opt out of text notifications.";
+                        $twilioPhoneNumber  = env('TWILIO_NUMBER');
+                        $twilioSid          = env('TWILIO_SID');
+                        $twilioToken        = env('TWILIO_AUTH_TOKEN');
+                        $client             = new Client($twilioSid, $twilioToken);
+                        // Remove spaces from the phone number
+                        $toPhoneNumber = str_replace(' ', '', $new_user->phone_number);
+                        $client->messages->create(
+                            $toPhoneNumber,
+                            [
+                                'from' => $twilioPhoneNumber,
+                                'body' => $message,
+                            ]
+                        );
+                    } catch(\Exception $ex){
+                        echo $ex->getMessage();
+                    }
                 }
 
 
@@ -317,6 +345,7 @@ class UserController extends Controller
         $this->data['user'] = User::with(['DocumentManagers' => function($query){
             $query->select('id');
         }])->where(['id' => $id])->first();
+
         $this->data['custom_fields'] =  CustomField::getDataByUser($id);
 
         if ($request->isMethod('put')) {
@@ -345,6 +374,7 @@ class UserController extends Controller
             } else if ($request->password && strlen($request->password) >= 6) {
                 $update_data['password'] = Hash::make($request->password);
             }
+
             User::whereId($id)->update($update_data);
             if ($request->custom_fields_count > 0) {
                 foreach ($request->custom_fields as $key => $value) {
@@ -357,8 +387,53 @@ class UserController extends Controller
 
 
             if(in_array($this->data['user']->role, ['user', 'contact'])){
-                $user = User::whereId($id)->first();
-                $user->documentManagers()->sync($request->document_types);
+                $old_documents = [];
+                foreach($this->data['user']->DocumentManagers as $documentManager){
+                    $old_documents[] = $documentManager->id;
+                }
+
+                $new_document = [];
+                foreach($request->document_types as $document_type){
+                    if(!in_array($document_type,$old_documents)){
+                        $new_document[] = $document_type;
+                    }
+                }
+                if(count($new_document) > 0){
+                    $user = User::whereId($id)->first();
+                    $user->documentManagers()->sync($request->document_types);
+                    try{
+                        $documents = DocumentManager::whereIn('id', $new_document)->get();
+                        Mail::send('email.userDocumentsSelectionUpdate', [
+                            'first_name' => $user->first_name,
+                            'documents' => $documents
+                        ], function($message) use($user){
+                            $message->to($user->email);
+                            $message->subject('Request for new documents');
+                        });
+
+                        $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
+                        foreach ($documents as $document){
+                            $message .= $document->title.",";
+                        }
+
+                        $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
+                        $twilioPhoneNumber  = env('TWILIO_NUMBER');
+                        $twilioSid          = env('TWILIO_SID');
+                        $twilioToken        = env('TWILIO_AUTH_TOKEN');
+                        $client             = new Client($twilioSid, $twilioToken);
+                        // Remove spaces from the phone number
+                        $toPhoneNumber = str_replace(' ', '', $user->phone_number);
+                        $client->messages->create(
+                            $toPhoneNumber,
+                            [
+                                'from' => $twilioPhoneNumber,
+                                'body' => $message,
+                            ]
+                        );
+                    } catch(\Exception $ex){
+                        echo $ex->getMessage();
+                    }
+                }
             }
 
             return redirect(url('contacts'))->withSuccess('Contact Updated Successfully.')->withInput();

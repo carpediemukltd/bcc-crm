@@ -620,8 +620,6 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
             {!! Form::open(['route' => ['document.manager.update', $user->id],'method' => 'post']) !!}
-                @csrf
-                @method('post')
                     <div class="modal-body">
                         <div class="response-send-email-notification"></div>
                         <label class="form-label" for="email"> Document Types:</label>

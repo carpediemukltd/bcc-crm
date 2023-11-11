@@ -619,7 +619,9 @@
     <div class="modal modal-xl" tabindex="-1" role="dialog" id="documentRequestManager">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                {!! Form::open(['route' => ['document.manager.update', $user->id],'method' => 'post']) !!}
+            <form action="{{ route('document.manager.update', $user->id) }}" method="post">
+                @csrf
+                @method('post')
                     <div class="modal-body">
                         <div class="response-send-email-notification"></div>
                         <label class="form-label" for="email"> Document Types:</label>
@@ -651,7 +653,7 @@
                         <!-- <button type="button" class="btn btn-primary" id="send_email_notification"><i class="fa fa-envelope"></i> Send Email Notification</button> -->
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                     </div>
-                {!! Form::close() !!}
+                </form>
             </div>
         </div>
     </div>

@@ -1522,8 +1522,9 @@ p.sub_text:after{
 .borad_view_holder{
   /* padding: 0 20px; */
 }
-.iq-nav-menu>li>a{
+.iq-nav-menu li a{
   padding: .5rem 0.5rem;
+  font-size: 14px;
 }
 .borad_view_holder .card{
   border: 1px solid #efefef;
@@ -1865,4 +1866,66 @@ div#user_edit_view {
 }
 .nav .search-input{
   width: calc(14.5rem + 5vw);
+}
+.nav .search-input.input-group .form-control{
+  font-size: 14px;
+}
+.iq-navbar-header h1{
+  position: relative;
+  top: 25px;
+}
+.iq-navbar-header h1 + p{
+  display: none;
+}
+.iq-navbar-header .btn.btn-link.btn-soft-light{
+  position: relative;
+  top: 25px;
+}
+.logo-main img{
+  width: 170px;
+  position: relative;
+  top: -3px;
+}
+.accordion .accordion-item .accordion-header{
+  background-color: #efefef;
+}
+.add-clicker-btns{
+  align-items: center;
+}
+.add-clicker-btns a{
+  position: relative;
+  top: 2px;
+}
+.add-clicker-btns button{
+  border: none;
+  background-color: inherit;
+  color: #065930;
+}
+.header-hover-menu .iq-nav-menu li.active > a::after{
+  display: none;
+}
+.activity-details-view li small p{
+  display: inline-block;
+}
+.documents_view_holder .form-group{
+  background-color: #efefef47;
+  padding: 18px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+.documents_view_holder .form-group .check-doc-field {
+  float: left;
+  margin-right: 5px;
+}
+.documents_view_holder .form-group .check-doc-field + p{
+  text-align: left;
+  overflow: hidden;
+}
+.activity_scroll_view, .notes-view-scroll{
+  max-height: 540px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.w-100.float-right.mt-1 svg {
+  color: #28704d;
 }

@@ -31,17 +31,7 @@
                         <div class="flex-wrap d-flex justify-content-between align-items-center">
                             <div>
                                 <h1>Contact Details</h1>
-                                <p>Experience a simple yet powerful way to build Dashboard</p>
                             </div>
-                            <!-- <div>
-                                <a href="" class="btn btn-link btn-soft-light">
-                                    <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M11.8251 15.2171H12.1748C14.0987 15.2171 15.731 13.985 16.3054 12.2764C16.3887 12.0276 16.1979 11.7713 15.9334 11.7713H14.8562C14.5133 11.7713 14.2362 11.4977 14.2362 11.16C14.2362 10.8213 14.5133 10.5467 14.8562 10.5467H15.9005C16.2463 10.5467 16.5263 10.2703 16.5263 9.92875C16.5263 9.58722 16.2463 9.31075 15.9005 9.31075H14.8562C14.5133 9.31075 14.2362 9.03619 14.2362 8.69849C14.2362 8.35984 14.5133 8.08528 14.8562 8.08528H15.9005C16.2463 8.08528 16.5263 7.8088 16.5263 7.46728C16.5263 7.12575 16.2463 6.84928 15.9005 6.84928H14.8562C14.5133 6.84928 14.2362 6.57472 14.2362 6.23606C14.2362 5.89837 14.5133 5.62381 14.8562 5.62381H15.9886C16.2483 5.62381 16.4343 5.3789 16.3645 5.13113C15.8501 3.32401 14.1694 2 12.1748 2H11.8251C9.42172 2 7.47363 3.92287 7.47363 6.29729V10.9198C7.47363 13.2933 9.42172 15.2171 11.8251 15.2171Z" fill="currentColor"></path>
-                                    <path opacity="0.4" d="M19.5313 9.82568C18.9966 9.82568 18.5626 10.2533 18.5626 10.7823C18.5626 14.3554 15.6186 17.2627 12.0005 17.2627C8.38136 17.2627 5.43743 14.3554 5.43743 10.7823C5.43743 10.2533 5.00345 9.82568 4.46872 9.82568C3.93398 9.82568 3.5 10.2533 3.5 10.7823C3.5 15.0873 6.79945 18.6413 11.0318 19.1186V21.0434C11.0318 21.5715 11.4648 22.0001 12.0005 22.0001C12.5352 22.0001 12.9692 21.5715 12.9692 21.0434V19.1186C17.2006 18.6413 20.5 15.0873 20.5 10.7823C20.5 10.2533 20.066 9.82568 19.5313 9.82568Z" fill="currentColor"></path>
-                                    </svg>
-                                    Announcements
-                                </a>
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -266,34 +256,34 @@
                 <div class="card">
 
                     <div class="profile-content tab-content iq-tab-fade-up">
-                        <!-- <div id="profile-feed" class="tab-pane fade active show">
-                            <div class="card-body p-0">
-                                <p class="p-3 mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla
-                                    dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra.
-                                    Proin blandit ac massa sed rhoncus</p>
-
-                            </div>
-                        </div> -->
                         <div id="profile-activity" class="tab-pane fade active show">
                             <div class="card-header d-flex justify-content-between">
                                 <div class="header-title">
                                     <h4 class="card-title">Activity</h4>
                                 </div>
                             </div>
-                            <div class="card-body" style="min-height: 580px;">
+                            <div class="card-body">
                                 <!-- There is no Activity -->
                                 <div class="iq-timeline0 m-0 d-flex align-items-center justify-content-between position-relative">
-                                    <ul class="list-inline p-0 m-0">
+                                    <ul class="activity_scroll_view activity-details-view list-inline p-0 m-0">
                                         <li>
                                             <div class="timeline-dots timeline-dot1 border-primary text-primary"></div>
-                                            <h6 class="float-left mb-1">Contact Created</h6>
+                                            <h6 class="float-left mb-3">Contact Created</h6>
                                             @foreach($activity as $activeities)
                                             @if($activeities->moduleName == 'Contact')
-                                            <small class="float-right mt-1">Time : {{date('d-m-Y h:i:s', strtotime($activeities->created_at));}}</small>
+                                            <small class="float-right mt-1">
+                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" height="20" width="18">
+                                    <path d="M2 5C2 4.44772 2.44772 4 3 4H8.66667H21C21.5523 4 22 4.44772 22 5V8H15.3333H8.66667H2V5Z" fill="currentColor" stroke="currentColor"></path>
+                                    <path d="M6 8H2V11M6 8V20M6 8H14M6 20H3C2.44772 20 2 19.5523 2 19V11M6 20H14M14 8H22V11M14 8V20M14 20H21C21.5523 20 22 19.5523 22 19V11M2 11H22M2 14H22M2 17H22M10 8V20M18 8V20" stroke="currentColor"></path>
+                                 </svg> <p>{{date('d-m-Y h:i:s', strtotime($activeities->created_at));}}</p></small>
                                                 @foreach($userRecord as $userrecord)
                                                 @if($activeities->user_id == $userrecord->id)
                                                 <div class="d-inline-block w-100">
-                                                    <small class="float-right mt-1">Created By : {{$userrecord->first_name}} {{$userrecord->last_name}}</small>
+                                                    <small class="float-right mt-1">
+                                                    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                                       <path fill-rule="evenodd" clip-rule="evenodd" d="M7.67 2H16.34C19.73 2 22 4.38 22 7.92V16.091C22 19.62 19.73 22 16.34 22H7.67C4.28 22 2 19.62 2 16.091V7.92C2 4.38 4.28 2 7.67 2ZM11.43 14.99L16.18 10.24C16.52 9.9 16.52 9.35 16.18 9C15.84 8.66 15.28 8.66 14.94 9L10.81 13.13L9.06 11.38C8.72 11.04 8.16 11.04 7.82 11.38C7.48 11.72 7.48 12.27 7.82 12.62L10.2 14.99C10.37 15.16 10.59 15.24 10.81 15.24C11.04 15.24 11.26 15.16 11.43 14.99Z" fill="currentColor"></path>
+                                    </svg>  
+                                                    <b>Created By :</b> <p>{{$userrecord->first_name}} {{$userrecord->last_name}}</p></small>
                                                 </div>
                                                 @endif
                                                 @endforeach
@@ -302,14 +292,22 @@
                                         </li>
                                         <li>
                                             <div class="timeline-dots timeline-dot1 border-success text-success"></div>
-                                            <h6 class="float-left mb-1">Deal Created</h6>
+                                            <h6 class="float-left mb-3">Deal Created</h6>
                                             @foreach($activity as $activeities)
                                             @if($activeities->moduleName == 'Deal')
-                                            <small class="float-right mt-1">Time : {{date('d-m-Y h:i:s', strtotime($activeities->created_at));}} </small>
+                                            <small class="float-right mt-1">
+                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" height="20" width="18">
+                                    <path d="M2 5C2 4.44772 2.44772 4 3 4H8.66667H21C21.5523 4 22 4.44772 22 5V8H15.3333H8.66667H2V5Z" fill="currentColor" stroke="currentColor"></path>
+                                    <path d="M6 8H2V11M6 8V20M6 8H14M6 20H3C2.44772 20 2 19.5523 2 19V11M6 20H14M14 8H22V11M14 8V20M14 20H21C21.5523 20 22 19.5523 22 19V11M2 11H22M2 14H22M2 17H22M10 8V20M18 8V20" stroke="currentColor"></path>
+                                 </svg> <b> <p>{{date('d-m-Y h:i:s', strtotime($activeities->created_at));}}</p> </small>
                                                 @foreach($userRecord as $userrecord)
                                                 @if($activeities->user_id == $userrecord->id)
                                                 <div class="d-inline-block w-100">
-                                                    <small class="float-right mt-1">Created By : {{$userrecord->first_name}} {{$userrecord->last_name}}</small>
+                                                    <small class="float-right mt-1">
+                                                    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                                       <path fill-rule="evenodd" clip-rule="evenodd" d="M7.67 2H16.34C19.73 2 22 4.38 22 7.92V16.091C22 19.62 19.73 22 16.34 22H7.67C4.28 22 2 19.62 2 16.091V7.92C2 4.38 4.28 2 7.67 2ZM11.43 14.99L16.18 10.24C16.52 9.9 16.52 9.35 16.18 9C15.84 8.66 15.28 8.66 14.94 9L10.81 13.13L9.06 11.38C8.72 11.04 8.16 11.04 7.82 11.38C7.48 11.72 7.48 12.27 7.82 12.62L10.2 14.99C10.37 15.16 10.59 15.24 10.81 15.24C11.04 15.24 11.26 15.16 11.43 14.99Z" fill="currentColor"></path>
+                                    </svg>  
+                                                    <b>Created By :</b> <p>{{$userrecord->first_name}}</p> <p>{{$userrecord->last_name}}</p></small>
                                                 </div>
                                                 @endif
                                                 @endforeach
@@ -319,18 +317,24 @@
                                         </li>
                                         <li>
                                             <div class="timeline-dots timeline-dot1 border-danger text-danger"></div>
-                                            <h6 class="float-left mb-1">Stage moves</h6>
+                                            <h6 class="float-left mb-3">Stage moves</h6>
                                             @foreach($activity as $activeities)
                                                 @if($activeities->moduleName == 'Stage')
-                                                <small class="float-right mt-1">Time : {{date('d-m-Y h:i:s', strtotime($activeities->created_at));}} </small>
+                                                <small class="float-right mt-1"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" height="20" width="18">
+                                    <path d="M2 5C2 4.44772 2.44772 4 3 4H8.66667H21C21.5523 4 22 4.44772 22 5V8H15.3333H8.66667H2V5Z" fill="currentColor" stroke="currentColor"></path>
+                                    <path d="M6 8H2V11M6 8V20M6 8H14M6 20H3C2.44772 20 2 19.5523 2 19V11M6 20H14M14 8H22V11M14 8V20M14 20H21C21.5523 20 22 19.5523 22 19V11M2 11H22M2 14H22M2 17H22M10 8V20M18 8V20" stroke="currentColor"></path>
+                                 </svg> <p>{{date('d-m-Y h:i:s', strtotime($activeities->created_at));}} </p></small>
                                                     @foreach($userRecord as $userrecord)
                                                         @if($activeities->user_id == $userrecord->id)
                                                         <div class="d-inline-block w-100">
-                                                            <small class="float-right mt-1">Created By : {{$userrecord->first_name}} {{$userrecord->last_name}}</small>
+
+                                                            <small class="float-right mt-1"><svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                                       <path fill-rule="evenodd" clip-rule="evenodd" d="M7.67 2H16.34C19.73 2 22 4.38 22 7.92V16.091C22 19.62 19.73 22 16.34 22H7.67C4.28 22 2 19.62 2 16.091V7.92C2 4.38 4.28 2 7.67 2ZM11.43 14.99L16.18 10.24C16.52 9.9 16.52 9.35 16.18 9C15.84 8.66 15.28 8.66 14.94 9L10.81 13.13L9.06 11.38C8.72 11.04 8.16 11.04 7.82 11.38C7.48 11.72 7.48 12.27 7.82 12.62L10.2 14.99C10.37 15.16 10.59 15.24 10.81 15.24C11.04 15.24 11.26 15.16 11.43 14.99Z" fill="currentColor"></path>
+                                    </svg> <b>Created By :</b> <p>{{$userrecord->first_name}}</p> <p>{{$userrecord->last_name}}</p></small>
                                                         </div>
 
                                                         <div class="d-inline-block w-100">
-                                                            <small class="float-right mt-1">Stage Name : {{$activeities->details}} </small>
+                                                            <small class="float-right mt-1"><b>Stage Name :</b> <p>{{$activeities->details}} </p></small>
                                                         </div>
                                                         @endif
                                                     @endforeach
@@ -341,14 +345,19 @@
                                         </li>
                                         <li>
                                             <div class="timeline-dots timeline-dot1 border-primary text-primary"></div>
-                                            <h6 class="float-left mb-1">Custom Field</h6>
+                                            <h6 class="float-left mb-3">Custom Field</h6>
                                             @foreach($activity as $activeities)
                                             @if($activeities->moduleName == 'Custom Field')
-                                            <small class="float-right mt-1">Time : {{date('d-m-Y h:i:s', strtotime($activeities->created_at));}}</small>
+                                            <small class="float-right mt-1"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" height="20" width="18">
+                                    <path d="M2 5C2 4.44772 2.44772 4 3 4H8.66667H21C21.5523 4 22 4.44772 22 5V8H15.3333H8.66667H2V5Z" fill="currentColor" stroke="currentColor"></path>
+                                    <path d="M6 8H2V11M6 8V20M6 8H14M6 20H3C2.44772 20 2 19.5523 2 19V11M6 20H14M14 8H22V11M14 8V20M14 20H21C21.5523 20 22 19.5523 22 19V11M2 11H22M2 14H22M2 17H22M10 8V20M18 8V20" stroke="currentColor"></path>
+                                 </svg> <p>{{date('d-m-Y h:i:s', strtotime($activeities->created_at));}}</p></small>
                                                 @foreach($userRecord as $userrecord)
                                                     @if($activeities->user_id == $userrecord->id)
                                                     <div class="d-inline-block w-100">
-                                                        <small class="float-right mt-1">Created By : {{$userrecord->first_name}} {{$userrecord->last_name}}</small>
+                                                        <small class="float-right mt-1"><svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                                       <path fill-rule="evenodd" clip-rule="evenodd" d="M7.67 2H16.34C19.73 2 22 4.38 22 7.92V16.091C22 19.62 19.73 22 16.34 22H7.67C4.28 22 2 19.62 2 16.091V7.92C2 4.38 4.28 2 7.67 2ZM11.43 14.99L16.18 10.24C16.52 9.9 16.52 9.35 16.18 9C15.84 8.66 15.28 8.66 14.94 9L10.81 13.13L9.06 11.38C8.72 11.04 8.16 11.04 7.82 11.38C7.48 11.72 7.48 12.27 7.82 12.62L10.2 14.99C10.37 15.16 10.59 15.24 10.81 15.24C11.04 15.24 11.26 15.16 11.43 14.99Z" fill="currentColor"></path>
+                                    </svg> <b>Created By :</b> <p>{{$userrecord->first_name}}</p> <p>{{$userrecord->last_name}}</p></small>
                                                     </div>
                                                     @endif
                                                     @endforeach
@@ -360,9 +369,9 @@
                                                 @foreach($customField as $customFields)
                                                     @if( $customFields->id == $customFieldDetails->custom_field_id )
 
-                                                    <div class="d-inline-block w-100">
-                                                            <small class="float-right mt-1">Title : {{$customFields->title }}</small>
-                                                            <small class="float-right mt-1">Data : {{$customFieldDetails->data}}</small>
+                                                    <div class="d-flex w-100">
+                                                            <small class="w-100 float-right mt-1"><b>Title :</b> <p>{{$customFields->title }}</p></small>
+                                                            <small class="w-100 float-right mt-1"><b>Data :</b> <p>{{$customFieldDetails->data}}</p></small>
                                                         </div>
                                                     @endif
                                                 @endforeach
@@ -374,14 +383,19 @@
 
                                         <li>
                                             <div class="timeline-dots timeline-dot1 border-warning text-warning"></div>
-                                            <h6 class="float-left mb-1">Document Uploaded</h6>
+                                            <h6 class="float-left mb-3">Document Uploaded</h6>
                                             @foreach($document as $document)
 
-                                            <small class="float-right mt-1">Time : {{date('d-m-Y h:i:s', strtotime($document->created_at));}} </small>
+                                            <small class="float-right mt-1"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" height="20" width="18">
+                                    <path d="M2 5C2 4.44772 2.44772 4 3 4H8.66667H21C21.5523 4 22 4.44772 22 5V8H15.3333H8.66667H2V5Z" fill="currentColor" stroke="currentColor"></path>
+                                    <path d="M6 8H2V11M6 8V20M6 8H14M6 20H3C2.44772 20 2 19.5523 2 19V11M6 20H14M14 8H22V11M14 8V20M14 20H21C21.5523 20 22 19.5523 22 19V11M2 11H22M2 14H22M2 17H22M10 8V20M18 8V20" stroke="currentColor"></path>
+                                 </svg> <p>{{date('d-m-Y h:i:s', strtotime($document->created_at));}} </p></small>
 
                                                 <div class="d-inline-block w-100">
-                                                    <small class="float-right mt-1">Document : {{$document->file_name}} </small>
-                                                    <small class="float-right mt-1">URl : {{$document->file_path}}</small>
+                                                    <small class="float-right mt-1"><svg fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5495 13.73H14.2624C14.6683 13.73 15.005 13.4 15.005 12.99C15.005 12.57 14.6683 12.24 14.2624 12.24H12.5495V10.51C12.5495 10.1 12.2228 9.77 11.8168 9.77C11.4109 9.77 11.0743 10.1 11.0743 10.51V12.24H9.37129C8.96535 12.24 8.62871 12.57 8.62871 12.99C8.62871 13.4 8.96535 13.73 9.37129 13.73H11.0743V15.46C11.0743 15.87 11.4109 16.2 11.8168 16.2C12.2228 16.2 12.5495 15.87 12.5495 15.46V13.73ZM19.3381 9.02561C19.5708 9.02292 19.8242 9.02 20.0545 9.02C20.302 9.02 20.5 9.22 20.5 9.47V17.51C20.5 19.99 18.5099 22 16.0446 22H8.17327C5.59901 22 3.5 19.89 3.5 17.29V6.51C3.5 4.03 5.5 2 7.96535 2H13.2525C13.5099 2 13.7079 2.21 13.7079 2.46V5.68C13.7079 7.51 15.203 9.01 17.0149 9.02C17.4381 9.02 17.8112 9.02316 18.1377 9.02593C18.3917 9.02809 18.6175 9.03 18.8168 9.03C18.9578 9.03 19.1405 9.02789 19.3381 9.02561ZM19.61 7.5662C18.7961 7.5692 17.8367 7.5662 17.1466 7.5592C16.0516 7.5592 15.1496 6.6482 15.1496 5.5422V2.9062C15.1496 2.4752 15.6674 2.2612 15.9635 2.5722C16.4995 3.1351 17.2361 3.90891 17.9693 4.67913C18.7002 5.44689 19.4277 6.21108 19.9496 6.7592C20.2387 7.0622 20.0268 7.5652 19.61 7.5662Z" fill="currentColor"></path>
+                            </svg> <b>Document :</b> <p>{{$document->file_name}} </p></small>
+                                                    <small class="float-right mt-1"><b>URl :</b> <p>{{$document->file_path}}</p></small>
                                                 </div>
 
 
@@ -391,169 +405,7 @@
                                 </div>
                             </div>
                         </div>
-                    <!-- <div id="profile-friends" class="tab-pane fade">
-                        <div class="card-header">
-                            <div class="header-title">
-                                <h4 class="card-title">Emails</h4>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline m-0 p-0">
-                                <li class="d-flex mb-4 align-items-center">
-                                    <img src="{{asset('assets/images/avatars/01.png')}}" alt="story-img"
-                                        class="rounded-pill avatar-40" loading="lazy" />
-                                    <div class="ms-3 flex-grow-1">
-                                        <h6>Paul Molive</h6>
-                                        <p class="mb-0">Web Designer</p>
-                                    </div>
-                                    <div class="dropdown">
-                                        <span class="dropdown-toggle" id="dropdownMenuButton9" data-bs-toggle="dropdown"
-                                            aria-expanded="false" role="button">
-                                        </span>
-                                        <div class="dropdown-menu dropdown-menu-end"
-                                            aria-labelledby="dropdownMenuButton9">
-                                            <a class="dropdown-item " href="#">Unfollow</a>
-                                            <a class="dropdown-item " href="#">Unfriend</a>
-                                            <a class="dropdown-item " href="#">block</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="d-flex mb-4 align-items-center">
-                                    <img src="{{asset('assets/images/avatars/05.png')}}" alt="story-img"
-                                        class="rounded-pill avatar-40" loading="lazy" />
-                                    <div class="ms-3 flex-grow-1">
-                                        <h6>Paul Molive</h6>
-                                        <p class="mb-0">trainee</p>
-                                    </div>
-                                    <div class="dropdown">
-                                        <span class="dropdown-toggle" id="dropdownMenuButton10"
-                                            data-bs-toggle="dropdown" aria-expanded="false" role="button">
-                                        </span>
-                                        <div class="dropdown-menu dropdown-menu-end"
-                                            aria-labelledby="dropdownMenuButton10">
-                                            <a class="dropdown-item " href="#">Unfollow</a>
-                                            <a class="dropdown-item " href="#">Unfriend</a>
-                                            <a class="dropdown-item " href="#">block</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="d-flex mb-4 align-items-center">
-                                    <img src="{{asset('assets/images/avatars/02.png')}}" alt="story-img"
-                                        class="rounded-pill avatar-40" loading="lazy" />
-                                    <div class="ms-3 flex-grow-1">
-                                        <h6>Anna Mull</h6>
-                                        <p class="mb-0">Web Developer</p>
-                                    </div>
-                                    <div class="dropdown">
-                                        <span class="dropdown-toggle" id="dropdownMenuButton11"
-                                            data-bs-toggle="dropdown" aria-expanded="false" role="button">
-                                        </span>
-                                        <div class="dropdown-menu dropdown-menu-end"
-                                            aria-labelledby="dropdownMenuButton11">
-                                            <a class="dropdown-item " href="#">Unfollow</a>
-                                            <a class="dropdown-item " href="#">Unfriend</a>
-                                            <a class="dropdown-item " href="#">block</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="d-flex mb-4 align-items-center">
-                                    <img src="{{asset('assets/images/avatars/03.png')}}" alt="story-img"
-                                        class="rounded-pill avatar-40" loading="lazy" />
-                                    <div class="ms-3 flex-grow-1">
-                                        <h6>Paige Turner</h6>
-                                        <p class="mb-0">trainee</p>
-                                    </div>
-                                    <div class="dropdown">
-                                        <span class="dropdown-toggle" id="dropdownMenuButton12"
-                                            data-bs-toggle="dropdown" aria-expanded="false" role="button">
-                                        </span>
-                                        <div class="dropdown-menu dropdown-menu-end"
-                                            aria-labelledby="dropdownMenuButton12">
-                                            <a class="dropdown-item " href="#">Unfollow</a>
-                                            <a class="dropdown-item " href="#">Unfriend</a>
-                                            <a class="dropdown-item " href="#">block</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="d-flex mb-4 align-items-center">
-                                    <img src="{{asset('assets/images/avatars/04.png')}}" alt="story-img"
-                                        class="rounded-pill avatar-40" loading="lazy" />
-                                    <div class="ms-3 flex-grow-1">
-                                        <h6>Barb Ackue</h6>
-                                        <p class="mb-0">Web Designer</p>
-                                    </div>
-                                    <div class="dropdown">
-                                        <span class="dropdown-toggle" id="dropdownMenuButton13"
-                                            data-bs-toggle="dropdown" aria-expanded="false" role="button">
-                                        </span>
-                                        <div class="dropdown-menu dropdown-menu-end"
-                                            aria-labelledby="dropdownMenuButton13">
-                                            <a class="dropdown-item " href="#">Unfollow</a>
-                                            <a class="dropdown-item " href="#">Unfriend</a>
-                                            <a class="dropdown-item " href="#">block</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="d-flex mb-4 align-items-center">
-                                    <img src="{{asset('assets/images/avatars/05.png')}}" alt="story-img"
-                                        class="rounded-pill avatar-40" loading="lazy" />
-                                    <div class="ms-3 flex-grow-1">
-                                        <h6>Greta Life</h6>
-                                        <p class="mb-0">Tester</p>
-                                    </div>
-                                    <div class="dropdown">
-                                        <span class="dropdown-toggle" id="dropdownMenuButton14"
-                                            data-bs-toggle="dropdown" aria-expanded="false" role="button">
-                                        </span>
-                                        <div class="dropdown-menu dropdown-menu-end"
-                                            aria-labelledby="dropdownMenuButton14">
-                                            <a class="dropdown-item " href="#">Unfollow</a>
-                                            <a class="dropdown-item " href="#">Unfriend</a>
-                                            <a class="dropdown-item " href="#">block</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="d-flex mb-4 align-items-center">
-                                    <img src="{{asset('assets/images/avatars/03.png')}}" alt="story-img"
-                                        class="rounded-pill avatar-40" loading="lazy" />
-                                    <div class="ms-3 flex-grow-1">
-                                        <h6>Ira Membrit</h6>
-                                        <p class="mb-0">Android Developer</p>
-                                    </div>
-                                    <div class="dropdown">
-                                        <span class="dropdown-toggle" id="dropdownMenuButton15"
-                                            data-bs-toggle="dropdown" aria-expanded="false" role="button">
-                                        </span>
-                                        <div class="dropdown-menu dropdown-menu-end"
-                                            aria-labelledby="dropdownMenuButton15">
-                                            <a class="dropdown-item " href="#">Unfollow</a>
-                                            <a class="dropdown-item " href="#">Unfriend</a>
-                                            <a class="dropdown-item " href="#">block</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="d-flex mb-4 align-items-center">
-                                    <img src="{{asset('assets/images/avatars/02.png')}}" alt="story-img"
-                                        class="rounded-pill avatar-40" loading="lazy" />
-                                    <div class="ms-3 flex-grow-1">
-                                        <h6>Pete Sariya</h6>
-                                        <p class="mb-0">Web Designer</p>
-                                    </div>
-                                    <div class="dropdown">
-                                        <span class="dropdown-toggle" id="dropdownMenuButton16"
-                                            data-bs-toggle="dropdown" aria-expanded="false" role="button">
-                                        </span>
-                                        <div class="dropdown-menu dropdown-menu-end"
-                                            aria-labelledby="dropdownMenuButton16">
-                                            <a class="dropdown-item " href="#">Unfollow</a>
-                                            <a class="dropdown-item " href="#">Unfriend</a>
-                                            <a class="dropdown-item " href="#">block</a>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div> -->
+                    
                         <div id="profile-notes" class="tab-pane fade">
                             <div class="card-header">
                                 <div class="header-title">

@@ -683,15 +683,7 @@
    </div>
 </div>
 <script type="text/javascript">
-   /* function listNotes(){
-     $('#notes').html('Loading...');
-     $.get({
-         url: "{{ route('note.list', $id) }}",
-     success: function(res){
-         $('#notes').html(res);
-     }
-   });
-   } */
+   
    $(document).ready(function(){
        $(document).on('click', '#viewBCCPortal', function(){
            // $('#TestModal').modal('show');

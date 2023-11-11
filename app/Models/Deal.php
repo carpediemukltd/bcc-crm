@@ -49,20 +49,23 @@ class Deal extends Model
             ->join('stages', function ($join) {
                 $join->on('stages.id', '=', 'deals.stage_id');
             })
-            ->when(!empty($filters['depositing_institution']), function ($q) use ($filters) {
+            ->when(isset($filters['depositing_institution']) && !empty($filters['depositing_institution']), function ($q) use ($filters) {
                 $q->where('deals.depositing_institution', 'like', '%' . $filters['depositing_institution'] . '%');
             })
-            ->when(!empty($filters['state']), function ($q) use ($filters) {
+            ->when(isset($filters['state']) && !empty($filters['state']), function ($q) use ($filters) {
                 $q->where('deals.state', 'like', '%' . $filters['state'] . '%');
             })
-            ->when(!empty($filters['submitted_bank']), function ($q) use ($filters) {
+            ->when(isset($filters['submitted_bank']) && !empty($filters['submitted_bank']), function ($q) use ($filters) {
                 $q->where('deals.submitted_bank', 'like', '%' . $filters['submitted_bank'] . '%');
             })
-            ->when(!empty($filters['sub_type']), function ($q) use ($filters) {
+            ->when(isset($filters['sub_type']) && !empty($filters['sub_type']), function ($q) use ($filters) {
                 $q->where('deals.sub_type', 'like', '%' . $filters['sub_type'] . '%');
             })
-            ->when($filters['company_id'] > 0, function ($q) use ($filters) {
+            ->when(isset($filters['company_id']) && $filters['company_id'] > 0, function ($q) use ($filters) {
                 $q->where('users.company_id', '=', DB::raw($filters['company_id']));
+            })
+            ->when(isset($filters['user_id']) && $filters['user_id'] > 0, function ($q) use ($filters) {
+                $q->where('users.id', '=', DB::raw($filters['user_id']));
             })
             ->select('deals.*', 'pipelines.title as pipeline', 'stages.title as stage', 'users.id as user_id', 'companies.id as company_id', 'companies.name as company_name')
             ->orderBy('id', 'DESC');

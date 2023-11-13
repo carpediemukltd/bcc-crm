@@ -406,16 +406,21 @@ class UserController extends Controller
 
 
             if(in_array($this->data['user']->role, ['user', 'contact'])){
-                $old_documents = [];
-                foreach($this->data['user']->DocumentManagers as $documentManager){
-                    $old_documents[] = $documentManager->id;
+                $existingDocumentManagerIds = DocumentManagerUser::whereUserId($id)->pluck('document_manager_id');
+                $newDocumentManagerIds = $request->document_types;
+                $notificationForNewIds = array();
+
+                if (count($existingDocumentManagerIds) < count($newDocumentManagerIds) && is_array($newDocumentManagerIds)) {
+                    // Find new ids in $newDocumentManagerIds that do not exist in $existingDocumentManagerIds
+                    $newIdsToAdd = array_diff($newDocumentManagerIds, $existingDocumentManagerIds->toArray());
+
+                    // Store new ids in $notificationForNewIds
+                    $notificationForNewIds = array_values($newIdsToAdd);
                 }
 
-                $new_document = [];
-                foreach($request->document_types as $document_type){
-                    if(!in_array($document_type,$old_documents)){
-                        $new_document[] = $document_type;
-                    }
+                DocumentManagerUser::whereUserId($id)->delete();
+                foreach ($request->document_types as $type) {
+                    DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type]);
                 }
 
                 if(!empty(array_diff($old_documents, $new_document)) || !empty(array_diff($new_document, $old_documents)) || count($old_documents) !== count($new_document)){
@@ -456,6 +461,9 @@ class UserController extends Controller
                             echo $ex->getMessage();
                         }
                     }
+                    
+                } catch(\Exception $ex){
+                    echo $ex->getMessage();
                 }
             }
 

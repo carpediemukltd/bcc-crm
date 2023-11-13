@@ -14,6 +14,7 @@ use App\Jobs\SendNotification;
 use App\Models\Activity;
 use App\Models\Company;
 use App\Models\CustomField;
+use App\Models\DocumentManagerUser;
 use App\Models\Documents;
 use Illuminate\Http\Request;
 use App\Models\RoundRobinSetting;
@@ -833,6 +834,47 @@ class UserController extends Controller
         ];
 
         $request->validate($validate);
+        
+        DocumentManagerUser::whereUserId($id)->delete();
+        foreach ($request->document_types as $type) {
+            DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type]);
+        }
+        $user = User::whereId($id)->first();
+        $docManagerIds = $request->document_types;
+        try{
+            $documents = DocumentManager::whereIn('id', $docManagerIds)->get();
+            Mail::send('email.userDocumentsSelectionUpdate', [
+                'first_name' => $user->first_name,
+                'documents' => $documents
+            ], function($message) use($user){
+                $message->to($user->email);
+                $message->subject('Request for new documents');
+            });
+
+            $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
+            foreach ($documents as $document){
+                $message .= $document->title.",";
+            }
+
+            $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
+            $twilioPhoneNumber  = env('TWILIO_NUMBER');
+            $twilioSid          = env('TWILIO_SID');
+            $twilioToken        = env('TWILIO_AUTH_TOKEN');
+            $client             = new Client($twilioSid, $twilioToken);
+            // Remove spaces from the phone number
+            $toPhoneNumber = str_replace(' ', '', $user->phone_number);
+            $client->messages->create(
+                $toPhoneNumber,
+                [
+                    'from' => $twilioPhoneNumber,
+                    'body' => $message,
+                ]
+            );
+        } catch(\Exception $ex){
+            echo $ex->getMessage();
+        }
+        return back()->withSuccess('Documents updated Successfully.');
+
 
         $this->data['user'] = User::with(['DocumentManagers' => function($query){
             $query->select('id');

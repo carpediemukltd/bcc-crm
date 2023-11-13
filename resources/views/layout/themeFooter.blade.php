@@ -978,6 +978,12 @@
                'X-CSRF-TOKEN': csrfToken
             },
             success: function(response) {
+               $(".contacts-html").html('');
+               $(".companies-html").html('');
+               $(".deals-html").html('');
+               $(".pipelines-html").html('');
+               $(".stages-html").html('');
+               
                $(".contacts-html").append(response.contacts);
                $(".deals-html").append(response.deals);
                $(".pipelines-html").append(response.pipelines);

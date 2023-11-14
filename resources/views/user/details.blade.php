@@ -419,7 +419,7 @@
                                     <p>{{$document->file_name}} </p>
                                  </small>
                                  <small class="float-right mt-1">
-                                    <b>URl :</b> 
+                                    <b>URL :</b> 
                                     <p>{{$document->file_path}}</p>
                                  </small>
                               </div>
@@ -453,7 +453,7 @@
                               </div>
                            </div>
                            <div class="row" id="show_loading" style="display: none;">
-                              <div class="col-md-2">
+                              <div class="col-md-12">
                                  <div class="preloader-dot-loading">
                                     <div class="cssload-loading"><i></i><i></i><i></i><i></i></div>
                                  </div>

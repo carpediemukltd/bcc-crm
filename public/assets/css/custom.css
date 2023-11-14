@@ -6,6 +6,10 @@
 * NOTE: This file contains the styling for Template.
 *
 */
+html,body{
+	scrollbar-width: thin;
+	scrollbar-color: #753ae8 #f1f1f1 !important;
+}
 :focus {
   outline: none;
 }
@@ -894,11 +898,11 @@ div#deals_list span {
   width: 97px;
 }
 .preloader-dot-loading .cssload-loading i {
-  width: 19px;
-  height: 19px;
+  width: 10px;
+  height: 10px;
   display: inline-block;
   border-radius: 50%;
-  background: #2a2b26;
+  background: #00562c;
 }
 .preloader-dot-loading .cssload-loading i:first-child {
   opacity: 0;
@@ -1920,6 +1924,8 @@ div#user_edit_view {
 .documents_view_holder .form-group .check-doc-field + p{
   text-align: left;
   overflow: hidden;
+  margin-bottom: 5px;
+  font-size: 13px;
 }
 .activity_scroll_view, .notes-view-scroll{
   max-height: 540px;
@@ -1928,4 +1934,7 @@ div#user_edit_view {
 }
 .w-100.float-right.mt-1 svg {
   color: #28704d;
+}
+.form-control.notes_field + .mentiony-content img{
+  width: 100%;
 }

@@ -35,7 +35,7 @@ class CompanyController extends Controller
         $this->data['slug']         = 'deals_company';
 
         $pipelines = Pipeline::orderBy('title', 'ASC')->get();
-        $companies = Company::orderBy('name', 'ASC')->get();
+        $companies = Company::where('status','active')->orderBy('name', 'ASC')->get();
         $stages = Stage::orderBy('sort', 'ASC')->get();
         $this->data['pipelines'] = $pipelines;
         $this->data['companies'] = $companies;
@@ -148,7 +148,7 @@ class CompanyController extends Controller
                 $q->where('role', $request->role);
             })
             ->when($request->start_date, function ($q) use ($request) {
-                $q->whereBetween('created_at', [$request->start_date, $request->end_date]);
+                $q->whereBetween('companies.created_at', [$request->start_date, $request->end_date]);
             })
             ->select('users.*', 'companies.id as the_company_id', 'companies.name as company_name')
             // ->groupBy('the_company_id')

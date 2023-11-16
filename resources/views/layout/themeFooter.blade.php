@@ -926,6 +926,8 @@
 
       phoneNumberInput.intlTelInput({
          separateDialCode: true,
+         initialCountry: 'us', // Set the initial country to United States
+         onlyCountries: ['us'], // Allow only United States
       });
 
       // Add an event listener to update the hidden input with the selected country code.

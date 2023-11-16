@@ -937,6 +937,11 @@
          selectedCountryCodeInput.val(selectedCountryCode);
       });
       phoneNumberInput.trigger('countrychange');
+      // Hide the country dropdown using JavaScript
+      var style = document.createElement('style');
+      style.type = 'text/css';
+      style.innerHTML = '.iti__country-list { display: none !important; }';
+      document.head.appendChild(style);
 
    });
 </script>
@@ -1063,6 +1068,7 @@
       $("#search-header").val('');
 
    });
+   
 </script>
 
 @yield('script')

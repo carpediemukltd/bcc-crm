@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DocumentGroup;
 use App\Models\DocumentManager;
 use App\Models\Note;
 use App\Models\User;
@@ -207,7 +208,7 @@ class UserController extends Controller
         } else if ($request->isMethod('get')) {
             $this->data['roles']     = array_diff($this->data['roles'], ['user']);
             $this->data['companies'] = Company::whereStatus('active')->get();
-            $documents = DocumentManager::get();
+            $documents = DocumentManager::with('DocumentGroup')->get();
             $sortedDocuments = $documents->sort(function ($a, $b) {
                 // Custom sorting function
                 $pattern = '/^\d+/'; // Regular expression to match numbers at the beginning of the title
@@ -228,6 +229,7 @@ class UserController extends Controller
 
             $sortedDocumentsArray = $sortedDocuments->values()->all();
             $this->data['documents'] = $sortedDocumentsArray;
+            $this->data['document_groups'] = DocumentGroup::get();
             return view($request->type == 'admin' ? 'user.add-admin' : 'user.add', $this->data);
         }
     }
@@ -323,7 +325,7 @@ class UserController extends Controller
             $deal = Deal::where('user_id',$id)->get();
             $stage = Stage::all();
 
-            $documents = DocumentManager::get();
+            $documents = DocumentManager::with('DocumentGroup')->get();
             $sortedDocuments = $documents->sort(function ($a, $b) {
                 // Custom sorting function
                 $pattern = '/^\d+/'; // Regular expression to match numbers at the beginning of the title
@@ -346,6 +348,7 @@ class UserController extends Controller
             $this->data['documents'] = $sortedDocumentsArray;
             $this->data['selected_documents'] = $this->data['user']->DocumentManagers;
             $this->data['bankusers'] = User::whereRole('bank')->get();
+            $this->data['document_groups'] = DocumentGroup::get();
             return view("user.details", $this->data,compact('activity','userRecord','document','customFieldDetails','customField','deal','stage'));
         }
     } // userDetails
@@ -433,12 +436,12 @@ class UserController extends Controller
                             $message->to($user->email);
                             $message->subject('Request for new documents');
                         });
-    
+
                         $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
                         foreach ($documents as $document){
                             $message .= $document->title.",";
                         }
-    
+
                         $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
                         $twilioPhoneNumber  = env('TWILIO_NUMBER');
                         $twilioSid          = env('TWILIO_SID');
@@ -454,7 +457,7 @@ class UserController extends Controller
                             ]
                         );
                     }
-                    
+
                 } catch(\Exception $ex){
                     echo $ex->getMessage();
                 }
@@ -462,7 +465,7 @@ class UserController extends Controller
 
             return redirect(url('contacts'))->withSuccess('Contact Updated Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
-            $documents = DocumentManager::get();
+            $documents = DocumentManager::with('DocumentGroup')->get();
             $sortedDocuments = $documents->sort(function ($a, $b) {
                 // Custom sorting function
                 $pattern = '/^\d+/'; // Regular expression to match numbers at the beginning of the title
@@ -484,6 +487,7 @@ class UserController extends Controller
             $sortedDocumentsArray = $sortedDocuments->values()->all();
             $this->data['documents'] = $sortedDocumentsArray;
             $this->data['selected_documents'] = $this->data['user']->DocumentManagers;
+            $this->data['document_groups'] = DocumentGroup::get();
             return view("user.edit", $this->data);
         }
     } // editUser
@@ -839,7 +843,7 @@ class UserController extends Controller
         ];
 
         $request->validate($validate);
-        
+
         $existingDocumentManagerIds = DocumentManagerUser::whereUserId($id)->pluck('document_manager_id');
         $newDocumentManagerIds = $request->document_types;
         $notificationForNewIds = array();
@@ -867,12 +871,12 @@ class UserController extends Controller
                     $message->to($user->email);
                     $message->subject('Request for new documents');
                 });
-    
+
                 $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
                 foreach ($documents as $document){
                     $message .= $document->title.",";
                 }
-    
+
                 $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
                 $twilioPhoneNumber  = env('TWILIO_NUMBER');
                 $twilioSid          = env('TWILIO_SID');
@@ -888,7 +892,7 @@ class UserController extends Controller
                     ]
                 );
             }
-            
+
         } catch(\Exception $ex){
             echo $ex->getMessage();
         }

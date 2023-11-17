@@ -281,7 +281,7 @@
                                     <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M7.67 2H16.34C19.73 2 22 4.38 22 7.92V16.091C22 19.62 19.73 22 16.34 22H7.67C4.28 22 2 19.62 2 16.091V7.92C2 4.38 4.28 2 7.67 2ZM11.43 14.99L16.18 10.24C16.52 9.9 16.52 9.35 16.18 9C15.84 8.66 15.28 8.66 14.94 9L10.81 13.13L9.06 11.38C8.72 11.04 8.16 11.04 7.82 11.38C7.48 11.72 7.48 12.27 7.82 12.62L10.2 14.99C10.37 15.16 10.59 15.24 10.81 15.24C11.04 15.24 11.26 15.16 11.43 14.99Z" fill="currentColor"></path>
                                     </svg>
-                                    <b>Created By :</b> 
+                                    <b>Created By :</b>
                                     <p>{{$userrecord->first_name}} {{$userrecord->last_name}}</p>
                                  </small>
                               </div>
@@ -309,7 +309,7 @@
                                     <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M7.67 2H16.34C19.73 2 22 4.38 22 7.92V16.091C22 19.62 19.73 22 16.34 22H7.67C4.28 22 2 19.62 2 16.091V7.92C2 4.38 4.28 2 7.67 2ZM11.43 14.99L16.18 10.24C16.52 9.9 16.52 9.35 16.18 9C15.84 8.66 15.28 8.66 14.94 9L10.81 13.13L9.06 11.38C8.72 11.04 8.16 11.04 7.82 11.38C7.48 11.72 7.48 12.27 7.82 12.62L10.2 14.99C10.37 15.16 10.59 15.24 10.81 15.24C11.04 15.24 11.26 15.16 11.43 14.99Z" fill="currentColor"></path>
                                     </svg>
-                                    <b>Created By :</b> 
+                                    <b>Created By :</b>
                                     <p>{{$userrecord->first_name}}</p>
                                     <p>{{$userrecord->last_name}}</p>
                                  </small>
@@ -338,14 +338,14 @@
                                     <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M7.67 2H16.34C19.73 2 22 4.38 22 7.92V16.091C22 19.62 19.73 22 16.34 22H7.67C4.28 22 2 19.62 2 16.091V7.92C2 4.38 4.28 2 7.67 2ZM11.43 14.99L16.18 10.24C16.52 9.9 16.52 9.35 16.18 9C15.84 8.66 15.28 8.66 14.94 9L10.81 13.13L9.06 11.38C8.72 11.04 8.16 11.04 7.82 11.38C7.48 11.72 7.48 12.27 7.82 12.62L10.2 14.99C10.37 15.16 10.59 15.24 10.81 15.24C11.04 15.24 11.26 15.16 11.43 14.99Z" fill="currentColor"></path>
                                     </svg>
-                                    <b>Created By :</b> 
+                                    <b>Created By :</b>
                                     <p>{{$userrecord->first_name}}</p>
                                     <p>{{$userrecord->last_name}}</p>
                                  </small>
                               </div>
                               <div class="d-inline-block w-100">
                                  <small class="float-right mt-1">
-                                    <b>Stage Name :</b> 
+                                    <b>Stage Name :</b>
                                     <p>{{$activeities->details}} </p>
                                  </small>
                               </div>
@@ -373,7 +373,7 @@
                                     <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M7.67 2H16.34C19.73 2 22 4.38 22 7.92V16.091C22 19.62 19.73 22 16.34 22H7.67C4.28 22 2 19.62 2 16.091V7.92C2 4.38 4.28 2 7.67 2ZM11.43 14.99L16.18 10.24C16.52 9.9 16.52 9.35 16.18 9C15.84 8.66 15.28 8.66 14.94 9L10.81 13.13L9.06 11.38C8.72 11.04 8.16 11.04 7.82 11.38C7.48 11.72 7.48 12.27 7.82 12.62L10.2 14.99C10.37 15.16 10.59 15.24 10.81 15.24C11.04 15.24 11.26 15.16 11.43 14.99Z" fill="currentColor"></path>
                                     </svg>
-                                    <b>Created By :</b> 
+                                    <b>Created By :</b>
                                     <p>{{$userrecord->first_name}}</p>
                                     <p>{{$userrecord->last_name}}</p>
                                  </small>
@@ -387,11 +387,11 @@
                               @if( $customFields->id == $customFieldDetails->custom_field_id )
                               <div class="d-flex w-100">
                                  <small class="w-100 float-right mt-1">
-                                    <b>Title :</b> 
+                                    <b>Title :</b>
                                     <p>{{$customFields->title }}</p>
                                  </small>
                                  <small class="w-100 float-right mt-1">
-                                    <b>Data :</b> 
+                                    <b>Data :</b>
                                     <p>{{$customFieldDetails->data}}</p>
                                  </small>
                               </div>
@@ -415,11 +415,11 @@
                                     <svg fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5495 13.73H14.2624C14.6683 13.73 15.005 13.4 15.005 12.99C15.005 12.57 14.6683 12.24 14.2624 12.24H12.5495V10.51C12.5495 10.1 12.2228 9.77 11.8168 9.77C11.4109 9.77 11.0743 10.1 11.0743 10.51V12.24H9.37129C8.96535 12.24 8.62871 12.57 8.62871 12.99C8.62871 13.4 8.96535 13.73 9.37129 13.73H11.0743V15.46C11.0743 15.87 11.4109 16.2 11.8168 16.2C12.2228 16.2 12.5495 15.87 12.5495 15.46V13.73ZM19.3381 9.02561C19.5708 9.02292 19.8242 9.02 20.0545 9.02C20.302 9.02 20.5 9.22 20.5 9.47V17.51C20.5 19.99 18.5099 22 16.0446 22H8.17327C5.59901 22 3.5 19.89 3.5 17.29V6.51C3.5 4.03 5.5 2 7.96535 2H13.2525C13.5099 2 13.7079 2.21 13.7079 2.46V5.68C13.7079 7.51 15.203 9.01 17.0149 9.02C17.4381 9.02 17.8112 9.02316 18.1377 9.02593C18.3917 9.02809 18.6175 9.03 18.8168 9.03C18.9578 9.03 19.1405 9.02789 19.3381 9.02561ZM19.61 7.5662C18.7961 7.5692 17.8367 7.5662 17.1466 7.5592C16.0516 7.5592 15.1496 6.6482 15.1496 5.5422V2.9062C15.1496 2.4752 15.6674 2.2612 15.9635 2.5722C16.4995 3.1351 17.2361 3.90891 17.9693 4.67913C18.7002 5.44689 19.4277 6.21108 19.9496 6.7592C20.2387 7.0622 20.0268 7.5652 19.61 7.5662Z" fill="currentColor"></path>
                                     </svg>
-                                    <b>Document :</b> 
+                                    <b>Document :</b>
                                     <p>{{$document->file_name}} </p>
                                  </small>
                                  <small class="float-right mt-1">
-                                    <b>URl :</b> 
+                                    <b>URl :</b>
                                     <p>{{$document->file_path}}</p>
                                  </small>
                               </div>
@@ -577,7 +577,7 @@
                         <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse"
                            id="view-documents">
                            <li class="nav-item">
-                              {{-- 
+                              {{--
                               <a class="nav-link"
                                  href="{{ url('magic-link/'.Auth::user()->id.'?contact_id='.$user->id) }}"
                                  data-bs-toggle="" aria-expanded="false">
@@ -657,11 +657,21 @@
                   $already_selected_documents[] = $selected_document->id;
                   @endphp
                   @endforeach
+                   @foreach($document_groups as $group)
+                       <div class="col-md-3">
+                           <label class="checkbox-inline">
+                               <div class="check-doc-field">
+                                   <input type="checkbox" class="document_group_checkbox" name="{{$group->name}}" value="{{$group->id}}">
+                               </div>
+                               <p><b>{{$group->name}}</b></p>
+                           </label>
+                       </div>
+                   @endforeach
                   @foreach($documents as $document)
                   <div class="col-md-4">
                      <label class="checkbox-inline">
                      <div class="check-doc-field">
-                        <input type="checkbox" name="document_types[]" value="{{$document->id}}" {{in_array($document->id, $already_selected_documents) ? 'checked' : ''}}> 
+                        <input type="checkbox" name="document_types[]" data-group-id="{{$document->DocumentGroup->id}}" value="{{$document->id}}" {{in_array($document->id, $already_selected_documents) ? 'checked' : ''}}>
                      </div>
                      <p>{{$document->title}}</p>
                      </label>
@@ -683,14 +693,14 @@
    </div>
 </div>
 <script type="text/javascript">
-   
+
    $(document).ready(function(){
        $(document).on('click', '#viewBCCPortal', function(){
            // $('#TestModal').modal('show');
            var userid     = $(this).data("userid");
            var contact_id = $(this).data("contact_id");
            var url = '{{ url("magic-link") }}/'+contact_id;
-   
+
            $.ajax({
                method: 'GET',
                url: url,
@@ -699,11 +709,11 @@
                },
                dataType: 'JSON', // The expected data type of the response
                success: function (response) {
-   
+
                    var data = `<iframe src="https://dashboard.bccusa.com/documents/view/`+response.contact_id+`?token=`+response.token+`&hide-header=true" width="70%" height="800"></iframe>`;
                    $('#modalBody').append(data);
                    $('#TestModal').modal('show');
-   
+
                    // console.table(response);
                    // $("#loader").hide();
                },
@@ -712,21 +722,21 @@
                }
            });
        });
-   
+
        $('#bank_users').on('change', function (e) {
            if($(this).val() != ''){
                $("#send_email_notification").prop("disabled", false);
            }
        });
-   
+
        $("#send_documents_toggle").click(function(){
            $('#sendDocuments').modal('show');
        })
-   
+
        $("#document_request_manager").click(function(){
            $('#documentRequestManager').modal('show');
        })
-   
+
        $("#send_email_notification").click(function(){
            $("#send_email_notification").prop("disabled", true);
            $.post({
@@ -759,7 +769,7 @@
            $('#TestModal').modal('hide');
        });
    });
-   
+
    function stopTimer() {
        $(".response-send-email-notification").html('')
    }
@@ -792,7 +802,7 @@
            });
        }
    }
-   
+
    function showEditNote(id, user_id) {
        $('#show_note_' + id).hide();
        $('#show_edit_note_' + id).show();
@@ -801,7 +811,7 @@
        $('#note_save_rights_' + id).show();
        $('#l_' + id).hide();
    }
-   
+
    function cancelEdit(id, user_id) {
        $('#show_note_' + id).show();
        $('#show_edit_note_' + id).hide();
@@ -809,7 +819,7 @@
        $('#note_save_rights_' + id).hide();
        $('#l_' + id).hide();
    }
-   
+
    function saveEditNote(id, user_id) {
        var contact_id = $('#contact_id').val();
        var note = $('#note_' + id).val();
@@ -846,7 +856,7 @@
            });
        }
    }
-   
+
    function deleteNote(id, user_id) {
        var contact_id = $('#contact_id').val();
        var r = confirm('Are you sure you want to delete this note?');
@@ -871,7 +881,7 @@
            });
        }
    }
-   
+
    function myFunction() {
        var x = document.getElementById("user_edit_view");
        if (x.style.display === "none") {
@@ -886,7 +896,7 @@
            y.style.display = "none";
        }
    }
-   
+
 </script>
 <script src="{{asset('assets/js/jquery.mentiony.js')}}" defer></script>
 <script>
@@ -903,18 +913,18 @@
                        var data = response.users.map(function(user){
                            return {id: user.id, name: user.first_name+" "+user.last_name, info: user.email, href: '#'}
                        })
-   
+
                        // NOTE: Assuming this filter process was done on server-side
                        // data = jQuery.grep(data, function( item ) {
                        //     return item.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1;
                        // });
                        // End server-side
-   
+
                        // Call this to populate mention.
                        onDataRequestCompleteCallback.call(this, data);
                    }
                });
-   
+
            },
            timeOut: 500, // Timeout to show mention after press @
            debug: 0, // show debug info
@@ -922,26 +932,26 @@
    }
    $(document).ready(function(){
        $('.container').on('input', '.notes_field', function() {
-   
+
        })
-   
+
        var hash = window.location.hash;
        // Check if the hash exists and it matches the ID of any tab
        if (hash && hash.includes('profile-notes')) {
            // Remove the "active" class from all tabs
            $('.nav-link').removeClass('active show').prop('aria-selected',false).prop('tabindex', '-1');
-   
+
            // Add the "active" class to the corresponding tab link
            $('a[href="#profile-notes"]').trigger('click')
-   
+
            $('.tab-pane').removeClass('active show')
            // Show the corresponding tab content
            $('#profile-notes').addClass('active show');
        }
-   
+
        // Get the URL
        var url = window.location.href;
-   
+
        // Extract the value of the "note" parameter
        var noteValue = getParameterByName('note', url);
        if (noteValue !== null) {
@@ -950,10 +960,10 @@
            }, 1000, function() {
                // After scrolling is complete, add the highlight class
                $('#show_note_'+noteValue).parent().addClass("note_highlight");
-   
+
            });
        }
-   
+
        // Function to get parameter value by name from URL
        function getParameterByName(name, url) {
            name = name.replace(/[\[\]]/g, "\\$&");
@@ -963,9 +973,12 @@
            if (!results[2]) return '';
            return decodeURIComponent(results[2].replace(/\+/g, " "));
        }
-   
+
        applyMentionyToNotesFields();
    })
-   
+   $('.document_group_checkbox').click(function(){
+       var group_id = $(this).val();
+       $("[data-group-id='" + group_id + "']").prop('checked',$(this).prop('checked'))
+   })
 </script>
 @endsection

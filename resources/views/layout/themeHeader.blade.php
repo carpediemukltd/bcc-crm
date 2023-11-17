@@ -48,15 +48,16 @@
 
       @yield('css')
    </head>
+   <style>
+      
+   </style>
    <body class="dual-compact light crm_dashboard_view theme-default theme-with-animation card-default theme-color-default">
       <!-- loader Start -->
       <?php $notificationService = app('App\Services\NotificationService');
     ?>
-      <div id="loading">
-         <div class="loader simple-loader">
-            <div class="loader-body">
-               <img id="loading-image" src="{{asset('assets/images/loader.webp')}}" alt="" class="light-loader img-fluid w-25" width="200" height="200">
-            </div>
+      <div class="loader">
+         <div class="logo">
+            <img src="{{asset('assets/images/app-icon.png')}}" style="width:50px;height:50px;" />
          </div>
       </div>
       <main class="main-content">

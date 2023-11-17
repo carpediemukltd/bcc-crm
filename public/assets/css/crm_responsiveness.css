@@ -1,5 +1,10 @@
-@media screen and (max-width: 1024px) {
-
+@media screen and (min-width: 1400px) {
+    .user-details-scroll{
+        max-height: auto;
+    }
+    div#user_edit_view{
+        height: auto;
+    }
 }
 @media screen and (max-width: 1024px) {
 

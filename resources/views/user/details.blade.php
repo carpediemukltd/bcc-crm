@@ -150,44 +150,15 @@
             <div class="card-body">
                <div class="user_details_view" id="user_details_view">
                   <form>
-                     <!-- <div class="row">
-                        <div class="col">
-                           <div class="form-group form-floating">
-                              <input type="text" class="form-control border_none" id="first_name" placeholder="First Name" value="{{$user->first_name}}">
-                              <label for="first_name">First Name</label>
-                           </div>
-                        </div>
-                        </div>
-                        <div class="row">
-                        <div class="col">
-                           <div class="form-group form-floating">
-                              <input type="text" class="form-control border_none" id="last_name" placeholder="Last Name" value="{{$user->last_name}}">
-                              <label for="last_name">Last Name</label>
-                           </div>
-                        </div>
-                        </div>
-                        <div class="row">
-                        <div class="col">
-                           <div class="form-group form-floating">
-                              <input type="text" class="form-control border_none" id="email" value="{{$user->email}}" disabled>
-                              <label for="email">Email</label>
-                           </div>
-                        </div>
-                        </div>
-                        <div class="row">
-                        <div class="col">
-                           <div class="form-group form-floating">
-                              <input type="text" class="form-control border_none" id="phone_number" placeholder="Phone number" value="{{$user->phone_number}}">
-                              <label for="phone_number">Phone number</label>
-                           </div>
-                        </div>
-                        </div> -->
-                     @include('user.partial._custom_fields')
+                     
                      <div class="row">
                         <div class="col text-right">
                            <button type="button" class="btn btn-primary contact_view_btn"
                               onclick="myFunction()">Edit</button>
                         </div>
+                     </div>
+                     <div class="user-details-scroll">
+                     @include('user.partial._custom_fields')
                      </div>
                   </form>
                </div>
@@ -401,8 +372,17 @@
                            </li>
                            <li>
                               <div class="timeline-dots timeline-dot1 border-warning text-warning"></div>
-                              <h6 class="float-left mb-3">Document Uploaded</h6>
-                              @foreach($document as $document)
+                              
+                              <div class="accordion doc-upload-view custom-accordion" id="documents-upload">
+                                 <div class="accordion-item">
+                                    <h5 class="accordion-header" id="documents-upload-ac">
+                                       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#documents-upload-view" aria-expanded="false" aria-controls="custom-collapseThree" fdprocessedid="1gvakd">
+                                       <h6 class="float-left mb-0">Document Uploaded</h6>
+                                       </button>
+                                    </h5>
+                                    <div id="documents-upload-view" class="accordion-collapse collapse" aria-labelledby="documents-upload-ac" data-bs-parent="#CustomAccordionExample">
+                                       <div class="accordion-body">
+                                       @foreach($document as $document)
                               <small class="float-right mt-1">
                                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" height="20" width="18">
                                     <path d="M2 5C2 4.44772 2.44772 4 3 4H8.66667H21C21.5523 4 22 4.44772 22 5V8H15.3333H8.66667H2V5Z" fill="currentColor" stroke="currentColor"></path>
@@ -424,6 +404,11 @@
                                  </small>
                               </div>
                               @endforeach
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              
                            </li>
                         </ul>
                      </div>

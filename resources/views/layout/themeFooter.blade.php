@@ -926,6 +926,8 @@
 
       phoneNumberInput.intlTelInput({
          separateDialCode: true,
+         initialCountry: 'us', // Set the initial country to United States
+         onlyCountries: ['us'], // Allow only United States
       });
 
       // Add an event listener to update the hidden input with the selected country code.
@@ -935,6 +937,11 @@
          selectedCountryCodeInput.val(selectedCountryCode);
       });
       phoneNumberInput.trigger('countrychange');
+      // Hide the country dropdown using JavaScript
+      var style = document.createElement('style');
+      style.type = 'text/css';
+      style.innerHTML = '.iti__country-list { display: none !important; }';
+      document.head.appendChild(style);
 
    });
 </script>
@@ -1061,6 +1068,7 @@
       $("#search-header").val('');
 
    });
+   
 </script>
 
 @yield('script')

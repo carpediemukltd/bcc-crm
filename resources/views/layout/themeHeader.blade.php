@@ -526,7 +526,7 @@
                </div>
                <div class="navbar-collapse collapse" id="navbarSupportedContent">
                   <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
-                     <li class="nav-item dropdown border-end pe-3 d-xl-block">
+                     <li class="nav-item search_bar_view dropdown border-end pe-3 d-xl-block">
                         <div class="form-group input-group mb-0 search-input">
                            <input id="search-header" type="text" class="form-control" placeholder="Search..." fdprocessedid="l5a9mq">
                            <span class="input-group-text">
@@ -582,7 +582,7 @@
                            </div>
                         </div>
                      </li>
-                     <li class="nav-item dropdown" id="itemdropdown1">
+                     <li class="nav-item dropdown user_view" id="itemdropdown1">
                         <a class="py-0 nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
                            <div class="btn btn-primary btn-icon btn-sm rounded-pill">

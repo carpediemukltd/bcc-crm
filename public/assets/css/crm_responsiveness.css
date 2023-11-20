@@ -17,10 +17,30 @@
 }
 /* ipad start */
 @media screen and (max-width: 768px) {
-
+    .iq-navbar-header h1 {
+        top: 10px;
+    }
+    .iq-banner .iq-navbar-header{
+    height: 150px !important;
+    }
+    .iq-navbar-header .btn.btn-link.btn-soft-light{
+        top: 10px;
+    }
 }
 /* ipad end */
 @media screen and (max-width: 767px) {
+    .card-header.d-flex.mb-4.justify-content-between {
+        display: block !important;
+      }
+      .d-flex.all-company-list {
+        display: block !important;
+      }
+      .contact_user_details .d-flex.flex-wrap.align-items-center.justify-content-between{
+        display: block !important;
+      }
+      .contact_user_details a{
+        margin-bottom: 10px;
+      }
     section.login-content{
         height: 100vh;
     }
@@ -45,5 +65,48 @@
   }
 /* mobile view start */
 @media screen and (max-width: 480px) {
+    .card-header.align-items-center.d-flex.justify-content-between a svg {
+        display: none;
+      }
+      .iq-container .btn-soft-light {
+        padding: 5px;
+        font-size: 12px;
+      }
+      .iq-container .btn-soft-light svg{
+        display: none;
+      }
+}
+@media screen and (max-width: 380px) {
+    .card-header.align-items-center.d-flex.justify-content-between{
+        display: block !important;
+    }
+    .card-header.align-items-center.d-flex.justify-content-between a svg {
+        display: none;
+      }
+      .iq-container .btn-soft-light {
+        padding: 5px;
+        font-size: 12px;
+      }
+      .iq-container .btn-soft-light svg{
+        display: none;
+      }
+      .dashboard_view{
 
+      }
+      .header-title {
+        display: none;
+      }
+      .container-fluid.navbar-inner {
+        padding: 0 15px;
+      }
+      /* .notification_view{
+        position: absolute !important;
+        top: -52px;
+        left: 60%;
+      }
+      .user_view{
+        position: absolute !important;
+        top: -52px;
+        left: 71%;
+      } */
 }

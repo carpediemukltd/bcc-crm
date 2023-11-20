@@ -1929,7 +1929,7 @@ div#user_edit_view {
   font-size: 13px;
 }
 .activity_scroll_view, .notes-view-scroll{
-  max-height: 540px;
+  height: 540px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -2036,4 +2036,9 @@ div#user_edit_view {
   position: absolute;
   top: 0;
   left: -27px;
+}
+.ml-2{
+  margin-left: 10px;
+}.ml-r{
+  margin-right: 10px;
 }

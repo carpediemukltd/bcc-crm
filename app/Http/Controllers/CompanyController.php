@@ -192,8 +192,11 @@ class CompanyController extends Controller
                 'phone_number' => $request->phone_country_code." ".$request->phone_number,
                 'status'       => $request->status
             ];
+            $company_status = $request->status;
+            if($company_status=='banned')$company_status='inactive';
             $company_data = [
                 'name'   => $request->name,
+                'status' => $company_status
             ];
             if (isset($data['password'])) {
                 $user_data['password'] = $data['password'];

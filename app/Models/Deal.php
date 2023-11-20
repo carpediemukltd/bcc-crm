@@ -42,6 +42,7 @@ class Deal extends Model
         })
             ->join('companies', function ($join) {
                 $join->on('companies.id', '=', 'users.company_id');
+                $join->on('companies.status', '=',  DB::raw("'active'"));
             })
             ->join('pipelines', function ($join) {
                 $join->on('pipelines.id', '=', 'deals.pipeline_id');

@@ -73,7 +73,14 @@ class User extends Authenticatable
                 return URL("uploads/documents") . "/" . $key;
         }
     }
-
+    public function getOcrolusCsvPathAttribute($key){
+        if($key){
+            return env('LENDOTICS_DASHBOARD_URL')."/uploads/csv/".$key;
+        }
+        else{
+            return null;
+        }
+    }
     public static function getUsers($data)
     {
         $users = User::with('company')->whereIn('role', $data['roles'])->where('users.id', '!=', $data['user_id'])
@@ -147,6 +154,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Company::class);
     }
+    
     private static function sanitizePhoneNumber($phoneNumber)
     {
         // Remove any non-numeric characters and keep the '+' sign

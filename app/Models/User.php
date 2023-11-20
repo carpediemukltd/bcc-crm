@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
 use App\Services\FileStorageService;
 use DateTime;
+use Illuminate\Support\Str;
+
 
 class User extends Authenticatable
 {
@@ -45,7 +47,18 @@ class User extends Authenticatable
     ];
     protected $appends = ['full_name', 'formatted_created_at'];
 
-    public function getConsentSignImageAttribute($key){
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            // Sanitize phone number
+            $model->phone_number = self::sanitizePhoneNumber($model->phone_number);
+            $model->uuid = Str::uuid();
+        });
+    }
+
+    public function getConsentSignImageAttribute($key)
+    {
         return $this->getS3Url($key);
     }
     private function getS3Url($key)
@@ -57,7 +70,7 @@ class User extends Authenticatable
                 return $fileStorageService->getTemporaryUrl($key);
                 break;
             default:
-            return URL("uploads/documents")."/".$key;
+                return URL("uploads/documents") . "/" . $key;
         }
     }
 
@@ -113,18 +126,20 @@ class User extends Authenticatable
     {
         return $this->first_name . ' ' . $this->last_name;
     }
-    public function getProfileImageAttribute($key){
-        if($key){
-            return env('APP_URL').$key;
+    public function getProfileImageAttribute($key)
+    {
+        if ($key) {
+            return env('APP_URL') . $key;
         }
         //if no any image is set
-        return env('APP_URL')."placeholder-profile.png";
+        return env('APP_URL') . "placeholder-profile.png";
     }
     public function documentManagers()
     {
         return $this->belongsToMany(DocumentManager::class);
     }
-    public function getFormattedCreatedAtAttribute(){
+    public function getFormattedCreatedAtAttribute()
+    {
         $createdAt = new DateTime($this->created_at);
         return $createdAt->format('j F, Y');
     }
@@ -132,5 +147,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Company::class);
     }
-
+    private static function sanitizePhoneNumber($phoneNumber)
+    {
+        // Remove any non-numeric characters and keep the '+' sign
+        return preg_replace("/[^0-9+()-]/", "", $phoneNumber);
+    }
 }

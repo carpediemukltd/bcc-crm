@@ -122,7 +122,7 @@ class User extends Authenticatable
     }
     public function documentManagers()
     {
-        return $this->belongsToMany(DocumentManager::class);
+        return $this->belongsToMany(DocumentManager::class)->withPivot(['due_date', 'document_uploaded']);
     }
     public function getFormattedCreatedAtAttribute(){
         $createdAt = new DateTime($this->created_at);

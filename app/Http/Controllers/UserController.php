@@ -103,7 +103,6 @@ class UserController extends Controller
         $roles = Permissions::getSubRoles($this->user);
         $this->data['roles'] = $roles;
         if ($request->isMethod('post')) {
-//            echo in_array($request->role, ['user', 'contact']);exit;
             if (!in_array($request->role, $roles)) {
                 return redirect()->back()->with('error', 'You\'ve selected an invalid role.')->withInput();
             }
@@ -162,7 +161,12 @@ class UserController extends Controller
                 }
 
                 if (in_array($request->role, ['user', 'contact'])) {
-                    $new_user->documentManagers()->attach($request->document_types);
+                    $new_user->documentManagers()->attach($request->document_types, [
+                        'due_date' => date('Y-m-d', strtotime(date('Y-m-d') . ' +7 days')),
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+
                     try{
                         Mail::send('email.newRegistration', [
                             'first_name' => $new_user->first_name,
@@ -261,10 +265,6 @@ class UserController extends Controller
 
     public function userDetails(Request $request, $id)
     {
-
-
-
-
         $this->data['current_slug']  = 'Contact Details';
         $this->data['slug']          = 'user_details';
         $access = Permissions::checkUserAccess($this->user, $id);
@@ -282,9 +282,6 @@ class UserController extends Controller
         $this->data['custom_fields'] =  CustomField::getDataByUser($id);
 
         if ($request->isMethod('put')) {
-
-
-
             $update_data = [
                 'first_name'   => $request->first_name,
                 'last_name'    => $request->last_name,
@@ -309,8 +306,6 @@ class UserController extends Controller
 
             ]);
 
-
-            // dd($request, $id , $abc);
             return redirect(route('user.details', $id))->withSuccess('Contact Update Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
             $activity = Activity::where('contact_id',$id)->get();
@@ -342,10 +337,19 @@ class UserController extends Controller
                 }
             });
 
+            $dueDate = '';
+            foreach($this->data['user']->DocumentManagers as $documentManager){
+                if($documentManager->pivot->document_uploaded == 0){
+                    $dueDate = $documentManager->pivot->due_date;
+                    break;
+                }
+            }
+
             $sortedDocumentsArray = $sortedDocuments->values()->all();
             $this->data['documents'] = $sortedDocumentsArray;
             $this->data['selected_documents'] = $this->data['user']->DocumentManagers;
             $this->data['bankusers'] = User::whereRole('bank')->get();
+            $this->data['due_date'] = $dueDate;
             return view("user.details", $this->data,compact('activity','userRecord','document','customFieldDetails','customField','deal','stage'));
         }
     } // userDetails
@@ -418,9 +422,17 @@ class UserController extends Controller
                     $notificationForNewIds = array_values($newIdsToAdd);
                 }
 
-                DocumentManagerUser::whereUserId($id)->delete();
+                DocumentManagerUser::whereUserId($id)->whereNotIn('document_manager_id',$request->document_types)->delete();
+                $due_date = date('Y-m-d', strtotime(date('Y-m-d') . ' +7 days'));
                 foreach ($request->document_types as $type) {
-                    DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type]);
+                    $document_exists = DocumentManagerUser::whereUserIdAndDocumentManagerId($id, $type)->first();
+                    if($document_exists){
+                        if($document_exists->document_uploaded === 0){
+                            DocumentManagerUser::whereUserIdAndDocumentManagerId($id, $type)->update(['due_date' => $due_date]);
+                        }
+                    }else{
+                        DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type, 'due_date' => $due_date]);
+                    }
                 }
                 $user = User::whereId($id)->first();
                 try{
@@ -433,12 +445,12 @@ class UserController extends Controller
                             $message->to($user->email);
                             $message->subject('Request for new documents');
                         });
-    
+
                         $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
                         foreach ($documents as $document){
                             $message .= $document->title.",";
                         }
-    
+
                         $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
                         $twilioPhoneNumber  = env('TWILIO_NUMBER');
                         $twilioSid          = env('TWILIO_SID');
@@ -454,7 +466,7 @@ class UserController extends Controller
                             ]
                         );
                     }
-                    
+
                 } catch(\Exception $ex){
                     echo $ex->getMessage();
                 }
@@ -839,7 +851,7 @@ class UserController extends Controller
         ];
 
         $request->validate($validate);
-        
+
         $existingDocumentManagerIds = DocumentManagerUser::whereUserId($id)->pluck('document_manager_id');
         $newDocumentManagerIds = $request->document_types;
         $notificationForNewIds = array();
@@ -852,9 +864,17 @@ class UserController extends Controller
             $notificationForNewIds = array_values($newIdsToAdd);
         }
 
-        DocumentManagerUser::whereUserId($id)->delete();
+        DocumentManagerUser::whereUserId($id)->whereNotIn('document_manager_id', $request->document_types)->delete();
+        $due_date = date('Y-m-d', strtotime(date('Y-m-d') . ' +7 days'));
         foreach ($request->document_types as $type) {
-            DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type]);
+            $document_exists = DocumentManagerUser::whereUserIdAndDocumentManagerId($id, $type)->first();
+            if($document_exists){
+                if($document_exists->document_uploaded === 0){
+                    DocumentManagerUser::whereUserIdAndDocumentManagerId($id, $type)->update(['due_date' => $due_date]);
+                }
+            }else{
+                DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type, 'due_date' => $due_date]);
+            }
         }
         $user = User::whereId($id)->first();
         try{
@@ -867,12 +887,12 @@ class UserController extends Controller
                     $message->to($user->email);
                     $message->subject('Request for new documents');
                 });
-    
+
                 $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
                 foreach ($documents as $document){
                     $message .= $document->title.",";
                 }
-    
+
                 $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
                 $twilioPhoneNumber  = env('TWILIO_NUMBER');
                 $twilioSid          = env('TWILIO_SID');
@@ -888,7 +908,7 @@ class UserController extends Controller
                     ]
                 );
             }
-            
+
         } catch(\Exception $ex){
             echo $ex->getMessage();
         }
@@ -949,5 +969,18 @@ class UserController extends Controller
         }
 
         return back()->withSuccess('Documents updated Successfully.');
+    }
+
+    public function userDueDate(Request $request, $id){
+        $request->validate([
+            'due_date' => [
+                'required',
+                'date',
+                'after_or_equal:tomorrow', // Ensures the due_date is today or a future date
+            ],
+        ]);
+
+        DocumentManagerUser::whereUserId($id)->update(['due_date' => $request->due_date]);
+        return back()->withSuccess('Due date updated Successfully.');
     }
 }

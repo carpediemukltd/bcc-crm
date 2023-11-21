@@ -83,8 +83,7 @@
                            </i>
                            <span>{{$user->phone_number}}</span>
                         </a>
-                        <a class="" href="https://dashboard.bccusa.com/user/documents/view/{{$user->id}}"
-                           target="_blank">
+                        <a target="_blank" href="{{ env('LENDOTICS_DASHBOARD_URL') }}/crm-trigger-bankportal-login/{{auth()->user()->uuid}}?redirect={{ env('LENDOTICS_DASHBOARD_URL') }}/user/documents/view/{{ $user->id }}">
                            <i class="user_icon icon">
                               <svg fill="none" style="width:20px" xmlns="http://www.w3.org/2000/svg"
                                  class="icon-32" width="32" height="32" viewBox="0 0 24 24">

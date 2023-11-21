@@ -874,7 +874,7 @@ class UserController extends Controller
                 $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA!\nThe following document(s) have been added:\n";
                 $i = 1;
                 foreach ($documents as $document){
-                    $message .= $i." ".$document->title."\n";
+                    $message .= $i."- ".$document->title."\n";
                     $i++;
                 }
 

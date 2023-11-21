@@ -871,12 +871,14 @@ class UserController extends Controller
                     $message->subject('Request for new documents');
                 });
 
-                $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
+                $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA!\nThe following document(s) have been added:\n";
+                $i = 1;
                 foreach ($documents as $document){
-                    $message .= $document->title.",";
+                    $message .= $i." ".$document->title."\n";
+                    $i++;
                 }
 
-                $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
+                $message .= "Please login https://dashboard.bccusa.com/ to finalize your application.\nReply STOP to opt out of text notifications.";
                 $twilioPhoneNumber  = env('TWILIO_NUMBER');
                 $twilioSid          = env('TWILIO_SID');
                 $twilioToken        = env('TWILIO_AUTH_TOKEN');

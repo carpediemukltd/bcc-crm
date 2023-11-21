@@ -761,8 +761,8 @@
 <script src="{{asset('assets/js/core/libs.min.js')}}"></script>
 <!-- Plugin Scripts -->
 <!-- Tour plugin Start -->
-<script src="{{asset('assets/vendor/sheperd/dist/js/sheperd.min.js')}}"></script>
-<script src="{{asset('assets//js/plugins/tour.js')}}" defer></script>
+<!-- <script src="{{asset('assets/vendor/sheperd/dist/js/sheperd.min.js')}}"></script>
+<script src="{{asset('assets//js/plugins/tour.js')}}" defer></script> -->
 <!-- Flatpickr Script -->
 <script src="{{asset('assets/vendor/flatpickr/dist/flatpickr.min.js')}}"></script>
 <script src="{{asset('assets/js/plugins/flatpickr.js')}}" defer></script>
@@ -790,7 +790,7 @@
 <script src="{{asset('assets/js/hope-ui.js?v=3.0.0')}}" defer></script>
 <script src="{{asset('assets/js/hope-uipro.js?v=3.0.0')}}" defer></script>
 <script src="{{asset('assets/js/sidebar.js?v=3.0.0')}}" defer></script>
-<script src="{{asset('assets/js/solid-icon-search-filter.js')}}"></script>
+<!-- <script src="{{asset('assets/js/solid-icon-search-filter.js')}}"></script> -->
 
 <script src="{{asset('assets/vendor/sortable/Sortable.min.js')}}"></script>
 <script src="{{asset('assets/js/plugins/kanban.js')}}"></script>
@@ -926,6 +926,8 @@
 
       phoneNumberInput.intlTelInput({
          separateDialCode: true,
+         initialCountry: 'us', // Set the initial country to United States
+         onlyCountries: ['us'], // Allow only United States
       });
 
       // Add an event listener to update the hidden input with the selected country code.
@@ -935,6 +937,11 @@
          selectedCountryCodeInput.val(selectedCountryCode);
       });
       phoneNumberInput.trigger('countrychange');
+      // Hide the country dropdown using JavaScript
+      var style = document.createElement('style');
+      style.type = 'text/css';
+      style.innerHTML = '.iti__country-list { display: none !important; }';
+      document.head.appendChild(style);
 
    });
 </script>
@@ -978,6 +985,12 @@
                'X-CSRF-TOKEN': csrfToken
             },
             success: function(response) {
+               $(".contacts-html").html('');
+               $(".companies-html").html('');
+               $(".deals-html").html('');
+               $(".pipelines-html").html('');
+               $(".stages-html").html('');
+               
                $(".contacts-html").append(response.contacts);
                $(".deals-html").append(response.deals);
                $(".pipelines-html").append(response.pipelines);
@@ -1055,6 +1068,7 @@
       $("#search-header").val('');
 
    });
+   
 </script>
 
 @yield('script')

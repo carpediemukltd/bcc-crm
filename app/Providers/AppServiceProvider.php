@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
         // //defaultStringLength changed to 191 to support mysql below 5.7
-        // Schema::defaultStringLength(191);
+        Schema::defaultStringLength(191);
 
 
 

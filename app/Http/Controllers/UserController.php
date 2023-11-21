@@ -11,10 +11,14 @@ use App\Models\UserOwner;
 use App\Models\UserDetails;
 use App\Helpers\Permissions;
 use App\Jobs\SendNotification;
+use App\Models\Activity;
 use App\Models\Company;
 use App\Models\CustomField;
+use App\Models\DocumentManagerUser;
+use App\Models\Documents;
 use Illuminate\Http\Request;
 use App\Models\RoundRobinSetting;
+use App\Models\Stage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
@@ -24,6 +28,7 @@ use Spatie\Permission\Models\Permission;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Carbon\Carbon;
 use Mail;
+use Twilio\Rest\Client;
 
 class UserController extends Controller
 {
@@ -98,19 +103,26 @@ class UserController extends Controller
         $roles = Permissions::getSubRoles($this->user);
         $this->data['roles'] = $roles;
         if ($request->isMethod('post')) {
+//            echo in_array($request->role, ['user', 'contact']);exit;
             if (!in_array($request->role, $roles)) {
                 return redirect()->back()->with('error', 'You\'ve selected an invalid role.')->withInput();
             }
-            $request->validate([
+
+            $validate = [
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'phone_number' => 'required',
                 'role' => 'required',
                 'email' => 'required|email|unique:users',
                 'password' => 'required|min:6',
-                'document_types' => 'required|array|min:1',
-                'document_types.*' => 'exists:document_managers,id',
-            ]);
+            ];
+
+            if (in_array($request->role, ['user', 'contact'])) {
+                $validate['document_types'] = 'required|array|min:1';
+                $validate['document_types.*'] = 'exists:document_managers,id';
+            }
+
+            $request->validate($validate);
             $data = $request->all();
 
             if ($data) {
@@ -122,6 +134,14 @@ class UserController extends Controller
                     'role' => $data['role'],
                     'company_id' => $company_id,
                     'password' => Hash::make($data['password'])
+                ]);
+
+
+                $activity = Activity::create([
+                    'moduleName' => 'Contact',
+                    'user_id' => auth()->id(),
+                    'contact_id' => $new_user->id
+
                 ]);
 
                 if ($data['role'] == 'owner')
@@ -141,7 +161,36 @@ class UserController extends Controller
                     }
                 }
 
-                $new_user->documentManagers()->attach($request->document_types);
+                if (in_array($request->role, ['user', 'contact'])) {
+                    $new_user->documentManagers()->attach($request->document_types);
+                    try{
+                        Mail::send('email.newRegistration', [
+                            'first_name' => $new_user->first_name,
+                            'documents' => DocumentManager::whereIn('id', $request->document_types)->get()
+                        ], function($message) use($new_user){
+                            $message->to($new_user->email);
+                            $message->subject('Welcome to BCCUSA');
+                        });
+
+                        $message            = "Hi $new_user->first_name, Your secure login to the BCCUSA bank portal has been created! It is accessible here: ".route('login').". Your email address is your login and your password is BCCUSA.com until you login and change it. Please upload all requested documents securely via our portal. Reply STOP to opt out of text notifications.";
+                        $twilioPhoneNumber  = env('TWILIO_NUMBER');
+                        $twilioSid          = env('TWILIO_SID');
+                        $twilioToken        = env('TWILIO_AUTH_TOKEN');
+                        $client             = new Client($twilioSid, $twilioToken);
+                        // Remove spaces from the phone number
+                        $toPhoneNumber = str_replace(' ', '', $new_user->phone_number);
+                        $client->messages->create(
+                            $toPhoneNumber,
+                            [
+                                'from' => $twilioPhoneNumber,
+                                'body' => $message,
+                            ]
+                        );
+                    } catch(\Exception $ex){
+                        echo $ex->getMessage();
+                    }
+                }
+
 
                 if ($data['role'] == 'contact' || $data['role'] == 'user') {
                     UserOwner::create([
@@ -158,7 +207,27 @@ class UserController extends Controller
         } else if ($request->isMethod('get')) {
             $this->data['roles']     = array_diff($this->data['roles'], ['user']);
             $this->data['companies'] = Company::whereStatus('active')->get();
-            $this->data['documents'] = DocumentManager::get();
+            $documents = DocumentManager::get();
+            $sortedDocuments = $documents->sort(function ($a, $b) {
+                // Custom sorting function
+                $pattern = '/^\d+/'; // Regular expression to match numbers at the beginning of the title
+
+                // Extract numbers from the beginning of the titles
+                preg_match($pattern, $a->title, $matchesA);
+                preg_match($pattern, $b->title, $matchesB);
+
+                // Compare titles using natural order comparison
+                if (!empty($matchesA) && empty($matchesB)) {
+                    return 1; // Move titles starting with numbers to the end
+                } elseif (empty($matchesA) && !empty($matchesB)) {
+                    return -1; // Keep other titles at the beginning
+                } else {
+                    return strnatcasecmp($a->title, $b->title);
+                }
+            });
+
+            $sortedDocumentsArray = $sortedDocuments->values()->all();
+            $this->data['documents'] = $sortedDocumentsArray;
             return view($request->type == 'admin' ? 'user.add-admin' : 'user.add', $this->data);
         }
     }
@@ -192,6 +261,10 @@ class UserController extends Controller
 
     public function userDetails(Request $request, $id)
     {
+
+
+
+
         $this->data['current_slug']  = 'Contact Details';
         $this->data['slug']          = 'user_details';
         $access = Permissions::checkUserAccess($this->user, $id);
@@ -201,12 +274,17 @@ class UserController extends Controller
             return redirect(route('dashboard'))->with('error', 'Access Denied to User.');
         }
         $this->data['id'] = $id;
-        $this->data['user'] = User::where('id', $id)->first();
+        $this->data['user'] = User::with(['DocumentManagers' => function($query){
+            $query->select('id');
+        }])->where(['id' => $id])->first();
         $this->data['notes'] = Note::getNotesByUser($id);
         $this->data['deals'] = Deal::getDealsByUser($id, 0);
         $this->data['custom_fields'] =  CustomField::getDataByUser($id);
 
         if ($request->isMethod('put')) {
+
+
+
             $update_data = [
                 'first_name'   => $request->first_name,
                 'last_name'    => $request->last_name,
@@ -216,16 +294,59 @@ class UserController extends Controller
             User::whereId($id)->update($update_data);
             if ($request->custom_fields_count > 0) {
                 foreach ($request->custom_fields as $key => $value) {
-                    UserDetails::updateOrCreate(
+                   $abc =  UserDetails::updateOrCreate(
                         ['user_id' => $id, 'deal_id' => 0, 'custom_field_id' => $key],
                         ['data' => $value]
                     );
                 }
             }
+
+
+            $activity = Activity::create([
+                'moduleName' => 'Custom Field',
+                'user_id' => auth()->id(),
+                'contact_id' =>$id
+
+            ]);
+
+
+            // dd($request, $id , $abc);
             return redirect(route('user.details', $id))->withSuccess('Contact Update Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
+            $activity = Activity::where('contact_id',$id)->get();
+            $userRecord = User::all();
+            $document = Documents::where('user_id',$id)->get();
+            $customFieldDetails = UserDetails::where('user_id',$id)->get();
+            $customField = CustomField::all();
+
+            // dd($customFieldDetails , $customField);
+            $deal = Deal::where('user_id',$id)->get();
+            $stage = Stage::all();
+
+            $documents = DocumentManager::get();
+            $sortedDocuments = $documents->sort(function ($a, $b) {
+                // Custom sorting function
+                $pattern = '/^\d+/'; // Regular expression to match numbers at the beginning of the title
+
+                // Extract numbers from the beginning of the titles
+                preg_match($pattern, $a->title, $matchesA);
+                preg_match($pattern, $b->title, $matchesB);
+
+                // Compare titles using natural order comparison
+                if (!empty($matchesA) && empty($matchesB)) {
+                    return 1; // Move titles starting with numbers to the end
+                } elseif (empty($matchesA) && !empty($matchesB)) {
+                    return -1; // Keep other titles at the beginning
+                } else {
+                    return strnatcasecmp($a->title, $b->title);
+                }
+            });
+
+            $sortedDocumentsArray = $sortedDocuments->values()->all();
+            $this->data['documents'] = $sortedDocumentsArray;
+            $this->data['selected_documents'] = $this->data['user']->DocumentManagers;
             $this->data['bankusers'] = User::whereRole('bank')->get();
-            return view("user.details", $this->data);
+            return view("user.details", $this->data,compact('activity','userRecord','document','customFieldDetails','customField','deal','stage'));
         }
     } // userDetails
 
@@ -243,18 +364,23 @@ class UserController extends Controller
         $this->data['user'] = User::with(['DocumentManagers' => function($query){
             $query->select('id');
         }])->where(['id' => $id])->first();
+
         $this->data['custom_fields'] =  CustomField::getDataByUser($id);
 
         if ($request->isMethod('put')) {
 
-            $request->validate([
+            $validate = [
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'phone_number' => 'required',
-                'document_types' => 'required|array|min:1',
-                'document_types.*' => 'exists:document_managers,id',
-            ]);
+            ];
 
+            if (in_array($this->data['user']->role, ['user', 'contact'])){
+                $validate['document_types'] = 'required|array|min:1';
+                $validate['document_types.*'] = 'exists:document_managers,id';
+            }
+
+            $request->validate($validate);
             $update_data = [
                 'first_name'   => $request->first_name,
                 'last_name'    => $request->last_name,
@@ -267,6 +393,7 @@ class UserController extends Controller
             } else if ($request->password && strlen($request->password) >= 6) {
                 $update_data['password'] = Hash::make($request->password);
             }
+
             User::whereId($id)->update($update_data);
             if ($request->custom_fields_count > 0) {
                 foreach ($request->custom_fields as $key => $value) {
@@ -277,12 +404,85 @@ class UserController extends Controller
                 }
             }
 
-            $user = User::whereId($id)->first();
-            $user->documentManagers()->sync($request->document_types);
+
+            if(in_array($this->data['user']->role, ['user', 'contact'])){
+                $existingDocumentManagerIds = DocumentManagerUser::whereUserId($id)->pluck('document_manager_id');
+                $newDocumentManagerIds = $request->document_types;
+                $notificationForNewIds = array();
+
+                if (count($existingDocumentManagerIds) < count($newDocumentManagerIds) && is_array($newDocumentManagerIds)) {
+                    // Find new ids in $newDocumentManagerIds that do not exist in $existingDocumentManagerIds
+                    $newIdsToAdd = array_diff($newDocumentManagerIds, $existingDocumentManagerIds->toArray());
+
+                    // Store new ids in $notificationForNewIds
+                    $notificationForNewIds = array_values($newIdsToAdd);
+                }
+
+                DocumentManagerUser::whereUserId($id)->delete();
+                foreach ($request->document_types as $type) {
+                    DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type]);
+                }
+                $user = User::whereId($id)->first();
+                try{
+                    $documents = DocumentManager::whereIn('id', $notificationForNewIds)->get();
+                    if(count($documents)){
+                        Mail::send('email.userDocumentsSelectionUpdate', [
+                            'first_name' => $user->first_name,
+                            'documents' => $documents
+                        ], function($message) use($user){
+                            $message->to($user->email);
+                            $message->subject('Request for new documents');
+                        });
+    
+                        $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
+                        foreach ($documents as $document){
+                            $message .= $document->title.",";
+                        }
+    
+                        $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
+                        $twilioPhoneNumber  = env('TWILIO_NUMBER');
+                        $twilioSid          = env('TWILIO_SID');
+                        $twilioToken        = env('TWILIO_AUTH_TOKEN');
+                        $client             = new Client($twilioSid, $twilioToken);
+                        // Remove spaces from the phone number
+                        $toPhoneNumber = str_replace(' ', '', $user->phone_number);
+                        $client->messages->create(
+                            $toPhoneNumber,
+                            [
+                                'from' => $twilioPhoneNumber,
+                                'body' => $message,
+                            ]
+                        );
+                    }
+                    
+                } catch(\Exception $ex){
+                    echo $ex->getMessage();
+                }
+            }
 
             return redirect(url('contacts'))->withSuccess('Contact Updated Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
-            $this->data['documents'] = DocumentManager::get();
+            $documents = DocumentManager::get();
+            $sortedDocuments = $documents->sort(function ($a, $b) {
+                // Custom sorting function
+                $pattern = '/^\d+/'; // Regular expression to match numbers at the beginning of the title
+
+                // Extract numbers from the beginning of the titles
+                preg_match($pattern, $a->title, $matchesA);
+                preg_match($pattern, $b->title, $matchesB);
+
+                // Compare titles using natural order comparison
+                if (!empty($matchesA) && empty($matchesB)) {
+                    return 1; // Move titles starting with numbers to the end
+                } elseif (empty($matchesA) && !empty($matchesB)) {
+                    return -1; // Keep other titles at the beginning
+                } else {
+                    return strnatcasecmp($a->title, $b->title);
+                }
+            });
+
+            $sortedDocumentsArray = $sortedDocuments->values()->all();
+            $this->data['documents'] = $sortedDocumentsArray;
             $this->data['selected_documents'] = $this->data['user']->DocumentManagers;
             return view("user.edit", $this->data);
         }
@@ -457,9 +657,9 @@ class UserController extends Controller
                 "sat_count" => $sat_count,
             ];
             $user = auth()->user();
-            if(!$user->hasAnyRole(['admin','owner', 'user'])) {
+            /* if(!$user->hasAnyRole(['admin','owner', 'user'])) {
                 $user->assignRole($user->role);
-            }
+            } */
             $slug = "dashboard";
             return view('dashboard',compact('user_count', 'week_data', 'slug'));
 
@@ -630,5 +830,124 @@ class UserController extends Controller
             return view('admin.admin_pagination', $this->data)->render();
         else
             return view("admin.list", $this->data);
+    }
+
+    public function updateDocumentManager(Request $request, $id){
+        $validate = [
+            'document_types' => 'required|array|min:1',
+            'document_types.*' => 'exists:document_managers,id'
+        ];
+
+        $request->validate($validate);
+        
+        $existingDocumentManagerIds = DocumentManagerUser::whereUserId($id)->pluck('document_manager_id');
+        $newDocumentManagerIds = $request->document_types;
+        $notificationForNewIds = array();
+
+        if (count($existingDocumentManagerIds) < count($newDocumentManagerIds) && is_array($newDocumentManagerIds)) {
+            // Find new ids in $newDocumentManagerIds that do not exist in $existingDocumentManagerIds
+            $newIdsToAdd = array_diff($newDocumentManagerIds, $existingDocumentManagerIds->toArray());
+
+            // Store new ids in $notificationForNewIds
+            $notificationForNewIds = array_values($newIdsToAdd);
+        }
+
+        DocumentManagerUser::whereUserId($id)->delete();
+        foreach ($request->document_types as $type) {
+            DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type]);
+        }
+        $user = User::whereId($id)->first();
+        try{
+            $documents = DocumentManager::whereIn('id', $notificationForNewIds)->get();
+            if(count($documents)){
+                Mail::send('email.userDocumentsSelectionUpdate', [
+                    'first_name' => $user->first_name,
+                    'documents' => $documents
+                ], function($message) use($user){
+                    $message->to($user->email);
+                    $message->subject('Request for new documents');
+                });
+    
+                $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
+                foreach ($documents as $document){
+                    $message .= $document->title.",";
+                }
+    
+                $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
+                $twilioPhoneNumber  = env('TWILIO_NUMBER');
+                $twilioSid          = env('TWILIO_SID');
+                $twilioToken        = env('TWILIO_AUTH_TOKEN');
+                $client             = new Client($twilioSid, $twilioToken);
+                // Remove spaces from the phone number
+                $toPhoneNumber = str_replace(' ', '', $user->phone_number);
+                $client->messages->create(
+                    $toPhoneNumber,
+                    [
+                        'from' => $twilioPhoneNumber,
+                        'body' => $message,
+                    ]
+                );
+            }
+            
+        } catch(\Exception $ex){
+            echo $ex->getMessage();
+        }
+        return back()->withSuccess('Documents updated Successfully.');
+
+
+        $this->data['user'] = User::with(['DocumentManagers' => function($query){
+            $query->select('id');
+        }])->where(['id' => $id])->first();
+
+        $old_documents = [];
+        foreach($this->data['user']->DocumentManagers as $documentManager){
+            $old_documents[] = $documentManager->id;
+        }
+
+        $new_document = [];
+        foreach($request->document_types as $document_type){
+            if(!in_array($document_type,$old_documents)){
+                $new_document[] = $document_type;
+            }
+        }
+
+        if(count($new_document) > 0){
+            $user = User::whereId($id)->first();
+            $user->documentManagers()->sync($request->document_types);
+            try{
+                $documents = DocumentManager::whereIn('id', $new_document)->get();
+                Mail::send('email.userDocumentsSelectionUpdate', [
+                    'first_name' => $user->first_name,
+                    'documents' => $documents
+                ], function($message) use($user){
+                    $message->to($user->email);
+                    $message->subject('Request for new documents');
+                });
+
+                $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
+                foreach ($documents as $document){
+                    $message .= $document->title.",";
+                }
+
+                $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
+                $twilioPhoneNumber  = env('TWILIO_NUMBER');
+                $twilioSid          = env('TWILIO_SID');
+                $twilioToken        = env('TWILIO_AUTH_TOKEN');
+                $client             = new Client($twilioSid, $twilioToken);
+                // Remove spaces from the phone number
+                $toPhoneNumber = str_replace(' ', '', $user->phone_number);
+                $client->messages->create(
+                    $toPhoneNumber,
+                    [
+                        'from' => $twilioPhoneNumber,
+                        'body' => $message,
+                    ]
+                );
+            } catch(\Exception $ex){
+                echo $ex->getMessage();
+            }
+        }
+
+        return back()->withSuccess('Documents updated Successfully.');
     }
 }

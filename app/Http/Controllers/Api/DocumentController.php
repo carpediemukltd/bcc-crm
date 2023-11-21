@@ -30,9 +30,9 @@ class DocumentController extends Controller
 
         if(count($user->documentManagers) === 0){
             $all_doc_type  = [
-                "expedited_products" => [
-                    "Completed_Application" => [], "Past_6_Months_of_Bank_Statements" => [], "Driver's_License" => []
-                ],
+//                "expedited_products" => [
+//                    "Completed_Application" => [], "Past_6_Months_of_Bank_Statements" => [], "Driver's_License" => []
+//                ],
                 "sba_products" => [
                     "Completed_Application" => [], "Past_6_Months_of_Bank_Statements" => [], "Past_3_Years_of_Personal_&_Corporate_Tax_Returns" => [],
                     $yearToDateProfitLoss => [],  $yearToDateProfitBalanceSheet => [], "Completed_Debt_Schedule" => [],
@@ -41,9 +41,9 @@ class DocumentController extends Controller
             ];
         }else{
             $all_doc_type = [
-                "expedited_products" => [
-                    "Completed_Application" => [], "Past_6_Months_of_Bank_Statements" => [], "Driver's_License" => []
-                ],
+//                "expedited_products" => [
+//                    "Completed_Application" => [], "Past_6_Months_of_Bank_Statements" => [], "Driver's_License" => []
+//                ],
             ];
 
             foreach($user->documentManagers as $documentManager){
@@ -81,10 +81,10 @@ class DocumentController extends Controller
 
         if(count($user->documentManagers) === 0){
             $content = [
-                'Completed_Application' => 'Your application may have been completed at time of submission. If you have not already completed an application, please do so <a href="https://eform.pandadoc.com/?eform=956176a8-ecfc-4afa-ba88-fdc33c7a1bf2">here.</a>',
+                'Completed_Application' => 'Your application may have been completed at time of submission. If you have not already completed an application, please do so <a href="https://form.jotform.com/232793908519166">here.</a>',
                 "Driver's_License" => "A driver's license or official form of identification is a necessary component to facilitate processing your loan request. BCCUSA and our partner banks take anti fraud measures very seriously. At times, a passport is a sufficient form of identification that can be produced in lieu of your driver's license. ",
                 'Past_6_Months_of_Bank_Statements' => "Your corporate bank statements are a fundamental requirement for determining loan qualification. It is important to provide each and every page associated the month's full statement (even if it's a blank page). This protects against fraud and ensures we, and our bank partners, have an accurate portrayal of your cash flow.",
-                'Signed_Contingent_Consulting_Retainer_Agreement'  => 'Your application may have been completed at time of submission. If you have not already completed an application, please do so <a href="https://eform.pandadoc.com/?eform=956176a8-ecfc-4afa-ba88-fdc33c7a1bf2">here.</a>',
+                'Signed_Contingent_Consulting_Retainer_Agreement'  => 'Your application may have been completed at time of submission. If you have not already completed an application, please do so <a href="https://form.jotform.com/232793908519166">here.</a>',
                 'Past_3_Years_of_Personal_&_Corporate_Tax_Returns'  => 'Your Personal Tax Returns showcase your ability to service all your personal obligations via your household income. Every page of your return has a purpose. When submitting your personal tax returns for review, please ensure that all pages are present.',
                 '2022_Year-to-date_(or_within_60_days_max)_Profit_&_Loss'  => " Your interim financials (profit & loss and balance sheet) provide a year-to-date view for banks to understand how your business is performing in the present year. In addition to your most recently filed corporate tax return, interim financials are an integral component for a banking institution to make a lending decision. Since these are unaudited financials, it's important to showcase as much strength as possible. Your BCCUSA at consultant will at times make suggestions for slight pivots that can be the difference between qualifying or not. This is value you can only receive from working with BCCUSA.",
                 'Completed_Debt_Schedule' =>  "Your interim financials (profit & loss and balance sheet) provide a year-to-date view for banks to understand how your business is performing in the present year. In addition to your most recently filed corporate tax return, interim financials are an integral component for a banking institution to make a lending decision. Since these are unaudited financials, it's important to showcase as much strength as possible. Your BCCUSA at consultant will at times make suggestions for slight pivots that can be the difference between qualifying or not. This is value you can only receive from working with BCCUSA."
@@ -98,12 +98,23 @@ class DocumentController extends Controller
             }
         }
 
-        $data['doc_type_title'] = ['expedited_products' => 'Expedited Products', 'sba_products' => 'SBA Products'];
+        $data['doc_type_title'] = [
+//            'expedited_products' => 'Expedited Products',
+            'sba_products' => 'SBA Products'
+        ];
         $data['all_documents'] = $all_doc_type;
         $data['content'] = $content;
         $data['ocrolus_csv_path'] = $ocrolusCSV;
         $data['showMenu'] = 1;
         $data['ocrolusCSVPath'] = 1;
+        $data['sba_products_templates'] = array(
+            'Personal_Financial_Statement'      => 'https://dashboard.bccusa.com/BCCUSA_PersonalFinancialStatement_2023.pdf',
+            'SBA_1919_Form'                     => 'https://dashboard.bccusa.com/SBA_1919_Form.pdf',
+            'Certificate_of_LLC_Members'        => 'https://dashboard.bccusa.com/Certificate%20of%20LLC%20Members_2023.pdf',
+            'Certificate_of_Corporate_Secretary'=> 'https://dashboard.bccusa.com/Certificate%20of%20Corporate%20Secretary.pdf',
+            'Landlord_Option_to_Renew'          => 'https://dashboard.bccusa.com/Landlord%20Option%20To%20Renew.pdf',
+            'Management_Resume_Template'        => 'https://dashboard.bccusa.com/Management%20Resume%20Template.pdf'
+        );
         return ApiResponse::success($data, '', 200);
     }
 
@@ -171,7 +182,7 @@ class DocumentController extends Controller
                 )) || preg_match('/^\d{4}_Year-to-date_\(or_within_60_days_max\)_/', $fileGroupName)) {
                     PostFilesToOcrolus::dispatch($doc);
                 }
-            }            
+            }
             $data['document_path'] = $url;
 
             return ApiResponse::success($data, 'Document uploaded successfully.', 200);

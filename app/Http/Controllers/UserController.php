@@ -423,6 +423,7 @@ class UserController extends Controller
                 foreach ($request->document_types as $type) {
                     DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type]);
                 }
+             
                 $user = User::whereId($id)->first();
                 try{
                     $documents = DocumentManager::whereIn('id', $notificationForNewIds)->get();
@@ -905,7 +906,7 @@ class UserController extends Controller
         }])->where(['id' => $id])->first();
 
         $old_documents = [];
-        foreach($this->data['user']->DocumentManagers as $documentManager){
+        foreach($user_data->DocumentManagers as $documentManager){
             $old_documents[] = $documentManager->id;
         }
 
@@ -916,18 +917,10 @@ class UserController extends Controller
             }
         }
 
-        if(count($new_document) > 0){
+        if(!empty(array_diff($old_documents, $new_document)) || !empty(array_diff($new_document, $old_documents)) || count($old_documents) !== count($new_document)){
             $user = User::whereId($id)->first();
             $user->documentManagers()->sync($request->document_types);
-            try{
-                $documents = DocumentManager::whereIn('id', $new_document)->get();
-                Mail::send('email.userDocumentsSelectionUpdate', [
-                    'first_name' => $user->first_name,
-                    'documents' => $documents
-                ], function($message) use($user){
-                    $message->to($user->email);
-                    $message->subject('Request for new documents');
-                });
+            if(count($new_document) > 0){
 
                 $message = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA!\nThe following document(s) have been added:\n";
                 $i = 1;

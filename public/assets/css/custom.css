@@ -1968,7 +1968,30 @@ div#user_edit_view {
     border-radius: 50%;
     position: relative;
     top: -2px;
+    animation: 3s spin-animation ease-in-out infinite;
+            transform-origin: center center;
   }
+  @keyframes spin-animation {
+    0% {
+        transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    }
+
+    25% {
+        transform: perspective(120px) rotateX(-180deg) rotateY(0deg);
+    }
+
+    50% {
+        transform: perspective(120px) rotateX(-180deg) rotateY(-180deg);
+    }
+
+    75% {
+        transform: perspective(120px) rotateX(0deg) rotateY(-180deg);
+    }
+
+    100% {
+        transform: perspective(120px) rotateX(0deg) rotateY(-360deg);
+    }
+}
 .logo::after,
 .logo::before {
   position: absolute;
@@ -2032,13 +2055,19 @@ div#user_edit_view {
 .doc-upload-view.accordion .accordion-item .accordion-header button{
   padding: 0 15px 0 0; 
 }
-.doc-upload-view .accordion-button::after{
+/* .doc-upload-view .accordion-button::after{
   position: absolute;
   top: 0;
   left: -27px;
-}
+} */
 .ml-2{
   margin-left: 10px;
 }.ml-r{
   margin-right: 10px;
 }
+.iq-timeline0 li .timeline-dots{
+  top: 0;
+}
+/* .iq-nav-menu li > ul ul{
+  left: 0;
+} */

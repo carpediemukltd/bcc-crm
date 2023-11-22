@@ -796,7 +796,17 @@
 <script src="{{asset('assets/js/plugins/kanban.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput-jquery.min.js"></script>
 
-
+<script>
+    const inputField = document.getElementById('amount');
+    inputField.addEventListener('input', function(event) {
+      let enteredValue = event.target.value;
+      let number = parseFloat(enteredValue.replace(/[^\d.]/g, ''));
+      let formattedValue = '$' + number.toLocaleString(undefined, {
+        maximumFractionDigits: 2
+      });
+      event.target.value = formattedValue;
+    });
+  </script>
 
 <script>
    setTimeout(function() {

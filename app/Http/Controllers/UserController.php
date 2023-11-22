@@ -418,14 +418,16 @@ class UserController extends Controller
                     $notificationForNewIds = array_values($newIdsToAdd);
                 }
 
+
                 DocumentManagerUser::whereUserId($id)->delete();
                 foreach ($request->document_types as $type) {
                     DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type]);
                 }
+             
                 $user = User::whereId($id)->first();
                 try{
                     $documents = DocumentManager::whereIn('id', $notificationForNewIds)->get();
-                    if(count($documents)){
+                    if($documents != null){
                         Mail::send('email.userDocumentsSelectionUpdate', [
                             'first_name' => $user->first_name,
                             'documents' => $documents
@@ -433,13 +435,15 @@ class UserController extends Controller
                             $message->to($user->email);
                             $message->subject('Request for new documents');
                         });
-    
-                        $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
+
+                        $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA!\nThe following document(s) have been added:\n";
+                        $i = 1;
                         foreach ($documents as $document){
-                            $message .= $document->title.",";
+                            $message .= $i." ".$document->title."\n";
+                            $i++;
                         }
-    
-                        $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
+
+                        $message .= "Please login https://dashboard.bccusa.com/ to finalize your application.\nReply STOP to opt out of text notifications.";
                         $twilioPhoneNumber  = env('TWILIO_NUMBER');
                         $twilioSid          = env('TWILIO_SID');
                         $twilioToken        = env('TWILIO_AUTH_TOKEN');
@@ -454,7 +458,7 @@ class UserController extends Controller
                             ]
                         );
                     }
-                    
+
                 } catch(\Exception $ex){
                     echo $ex->getMessage();
                 }
@@ -839,7 +843,7 @@ class UserController extends Controller
         ];
 
         $request->validate($validate);
-        
+
         $existingDocumentManagerIds = DocumentManagerUser::whereUserId($id)->pluck('document_manager_id');
         $newDocumentManagerIds = $request->document_types;
         $notificationForNewIds = array();
@@ -867,13 +871,15 @@ class UserController extends Controller
                     $message->to($user->email);
                     $message->subject('Request for new documents');
                 });
-    
-                $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
+
+                $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA!\nThe following document(s) have been added:\n";
+                $i = 1;
                 foreach ($documents as $document){
-                    $message .= $document->title.",";
+                    $message .= $i."- ".$document->title."\n";
+                    $i++;
                 }
-    
-                $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
+
+                $message .= "Please login https://dashboard.bccusa.com/ to finalize your application.\nReply STOP to opt out of text notifications.";
                 $twilioPhoneNumber  = env('TWILIO_NUMBER');
                 $twilioSid          = env('TWILIO_SID');
                 $twilioToken        = env('TWILIO_AUTH_TOKEN');
@@ -888,7 +894,7 @@ class UserController extends Controller
                     ]
                 );
             }
-            
+
         } catch(\Exception $ex){
             echo $ex->getMessage();
         }
@@ -900,7 +906,7 @@ class UserController extends Controller
         }])->where(['id' => $id])->first();
 
         $old_documents = [];
-        foreach($this->data['user']->DocumentManagers as $documentManager){
+        foreach($user_data->DocumentManagers as $documentManager){
             $old_documents[] = $documentManager->id;
         }
 
@@ -911,25 +917,19 @@ class UserController extends Controller
             }
         }
 
-        if(count($new_document) > 0){
+        if(!empty(array_diff($old_documents, $new_document)) || !empty(array_diff($new_document, $old_documents)) || count($old_documents) !== count($new_document)){
             $user = User::whereId($id)->first();
             $user->documentManagers()->sync($request->document_types);
-            try{
-                $documents = DocumentManager::whereIn('id', $new_document)->get();
-                Mail::send('email.userDocumentsSelectionUpdate', [
-                    'first_name' => $user->first_name,
-                    'documents' => $documents
-                ], function($message) use($user){
-                    $message->to($user->email);
-                    $message->subject('Request for new documents');
-                });
+            if(count($new_document) > 0){
 
-                $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
+                $message = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA!\nThe following document(s) have been added:\n";
+                $i = 1;
                 foreach ($documents as $document){
-                    $message .= $document->title.",";
+                    $message .= $i." ".$document->title."\n";
+                    $i++;
                 }
 
-                $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
+                $message .= "Please login https://dashboard.bccusa.com/ to finalize your application.\nReply STOP to opt out of text notifications.";
                 $twilioPhoneNumber  = env('TWILIO_NUMBER');
                 $twilioSid          = env('TWILIO_SID');
                 $twilioToken        = env('TWILIO_AUTH_TOKEN');

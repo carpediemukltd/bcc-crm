@@ -10,9 +10,6 @@
       </ul>
       <div class="right-panel">
          ©2023 <span>BCC, CRM</span>
-         <!-- , Developed
-         
-         by <a href="https://carpediem.team/" target="_blank">Carpediem</a>. -->
       </div>
    </div>
 </footer>
@@ -760,9 +757,6 @@
 
 <script src="{{asset('assets/js/core/libs.min.js')}}"></script>
 <!-- Plugin Scripts -->
-<!-- Tour plugin Start -->
-<!-- <script src="{{asset('assets/vendor/sheperd/dist/js/sheperd.min.js')}}"></script>
-<script src="{{asset('assets//js/plugins/tour.js')}}" defer></script> -->
 <!-- Flatpickr Script -->
 <script src="{{asset('assets/vendor/flatpickr/dist/flatpickr.min.js')}}"></script>
 <script src="{{asset('assets/js/plugins/flatpickr.js')}}" defer></script>
@@ -790,23 +784,11 @@
 <script src="{{asset('assets/js/hope-ui.js?v=3.0.0')}}" defer></script>
 <script src="{{asset('assets/js/hope-uipro.js?v=3.0.0')}}" defer></script>
 <script src="{{asset('assets/js/sidebar.js?v=3.0.0')}}" defer></script>
-<!-- <script src="{{asset('assets/js/solid-icon-search-filter.js')}}"></script> -->
 
 <script src="{{asset('assets/vendor/sortable/Sortable.min.js')}}"></script>
 <script src="{{asset('assets/js/plugins/kanban.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput-jquery.min.js"></script>
 
-<script>
-    const inputField = document.getElementById('amount');
-    inputField.addEventListener('input', function(event) {
-      let enteredValue = event.target.value;
-      let number = parseFloat(enteredValue.replace(/[^\d.]/g, ''));
-      let formattedValue = '$' + number.toLocaleString(undefined, {
-        maximumFractionDigits: 2
-      });
-      event.target.value = formattedValue;
-    });
-  </script>
 
 <script>
    setTimeout(function() {

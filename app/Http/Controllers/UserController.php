@@ -422,37 +422,44 @@ class UserController extends Controller
                 foreach ($request->document_types as $type) {
                     DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type]);
                 }
-                $user = User::whereId($id)->first();
-                try{
-                    $documents = DocumentManager::whereIn('id', $notificationForNewIds)->get();
-                    if(count($documents)){
-                        Mail::send('email.userDocumentsSelectionUpdate', [
-                            'first_name' => $user->first_name,
-                            'documents' => $documents
-                        ], function($message) use($user){
-                            $message->to($user->email);
-                            $message->subject('Request for new documents');
-                        });
-    
-                        $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
-                        foreach ($documents as $document){
-                            $message .= $document->title.",";
+
+                if(!empty(array_diff($old_documents, $new_document)) || !empty(array_diff($new_document, $old_documents)) || count($old_documents) !== count($new_document)){
+                    $user = User::whereId($id)->first();
+                    $user->documentManagers()->sync($request->document_types);
+                    if(count($new_document) > 0){
+
+                        try{
+                            $documents = DocumentManager::whereIn('id', $new_document)->get();
+                            Mail::send('email.userDocumentsSelectionUpdate', [
+                                'first_name' => $user->first_name,
+                                'documents' => $documents
+                            ], function($message) use($user){
+                                $message->to($user->email);
+                                $message->subject('Request for new documents');
+                            });
+
+                            $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
+                            foreach ($documents as $document){
+                                $message .= $document->title.",";
+                            }
+
+                            $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
+                            $twilioPhoneNumber  = env('TWILIO_NUMBER');
+                            $twilioSid          = env('TWILIO_SID');
+                            $twilioToken        = env('TWILIO_AUTH_TOKEN');
+                            $client             = new Client($twilioSid, $twilioToken);
+                            // Remove spaces from the phone number
+                            $toPhoneNumber = str_replace(' ', '', $user->phone_number);
+                            $client->messages->create(
+                                $toPhoneNumber,
+                                [
+                                    'from' => $twilioPhoneNumber,
+                                    'body' => $message,
+                                ]
+                            );
+                        } catch(\Exception $ex){
+                            echo $ex->getMessage();
                         }
-    
-                        $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
-                        $twilioPhoneNumber  = env('TWILIO_NUMBER');
-                        $twilioSid          = env('TWILIO_SID');
-                        $twilioToken        = env('TWILIO_AUTH_TOKEN');
-                        $client             = new Client($twilioSid, $twilioToken);
-                        // Remove spaces from the phone number
-                        $toPhoneNumber = str_replace(' ', '', $user->phone_number);
-                        $client->messages->create(
-                            $toPhoneNumber,
-                            [
-                                'from' => $twilioPhoneNumber,
-                                'body' => $message,
-                            ]
-                        );
                     }
                     
                 } catch(\Exception $ex){
@@ -839,68 +846,13 @@ class UserController extends Controller
         ];
 
         $request->validate($validate);
-        
-        $existingDocumentManagerIds = DocumentManagerUser::whereUserId($id)->pluck('document_manager_id');
-        $newDocumentManagerIds = $request->document_types;
-        $notificationForNewIds = array();
 
-        if (count($existingDocumentManagerIds) < count($newDocumentManagerIds) && is_array($newDocumentManagerIds)) {
-            // Find new ids in $newDocumentManagerIds that do not exist in $existingDocumentManagerIds
-            $newIdsToAdd = array_diff($newDocumentManagerIds, $existingDocumentManagerIds->toArray());
-
-            // Store new ids in $notificationForNewIds
-            $notificationForNewIds = array_values($newIdsToAdd);
-        }
-
-        DocumentManagerUser::whereUserId($id)->delete();
-        foreach ($request->document_types as $type) {
-            DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type]);
-        }
-        $user = User::whereId($id)->first();
-        try{
-            $documents = DocumentManager::whereIn('id', $notificationForNewIds)->get();
-            if(count($documents)){
-                Mail::send('email.userDocumentsSelectionUpdate', [
-                    'first_name' => $user->first_name,
-                    'documents' => $documents
-                ], function($message) use($user){
-                    $message->to($user->email);
-                    $message->subject('Request for new documents');
-                });
-    
-                $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
-                foreach ($documents as $document){
-                    $message .= $document->title.",";
-                }
-    
-                $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
-                $twilioPhoneNumber  = env('TWILIO_NUMBER');
-                $twilioSid          = env('TWILIO_SID');
-                $twilioToken        = env('TWILIO_AUTH_TOKEN');
-                $client             = new Client($twilioSid, $twilioToken);
-                // Remove spaces from the phone number
-                $toPhoneNumber = str_replace(' ', '', $user->phone_number);
-                $client->messages->create(
-                    $toPhoneNumber,
-                    [
-                        'from' => $twilioPhoneNumber,
-                        'body' => $message,
-                    ]
-                );
-            }
-            
-        } catch(\Exception $ex){
-            echo $ex->getMessage();
-        }
-        return back()->withSuccess('Documents updated Successfully.');
-
-
-        $this->data['user'] = User::with(['DocumentManagers' => function($query){
+        $user_data = User::with(['DocumentManagers' => function($query){
             $query->select('id');
         }])->where(['id' => $id])->first();
 
         $old_documents = [];
-        foreach($this->data['user']->DocumentManagers as $documentManager){
+        foreach($user_data->DocumentManagers as $documentManager){
             $old_documents[] = $documentManager->id;
         }
 
@@ -911,40 +863,43 @@ class UserController extends Controller
             }
         }
 
-        if(count($new_document) > 0){
+        if(!empty(array_diff($old_documents, $new_document)) || !empty(array_diff($new_document, $old_documents)) || count($old_documents) !== count($new_document)){
             $user = User::whereId($id)->first();
             $user->documentManagers()->sync($request->document_types);
-            try{
-                $documents = DocumentManager::whereIn('id', $new_document)->get();
-                Mail::send('email.userDocumentsSelectionUpdate', [
-                    'first_name' => $user->first_name,
-                    'documents' => $documents
-                ], function($message) use($user){
-                    $message->to($user->email);
-                    $message->subject('Request for new documents');
-                });
+            if(count($new_document) > 0){
 
-                $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
-                foreach ($documents as $document){
-                    $message .= $document->title.",";
+                try{
+                    $documents = DocumentManager::whereIn('id', $new_document)->get();
+                    Mail::send('email.userDocumentsSelectionUpdate', [
+                        'first_name' => $user->first_name,
+                        'documents' => $documents
+                    ], function($message) use($user){
+                        $message->to($user->email);
+                        $message->subject('Request for new documents');
+                    });
+
+                    $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
+                    foreach ($documents as $document){
+                        $message .= $document->title.", ";
+                    }
+
+                    $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
+                    $twilioPhoneNumber  = env('TWILIO_NUMBER');
+                    $twilioSid          = env('TWILIO_SID');
+                    $twilioToken        = env('TWILIO_AUTH_TOKEN');
+                    $client             = new Client($twilioSid, $twilioToken);
+                    // Remove spaces from the phone number
+                    $toPhoneNumber = str_replace(' ', '', $user->phone_number);
+                    $client->messages->create(
+                        $toPhoneNumber,
+                        [
+                            'from' => $twilioPhoneNumber,
+                            'body' => $message,
+                        ]
+                    );
+                } catch(\Exception $ex){
+                    echo $ex->getMessage();
                 }
-
-                $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
-                $twilioPhoneNumber  = env('TWILIO_NUMBER');
-                $twilioSid          = env('TWILIO_SID');
-                $twilioToken        = env('TWILIO_AUTH_TOKEN');
-                $client             = new Client($twilioSid, $twilioToken);
-                // Remove spaces from the phone number
-                $toPhoneNumber = str_replace(' ', '', $user->phone_number);
-                $client->messages->create(
-                    $toPhoneNumber,
-                    [
-                        'from' => $twilioPhoneNumber,
-                        'body' => $message,
-                    ]
-                );
-            } catch(\Exception $ex){
-                echo $ex->getMessage();
             }
         }
 

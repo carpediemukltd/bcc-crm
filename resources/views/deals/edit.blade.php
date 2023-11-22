@@ -143,7 +143,7 @@
                      <div class="row">
                         <div class="col">
                            <button type="submit" class="btn btn-primary">Update</button>
-                           <a href="{{ route('user.deals', [$current_user_id,'listing']) }}" class="btn btn-danger">Cancel</a>
+                           <a href="{{ route('user.deals', [$current_user_id]) }}" class="btn btn-danger">Cancel</a>
                         </div>
                      </div>
                   </form>

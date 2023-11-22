@@ -8,8 +8,8 @@
             <div class="col-md-12">
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
-                     <h1>Add New Deal</h1>
-                     <p>Add new deal.</p>
+                     <h1>{{$user->first_name}} {{$user->last_name}}</h1>
+                     <p>Add New Deal.</p>
                   </div>
                </div>
             </div>
@@ -152,7 +152,7 @@
                      <div class="row">
                         <div class="col">
                            <button type="submit" class="btn btn-primary">Submit</button>
-                           <a href="{{ route('user.deals', [$current_user_id,'listing']) }}" class="btn btn-danger">Cancel</a>
+                           <a href="{{ route('user.deals', [$current_user_id]) }}" class="btn btn-danger">Cancel</a>
                         </div>
                      </div>
                   </form>

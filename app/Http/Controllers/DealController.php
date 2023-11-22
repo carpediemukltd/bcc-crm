@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Deal;
 use App\Models\Stage;
 use App\Models\Pipeline;
+use App\Models\Company;
 use App\Models\UserOwner;
 use App\Models\UserDetails;
 
@@ -36,7 +37,48 @@ class DealController extends Controller
         });
     }
 
-    public function userDeals($id, $view = 'listing')
+    public function userDeals($user_id)
+    {
+        $this->data['current_slug'] = 'User Deals';
+        $this->data['slug']         = 'user_deals';
+
+        $user = User::whereId($user_id)->first();
+        $pipelines = Pipeline::orderBy('title', 'ASC')->get();
+        $company = Company::getCompanyByUser($user_id);
+        $company_id = 0;
+        if ($company[0])
+            $company_id = $company[0]->id;
+        $this->data['company_id'] = $company_id;
+        $this->data['user'] = $user;
+        $this->data['current_user_id'] = $user_id;
+        $stages = Stage::orderBy('sort', 'ASC')->get();
+        $this->data['pipelines'] = $pipelines;
+        $this->data['stages'] = $stages;
+        return view("deals.user", $this->data);
+    }
+
+
+    public function userDealsDetail($user_id, $view, Request $request)
+    {
+        $filters['user_id'] = $user_id;
+        $filters['company_id'] = $request->company_id;
+        $filters['depositing_institution'] = $request->depositing_institution;
+        $filters['state'] = $request->state;
+        $filters['submitted_bank'] = $request->submitted_bank;
+        $filters['sub_type'] = $request->sub_type;
+        $filters['paginate'] = 10;
+        $this->data['current_user_id'] = $user_id;
+        $this->data['deals'] = Deal::getDealsByFilters($filters);
+        $this->data['stages'] = Stage::orderBy('sort', 'ASC')->get();
+
+        if ($view == 'board') {
+            return view("deals.user_board", $this->data);
+        } else {
+            return view("deals.user_list", $this->data);
+        }
+    }
+
+    public function userDeals_old($id, $view = 'listing')
     {
         $this->data['current_slug'] = 'Deals';
         $this->data['slug']         = 'user_deals';
@@ -48,9 +90,13 @@ class DealController extends Controller
 
         $this->data['current_user_id'] = $id;
         $this->data['rs_deals'] = Deal::getDealsByUser($id, 0);
-        $pipelines = Pipeline::orderBy('title', 'ASC')->get();
+        $pipelines = Pipeline::getPipelineByUser($id);
         $this->data['pipelines'] = $pipelines;
-       /*  $pipeline_stages = array();
+        $pipeline_id = 0;
+        if ($pipelines[0])
+            $pipeline_id = $pipelines[0]->id;
+        $this->data['pipeline_id'] = $pipeline_id;
+        /*  $pipeline_stages = array();
         if ($pipelines->isNotEmpty()) {
             foreach ($pipelines as $pipeline) {
                 $pipeline_arr['id'] = $pipeline->id;
@@ -117,20 +163,22 @@ class DealController extends Controller
         }
     }
 
-    public function deals_sandbox() {
+    public function deals_sandbox()
+    {
         $slug = "deals-sandbox";
         return view('deals_report', compact('slug'));
     }
 
-    public function filter_deals(Request $request) {
-        
-        $dates = explode("-",$request->daterange);
+    public function filter_deals(Request $request)
+    {
+
+        $dates = explode("-", $request->daterange);
         $Date1 = rtrim(date('Y-m-d', strtotime($dates[0])));
         $Date2 = ltrim(date('Y-m-d', strtotime($dates[1])));
 
-        $deals = Deal::with('stage', 'pipeline')->whereDate('created_at','>=', $Date1)->whereDate('created_at','<=', $Date2)->where('stage_id',$request->stages)->get();
+        $deals = Deal::with('stage', 'pipeline')->whereDate('created_at', '>=', $Date1)->whereDate('created_at', '<=', $Date2)->where('stage_id', $request->stages)->get();
 
-       return response()->json($deals);
+        return response()->json($deals);
     }
 
     public function userDealsBoardCards($id, $pipeline_id)
@@ -144,16 +192,16 @@ class DealController extends Controller
         }
 
         $this->data['current_user_id'] = $id;
-        $this->data['stages'] = Stage::orderBy('sort','ASC')->get();
+        $this->data['stages'] = Stage::orderBy('sort', 'ASC')->get();
         $this->data['deals'] = Deal::where('pipeline_id', $pipeline_id)->where('user_id', $id)->get();
 
         return view("deals.board_card", $this->data);
     }
 
     public function dealsAdd(Request $request, $id)
-    {   
+    {
 
-        
+
         $access = Permissions::checkUserAccess($this->user, $id);
         if (!$access) {
             return redirect(route('dashboard'))->with('error', 'Access Denied.');
@@ -178,7 +226,7 @@ class DealController extends Controller
                 'moduleName' => 'Deal',
                 'user_id' => auth()->id(),
                 'contact_id' => $id
-               
+
             ]);
 
             if ($request->custom_fields_count > 0) {
@@ -190,7 +238,7 @@ class DealController extends Controller
                 }
             }
             SendNotification::dispatch(['id' => $deal->id, 'type' => 'deal_added']);
-            return redirect(route('user.deals', [$id, 'listing']))->withSuccess('Deal Created Successfully.')->withInput();
+            return redirect(route('user.deals', [$id]))->withSuccess('Deal Created Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
             $this->data['current_slug'] = 'Add Deal';
             $this->data['slug'] = 'user_add_deal';
@@ -200,6 +248,7 @@ class DealController extends Controller
             $this->data['rs_pipelines'] = Pipeline::getPipelineByUser($id);
             $this->data['rs_stages'] = Stage::orderBy('sort', 'ASC')->get();
             $this->data['owners'] = User::whereRole('owner')->get();
+            $this->data['user'] = User::whereId($id)->first();
             return view("deals.add", $this->data);
         }
     } // dealsAdd
@@ -239,7 +288,7 @@ class DealController extends Controller
                 }
             }
 
-            return redirect(route('user.deals', [$user_id, 'listing']))->withSuccess('Deal Update Successfully.')->withInput();
+            return redirect(route('user.deals', [$user_id]))->withSuccess('Deal Update Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
             $this->data['current_slug'] = 'Edit Deal';
             $this->data['slug'] = 'user_edit_deal';
@@ -255,7 +304,7 @@ class DealController extends Controller
     public function dealsUpdateStage(Request $request, $user_id, $id)
     {
 
-       
+
         $access = Permissions::checkUserAccess($this->user, $user_id);
         if (!$access) {
             return redirect(route('dashboard'))->with('error', 'Access Denied.');
@@ -271,18 +320,18 @@ class DealController extends Controller
                 'stage_id' => $request->stage_id,
             ]);
 
-            $satgeName = Stage::where('id',$request->stage_id)->get();
+            $satgeName = Stage::where('id', $request->stage_id)->get();
 
             $activity = Activity::create([
                 'moduleName' => 'Stage',
                 'user_id' => auth()->id(),
                 'contact_id' => $user_id,
-                'details' =>$satgeName[0]->title
-               
+                'details' => $satgeName[0]->title
+
             ]);
 
-            SendNotification::dispatch(['id'=> $id, 'type'=> 'deal_stage_changed']);
-            return redirect(route('user.deals', [$user_id, 'listing']))->withSuccess('Deal Update Successfully.')->withInput();
+            SendNotification::dispatch(['id' => $id, 'type' => 'deal_stage_changed']);
+            return redirect(route('user.deals', [$user_id]))->withSuccess('Deal Update Successfully.')->withInput();
         }
     }
 

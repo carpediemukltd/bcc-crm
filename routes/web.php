@@ -130,7 +130,8 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::any('contact/{id}/deals/add', [DealController::class, 'dealsAdd'])->name('user.deals.add');
         Route::any('contact/{user_id}/deals/edit/{id}', [DealController::class, 'dealsEdit'])->name('user.deals.edit');
         Route::get('contact/{id}/pipeline/{pipeline_id}/deals/board_cards', [DealController::class, 'userDealsBoardCards'])->name('user.deals.board_cards');
-        Route::get('contact/{id}/deals/{view}', [DealController::class, 'userDeals'])->name('user.deals');
+        Route::get('contact/{id}/deals', [DealController::class, 'userDeals'])->name('user.deals');
+        Route::any('contact/{id}/deals/{view}', [DealController::class, 'userDealsDetail'])->name('user.deals.detail');
         Route::post('contact/{user_id}/deals/updateStage/{id}', [DealController::class, 'dealsUpdateStage'])->name('user.deals.updatestage');
         Route::get('deal/{id}/exportcsv', [DealController::class, 'exportCSV'])->name('deal.export.csv');
         Route::get('deal/{id}/exportxls', [DealController::class, 'exportXLS'])->name('deal.export.xls');

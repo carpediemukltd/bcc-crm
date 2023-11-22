@@ -54,13 +54,13 @@
                      <h4 class="card-title">Deals Board</h4>
                   </div>
                   <div>
-                     <a class="btn btn-primary px-3 " href="{{ route('user.deals',[$current_user_id,'listing']) }}" data-bs-toggle="tooltip"
+                     <a class="btn btn-primary px-3 " href="{{ route('user.deals',[$current_user_id]) }}" data-bs-toggle="tooltip"
                         data-bs-placement="top" data-bs-title="List view">
                         <svg class="svg-inline--fa fa-list fs--2" width="12px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="list" role="img" xmlns="" viewBox="0 0 512 512" data-fa-i2svg="">
                            <path fill="currentColor" d="M88 48C101.3 48 112 58.75 112 72V120C112 133.3 101.3 144 88 144H40C26.75 144 16 133.3 16 120V72C16 58.75 26.75 48 40 48H88zM480 64C497.7 64 512 78.33 512 96C512 113.7 497.7 128 480 128H192C174.3 128 160 113.7 160 96C160 78.33 174.3 64 192 64H480zM480 224C497.7 224 512 238.3 512 256C512 273.7 497.7 288 480 288H192C174.3 288 160 273.7 160 256C160 238.3 174.3 224 192 224H480zM480 384C497.7 384 512 398.3 512 416C512 433.7 497.7 448 480 448H192C174.3 448 160 433.7 160 416C160 398.3 174.3 384 192 384H480zM16 232C16 218.7 26.75 208 40 208H88C101.3 208 112 218.7 112 232V280C112 293.3 101.3 304 88 304H40C26.75 304 16 293.3 16 280V232zM88 368C101.3 368 112 378.7 112 392V440C112 453.3 101.3 464 88 464H40C26.75 464 16 453.3 16 440V392C16 378.7 26.75 368 40 368H88z"> </path>
                         </svg>
                      </a>
-                     <a class="btn btn-primary px-3 " href="{{ route('user.deals',[$current_user_id,'board']) }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Board view" aria-describedby="tooltip352331">
+                     <a class="btn btn-primary px-3 " href="{{ route('user.deals',[$current_user_id]) }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Board view" aria-describedby="tooltip352331">
                         <svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="">
                            <path d="M0 0.5C0 0.223857 0.223858 0 0.5 0H1.83333C2.10948 0 2.33333 0.223858 2.33333 0.5V1.83333C2.33333 2.10948 2.10948 2.33333 1.83333 2.33333H0.5C0.223857 2.33333 0 2.10948 0 1.83333V0.5Z" fill="currentColor"></path>
                            <path d="M3.33333 0.5C3.33333 0.223857 3.55719 0 3.83333 0H5.16667C5.44281 0 5.66667 0.223858 5.66667 0.5V1.83333C5.66667 2.10948 5.44281 2.33333 5.16667 2.33333H3.83333C3.55719 2.33333 3.33333 2.10948 3.33333 1.83333V0.5Z" fill="currentColor"></path>
@@ -92,24 +92,7 @@
                
                
                <div class="card-body pt-0">
-                  <div class="row">
-                     <div class="col-lg-6">
-                        
-                           @if(isset($pipelines))
-                           <div class="form-group w-100">
-                              <label class="form-label">Select Pipeline</label>
-                              <div class="d-flex align-items-center justify-content-between">
-                              <select class="form-control" id="pipelines" name="pipelines">
-                                 @foreach($pipelines as $pipeline)
-                                 <option value="{{$pipeline->id}}">{{$pipeline->title}}</option>
-                                 @endforeach
-                              </select>&nbsp;
-                              <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" onclick="triggerGet()">Load</button>
-                           </div>
-                           @endif
-                        </div>
-                     </div>
-                  </div>
+                  <input type="hidden" id="pipeline_id" value="{{$pipeline_id}}">
                   <div class="row" id="show_loading" style="display: none;">
                      <div class="col-md-12" >
                         <div class="preloader-dot-loading mt-3">
@@ -127,15 +110,16 @@
 </div>
 <script type="text/javascript">
    $(document).ready(function() {
-       $('#pipelines').change(function() {
+       /* $('#pipelines').change(function() {
            getDeals($(this).val());
-       });
-       triggerGet();
+         });
+         triggerGet(); */
+         getDeals($('#pipeline_id').val());
    });
-   
+   /* 
    function triggerGet() {
        $('#pipelines').trigger('change');
-   }
+   } */
    
    function getDeals(id) {
        $('#deals').html('Loading...');
@@ -147,6 +131,7 @@
            success: function(res) {
                $('#show_loading').hide();
                $('#deals').html(res);
+               $('#deals').show();
            }
        });
    }

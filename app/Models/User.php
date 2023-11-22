@@ -154,10 +154,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Company::class);
     }
-    
+
     private static function sanitizePhoneNumber($phoneNumber)
     {
         // Remove any non-numeric characters and keep the '+' sign
         return preg_replace("/[^0-9+()-]/", "", $phoneNumber);
+    }
+
+    public function setting(){
+        return $this->hasOne(UserSetting::class);
     }
 }

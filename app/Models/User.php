@@ -10,19 +10,21 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
 use App\Services\FileStorageService;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use DateTime;
 use Illuminate\Support\Str;
 
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
+
     protected $fillable = [
         'first_name', 'last_name', 'phone_number', 'email', 'company_id', 'password', 'profile_image', 'status', 'role', 'created_at', 'bell_notification_count', 'verification_code', 'verification_code_expiry', 'two_factor_enabled', 'two_factor_type', 'first_time_login', 'consent_sign_image'
     ];

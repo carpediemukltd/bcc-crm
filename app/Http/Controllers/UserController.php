@@ -133,7 +133,9 @@ class UserController extends Controller
                     'phone_number'  => $data['phone_country_code']." ".$data['phone_number'],
                     'role' => $data['role'],
                     'company_id' => $company_id,
-                    'password' => Hash::make($data['password'])
+                    'password' => Hash::make($data['password']),
+                    'email_verified' => $data['emailVerified'],
+                    'mobile_verified' => $data['mobileVerified']
                 ]);
 
 
@@ -386,6 +388,8 @@ class UserController extends Controller
                 'last_name'    => $request->last_name,
                 'phone_number' => $request->phone_country_code." ".$request->phone_number,
                 'status'       => $request->status,
+                'email_verified' => $request->emailVerified,
+                'mobile_verified' => $request->mobileVerified
             ];
 
             if ($request->password && strlen($request->password) < 6) {
@@ -433,12 +437,12 @@ class UserController extends Controller
                             $message->to($user->email);
                             $message->subject('Request for new documents');
                         });
-    
+
                         $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
                         foreach ($documents as $document){
                             $message .= $document->title.",";
                         }
-    
+
                         $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
                         $twilioPhoneNumber  = env('TWILIO_NUMBER');
                         $twilioSid          = env('TWILIO_SID');
@@ -454,7 +458,7 @@ class UserController extends Controller
                             ]
                         );
                     }
-                    
+
                 } catch(\Exception $ex){
                     echo $ex->getMessage();
                 }
@@ -839,7 +843,7 @@ class UserController extends Controller
         ];
 
         $request->validate($validate);
-        
+
         $existingDocumentManagerIds = DocumentManagerUser::whereUserId($id)->pluck('document_manager_id');
         $newDocumentManagerIds = $request->document_types;
         $notificationForNewIds = array();
@@ -867,12 +871,12 @@ class UserController extends Controller
                     $message->to($user->email);
                     $message->subject('Request for new documents');
                 });
-    
+
                 $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA! The following document(s) have been added:";
                 foreach ($documents as $document){
                     $message .= $document->title.",";
                 }
-    
+
                 $message .= "Please login ".route('login')." to finalize your application. Reply STOP to opt out of text notifications.";
                 $twilioPhoneNumber  = env('TWILIO_NUMBER');
                 $twilioSid          = env('TWILIO_SID');
@@ -888,7 +892,7 @@ class UserController extends Controller
                     ]
                 );
             }
-            
+
         } catch(\Exception $ex){
             echo $ex->getMessage();
         }

@@ -77,11 +77,21 @@
                               <label class="form-label" for="email" style="color: #000;">Document Types:</label>
                               <div class="form-group">
                                   <div class="row">
+                                  @foreach($document_groups as $group)
+                                      <div class="col-md-3">
+                                          <label class="checkbox-inline">
+                                              <div class="check-doc-field">
+                                                  <input type="checkbox" class="document_group_checkbox" name="{{$group->name}}" value="{{$group->id}}">
+                                              </div>
+                                              <p><b>{{$group->name}}</b></p>
+                                          </label>
+                                      </div>
+                                  @endforeach
                                   @foreach($documents as $document)
                                       <div class="col-md-4">
                                           <label class="checkbox-inline">
                                              <div class="check-doc-field">
-                                              <input type="checkbox" name="document_types[]" value="{{$document->id}}">
+                                              <input type="checkbox" name="document_types[]" data-group-id="{{$document->DocumentGroup->id}}" value="{{$document->id}}">
                                              </div>
                                              <p>{{$document->title}}</p>
                                           </label>
@@ -151,6 +161,11 @@
       console.log('removed');
    }
   }
+
+  $('.document_group_checkbox').click(function(){
+      var group_id = $(this).val();
+      $("[data-group-id='" + group_id + "']").prop('checked',$(this).prop('checked'))
+  })
    </script>
 
 @endsection

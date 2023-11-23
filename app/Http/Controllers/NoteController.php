@@ -133,7 +133,10 @@ class NoteController extends Controller
             if($request->has('mentions')){
                 $mentions = $request->input('mentions');
                 foreach ($mentions as $mention){
-                    $user = User::whereId($mention)->first();
+                    $user = User::with('setting')->whereId($mention)->first();
+                    if($user->setting != null && $user->setting->email_notification == 0){
+                        continue;
+                    }
                     $custom_field = CustomField::whereTitle('Legal Business Name')->first();
                     $legal_business_name = null;
                     if($custom_field){

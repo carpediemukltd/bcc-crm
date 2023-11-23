@@ -21,6 +21,10 @@
    border-radius: 10px !important;
    box-shadow: 2px 2px 2px #eecaca !important;
    }
+
+   .error{
+       color: #7c0303;
+   }
 </style>
 <div class="position-relative  iq-banner ">
    <div class="iq-navbar-header" style="height: 215px;">
@@ -600,6 +604,9 @@
                                     Portal</span>
                                  </div>
                               </a>
+                               @if($due_date != '')
+                                <p>Due Date : {{date('F d Y', strtotime($due_date))}} <a href="javascript:void(0);" id="change_due_date">Change</a></p>
+                               @endif
                            </li>
                         </ul>
                      </div>
@@ -699,6 +706,28 @@
       </div>
    </div>
 </div>
+@if($due_date != '')
+    <div class="modal" tabindex="-1" role="dialog" id="changeDueDate">
+        <div class="modal-dialog" role="document">
+            {!! Form::open(['route' => ['user.due_date', $user->id], 'method' => 'post', 'id' => 'due_date_form']) !!}
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="response-send-email-notification"></div>
+                    <div class="form-group">
+                        <label for="">Due Date</label>
+                        {!! Form::date('due_date',$due_date,['class' => 'form-control', 'min' => date('Y-m-d', strtotime(date('Y-m-d') . ' +1 days'))]) !!}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary"> Change Due Date</button>
+                    <!-- <button type="button" class="btn btn-primary" id="send_email_notification"><i class="fa fa-envelope"></i> Send Email Notification</button> -->
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+            {!! Form::close() !!}
+        </div>
+    </div>
+@endif
 <script type="text/javascript">
 
    $(document).ready(function(){
@@ -743,6 +772,12 @@
        $("#document_request_manager").click(function(){
            $('#documentRequestManager').modal('show');
        })
+
+
+       $("#change_due_date").click(function(){
+           $('#changeDueDate').modal('show');
+       })
+
 
        $("#send_email_notification").click(function(){
            $("#send_email_notification").prop("disabled", true);
@@ -983,9 +1018,30 @@
 
        applyMentionyToNotesFields();
    })
+
    $('.document_group_checkbox').click(function(){
        var group_id = $(this).val();
        $("[data-group-id='" + group_id + "']").prop('checked',$(this).prop('checked'))
    })
 </script>
+
+</script>
+<script src="{{asset('assets/js/jquery-validation.min.js')}}" defer></script>
+<script>
+    $(document).ready(function(){
+        $("#due_date_form").validate({
+            rules: {
+                due_date: {
+                    required: true
+                },
+            },
+            messages: {
+                due_date: {
+                    required: "Due date required"
+                }
+            }
+        });
+    })
+</script>
+
 @endsection

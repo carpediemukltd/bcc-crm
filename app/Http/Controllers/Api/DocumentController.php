@@ -107,7 +107,14 @@ class DocumentController extends Controller
         $data['ocrolus_csv_path'] = $ocrolusCSV;
         $data['showMenu'] = 1;
         $data['ocrolusCSVPath'] = 1;
-        $data['sba_products_templates'] = array('Personal_Financial_Statement'=> 'https://dashboard.bccusa.com/BCCUSA_PersonalFinancialStatement_2023.pdf');
+        $data['sba_products_templates'] = array(
+            'Personal_Financial_Statement'      => 'https://dashboard.bccusa.com/BCCUSA_PersonalFinancialStatement_2023.pdf',
+            'SBA_1919_Form'                     => 'https://dashboard.bccusa.com/SBA_1919_Form.pdf',
+            'Certificate_of_LLC_Members'        => 'https://dashboard.bccusa.com/Certificate%20of%20LLC%20Members_2023.pdf',
+            'Certificate_of_Corporate_Secretary'=> 'https://dashboard.bccusa.com/Certificate%20of%20Corporate%20Secretary.pdf',
+            'Landlord_Option_to_Renew'          => 'https://dashboard.bccusa.com/Landlord%20Option%20To%20Renew.pdf',
+            'Management_Resume_Template'        => 'https://dashboard.bccusa.com/Management%20Resume%20Template.pdf'
+        );
         return ApiResponse::success($data, '', 200);
     }
 

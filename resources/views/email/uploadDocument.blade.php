@@ -9,16 +9,14 @@
 </head>
 <body>
 <h3>Hi {{$first_name}},</h3>
-<p>An Additional document request has been added for your bank financing application!</p>
-<p>The Additional documents are: </p>
+<p>The due date is almost here: </p>
 <ul>
     @foreach($documents as $document)
         <li>{{$document->title}}</li>
     @endforeach
 </ul>
-<p>Please, Login to your secure Bank portal to upload these and expedite your fundings. <a href="https://dashboard.bccusa.com/">Bank Portal - Login</a></p>
+<p>Please login to your secure bank portal <a href="https://dashboard.bccusa.com/">https://dashboard.bccusa.com/</a> to upload these and expedite your funding.</p>
 <p>Thank you!</p>
-<br/>
 <p><b>Team BCCUSA</b></p>
 </body>
 </html>

@@ -671,21 +671,11 @@
                   $already_selected_documents[] = $selected_document->id;
                   @endphp
                   @endforeach
-                   @foreach($document_groups as $group)
-                       <div class="col-md-3">
-                           <label class="checkbox-inline">
-                               <div class="check-doc-field">
-                                   <input type="checkbox" class="document_group_checkbox" name="{{$group->name}}" value="{{$group->id}}">
-                               </div>
-                               <p><b>{{$group->name}}</b></p>
-                           </label>
-                       </div>
-                   @endforeach
                   @foreach($documents as $document)
                   <div class="col-md-4">
                      <label class="checkbox-inline">
                      <div class="check-doc-field">
-                        <input type="checkbox" name="document_types[]" data-group-id="{{$document->DocumentGroup->id}}" value="{{$document->id}}" {{in_array($document->id, $already_selected_documents) ? 'checked' : ''}}>
+                        <input type="checkbox" name="document_types[]" value="{{$document->id}}" {{in_array($document->id, $already_selected_documents) ? 'checked' : ''}}>
                      </div>
                      <p>{{$document->title}}</p>
                      </label>
@@ -729,7 +719,6 @@
     </div>
 @endif
 <script type="text/javascript">
-
    $(document).ready(function(){
        $(document).on('click', '#viewBCCPortal', function(){
            // $('#TestModal').modal('show');
@@ -773,11 +762,9 @@
            $('#documentRequestManager').modal('show');
        })
 
-
        $("#change_due_date").click(function(){
            $('#changeDueDate').modal('show');
        })
-
 
        $("#send_email_notification").click(function(){
            $("#send_email_notification").prop("disabled", true);
@@ -1019,12 +1006,6 @@
        applyMentionyToNotesFields();
    })
 
-   $('.document_group_checkbox').click(function(){
-       var group_id = $(this).val();
-       $("[data-group-id='" + group_id + "']").prop('checked',$(this).prop('checked'))
-   })
-</script>
-
 </script>
 <script src="{{asset('assets/js/jquery-validation.min.js')}}" defer></script>
 <script>
@@ -1043,5 +1024,4 @@
         });
     })
 </script>
-
 @endsection

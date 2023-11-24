@@ -30,7 +30,8 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Carbon\Carbon;
 use Mail;
 use Twilio\Rest\Client;
-
+use App\Jobs\UsersImport as JobsUsersImport;
+use App\Models\UserImport;
 class UserController extends Controller
 {
     protected $user;
@@ -942,4 +943,45 @@ class UserController extends Controller
         return back()->withSuccess('Due date updated Successfully.');
 
     }
+    
+    public function showImportContactsFileForm() 
+    {
+        return view('imports.create');
+    }
+    public function processImportContacts(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx',
+        ]);
+        $fileExtension = $request->file('file')->getClientOriginalExtension();
+        if ($fileExtension != 'xlsx') {
+            return redirect()->back()->with('error', 'The file must be a xlsx.');
+        }            
+        // Get the uploaded file
+        $file = $request->file('file');
+
+        // Create the directory if it doesn't exist
+        $directory = public_path('csv/imports');
+        if (!file_exists($directory)) {
+            mkdir($directory, 0755, true);
+        }
+
+        // Generate a unique filename for the uploaded image
+        $fileName           = uniqid() . '.' . $file->getClientOriginalExtension();
+        $fileOriginalName   = $file->getClientOriginalName();
+
+        // Move the uploaded file to the dynamic directory
+        $file->move($directory, $fileName);
+      
+        // Save the file name to the database
+        $import             = new UserImport();
+        $import->file_name  = $fileName;
+        $import->file_original_name = $fileOriginalName; 
+        $import->added_by   = auth()->user()->id;
+        $import->save();
+        JobsUsersImport::dispatch($import);
+        return redirect()->back()->with('success', 'File uploaded successfully, system will send you email once process is completed!');
+    }
+    
+
 }

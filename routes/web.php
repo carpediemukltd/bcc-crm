@@ -177,5 +177,7 @@ Route::middleware([CheckStatus::class])->group(function () {
     });
     Route::get('search', [SearchController::class, 'show'])->name('search');
     Route::post('search', [SearchController::class, 'index']);
+    Route::get('contacts/import-file', [UserController::class, 'showImportContactsFileForm'])->name('showImportContactsFileForm');
+    Route::post('contacts/import', [UserController::class, 'processImportContacts'])->name('processImportContacts');
 
 });

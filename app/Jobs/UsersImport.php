@@ -40,8 +40,11 @@ class UsersImport implements ShouldQueue
     {
         $hasError = false;
         try {
-            Excel::import(new ImportsUsersImport, public_path('csv/imports/') . $this->userImport->file_name);
-            $this->userImport->status = 'completed';
+            $import = new ImportsUsersImport();
+            Excel::import($import, public_path('csv/imports/') . $this->userImport->file_name);
+            $this->userImport->status           = 'completed';
+            $this->userImport->records_imported = $import->getInsertedRowCount();
+            $this->userImport->records          = $import->getRowsCount();
             $this->userImport->save();
         } catch (\Exception $e) {
             $hasError = true;

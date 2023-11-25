@@ -901,60 +901,12 @@ class UserController extends Controller
         }
         return back()->withSuccess('Documents updated Successfully.');
 
-
-        $this->data['user'] = User::with(['DocumentManagers' => function($query){
-            $query->select('id');
-        }])->where(['id' => $id])->first();
-
-        $old_documents = [];
-        foreach($user_data->DocumentManagers as $documentManager){
-            $old_documents[] = $documentManager->id;
-        }
-
-        $new_document = [];
-        foreach($request->document_types as $document_type){
-            if(!in_array($document_type,$old_documents)){
-                $new_document[] = $document_type;
-            }
-        }
-
-        if(!empty(array_diff($old_documents, $new_document)) || !empty(array_diff($new_document, $old_documents)) || count($old_documents) !== count($new_document)){
-            $user = User::whereId($id)->first();
-            $user->documentManagers()->sync($request->document_types);
-            if(count($new_document) > 0){
-
-                $message = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA!\nThe following document(s) have been added:\n";
-                $i = 1;
-                foreach ($documents as $document){
-                    $message .= $i." ".$document->title."\n";
-                    $i++;
-                }
-
-                $message .= "Please login https://dashboard.bccusa.com/ to finalize your application.\nReply STOP to opt out of text notifications.";
-                $twilioPhoneNumber  = env('TWILIO_NUMBER');
-                $twilioSid          = env('TWILIO_SID');
-                $twilioToken        = env('TWILIO_AUTH_TOKEN');
-                $client             = new Client($twilioSid, $twilioToken);
-                // Remove spaces from the phone number
-                $toPhoneNumber = str_replace(' ', '', $user->phone_number);
-                $client->messages->create(
-                    $toPhoneNumber,
-                    [
-                        'from' => $twilioPhoneNumber,
-                        'body' => $message,
-                    ]
-                );
-            } catch(\Exception $ex){
-                echo $ex->getMessage();
-            }
-        }
-
-        return back()->withSuccess('Documents updated Successfully.');
     }
     
     public function showImportContactsFileForm() 
     {
-        return view('imports.create');
+        $data = UserImport::with('user')->paginate(10);
+        return view('imports.create', ['data'=>$data]);
     }
     public function processImportContacts(Request $request)
     {

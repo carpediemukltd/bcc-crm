@@ -68,6 +68,48 @@
                             </div>
                         </form>
                     </div>
+                    <div class="card-body">
+                    <div class="row">
+                        <h4>Import History</h4>
+                        <div class="col">
+                        <table id="user-list-table" class="table table-striped dataTable no-footer" role="grid" aria-describedby="user-list-table_info">
+                              <thead>
+                                 <tr class="ligth">
+                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">#</th>
+                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">File Name</th>
+                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">Records Imported</th>
+                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">Total Records</th>
+                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">Upload By</th>
+                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">Status</th>
+                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">Date</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                @if(count($data))
+                                @foreach($data as $key=>$value)
+                                <tr>
+                                    <td>{{++$key}}</td>
+                                    <td><a href="{{$value->file_name}}">{{$value->file_original_name}}</a></td>
+                                    <td>{{$value->records_imported}}</td>
+                                    <td>{{$value->records}}</td>
+                                    <td>{{$value->user->full_name}} ({{ucfirst($value->user->role)}})</td>
+                                    <td>{{$value->status}}</td>
+                                    <td>{{$value->updated_at}}</td>
+                                </tr>
+                                @endforeach
+                               
+                                @endif
+                               
+                              </tbody>
+                            
+                        </table>
+                        {{$data->links()}}
+
+                                
+                        </div>
+                    </div>
+
+                    </div>
                 </div>
             </div>
         </div>

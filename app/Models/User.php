@@ -143,7 +143,7 @@ class User extends Authenticatable
     }
     public function documentManagers()
     {
-        return $this->belongsToMany(DocumentManager::class)->withPivot(['due_date', 'document_uploaded']);
+        return $this->belongsToMany(DocumentManager::class);
     }
     public function getFormattedCreatedAtAttribute()
     {

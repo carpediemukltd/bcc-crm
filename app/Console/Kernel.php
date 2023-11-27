@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('upload:document')->daily(); // Adjust the frequency as needed
+        // $schedule->command('inspire')->hourly();
     }
 
     /**

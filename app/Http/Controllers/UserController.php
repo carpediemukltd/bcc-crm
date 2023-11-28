@@ -423,6 +423,11 @@ class UserController extends Controller
                 foreach ($request->document_types as $type) {
                     DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type]);
                 }
+
+                DocumentManagerUser::whereUserId($id)->delete();
+                foreach ($request->document_types as $type) {
+                    DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type]);
+                }
              
                 $user = User::whereId($id)->first();
                 try{
@@ -899,6 +904,5 @@ class UserController extends Controller
             echo $ex->getMessage();
         }
         return back()->withSuccess('Documents updated Successfully.');
-
     }
 }

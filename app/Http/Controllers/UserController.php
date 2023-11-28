@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DocumentGroup;
 use App\Models\DocumentManager;
 use App\Models\Note;
 use App\Models\User;
@@ -211,7 +212,7 @@ class UserController extends Controller
         } else if ($request->isMethod('get')) {
             $this->data['roles']     = array_diff($this->data['roles'], ['user']);
             $this->data['companies'] = Company::whereStatus('active')->get();
-            $documents = DocumentManager::get();
+            $documents = DocumentManager::with('DocumentGroup')->get();
             $sortedDocuments = $documents->sort(function ($a, $b) {
                 // Custom sorting function
                 $pattern = '/^\d+/'; // Regular expression to match numbers at the beginning of the title
@@ -232,6 +233,7 @@ class UserController extends Controller
 
             $sortedDocumentsArray = $sortedDocuments->values()->all();
             $this->data['documents'] = $sortedDocumentsArray;
+            $this->data['document_groups'] = DocumentGroup::get();
             return view($request->type == 'admin' ? 'user.add-admin' : 'user.add', $this->data);
         }
     }
@@ -318,7 +320,7 @@ class UserController extends Controller
             $deal = Deal::where('user_id',$id)->get();
             $stage = Stage::all();
 
-            $documents = DocumentManager::get();
+            $documents = DocumentManager::with('DocumentGroup')->get();
             $sortedDocuments = $documents->sort(function ($a, $b) {
                 // Custom sorting function
                 $pattern = '/^\d+/'; // Regular expression to match numbers at the beginning of the title
@@ -349,6 +351,7 @@ class UserController extends Controller
             $this->data['documents'] = $sortedDocumentsArray;
             $this->data['selected_documents'] = $this->data['user']->DocumentManagers;
             $this->data['bankusers'] = User::whereRole('bank')->get();
+            $this->data['document_groups'] = DocumentGroup::get();
             $this->data['due_date'] = $dueDate;
             return view("user.details", $this->data,compact('activity','userRecord','document','customFieldDetails','customField','deal','stage'));
         }
@@ -455,6 +458,7 @@ class UserController extends Controller
                         }
 
                         $message .= "Please login https://dashboard.bccusa.com/ to finalize your application.\nReply STOP to opt out of text notifications.";
+
                         $twilioPhoneNumber  = env('TWILIO_NUMBER');
                         $twilioSid          = env('TWILIO_SID');
                         $twilioToken        = env('TWILIO_AUTH_TOKEN');
@@ -477,7 +481,7 @@ class UserController extends Controller
 
             return redirect(url('contacts'))->withSuccess('Contact Updated Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
-            $documents = DocumentManager::get();
+            $documents = DocumentManager::with('DocumentGroup')->get();
             $sortedDocuments = $documents->sort(function ($a, $b) {
                 // Custom sorting function
                 $pattern = '/^\d+/'; // Regular expression to match numbers at the beginning of the title
@@ -499,6 +503,7 @@ class UserController extends Controller
             $sortedDocumentsArray = $sortedDocuments->values()->all();
             $this->data['documents'] = $sortedDocumentsArray;
             $this->data['selected_documents'] = $this->data['user']->DocumentManagers;
+            $this->data['document_groups'] = DocumentGroup::get();
             return view("user.edit", $this->data);
         }
     } // editUser
@@ -891,6 +896,7 @@ class UserController extends Controller
                     $message->subject('Request for new documents');
                 });
 
+
                 $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA!\nThe following document(s) have been added:\n";
                 $i = 1;
 
@@ -920,6 +926,7 @@ class UserController extends Controller
             echo $ex->getMessage();
         }
         return back()->withSuccess('Documents updated Successfully.');
+
     }
 
     public function userDueDate(Request $request, $id){
@@ -933,5 +940,6 @@ class UserController extends Controller
 
         DocumentManagerUser::whereUserId($id)->update(['due_date' => $request->due_date]);
         return back()->withSuccess('Due date updated Successfully.');
+
     }
 }

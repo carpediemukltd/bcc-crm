@@ -905,18 +905,25 @@ class UserController extends Controller
     
     public function showImportContactsFileForm() 
     {
-        $data = UserImport::with('user')->paginate(10);
-        return view('imports.create', ['data'=>$data]);
+        $data['user_imports'] = UserImport::with('user')->orderBy('id', 'DESC')->paginate(10);
+        $data['companies']   = Company::where('status', 'active')->get();
+
+        return view('imports.create', $data);
     }
     public function processImportContacts(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:xlsx',
+            'file'      => 'required|mimes:xlsx',
+            'company'   => 'required' 
         ]);
         $fileExtension = $request->file('file')->getClientOriginalExtension();
         if ($fileExtension != 'xlsx') {
             return redirect()->back()->with('error', 'The file must be a xlsx.');
         }            
+        $company = Company::find($request->company);
+        if(!$company){
+            return redirect()->back()->with('error', 'Invalid Company selection!');
+        }
         // Get the uploaded file
         $file = $request->file('file');
 
@@ -938,8 +945,9 @@ class UserController extends Controller
         $import->file_name  = $fileName;
         $import->file_original_name = $fileOriginalName; 
         $import->added_by   = auth()->user()->id;
+        $import->company_id = $company->id;
         $import->save();
-        JobsUsersImport::dispatch($import);
+        JobsUsersImport::dispatch($import, $company->id);
         return redirect()->back()->with('success', 'File uploaded successfully, system will send you email once process is completed!');
     }
     

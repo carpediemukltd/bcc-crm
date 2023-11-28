@@ -20,6 +20,8 @@ class CreateUserImportsTable extends Migration
             $table->unsignedBigInteger('added_by');
             $table->integer('records')->default(0);
             $table->integer('records_imported')->default(0);
+            $table->integer('duplicate_records')->default(0);
+            $table->integer('company_id');
             $table->enum('status', ['inprogress', 'partially_imported', 'completed', 'failed'])->default('inprogress');
             $table->timestamps();
             $table->foreign('added_by')->references('id')->on('users');

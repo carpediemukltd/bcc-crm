@@ -18,7 +18,9 @@ class UsersImport implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     private $userImport;
+    protected $companyId;
     public $timeout = 18000;
+    
 
 
     /**
@@ -26,9 +28,10 @@ class UsersImport implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(UserImport $classUserImport)
+    public function __construct(UserImport $classUserImport, $companyId)
     {
         $this->userImport = $classUserImport;
+        $this->companyId = $companyId;
     }
 
     /**
@@ -39,18 +42,20 @@ class UsersImport implements ShouldQueue
     public function handle()
     {
         $hasError = false;
-        try {
-            $import = new ImportsUsersImport();
-            Excel::import($import, public_path('csv/imports/') . $this->userImport->file_name);
-            $this->userImport->status           = 'completed';
-            $this->userImport->records_imported = $import->getInsertedRowCount();
-            $this->userImport->records          = $import->getRowsCount();
+        // try {
+            $import = new ImportsUsersImport($this->companyId);
+            Excel::import($import, public_path('csv/imports/').$this->userImport->file_name);
+            $this->userImport->status            = 'completed';
+            $this->userImport->records_imported  = $import->getInsertedRowCount();
+            $this->userImport->records           = $import->getRowsCount();
+            $this->userImport->duplicate_records = $import->getDuplicateRows();
             $this->userImport->save();
-        } catch (\Exception $e) {
-            $hasError = true;
-            $this->userImport->status = 'failed';
-            $this->userImport->save();
-        } 
+        // } catch (\Exception $e) {
+        //     $hasError = true;
+        //     $this->userImport->status = 'failed';
+        //     $this->userImport->save();
+        // } 
+        
         try {
             $user = User::find($this->userImport->added_by);
             if($hasError){

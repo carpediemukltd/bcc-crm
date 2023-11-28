@@ -41,6 +41,7 @@ use App\Http\Controllers\SearchController;
 |
 */
 // Route::get('/extension', [ChromeExtensionController::class, 'login'])->name('ext.login');
+Route::get('cleanup-dummy-users', [GeneralController::class, 'cleanupDummyUsers']);
 Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('verify-2fa', [AuthController::class, 'verify2FA'])->name('verify-2fa');

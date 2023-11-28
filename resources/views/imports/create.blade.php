@@ -1,6 +1,5 @@
 @extends('layout.appTheme')
 @section('content')
-
 <div class="position-relative  iq-banner ">
     <div class="iq-navbar-header" style="height: 215px;">
         <div class="container-fluid iq-container">
@@ -47,14 +46,16 @@
                                         @endif
                                     </div>
                                 </div>
-                                <!-- <div class="col">
+                                <div class="col">
                                     <div class="form-group">
-                                        <label class="form-label" for="deal_owner">Company</label>
-                                        <select class="form-select" name="deal_owner">
-
+                                        <label class="form-label" for="deal_owner">Select Company</label>
+                                        <select class="form-select" name="company">
+                                            @foreach($companies as $company)
+                                            <option value="{{$company->id}}">{{$company->name}}</option>
+                                            @endforeach()
                                         </select>
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
 
                             <div class="row">
@@ -79,19 +80,21 @@
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">File Name</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Records Imported</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Total Records</th>
+                                    <th class="sorting" tabindex="0" aria-controls="user-list-table">Duplicate Records</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Upload By</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Status</th>
                                     <th class="sorting" tabindex="0" aria-controls="user-list-table">Date</th>
                                  </tr>
                               </thead>
                               <tbody>
-                                @if(count($data))
-                                @foreach($data as $key=>$value)
+                                @if(count($user_imports))
+                                @foreach($user_imports as $key=>$value)
                                 <tr>
                                     <td>{{++$key}}</td>
-                                    <td><a href="{{$value->file_name}}">{{$value->file_original_name}}</a></td>
+                                    <td><a href="{{URL('/')}}{{'/csv/imports/'}}{{$value->file_name}}">{{$value->file_original_name}}</a></td>
                                     <td>{{$value->records_imported}}</td>
                                     <td>{{$value->records}}</td>
+                                    <td>{{$value->duplicate_records}}</td>
                                     <td>{{$value->user->full_name}} ({{ucfirst($value->user->role)}})</td>
                                     <td>{{$value->status}}</td>
                                     <td>{{$value->updated_at}}</td>
@@ -103,7 +106,7 @@
                               </tbody>
                             
                         </table>
-                        {{$data->links()}}
+                        {{$user_imports->links()}}
 
                                 
                         </div>

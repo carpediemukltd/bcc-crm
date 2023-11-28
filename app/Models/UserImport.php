@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserImport extends Model
 {
     use HasFactory;
-    protected $fillable = ['file_name', 'file_original_name', 'added_by', 'records', 'records_imported', 'status'];
+    protected $fillable = ['file_name', 'file_original_name', 'added_by', 'records', 'records_imported', 'status', 'duplicate_records', 'company_id'];
     
     public function getUpdatedAtAttribute($value){
         $updatedAt = new DateTime($value);
@@ -17,9 +17,6 @@ class UserImport extends Model
     }
     public function getStatusAttribute($value){
         return ucwords($value);
-    }
-    public function getFileNameAttribute($value){
-        return env('APP_URL')."/csv/imports/".$value;
     }
     public function user(){
         return $this->belongsTo(User::class, 'added_by', 'id');

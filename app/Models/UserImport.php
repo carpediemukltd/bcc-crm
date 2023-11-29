@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserImport extends Model
 {
     use HasFactory;
-    protected $fillable = ['file_name', 'file_original_name', 'added_by', 'records', 'records_imported', 'status', 'duplicate_records', 'company_id'];
+    protected $fillable = ['file_name', 'file_original_name', 'added_by', 'records', 'records_imported', 'status', 'duplicate_records', 'company_id', 'is_file_deleted', 'job_id'];
     
     public function getUpdatedAtAttribute($value){
         $updatedAt = new DateTime($value);

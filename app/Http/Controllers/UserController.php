@@ -30,6 +30,7 @@ use Carbon\Carbon;
 use Mail;
 use Twilio\Rest\Client;
 use App\Jobs\UsersImport as JobsUsersImport;
+use App\Models\StopUserImport;
 use App\Models\UserImport;
 class UserController extends Controller
 {
@@ -905,7 +906,8 @@ class UserController extends Controller
     
     public function showImportContactsFileForm() 
     {
-        $data['user_imports'] = UserImport::with('user')->orderBy('id', 'DESC')->paginate(10);
+        $data['user_imports'] = UserImport::whereNotIn('status', ['inprogress'])->with('user')->orderBy('id', 'DESC')->paginate(10);
+        $data['user_imports_inprogress'] = UserImport::where('status', 'inprogress')->with('user')->orderBy('id', 'DESC')->get();
         $data['companies']   = Company::where('status', 'active')->get();
 
         return view('imports.create', $data);
@@ -950,6 +952,43 @@ class UserController extends Controller
         JobsUsersImport::dispatch($import, $company->id);
         return redirect()->back()->with('success', 'File uploaded successfully, system will send you email once process is completed!');
     }
-    
+    public function importFilesDelete(Request $request){
+        $userImport = UserImport::find($request->id);
+        // Get the file path
+        $filePath = public_path('csv/imports/') . $userImport->file_name;
+
+        // Check if the file exists before attempting to delete
+        if (file_exists($filePath)) {
+            // Delete the file
+            unlink($filePath);
+        }
+
+        // Mark the file as deleted in the database
+        $userImport->is_file_deleted = '1';
+        $userImport->save();
+        return redirect()->back()->with('success', 'File has been deleted!');
+    }
+    public function stopUserImport(Request $request){
+        $userImportId = $request->id;
+        $stopUserImport = new StopUserImport();
+        $stopUserImport->user_imports_id = $userImportId;
+        $stopUserImport->save();
+        $userImport = UserImport::find($userImportId);
+        $userImport->status = 'stopped';
+        $userImport->save();
+
+        return redirect()->back()->with('success', 'Importing contacts has been stopped!');
+    }
+    public function resumeUserImport(Request $request){
+        $userImportId = $request->id;
+
+        StopUserImport::where('user_imports_id',$userImportId)->delete();
+        $userImport = UserImport::find($userImportId);
+        $userImport->status = 'inprogress';
+        $userImport->save();
+        return redirect()->back()->with('success', 'Importing contacts has been resumed!');
+
+    }
+
 
 }

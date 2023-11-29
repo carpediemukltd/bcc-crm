@@ -20,7 +20,7 @@ class UsersImport implements ShouldQueue
     private $userImport;
     protected $companyId;
     public $timeout = 18000;
-    
+
 
 
     /**
@@ -42,31 +42,29 @@ class UsersImport implements ShouldQueue
     public function handle()
     {
         $hasError = false;
-        // try {
-            $import = new ImportsUsersImport($this->companyId);
-            Excel::import($import, public_path('csv/imports/').$this->userImport->file_name);
-            $this->userImport->status            = 'completed';
-            $this->userImport->records_imported  = $import->getInsertedRowCount();
-            $this->userImport->records           = $import->getRowsCount();
-            $this->userImport->duplicate_records = $import->getDuplicateRows();
+        try {
+            $import = new ImportsUsersImport($this->companyId, $this->userImport->id);
+            Excel::import($import, public_path('csv/imports/') . $this->userImport->file_name);
+            if ($import->getInsertedRowCount() == $import->getRowsCount() || ($import->getDuplicateRows() + $import->getInsertedRowCount())  == $import->getRowsCount()) {
+                $this->userImport->status = 'completed';
+                $this->userImport->save();
+            }
+        } catch (\Exception $e) {
+            $hasError = true;
+            $this->userImport->status = 'failed';
             $this->userImport->save();
-        // } catch (\Exception $e) {
-        //     $hasError = true;
-        //     $this->userImport->status = 'failed';
-        //     $this->userImport->save();
-        // } 
-        
+        }
+
         try {
             $user = User::find($this->userImport->added_by);
-            if($hasError){
+            if ($hasError) {
                 $templateBody = "<h2>Hey Team , Bulk upload through excel importer failed to process! </h2>
                 <br><br>
                 <p>File Name : <b>" . $this->userImport->file_name . "</b> </p>
                 <br>
                 <p>Uploaded By : <b>" . $this->userImport->file_name . " " . $user->last_name . "</b> </p>
                 ";
-
-            }else{
+            } else {
                 $templateBody = "<h2>Hey Team , Bulk upload through excel importer successfully processed! </h2>
                 <br><br>
                 <p>File Name : <b>" . $this->userImport->file_name . "</b> </p>
@@ -74,7 +72,7 @@ class UsersImport implements ShouldQueue
                 <p>Uploaded By : <b>" . $this->userImport->file_name . " " . $user->last_name . "</b> </p>
                 ";
             }
-           
+
 
             $mail = new PHPMailer(true);
 
@@ -89,10 +87,10 @@ class UsersImport implements ShouldQueue
             $mail->setFrom(env('EMAIL_FROM'));
             $mail->isHTML(true); //Set email format to HTML
 
-            $mail->Subject = env('APP_NAME')." - Bulk contacts upload";
-        
+            $mail->Subject = env('APP_NAME') . " - Bulk contacts upload";
+
             foreach ([
-                
+
                 $user->first_name    => $user->email
             ] as $rec_name => $rec_email) {
                 $mail->addAddress($rec_email, $rec_name);
@@ -101,6 +99,5 @@ class UsersImport implements ShouldQueue
             }
         } catch (\Exception $e) {
         }
-        
     }
 }

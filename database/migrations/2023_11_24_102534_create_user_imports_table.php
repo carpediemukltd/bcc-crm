@@ -22,7 +22,8 @@ class CreateUserImportsTable extends Migration
             $table->integer('records_imported')->default(0);
             $table->integer('duplicate_records')->default(0);
             $table->integer('company_id');
-            $table->enum('status', ['inprogress', 'partially_imported', 'completed', 'failed'])->default('inprogress');
+            $table->enum('status', ['inprogress', 'partially_imported', 'completed', 'failed', 'stopped', 'pending'])->default('pending');
+            $table->enum('is_file_deleted', ['1', '0'])->default('0')->comment('1=file deleted, 0=file exists');
             $table->timestamps();
             $table->foreign('added_by')->references('id')->on('users');
 

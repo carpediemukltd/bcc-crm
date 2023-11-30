@@ -347,12 +347,13 @@
                                             <div class="timeline-dots timeline-dot1 border-warning text-warning"></div>
                                             <h6 class="float-left mb-1">Document Uploaded</h6>
                                             @foreach($document as $document)
+                                            <small class="float-right mt-1">{{$document->file_group_name}} :  </small>
                                            
-                                            <small class="float-right mt-1">Time : {{date('d-m-Y h:i:s', strtotime($document->created_at));}} </small>
+                                           
                                                
                                                 <div class="d-inline-block w-100">
-                                                    <small class="float-right mt-1">Document : {{$document->file_name}} </small>
-                                                    <small class="float-right mt-1">URl : {{$document->file_path}}</small>
+                                                <small class="float-right mt-1"><a href="{{$document->file_path}}">{{$document->file_name}}</a> </small>
+                                            <small class="float-right mt-1">Time : {{date('d-m-Y h:i:s', strtotime($document->created_at));}} </small>
                                                 </div>
                                                
                                            

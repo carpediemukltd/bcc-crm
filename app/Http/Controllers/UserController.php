@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DocumentGroup;
 use App\Models\DocumentManager;
 use App\Models\Note;
 use App\Models\User;
@@ -162,7 +163,12 @@ class UserController extends Controller
                 }
 
                 if (in_array($request->role, ['user', 'contact'])) {
-                    $new_user->documentManagers()->attach($request->document_types);
+                    $new_user->documentManagers()->attach($request->document_types, [
+                        'due_date' => date('Y-m-d', strtotime(date('Y-m-d') . ' +7 days')),
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+
                     try{
                         Mail::send('email.newRegistration', [
                             'first_name' => $new_user->first_name,
@@ -207,7 +213,7 @@ class UserController extends Controller
         } else if ($request->isMethod('get')) {
             $this->data['roles']     = array_diff($this->data['roles'], ['user']);
             $this->data['companies'] = Company::whereStatus('active')->get();
-            $documents = DocumentManager::get();
+            $documents = DocumentManager::with('DocumentGroup')->get();
             $sortedDocuments = $documents->sort(function ($a, $b) {
                 // Custom sorting function
                 $pattern = '/^\d+/'; // Regular expression to match numbers at the beginning of the title
@@ -228,6 +234,7 @@ class UserController extends Controller
 
             $sortedDocumentsArray = $sortedDocuments->values()->all();
             $this->data['documents'] = $sortedDocumentsArray;
+            $this->data['document_groups'] = DocumentGroup::get();
             return view($request->type == 'admin' ? 'user.add-admin' : 'user.add', $this->data);
         }
     }
@@ -261,10 +268,6 @@ class UserController extends Controller
 
     public function userDetails(Request $request, $id)
     {
-
-
-
-
         $this->data['current_slug']  = 'Contact Details';
         $this->data['slug']          = 'user_details';
         $access = Permissions::checkUserAccess($this->user, $id);
@@ -274,17 +277,12 @@ class UserController extends Controller
             return redirect(route('dashboard'))->with('error', 'Access Denied to User.');
         }
         $this->data['id'] = $id;
-        $this->data['user'] = User::with(['DocumentManagers' => function($query){
-            $query->select('id');
-        }])->where(['id' => $id])->first();
+        $this->data['user'] = User::with('documentManagers')->where(['id' => $id])->first();
         $this->data['notes'] = Note::getNotesByUser($id);
         $this->data['deals'] = Deal::getDealsByUser($id, 0);
         $this->data['custom_fields'] =  CustomField::getDataByUser($id);
 
         if ($request->isMethod('put')) {
-
-
-
             $update_data = [
                 'first_name'   => $request->first_name,
                 'last_name'    => $request->last_name,
@@ -323,7 +321,7 @@ class UserController extends Controller
             $deal = Deal::where('user_id',$id)->get();
             $stage = Stage::all();
 
-            $documents = DocumentManager::get();
+            $documents = DocumentManager::with('DocumentGroup')->get();
             $sortedDocuments = $documents->sort(function ($a, $b) {
                 // Custom sorting function
                 $pattern = '/^\d+/'; // Regular expression to match numbers at the beginning of the title
@@ -342,10 +340,21 @@ class UserController extends Controller
                 }
             });
 
+            $dueDate = '';
+//            echo "<pre>".print_r($this->data['user']->DocumentManagers,1)."</pre>";exit;
+            foreach($this->data['user']->DocumentManagers as $documentManager){
+                if($documentManager->pivot->document_uploaded == 0){
+                    $dueDate = $documentManager->pivot->due_date;
+                    break;
+                }
+            }
+
             $sortedDocumentsArray = $sortedDocuments->values()->all();
             $this->data['documents'] = $sortedDocumentsArray;
             $this->data['selected_documents'] = $this->data['user']->DocumentManagers;
             $this->data['bankusers'] = User::whereRole('bank')->get();
+            $this->data['document_groups'] = DocumentGroup::get();
+            $this->data['due_date'] = $dueDate;
             return view("user.details", $this->data,compact('activity','userRecord','document','customFieldDetails','customField','deal','stage'));
         }
     } // userDetails
@@ -419,9 +428,19 @@ class UserController extends Controller
                 }
 
 
-                DocumentManagerUser::whereUserId($id)->delete();
+                DocumentManagerUser::whereUserId($id)->whereNotIn('document_manager_id',$request->document_types)->delete();
+                $due_date = date('Y-m-d', strtotime(date('Y-m-d') . ' +7 days'));
                 foreach ($request->document_types as $type) {
-                    DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type]);
+                    foreach ($request->document_types as $type) {
+                        $document_exists = DocumentManagerUser::whereUserIdAndDocumentManagerId($id, $type)->first();
+                        if($document_exists){
+                            if($document_exists->document_uploaded === 0){
+                                DocumentManagerUser::whereUserIdAndDocumentManagerId($id, $type)->update(['due_date' => $due_date]);
+                            }
+                        }else{
+                            DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type, 'due_date' => $due_date]);
+                        }
+                    }
                 }
 
                 $user = User::whereId($id)->first();
@@ -466,7 +485,7 @@ class UserController extends Controller
 
             return redirect(url('contacts'))->withSuccess('Contact Updated Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
-            $documents = DocumentManager::get();
+            $documents = DocumentManager::with('DocumentGroup')->get();
             $sortedDocuments = $documents->sort(function ($a, $b) {
                 // Custom sorting function
                 $pattern = '/^\d+/'; // Regular expression to match numbers at the beginning of the title
@@ -488,6 +507,7 @@ class UserController extends Controller
             $sortedDocumentsArray = $sortedDocuments->values()->all();
             $this->data['documents'] = $sortedDocumentsArray;
             $this->data['selected_documents'] = $this->data['user']->DocumentManagers;
+            $this->data['document_groups'] = DocumentGroup::get();
             return view("user.edit", $this->data);
         }
     } // editUser
@@ -856,9 +876,17 @@ class UserController extends Controller
             $notificationForNewIds = array_values($newIdsToAdd);
         }
 
-        DocumentManagerUser::whereUserId($id)->delete();
+        DocumentManagerUser::whereUserId($id)->whereNotIn('document_manager_id', $request->document_types)->delete();
+        $due_date = date('Y-m-d', strtotime(date('Y-m-d') . ' +7 days'));
         foreach ($request->document_types as $type) {
-            DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type]);
+            $document_exists = DocumentManagerUser::whereUserIdAndDocumentManagerId($id, $type)->first();
+            if($document_exists){
+                if($document_exists->document_uploaded === 0){
+                    DocumentManagerUser::whereUserIdAndDocumentManagerId($id, $type)->update(['due_date' => $due_date]);
+                }
+            }else{
+                DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type, 'due_date' => $due_date]);
+            }
         }
         $user = User::whereId($id)->first();
         try{
@@ -899,5 +927,18 @@ class UserController extends Controller
             echo $ex->getMessage();
         }
         return back()->withSuccess('Documents updated Successfully.');
+    }
+
+    public function userDueDate(Request $request, $id){
+        $request->validate([
+            'due_date' => [
+                'required',
+                'date',
+                'after_or_equal:tomorrow', // Ensures the due_date is today or a future date
+            ],
+        ]);
+
+        DocumentManagerUser::whereUserId($id)->update(['due_date' => $request->due_date]);
+        return back()->withSuccess('Due date updated Successfully.');
     }
 }

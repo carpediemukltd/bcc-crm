@@ -19,6 +19,7 @@ class UsersImport implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     private $userImport;
     protected $companyId;
+    protected $authUserId;
     public $timeout = 18000;
 
 
@@ -28,10 +29,11 @@ class UsersImport implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(UserImport $classUserImport, $companyId)
+    public function __construct(UserImport $classUserImport, $companyId, $authUserId)
     {
-        $this->userImport = $classUserImport;
-        $this->companyId = $companyId;
+        $this->userImport   = $classUserImport;
+        $this->companyId    = $companyId;
+        $this->authUserId   = $authUserId;
     }
 
     /**
@@ -41,10 +43,13 @@ class UsersImport implements ShouldQueue
      */
     public function handle()
     {
+        ini_set('memory_limit', '2048M'); // Set memory limit to 2 GB
+
         $hasError = false;
         try {
-            $import = new ImportsUsersImport($this->companyId, $this->userImport->id);
+            $import = new ImportsUsersImport($this->companyId, $this->userImport->id, $this->authUserId);
             Excel::import($import, public_path('csv/imports/') . $this->userImport->file_name);
+            
             if ($import->getInsertedRowCount() == $import->getRowsCount() || ($import->getDuplicateRows() + $import->getInsertedRowCount())  == $import->getRowsCount()) {
                 $this->userImport->status = 'completed';
                 $this->userImport->save();
@@ -52,6 +57,7 @@ class UsersImport implements ShouldQueue
         } catch (\Exception $e) {
             $hasError = true;
             $this->userImport->status = 'failed';
+            $this->userImport->exception = $e->getMessage();
             $this->userImport->save();
         }
 

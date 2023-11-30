@@ -32,6 +32,8 @@ use Twilio\Rest\Client;
 use App\Jobs\UsersImport as JobsUsersImport;
 use App\Models\StopUserImport;
 use App\Models\UserImport;
+use App\Services\ApiResponse;
+
 class UserController extends Controller
 {
     protected $user;
@@ -904,13 +906,23 @@ class UserController extends Controller
 
     }
     
-    public function showImportContactsFileForm() 
+    public function showImportContactsFileForm(Request $request) 
     {
-        $data['user_imports'] = UserImport::whereNotIn('status', ['inprogress'])->with('user')->orderBy('id', 'DESC')->paginate(10);
-        $data['user_imports_inprogress'] = UserImport::where('status', 'inprogress')->with('user')->orderBy('id', 'DESC')->get();
-        $data['companies']   = Company::where('status', 'active')->get();
+        if ($request->is('api/*')) {
+            // API request
+            $data = UserImport::whereIn('status', ['inprogress', 'pending'])
+                ->with('user')
+                ->orderBy('id', 'DESC')
+                ->get();
+                return ApiResponse::success($data, '', 200);
 
-        return view('imports.create', $data);
+        } else {
+            // Web request
+            $data['user_imports'] = UserImport::whereNotIn('status', ['inprogress', 'pending'])->with('user')->orderBy('id', 'DESC')->paginate(10);
+            $data['companies']   = Company::where('status', 'active')->get();
+            return view('imports.create', $data);
+        }       
+
     }
     public function processImportContacts(Request $request)
     {
@@ -948,8 +960,9 @@ class UserController extends Controller
         $import->file_original_name = $fileOriginalName; 
         $import->added_by   = auth()->user()->id;
         $import->company_id = $company->id;
+        $import->status     = 'pending';
         $import->save();
-        JobsUsersImport::dispatch($import, $company->id);
+        JobsUsersImport::dispatch($import, $company->id, auth()->user()->id);
         return redirect()->back()->with('success', 'File uploaded successfully, system will send you email once process is completed!');
     }
     public function importFilesDelete(Request $request){
@@ -989,6 +1002,5 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Importing contacts has been resumed!');
 
     }
-
 
 }

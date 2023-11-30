@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DialogflowController;
+use App\Http\Controllers\UserController as ControllersUserController;
 use App\Http\Middleware\Api\CheckUser;
 use App\Http\Middleware\DialogflowMiddleware;
 /*
@@ -20,6 +21,8 @@ use App\Http\Middleware\DialogflowMiddleware;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+// Web requests
+Route::get('contacts/import-inprogress', [ControllersUserController::class, 'showImportContactsFileForm']);
 
 Route::post('login', [AuthController::class, 'postLogin'])->name('login');
 Route::post('generate-verification-code', [AuthController::class, 'generateVerificationCode']);
@@ -38,9 +41,9 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::put('notification-mark-read/{id?}', [NotificationController::class, 'notificationMarkRead']);
     });
 
-    Route::resource('email-templates', EmailTemplateController::class);
     Route::post('logout', [AuthController::class, 'logout']);
 });
+Route::resource('email-templates', EmailTemplateController::class);
 
 //Route::middleware([DialogflowMiddleware::class])->group(function (Request $request) {
 //    Route::post("dialogflow", [DialogflowController::class, "index"]);

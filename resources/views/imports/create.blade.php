@@ -69,55 +69,19 @@
                             </div>
                         </form>
                     </div>
-                    @if(count($user_imports_inprogress))
 
-                    <div class="card-body">
+                    <div class="card-body inprogress-imports-section">
                         <div class="row">
                             <h4>Importing Files</h4>
                             <div class="col">
-                                <table style="box-shadow: 1px 1px 3px 0px;" class="table table-striped dataTable no-footer" role="grid" aria-describedby="user-list-table_info">
-                                  
-                                    <tbody >
-                                        @foreach($user_imports_inprogress as $key=>$value)
-                                        <tr>
-                                            <td>{{++$key}}</td>
-                                           
-                                            <td><a href="{{URL('/')}}{{'/csv/imports/'}}{{$value->file_name}}">{{$value->file_original_name}} </a></td>
-                                            <td class="records-stats">{{$value->records}} {{'/'}} {{$value->records_imported}}</td>
-                                            <td class="file-upload-loader-parent"><div class="file-upload-loader"></div></td>
-                                            <td><span data-bs-toggle="modal" data-bs-target="#stop-importing-{{$value->id}}" class="cursor-pointer stop-importing-icon"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16"> <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/> <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/> </svg><span></td>
-                                            
-                                        </tr>
-                                        <div class="modal fade" id="stop-importing-{{$value->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-body px-4 py-4">
-                                                        <form action="{{route('stopUserImport', $value->id)}}" method="POST">
-                                                            @method('put')
-                                                            @csrf()
-                                                            <h3 class="text-center mb-4">Are you sure you want to stop importing {{$value->file_original_name}}?</h3>
-                                                            <div class="form-group mb-4">
-                                                            </div>
-                                                            <div class="text-center pb-2">
-                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                                                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Yes, Stop!</button>
-                                                            </div>
-
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endforeach
-                                    </tbody>
-
+                                <table style="box-shadow: 1px 1px 3px 0px;" class="table table-striped dataTable no-footer inprogress-imports-table" role="grid" aria-describedby="user-list-table_info">
+                                    <tbody></tbody>
                                 </table>
 
                             </div>
                         </div>
 
                     </div>
-                    @endif()
                     <div class="card-body">
                         <div class="row">
                             <h4>Import History</h4>
@@ -228,21 +192,72 @@
     </div>
 </div>
 <script>
-    var count = 0;
-    var stats = '';
+       $(document).ready(function () {
+        $(".inprogress-imports-section").hide();
 
-    var interval = setInterval(() => {
-        ++count;
-        stats = 15 + ' / ' + count;
-        $(".records-stats").html('')
-        $(".records-stats").append(stats)
-        if(count == 15){
-            clearInterval(interval);
-            $(".file-upload-loader-parent").html('');
-            $(".file-upload-loader-parent").html('Contacts imported successfully!');
-            $(".stop-importing-icon").empty()
+        // Function to fetch in-progress imports from API
+        function fetchInProgressImports() {
+            $.ajax({
+                url: '/api/contacts/import-inprogress', // replace with your actual API endpoint
+                method: 'GET',
+                success: function (response) {
+                   updateInProgressImports(response);
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
         }
-        
-    }, 2000);
+
+        // Function to update the content based on API response
+        function updateInProgressImports(data) {
+            // Check if there are in-progress imports
+            if (data.data.length > 0) {
+                // Clear existing content
+                $(".inprogress-imports-table tbody").empty();
+
+                // Update the table with API data
+                $.each(data.data, function (index, importData) {
+                    const progressPercentage = (importData.records_imported / importData.records) * 100;
+
+                    $(".inprogress-imports-table tbody").append(
+                        `<tr>
+                            <td>${index + 1}</td>
+                            <td><a href="${importData.file_name}">${importData.file_original_name}</a></td>
+                            <td class="records-stats">
+                            <label for="file">Importing progress:</label>
+                                <progress id="file" value="${progressPercentage}" max="100"> ${progressPercentage}% </progress>
+                            </td>
+                            <td class="file-upload-loader-parent">${importData.status=='Inprogress'?'<div class="file-upload-loader"></div>':'Pending'}</td>
+                            <td>
+                                <span data-bs-toggle="modal" data-bs-target="#stop-importing-${importData.id}" class="cursor-pointer stop-importing-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                    </svg>
+                                </span>
+                            </td>
+                        </tr>`
+                    );
+                });
+
+                // Display the table
+                $(".inprogress-imports-table").show();
+                $(".inprogress-imports-section").show();
+            } else {
+                // No in-progress imports, hide the table or show a message
+                $(".inprogress-imports-table").hide();
+                $(".inprogress-imports-section").hide();
+
+            }
+        }
+
+        // Fetch in-progress imports on document ready
+        fetchInProgressImports();
+
+        // Set an interval to fetch in-progress imports every 5 seconds
+        setInterval(fetchInProgressImports, 10000);
+    });
+
 </script>
 @endsection

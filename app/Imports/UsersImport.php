@@ -14,9 +14,13 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\BeforeImport;
 use PhpOffice\PhpSpreadsheet\Shared\Date as ExcelDate;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 
-class UsersImport implements ToModel, WithHeadingRow, WithEvents
+
+class UsersImport implements ToModel, WithHeadingRow, WithEvents, WithChunkReading
 {
     private $rowsInserted   = 0;
     private $rowsCount      = 0;
@@ -25,11 +29,13 @@ class UsersImport implements ToModel, WithHeadingRow, WithEvents
     private $status         = 'pending';
     private $companyId;
     private $userImportId;
+    private $authUserId;
 
-    public function __construct($companyId, $userImportId)
+    public function __construct($companyId, $userImportId, $authUserId)
     {
         $this->companyId    = $companyId;
         $this->userImportId = $userImportId;
+        $this->authUserId   = $authUserId;
     }
 
     /**
@@ -39,19 +45,28 @@ class UsersImport implements ToModel, WithHeadingRow, WithEvents
      */
     public function model(array $row)
     {
+        ini_set('memory_limit', '2048M'); // Set memory limit to 2 GB
+        ini_set('max_execution_time', 0);
         $checkStoppedUsersImport = StopUserImport::where('user_imports_id', $this->userImportId)->first();
         if (!$checkStoppedUsersImport) {
             $existingUser = User::where('email', $row['email'])->first();
-            if (!$existingUser) {
+            if (!$existingUser && $row['email']) {
                 ++$this->rowsInserted;
 
                 $createdAtSerial = $row['create_date'];
                 // Convert the Excel serial number to a DateTime object
                 $createdAt = ExcelDate::excelToDateTimeObject($createdAtSerial);
-
+                $firstName = $row['first_name'];
+                $lastName  = $row['last_name'];
+                if(!$firstName){
+                    $firstName = 'Misc';
+                }
+                if(!$lastName){
+                    $lastName = 'User';
+                }
                 $user = new User([
-                    'first_name'    => $row['first_name'],
-                    'last_name'     => $row['last_name'],
+                    'first_name'    => $firstName,
+                    'last_name'     => $lastName,
                     'email'         => $row['email'],
                     'phone_number'  => $row['phone_number'],
                     'password'      => Hash::make('BCCUSA.COM'),
@@ -68,9 +83,9 @@ class UsersImport implements ToModel, WithHeadingRow, WithEvents
                 $this->updateUserImportRecords();
 
                 Activity::create([
-                    'moduleName' => 'Contact',
-                    'user_id' => auth()->id(),
-                    'contact_id' => $user->id
+                    'moduleName'    => 'Contact',
+                    'user_id'       => $this->authUserId,
+                    'contact_id'    => $user->id
                 ]);
                 //$user->documentManagers()->attach($request->document_types);
                 $randomUserId = User::where('company_id', $this->companyId)->whereIn('role', ['admin', 'owner'])->inRandomOrder()->value('id');
@@ -80,7 +95,7 @@ class UsersImport implements ToModel, WithHeadingRow, WithEvents
                         'owner_id' => $randomUserId,
                     ]);
                 }
-                SendNotification::dispatch(['id' => $user->id, 'type' => 'contact_added']);
+                // SendNotification::dispatch(['id' => $user->id, 'type' => 'contact_added']);
 
                 return $user;
             } else {
@@ -127,5 +142,14 @@ class UsersImport implements ToModel, WithHeadingRow, WithEvents
         $userImport->duplicate_records = $this->rowsDuplicate;
         $userImport->status = $this->status;
         $userImport->save();
+    }
+    // public function batchSize(): int
+    // {
+    //     return 500;
+    // }
+    
+    public function chunkSize(): int
+    {
+        return 500;
     }
 }

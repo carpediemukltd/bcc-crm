@@ -25,7 +25,7 @@ class CreateUserImportsTable extends Migration
             $table->enum('status', ['inprogress', 'partially_imported', 'completed', 'failed', 'stopped', 'pending'])->default('pending');
             $table->enum('is_file_deleted', ['1', '0'])->default('0')->comment('1=file deleted, 0=file exists');
             $table->timestamps();
-            $table->foreign('added_by')->references('id')->on('users');
+            $table->foreign('added_by')->references('id')->on('users')->onDelete('cascade');
 
         });
     }

@@ -211,6 +211,7 @@
                                              <span class="item-name">Contact List</span>
                                           </a>
                                        </li>
+                                       @if (Auth::user()->role == 'superadmin')
                                        <li class="nav-item">
                                           <a class="nav-link <?php if(isset($slug) && $slug == 'Import Contacts'){echo 'active';}?>"
                                              href="{{route('showImportContactsFileForm')}}">
@@ -234,6 +235,7 @@
                                              <span class="item-name">Import Contacts</span>
                                           </a>
                                        </li>
+                                       @endif
                                       
                                     </ul>
                                  </li>

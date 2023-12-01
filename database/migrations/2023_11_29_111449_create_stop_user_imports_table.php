@@ -17,7 +17,7 @@ class CreateStopUserImportsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_imports_id');
             $table->timestamps();
-            $table->foreign('user_imports_id')->references('id')->on('user_imports');
+            $table->foreign('user_imports_id')->references('id')->on('user_imports')->onDelete('cascade');
 
         });
     }

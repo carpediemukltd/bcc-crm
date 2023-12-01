@@ -2,7 +2,6 @@
 
 namespace App\Imports;
 
-use App\Jobs\SendNotification;
 use App\Models\Activity;
 use App\Models\StopUserImport;
 use App\Models\User;
@@ -14,10 +13,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\BeforeImport;
 use PhpOffice\PhpSpreadsheet\Shared\Date as ExcelDate;
-use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
-use Illuminate\Contracts\Queue\ShouldQueue;
-
 
 
 class UsersImport implements ToModel, WithHeadingRow, WithEvents, WithChunkReading
@@ -143,11 +139,6 @@ class UsersImport implements ToModel, WithHeadingRow, WithEvents, WithChunkReadi
         $userImport->status = $this->status;
         $userImport->save();
     }
-    // public function batchSize(): int
-    // {
-    //     return 500;
-    // }
-    
     public function chunkSize(): int
     {
         return 500;

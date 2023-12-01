@@ -251,44 +251,44 @@ class DealController extends Controller
                 ->get()
                 ->toArray();
 
-            if(sizeof($aUserDetail) <= 0)
-                return false;
-
-            $aDataPoints = ["State" => $request->state, "Requested" => $request->amount];
-
-            $aCustomFields = [];
-            foreach($aUserDetail AS $iKey => $aData)
-                $aCustomFields[$aData["custom_field_id"]][] = $aData;
-
-            $aDataPoints["Company Name"]    = $aCustomFields[1][0]["data"] == "" ? "Unknown" : $aCustomFields[1][0]["data"];
-            $aDataPoints["Credit"]          = $aCustomFields[36][0]["data"];
-
-            $objResponse = Http::withHeaders([
-                'Content-Type' => 'application/json',
-            ])->post("http://52.87.44.199:5000/predict", [$aDataPoints]);;
-
-            $aData      = $objResponse->json();
-            if(isset($aData["response"]))
+            if(sizeof($aUserDetail) > 0)
             {
-                $sOutcome   = $aData["response"];
+                $aDataPoints = ["State" => $request->state, "Requested" => $request->amount];
 
-                Deal::where("id", $deal->id)
-                    ->update([
-                        "predictive_outcome" => $sOutcome == "Approved" ? 1 : 0
-                    ]);
-            }
-            else
-            {
-                $sRequestData = json_encode($aDataPoints);
-                $sResponseData = json_encode($aData);
+                $aCustomFields = [];
+                foreach($aUserDetail AS $iKey => $aData)
+                    $aCustomFields[$aData["custom_field_id"]][] = $aData;
 
-                $sHTML = '<p>RequestData: <br>'.$sRequestData.'<br><br></p>';
-                $sHTML .= '<p>ResponseData: <br>'.$sResponseData.'</p>';
-                DialogflowController::sendEmail("ERROR: ML server generated error",$sHTML, ["muhammadjunaid@carpediem.team"]);
+                $aDataPoints["Company Name"]    = $aCustomFields[1][0]["data"] == "" ? "Unknown" : $aCustomFields[1][0]["data"];
+                $aDataPoints["Credit"]          = $aCustomFields[36][0]["data"];
+
+                $objResponse = Http::withHeaders([
+                    'Content-Type' => 'application/json',
+                ])->post("http://52.87.44.199:5000/predict", [$aDataPoints]);;
+
+                $aData      = $objResponse->json();
+                if(isset($aData["response"]))
+                {
+                    $sOutcome   = $aData["response"];
+
+                    Deal::where("id", $deal->id)
+                        ->update([
+                            "predictive_outcome" => $sOutcome == "Approved" ? 1 : 0
+                        ]);
+                }
+                else
+                {
+                    $sRequestData = json_encode($aDataPoints);
+                    $sResponseData = json_encode($aData);
+
+                    $sHTML = '<p>RequestData: <br>'.$sRequestData.'<br><br></p>';
+                    $sHTML .= '<p>ResponseData: <br>'.$sResponseData.'</p>';
+                    DialogflowController::sendEmail("ERROR: ML server generated error",$sHTML, ["muhammadjunaid@carpediem.team"]);
+                }
             }
 
             ############################################################### /ML
-            
+
             return redirect(route('user.deals', [$id]))->withSuccess('Deal Created Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
             $this->data['current_slug'] = 'Add Deal';

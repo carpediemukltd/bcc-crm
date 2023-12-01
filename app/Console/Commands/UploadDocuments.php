@@ -71,10 +71,10 @@ class UploadDocuments extends Command
                 $isDueDatePassed = $dueDate->isPast();
 
                 if ($isDueDatePassed) {
-                    $daysDifference = $dueDate->diffInDays($currentDate);
+                    $daysDifference = $dueDate->diffInDays($currentDate) + 1;
                     $this->info('A');
                 } else {
-                    $daysDifference = $currentDate->diffInDays($dueDate);
+                    $daysDifference = $currentDate->diffInDays($dueDate) + 1;
                 }
 
                 $template = '';
@@ -89,11 +89,7 @@ class UploadDocuments extends Command
                     $message = "Hi $userFirstName! The documents required for your bank financing application with BCCUSA are due in $daysDifference days. Navigate https://dashboard.bccusa.com/ to access your bank portal to securely upload. For a more optimized mobile experience, download the IOS App or Android App. Reply Stop to opt out.";
                 }
 
-
                 if($daysDifference == 0 || ($daysDifference <= 7 && $daysDifference % 2 ==1)){
-                    $this->info($template);
-                    $this->info($email['email']);
-                    $this->info($message);
                     Mail::send($template, [
                         'first_name' => $userFirstName,
                         'documents' => $documents,

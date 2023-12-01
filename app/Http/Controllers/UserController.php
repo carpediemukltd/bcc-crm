@@ -164,7 +164,7 @@ class UserController extends Controller
 
                 if (in_array($request->role, ['user', 'contact'])) {
                     $new_user->documentManagers()->attach($request->document_types, [
-                        'due_date' => date('Y-m-d', strtotime(date('Y-m-d') . ' +7 days')),
+                        'due_date' => date('Y-m-d h:m:s', strtotime(date('Y-m-d h:m:s') . ' +7 days')),
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]);
@@ -429,7 +429,7 @@ class UserController extends Controller
 
 
                 DocumentManagerUser::whereUserId($id)->whereNotIn('document_manager_id',$request->document_types)->delete();
-                $due_date = date('Y-m-d', strtotime(date('Y-m-d') . ' +7 days'));
+                $due_date = date('Y-m-d h:m:s', strtotime(date('Y-m-d h:m:s') . ' +7 days'));
                 foreach ($request->document_types as $type) {
                     foreach ($request->document_types as $type) {
                         $document_exists = DocumentManagerUser::whereUserIdAndDocumentManagerId($id, $type)->first();
@@ -877,7 +877,7 @@ class UserController extends Controller
         }
 
         DocumentManagerUser::whereUserId($id)->whereNotIn('document_manager_id', $request->document_types)->delete();
-        $due_date = date('Y-m-d', strtotime(date('Y-m-d') . ' +7 days'));
+        $due_date = date('Y-m-d h:m:s', strtotime(date('Y-m-d h:m:s') . ' +7 days'));
         foreach ($request->document_types as $type) {
             $document_exists = DocumentManagerUser::whereUserIdAndDocumentManagerId($id, $type)->first();
             if($document_exists){

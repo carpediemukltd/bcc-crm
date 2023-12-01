@@ -6,6 +6,8 @@ use App\Models\ChatFeedback;
 use App\Models\ChatLog;
 use App\Models\ChatPotentialUser;
 use App\Models\ChatScheduling;
+use App\Events\ChatMessage;
+use App\Models\ChatLog;
 use App\Models\Deal;
 use App\Models\Documents;
 use App\Models\RequiredDocument;
@@ -594,5 +596,31 @@ class DialogflowController extends Controller
 
         $iUserId = $aUser->id;
         return self::returnMessage(self::getDocuments($iUserId, $sEmail, false));
+    }
+
+    public static function chatMessage(Request  $request)
+    {
+        try
+        {
+            $iUserId    = $request->userId;
+            $sMessage   = $request->message;
+            $sChannel   = $request->channel;
+            $sClose   = $request->close;
+            $iOwnerId   = auth()->user()->id;
+
+            event(new ChatMessage(["message" => htmlspecialchars($sMessage, ENT_QUOTES, "UTF-8"), "ownerId" => $iOwnerId, "close" => $sClose], $sChannel));
+
+            ChatLog::create([
+                "sender_id"     => $iOwnerId,
+                "receiver_id"   => $iUserId,
+                "chat_message"  => $sMessage
+            ]);
+
+            return true;
+        }
+        catch(\Exception $e)
+        {
+            return $e->getMessage();
+        }
     }
 }

@@ -18,7 +18,7 @@
 
 <!-- Live Customizer start -->
 <!-- Setting offcanvas start here -->
-<div class="offcanvas offcanvas-end live-customizer" tabindex="-1" id="live-customizer" data-bs-scroll="true" data-bs-backdrop="false" aria-labelledby="live-customizer-label">
+<!-- <div class="offcanvas offcanvas-end live-customizer" tabindex="-1" id="live-customizer" data-bs-scroll="true" data-bs-backdrop="false" aria-labelledby="live-customizer-label">
    <div class="offcanvas-header">
       <div class="d-flex align-items-center">
          <h4 class="offcanvas-title" id="live-customizer-label">Live Customizer</h4>
@@ -55,7 +55,6 @@
                   <h5 class="d-inline-block">Style Setting</h5>
                </div>
                <div class="p-3">
-                  <!-- Theme start here -->
                   <div>
                      <h6 class="mb-3">Theme</h6>
                      <div class="d-grid gap-3 grid-cols-3 mb-3">
@@ -107,9 +106,7 @@
                         </div>
                      </div>
                   </div>
-                  <!-- Theme end here -->
                   <hr class="hr-horizontal">
-                  <!-- Color customizer start here -->
                   <div>
                      <div class="d-flex align-items-center justify-content-between">
                         <h6 class="mt-4 mb-3">Color Customizer</h6>
@@ -184,8 +181,6 @@
                         </div>
                      </div>
                   </div>
-                  <!-- Color customizer end here -->
-                  <!-- menu hide start here -->
                   <hr class="hr-horizontal">
                   <div data-setting="checkbox">
                      <div class="d-flex justify-content-between align-items-center">
@@ -195,9 +190,7 @@
                         </div>
                      </div>
                   </div>
-                  <!-- menu hide end here -->
                   <hr class="hr-horizontal">
-                  <!-- Menu color start here -->
                   <div>
                      <h6 class="mt-4 mb-3">Menu Color</h6>
                      <div class="d-grid gap-3 grid-cols-3 mb-3">
@@ -260,9 +253,7 @@
                         </div>
                      </div>
                   </div>
-                  <!-- Menu color end here -->
                   <hr class="hr-horizontal">
-                  <!-- Menu Style start here -->
                   <div>
                      <h6 class="mt-4 mb-3">Menu Style</h6>
                      <div class="d-grid gap-3 grid-cols-4 mb-4">
@@ -300,9 +291,7 @@
                         </div>
                      </div>
                   </div>
-                  <!-- Menu Style end here -->
                   <hr class="hr-horizontal">
-                  <!-- Active Menu Style start here -->
                   <div>
                      <h6 class="mt-4 mb-3">Active Menu Style</h6>
                      <div class="d-grid gap-3 grid-cols-3 mb-4">
@@ -358,8 +347,6 @@
                         </div>
                      </div>
                   </div>
-                  <!-- Active Menu Style end here -->
-                  <!-- navbar hide start here -->
                   <hr class="hr-horizontal">
                   <div data-setting="checkbox">
                      <div class="d-flex justify-content-between align-items-center">
@@ -369,9 +356,7 @@
                         </div>
                      </div>
                   </div>
-                  <!-- navbar hide end here -->
                   <hr class="hr-horizontal">
-                  <!-- Navbar style start here -->
                   <div>
                      <h6 class="mt-4 mb-3">Navbar Style</h6>
                      <div class="d-grid gap-3 grid-cols-4 mb-4">
@@ -409,9 +394,7 @@
                         </div>
                      </div>
                   </div>
-                  <!-- Navbar style end here -->
                   <hr class="hr-horizontal">
-                  <!-- Card style start here -->
                   <div class="mb-4">
                      <div class="mt-4 mb-3">
                         <h6 class="d-inline-block mb-0 me-2">Card Style</h6>
@@ -438,9 +421,7 @@
                         </label>
                      </div>
                   </div>
-                  <!-- Card style end here -->
                   <hr class="hr-horizontal">
-                  <!-- Banner style start here -->
                   <div>
                      <h6 class="mt-4 mb-3">Banner Style</h6>
                      <div class="d-grid gap-3 grid-cols-3 mb-4">
@@ -471,9 +452,7 @@
                         </div>
                      </div>
                   </div>
-                  <!-- Banner style end here -->
                   <hr class="hr-horizontal">
-                  <!-- Page Animation start here -->
                   <div class="mt-4 mb-3">
                      <h6 class="d-inline-block mb-0 me-2">Footer </h6>
                      <small class="badge bg-warning rounded-pill">Pro</small>
@@ -492,7 +471,6 @@
                         <label class="btn btn-border d-block" for="footer_glass">Glass</label>
                      </div>
                   </div>
-                  <!-- Page Animation start here -->
                </div>
             </div>
          </div>
@@ -549,7 +527,6 @@
                         </div>
                      </div>
                   </div>
-                  <!-- Page container start here -->
                   <div>
                      <h6 class="d-inline-block mb-3 me-2">Page Style </h6>
                      <small class="badge bg-warning rounded-pill">Pro</small>
@@ -569,8 +546,6 @@
                         <label class="btn btn-border d-block" for="page-layout-full-width">Full Width</label>
                      </div>
                   </div>
-                  <!-- Page container start here -->
-                  <!-- Style appearance start here -->
                   <div>
                      <h6 class="d-inline-block mb-3 me-2">Style Appearance </h6>
                      <small class="badge bg-warning rounded-pill">Pro</small>
@@ -589,8 +564,6 @@
                         <label class="btn btn-border d-block" for="theme-style-appearance-sharp">Sharp</label>
                      </div>
                   </div>
-                  <!-- Style appearance end here -->
-                  <!-- Page Animation start here -->
                   <div>
                      <h6 class="d-inline-block mb-3 me-2">Page Transition </h6>
                      <small class="badge bg-warning rounded-pill">Pro</small>
@@ -605,7 +578,6 @@
                         <label class="btn btn-border d-block" for="without-page-animation">No Animation</label>
                      </div>
                   </div>
-                  <!-- Page Animation start here -->
                   <div>
                      <h6 class="mb-3 d-inline-block">Storage</h6>
                      <span data-bs-toggle="tooltip" data-bs-placement="right" title="You can save the setting changes you made for your project on either Local storage, Session storage.">
@@ -633,7 +605,7 @@
          </div>
       </div>
    </div>
-</div>
+</div> -->
 
 <!-- Live Customizer end -->
 <!-- Wrapper End-->

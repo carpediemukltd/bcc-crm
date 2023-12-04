@@ -443,6 +443,11 @@ class UserController extends Controller
                     }
                 }
 
+                DocumentManagerUser::whereUserId($id)->delete();
+                foreach ($request->document_types as $type) {
+                    DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type]);
+                }
+             
                 $user = User::whereId($id)->first();
                 try{
                     $documents = DocumentManager::whereIn('id', $notificationForNewIds)->get();

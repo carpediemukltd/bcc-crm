@@ -118,6 +118,7 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::get('contacts', [UserController::class, 'userList'])->name('user.list');
         Route::any('contact/edit/{id}', [UserController::class, 'editUser'])->name('user.edit');
         Route::any('contact/{id}/details', [UserController::class, 'userDetails'])->name('user.details');
+        Route::post('contact/{id}/due_date', [UserController::class, 'userDueDate'])->name('user.due_date');
 
         //update document manager
         Route::post('update-document-manager/{id}', [UserController::class, 'updateDocumentManager'])->name('document.manager.update');

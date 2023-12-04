@@ -10,6 +10,6 @@ class DocumentGroup extends Model
     use HasFactory;
 
     public function DocumentGroup(){
-        return $this->hasMany(DocumentManager::class);
+        return $this->belongsToMany(DocumentManager::class);
     }
 }

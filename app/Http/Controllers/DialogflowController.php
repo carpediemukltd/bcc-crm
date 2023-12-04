@@ -23,9 +23,6 @@ use Illuminate\Support\Facades\Config;
 
 class DialogflowController extends Controller
 {
-    const sSendGridAPI      = "smtp.sendgrid.net";
-    const sSendGridUserName = 'apikey';
-    const sSendGridPassword = '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';
     const iBlockCheck       = 5;
     const aAllowFiles       = ["pdf", "xlsx", "docx"];
     private static $sStorageDisk = "s3";
@@ -316,13 +313,13 @@ class DialogflowController extends Controller
     {
         $objMailer = new PHPMailer(true);
         $objMailer->isSMTP();
-        $objMailer->Host       = self::sSendGridAPI;
+        $objMailer->Host       = env("EMAIL_HOST");
         $objMailer->SMTPAuth   = true;
-        $objMailer->Username   = self::sSendGridUserName;
-        $objMailer->Password   = self::sSendGridPassword;
-        $objMailer->SMTPSecure = 'ssl';
-        $objMailer->Port       = 465;
-        $objMailer->setFrom('info@bccsba.com');
+        $objMailer->Username   = env("EMAIL_USERNAME");
+        $objMailer->Password   = env("EMAIL_PASSWORD");
+        $objMailer->SMTPSecure = env("EMAIL_SMTP");
+        $objMailer->Port       = env("EMAIL_PORT");
+        $objMailer->setFrom(env("EMAIL_FROM"));
 
         foreach($aToEmail AS $iKey => $sEmail)
             $objMailer->addAddress($sEmail);

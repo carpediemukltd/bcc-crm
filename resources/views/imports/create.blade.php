@@ -217,6 +217,7 @@
 <script>
     $(document).ready(function() {
         $(".inprogress-imports-section").hide();
+        var hasRecordsInitially = false;
 
         // Trigger modal on span click
         $(document).on('click', '.stop-importing-icon', function() {
@@ -278,10 +279,14 @@
                 // Display the table
                 $(".inprogress-imports-table").show();
                 $(".inprogress-imports-section").show();
+                hasRecordsInitially = true;
             } else {
                 // No in-progress imports, hide the table or show a message
                 $(".inprogress-imports-table").hide();
                 $(".inprogress-imports-section").hide();
+                if(hasRecordsInitially == true){
+                    location.reload();
+                }
 
             }
         }
@@ -289,8 +294,8 @@
         // Fetch in-progress imports on document ready
         fetchInProgressImports();
 
-        // Set an interval to fetch in-progress imports every 5 seconds
-        setInterval(fetchInProgressImports, 50000);
+        // Set an interval to fetch in-progress imports every 10 seconds
+        setInterval(fetchInProgressImports, 10000);
     });
 </script>
 @endsection

@@ -997,7 +997,7 @@ class UserController extends Controller
 
         StopUserImport::where('user_imports_id',$userImportId)->delete();
         $userImport = UserImport::find($userImportId);
-        $userImport->status = 'inprogress';
+        $userImport->status = 'pending';
         $userImport->save();
         return redirect()->back()->with('success', 'Importing contacts has been resumed!');
 

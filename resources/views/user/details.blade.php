@@ -469,9 +469,11 @@
                                  </small>
                                  <small class="float-right mt-1">
                                     <b>URL :</b> 
-                                    <p>{{$document->file_path}}</p>
+                                    <p><a href="{{$document->file_path}}">{{$document->file_name}}</a></p>
                                  </small>
                               </div>
+                              <!-- <b><small class="float-right mt-1">{{$document->file_group_name}} :  </small> :</b> 
+                                    <p><a href="{{$document->file_path}}">{{$document->file_name}}</a> </p> -->
                               @endforeach
                               </div>
                                     </div>

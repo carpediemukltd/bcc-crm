@@ -35,13 +35,18 @@
 
 <body class=" ">
    <!-- loader Start -->
-   <div id="loading">
+   <!-- <div id="loading">
       <div class="loader simple-loader">
          <div class="loader-body">
             <img src="{{asset('assets/images/loader.webp')}}" alt="loader" class="light-loader img-fluid w-25" width="200" height="200">
          </div>
       </div>
-   </div>
+   </div> -->
+   <div class="loader">
+         <div class="logo">
+            <img src="{{asset('assets/images/app-icon.png')}}" style="width:50px;height:50px;" />
+         </div>
+      </div>
    <!-- loader END -->
    <div class="wrapper">
       <section class="login-content">
@@ -51,10 +56,10 @@
                   <div class="col-md-10">
                      <div class="card card-transparent shadow-none d-flex justify-content-center mb-0 auth-card iq-auth-form">
                         <div class="card-body">
-                           <a href="#" class="navbar-brand d-flex align-items-center mb-3">
+                           <a href="#" class="navbar-brand login-brand-logo mb-4">
                               <!--Logo start-->
                               <div class="logo-main">
-                                 <img src="{{asset('assets/images/bcc-update-logo.png')}}" alt="" style="width:150px">
+                                 <img src="{{asset('assets/images/bcc-update-logo.png')}}" alt="" style="width:250px">
                               </div>
                               <!--logo End-->
                            </a>
@@ -122,8 +127,9 @@
                </div>
 
             </div>
-            <div class="col-md-6 d-md-block d-none bg-primary p-0 vh-100 overflow-hidden">
-               <img src="{{asset('assets/images/auth/01.png')}}" class="img-fluid gradient-main animated-scaleX" alt="images" loading="lazy">
+            <div class="col-md-6 d-md-block d-none p-0 vh-100 overflow-hidden">
+               <img src="{{asset('assets/images/auth/login-bg.png')}}" class="img-fluid login-brand-banner gradient-main" alt="images">
+               <!-- <img id="v-code" src="{{asset('assets/images/auth/v-code.png')}}" class="img-fluid v-code gradient-main animated-scaleX" alt="images" loading="lazy"> -->
             </div>
          </div>
       </section>
@@ -164,6 +170,7 @@
             // Get the form data
             var formData = $(this).serialize();
             $('#spiner').css("display","inline-block");
+            
             // Send an Ajax POST request for initial login
             $.ajax({
                type: 'POST',
@@ -177,7 +184,7 @@
                      } else {
                         // Hide the initial login form
                         $('#login-form').hide();
-
+                        
                         // Show the 2FA form
                         $('.2fa-form').show();
                         // Set the email value in the 2FA form

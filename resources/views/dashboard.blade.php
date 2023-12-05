@@ -77,7 +77,7 @@
 </style>
 @endsection
 @section('content')
-<div class="content-inner container-fluid pb-0" id="page_layout">
+<div class="content-inner container-fluid pb-0 dashboard_view" id="page_layout">
     @include('alert_message')
     <div id="loader" style="display: none;"></div>
     <div class="row">
@@ -89,14 +89,13 @@
                             <h3>Quick Insights</h3>
                             <p class="text-primary mb-0">Users Count</p>
                         </div>
-                        <div class="d-flex justify-content-between align-items-center">
+                        <div class="">
                             <div class="form-group">
                                 <label for="">Date In<span style="color: red">*</span></label>
-                                <input type="text" class="input-sm form-control" id="daterange" name="daterange" autocomplete="off" />
-                            </div>
-                            <div class="form-group mt-4">
-                                <label for=""></label>
-                                <button type="button" name="filter" id="filter" class="btn btn-primary m2">Filter</button>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <input type="text" class="input-sm form-control" id="daterange" name="daterange" autocomplete="off" />
+                                    <button type="button" name="filter" id="filter" class="ml-2 btn btn-primary m2">Filter</button>
+                                </div>
                             </div>
                         </div>
                     </div>

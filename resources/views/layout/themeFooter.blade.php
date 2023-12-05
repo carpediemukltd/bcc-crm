@@ -914,7 +914,6 @@
    });
 
    $(document).ready(function() {
-
       // Initialize the plugin with the user's country code.
       var phoneNumberInput = $('#phone-number');
       var selectedCountryCodeInput = $('#selected-country-code'); // Hidden input field
@@ -927,7 +926,7 @@
            $('button[type="submit"]').on("click",function(){
                $("#errorSpan").html("");
                var inputNumber = phoneNumberInput.val();
-               var pattern = /^\d{11}$/;
+               var pattern = /^[+]\d{11}$/;
 
                if (!pattern.test(inputNumber))
                {

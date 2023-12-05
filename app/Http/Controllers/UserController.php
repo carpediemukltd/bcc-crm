@@ -21,6 +21,7 @@ use App\Models\RoundRobinSetting;
 use App\Models\Stage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use libphonenumber\PhoneNumberUtil;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -54,14 +55,44 @@ class UserController extends Controller
     {
         $this->data['current_slug'] = 'My Profile';
         if ($request->isMethod('post')) {
+
+            $phoneNumberUtil = PhoneNumberUtil::getInstance();
+            $phoneNumberObj = $phoneNumberUtil->parse($request->phone_country_code.$request->phone_number, 'US');
+
+            if(!$phoneNumberUtil->isValidNumberForRegion($phoneNumberObj,'US'))
+                return redirect()->back()->with('error', 'Phone number is invalid.');
+
             $update_data = [
                 'first_name'            => $request->first_name,
                 'last_name'             => $request->last_name,
                 'phone_number'          => $request->phone_country_code." ".$request->phone_number,
                 'two_factor_enabled'    => $request->has('two_factor') ? '1' : '0',
             ];
-            if($request->has('two_factor')){
-                $update_data['two_factor_type'] = $request->two_factor_type;
+            if ($request->has('two_factor')) {
+
+                $mobileVerifiedcheckbox = $request->input('mobileVerifiedcheckbox');
+                $emailVerifiedcheckbox = $request->input('emailVerifiedcheckbox');
+
+                $mobileVerified = $request->input('mobileVerified');
+                $emailVerified = $request->input('emailVerified');
+
+                if (($mobileVerifiedcheckbox == 1 && $mobileVerified) && ($emailVerifiedcheckbox == 1 && $emailVerified))
+                    $update_data['two_factor_type'] = 'both';
+                elseif ($mobileVerifiedcheckbox == 1 && $mobileVerified)
+                    $update_data['two_factor_type'] = 'phone';
+                elseif ($emailVerifiedcheckbox == 1 && $emailVerified)
+                    $update_data['two_factor_type'] = 'email';
+
+                $update_data['mobile_verified'] = $mobileVerified;
+                $update_data['email_verified'] = $emailVerified;
+            }
+            else
+            {
+                $mobileVerified = $request->input('mobileVerified');
+                $emailVerified = $request->input('emailVerified');
+
+                $update_data['mobile_verified'] = $mobileVerified;
+                $update_data['email_verified'] = $emailVerified;
             }
             if ($request->password && !$request->confirm_password) {
                 return redirect()->back()->withError('Confirm password is required.')->withInput();
@@ -123,6 +154,12 @@ class UserController extends Controller
             }
 
             $request->validate($validate);
+            $phoneNumberUtil = PhoneNumberUtil::getInstance();
+            $phoneNumberObj = $phoneNumberUtil->parse($request->phone_country_code.$request->phone_number, 'US');
+
+            if(!$phoneNumberUtil->isValidNumberForRegion($phoneNumberObj,'US'))
+                return redirect()->back()->with('error', 'Phone number is invalid.');
+
             $data = $request->all();
 
             if ($data) {
@@ -383,6 +420,13 @@ class UserController extends Controller
             }
 
             $request->validate($validate);
+
+            $phoneNumberUtil = PhoneNumberUtil::getInstance();
+            $phoneNumberObj = $phoneNumberUtil->parse($request->phone_country_code.$request->phone_number, 'US');
+
+            if(!$phoneNumberUtil->isValidNumberForRegion($phoneNumberObj,'US'))
+                return redirect()->back()->with('error', 'Phone number is invalid.');
+
             $update_data = [
                 'first_name'   => $request->first_name,
                 'last_name'    => $request->last_name,

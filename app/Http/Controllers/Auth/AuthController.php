@@ -18,6 +18,8 @@ use DateTime;
 use PHPMailer\PHPMailer\PHPMailer;
 use Twilio\Rest\Client;
 use Validator;
+use libphonenumber\PhoneNumberUtil;
+
 class AuthController extends Controller
 {
     /**
@@ -146,7 +148,7 @@ class AuthController extends Controller
             'verification_code' => $code,
             'verification_code_expiry' => Carbon::now()->addMinutes(2), // Code expires in 2 minutes
         ]);
-        if ($user->two_factor_type == 'email') {
+        if ($user->two_factor_type == 'email' && $user->email_verified) {
             try {
                 $templateBody = "<p>Lendotics Verification Code: <b>" . $code . "</b> </p>";
 
@@ -173,14 +175,61 @@ class AuthController extends Controller
                 error_log($e->getMessage());
             }
         }
-        if ($user->two_factor_type == 'phone') {
-            $message            = 'Your Lendotics Verification Code is: ' . $code;
+        if ($user->two_factor_type == 'phone' && $user->mobile_verified) {
+//            $message            = 'Your Lendotics Verification Code is: ' . $code;
+//            $twilioPhoneNumber  = env('TWILIO_NUMBER');
+//            $twilioSid          = env('TWILIO_SID');
+//            $twilioToken        = env('TWILIO_AUTH_TOKEN');
+//            $client             = new Client($twilioSid, $twilioToken);
+//            // Remove spaces from the phone number
+//            $toPhoneNumber = str_replace(' ', '', $user->phone_number);
+//            try {
+//                $client->messages->create(
+//                    $toPhoneNumber,
+//                    [
+//                        'from' => $twilioPhoneNumber,
+//                        'body' => $message,
+//                    ]
+//                );
+//
+//            } catch (\Exception $e) {
+//                return $e->getMessage();
+//            }
+        }
+        //send code to both email and phone number
+        elseif ($user->two_factor_type == 'both') {
+            try {
+                $templateBody = "<p>Verification Code: <b>" . $code . "</b> </p>";
+
+                $mail = new PHPMailer(true);
+
+                // $mail->SMTPDebug = 3;                      //Enable verbose debug output
+                $mail->isSMTP();                                            //Send using SMTP
+                $mail->Host = env('EMAIL_HOST');                     //Set the SMTP server to send through
+                $mail->SMTPAuth = true;                                   //Enable SMTP authentication
+                $mail->Username = env('EMAIL_USERNAME');                     //SMTP username
+                $mail->Password = env('EMAIL_PASSWORD');                                //SMTP password
+                $mail->SMTPSecure = env('EMAIL_SMTP');              //Enable implicit TLS encryption
+                $mail->Port = env('EMAIL_PORT');
+                $mail->setFrom(env('EMAIL_FROM'));
+                $mail->isHTML(true); //Set email format to HTML
+
+                $mail->Subject = 'Bankportal 2FA Verification Code';
+
+                $mail->addAddress($user->email); //Name is optional
+                $mail->Body    = $templateBody;
+                $mail->send();
+            }
+            catch (\Exception $e) {
+                error_log($e->getMessage());
+            }
+
+            $message            = 'Your Bankportal Verification Code is: ' . $code;
             $twilioPhoneNumber  = env('TWILIO_NUMBER');
             $twilioSid          = env('TWILIO_SID');
             $twilioToken        = env('TWILIO_AUTH_TOKEN');
             $client             = new Client($twilioSid, $twilioToken);
-            // Remove spaces from the phone number
-            $toPhoneNumber = str_replace(' ', '', $user->phone_number);
+            $toPhoneNumber      = $user->phone_number;
             try {
                 $client->messages->create(
                     $toPhoneNumber,
@@ -190,12 +239,10 @@ class AuthController extends Controller
                     ]
                 );
 
-            } catch (\Exception $e) {
+            }
+            catch (\Exception $e) {
                 return $e->getMessage();
             }
-        }
-        //send code to both email and phone number
-        elseif ($user->two_factor_type == 'both') {
         }
     }
 
@@ -227,8 +274,26 @@ class AuthController extends Controller
                 'verification_code' => null,
                 'verification_code_expiry' => null,
             ]);
-            
-            if (Auth::attempt(['email' => $request->email, 'password' => $request->password]))
+            if ($request->has('mobileVerified'))
+            {
+                if ($request->mobileVerified == 1)
+                {
+                    $iEmailVerified = $request->EmailVerified;
+                    $two_factor_type = 'phone';
+
+                    if ($iEmailVerified == 1)
+                        $two_factor_type = 'both';
+
+                    $user->update([
+                        'mobile_verified' => '1',
+                        'two_factor_enabled' => '1',
+                        'two_factor_type' => $two_factor_type
+                    ]);
+                }
+            }
+
+            if (Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+            }
 
             // Redirect to the dashboard or any desired page
             return response()->json(['success' => 'Code verified successfully.']);
@@ -237,6 +302,21 @@ class AuthController extends Controller
     }
     public function resendVerificationCode(Request $request){
         $user = User::where(['email' =>  $request->email])->first();
+
+        if ($request->has('phoneNumber'))
+        {
+            $phoneNumberUtil = PhoneNumberUtil::getInstance();
+
+            $phoneNumberObj = $phoneNumberUtil->parse($request->phoneNumber, 'US');
+
+            if(!$phoneNumberUtil->isValidNumberForRegion($phoneNumberObj,'US'))
+                return response()->json(['error' => 'Phone Number is invalid.']);
+
+            $user = User::where(['email' => $request->email,'phone_number' => $request->phoneNumber])->first();
+            if (!$user)
+                return response()->json(['error' => 'Unable to find Phone Number.']);
+        }
+
         $response = $this->generate2FACode($user);
             if ($response) {
                 return response()->json(['error' => $response]);

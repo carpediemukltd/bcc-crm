@@ -9,6 +9,7 @@
         "aws/aws-sdk-php": "^3.283",
         "doctrine/dbal": "^3.6",
         "fruitcake/laravel-cors": "^2.0",
+        "giggsey/libphonenumber-for-php": "^8.13",
         "google/auth": "^1.29",
         "google/cloud-dialogflow": "^1.8",
         "guzzlehttp/guzzle": "^7.0.1",

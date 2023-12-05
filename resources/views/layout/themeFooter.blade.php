@@ -11,7 +11,7 @@
       <div class="right-panel">
          ©2023 <span>BCC, CRM</span>
          <!-- , Developed
-         
+
          by <a href="https://carpediem.team/" target="_blank">Carpediem</a>. -->
       </div>
    </div>
@@ -914,9 +914,31 @@
    });
 
    $(document).ready(function() {
+
       // Initialize the plugin with the user's country code.
       var phoneNumberInput = $('#phone-number');
       var selectedCountryCodeInput = $('#selected-country-code'); // Hidden input field
+
+       //Validate the number format of mobile
+       if($("div").hasClass("phone-input"))
+       {
+           $(".phone-input").after("<span id='errorSpan' style='color:red'></span>");
+
+           $('button[type="submit"]').on("click",function(){
+               $("#errorSpan").html("");
+               var inputNumber = phoneNumberInput.val();
+               var pattern = /^\d{11}$/;
+
+               if (!pattern.test(inputNumber))
+               {
+                   phoneNumberInput.focus();
+                   $("#errorSpan").html("Invalid Format");
+                   return false;
+               }
+               else
+                   $("#errorSpan").html("");
+           });
+       }
 
       // Remove non-digit characters as the user types.
       phoneNumberInput.on('input', function() {
@@ -943,6 +965,22 @@
       style.innerHTML = '.iti__country-list { display: none !important; }';
       document.head.appendChild(style);
 
+      phoneNumberInput.blur(function(){
+          $("#errorSpan").html("");
+          var countryCode = selectedCountryCodeInput.val();
+          var inputNumber = countryCode+phoneNumberInput.val();
+          var pattern = /^[+]\d{11}$/;
+
+          if (!pattern.test(inputNumber))
+          {
+              phoneNumberInput.focus();
+              $("#errorSpan").html("Invalid Format");
+              return false;
+          }
+          else
+              $("#errorSpan").html("");
+      });
+
    });
 </script>
 <script>
@@ -957,7 +995,7 @@
       $(".content-inner").hide();
       $("#search-container").show();
       $("#search-container .content-inner").show();
-      
+
 
 
       // Initialize an empty data object
@@ -990,7 +1028,7 @@
                $(".deals-html").html('');
                $(".pipelines-html").html('');
                $(".stages-html").html('');
-               
+
                $(".contacts-html").append(response.contacts);
                $(".deals-html").append(response.deals);
                $(".pipelines-html").append(response.pipelines);
@@ -1068,7 +1106,7 @@
       $("#search-header").val('');
 
    });
-   
+
 </script>
 
 @yield('script')

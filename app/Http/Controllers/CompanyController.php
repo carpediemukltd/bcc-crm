@@ -15,6 +15,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use libphonenumber\PhoneNumberUtil;
 
 class CompanyController extends Controller
 {
@@ -73,15 +74,15 @@ class CompanyController extends Controller
 
         if ($request->isMethod('post')) {
 
-            $request->validate([
-                'first_name' => 'required',
-                'last_name' => 'required',
-                'phone_number' => 'required',
-                'role' => 'required',
-                'name' => 'required|unique:companies',
-                'email' => 'required|email|unique:users',
-                'password' => 'required|min:6'
-            ]);
+//            $request->validate([
+//                'first_name' => 'required',
+//                'last_name' => 'required',
+//                'phone_number' => 'required',
+//                'role' => 'required',
+//                'name' => 'required|unique:companies',
+//                'email' => 'required|email|unique:users',
+//                'password' => 'required|min:6'
+//            ]);
 
             $data = $request->all();
 
@@ -89,6 +90,12 @@ class CompanyController extends Controller
             if (!in_array($request->role, $roles)) {
                 return redirect()->back()->with('error', 'You\'ve selected an invalid role.')->withInput();
             }
+
+            $phoneNumberUtil = PhoneNumberUtil::getInstance();
+            $phoneNumberObj = $phoneNumberUtil->parse($data['phone_country_code'].$data['phone_number'], 'US');
+
+            if(!$phoneNumberUtil->isValidNumberForRegion($phoneNumberObj,'US'))
+                return redirect()->back()->with('error','Phone Number is invalid.');
 
             if ($data) {
                 $new_company = Company::create([
@@ -181,6 +188,12 @@ class CompanyController extends Controller
 
             $data = $request->all();
 
+            $phoneNumberUtil = PhoneNumberUtil::getInstance();
+            $phoneNumberObj = $phoneNumberUtil->parse($data['phone_country_code'].$data['phone_number'], 'US');
+
+            if(!$phoneNumberUtil->isValidNumberForRegion($phoneNumberObj,'US'))
+                return redirect()->back()->with('error','Phone Number is invalid.');
+
             if ($request->password && strlen($request->password) < 6) {
                 return redirect()->back()->withError('Password must be 6 digits.')->withInput();
             } else if ($request->password && strlen($request->password) >= 6) {
@@ -263,7 +276,7 @@ class CompanyController extends Controller
 
         return response()->download($path)->deleteFileAfterSend();
     }
- 
+
     public function exportDealsCSV(Request $request)
     {
         $file_name = 'company_deals.csv';

@@ -74,15 +74,15 @@ class CompanyController extends Controller
 
         if ($request->isMethod('post')) {
 
-//            $request->validate([
-//                'first_name' => 'required',
-//                'last_name' => 'required',
-//                'phone_number' => 'required',
-//                'role' => 'required',
-//                'name' => 'required|unique:companies',
-//                'email' => 'required|email|unique:users',
-//                'password' => 'required|min:6'
-//            ]);
+            $request->validate([
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'phone_number' => 'required',
+                'role' => 'required',
+                'name' => 'required|unique:companies',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|min:6'
+            ]);
 
             $data = $request->all();
 

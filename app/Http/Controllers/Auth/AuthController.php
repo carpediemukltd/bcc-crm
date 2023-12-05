@@ -176,25 +176,25 @@ class AuthController extends Controller
             }
         }
         if ($user->two_factor_type == 'phone' && $user->mobile_verified) {
-//            $message            = 'Your Lendotics Verification Code is: ' . $code;
-//            $twilioPhoneNumber  = env('TWILIO_NUMBER');
-//            $twilioSid          = env('TWILIO_SID');
-//            $twilioToken        = env('TWILIO_AUTH_TOKEN');
-//            $client             = new Client($twilioSid, $twilioToken);
-//            // Remove spaces from the phone number
-//            $toPhoneNumber = str_replace(' ', '', $user->phone_number);
-//            try {
-//                $client->messages->create(
-//                    $toPhoneNumber,
-//                    [
-//                        'from' => $twilioPhoneNumber,
-//                        'body' => $message,
-//                    ]
-//                );
-//
-//            } catch (\Exception $e) {
-//                return $e->getMessage();
-//            }
+            $message            = 'Your Lendotics Verification Code is: ' . $code;
+            $twilioPhoneNumber  = env('TWILIO_NUMBER');
+            $twilioSid          = env('TWILIO_SID');
+            $twilioToken        = env('TWILIO_AUTH_TOKEN');
+            $client             = new Client($twilioSid, $twilioToken);
+            // Remove spaces from the phone number
+            $toPhoneNumber = str_replace(' ', '', $user->phone_number);
+            try {
+                $client->messages->create(
+                    $toPhoneNumber,
+                    [
+                        'from' => $twilioPhoneNumber,
+                        'body' => $message,
+                    ]
+                );
+
+            } catch (\Exception $e) {
+                return $e->getMessage();
+            }
         }
         //send code to both email and phone number
         elseif ($user->two_factor_type == 'both') {

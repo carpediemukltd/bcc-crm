@@ -145,7 +145,7 @@ class User extends Authenticatable
     }
     public function documentManagers()
     {
-        return $this->belongsToMany(DocumentManager::class);
+        return $this->belongsToMany(DocumentManager::class)->withPivot(['due_date', 'document_uploaded']);
     }
     public function getFormattedCreatedAtAttribute()
     {
@@ -156,7 +156,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Company::class);
     }
-    
+
     private static function sanitizePhoneNumber($phoneNumber)
     {
         // Remove any non-numeric characters and keep the '+' sign

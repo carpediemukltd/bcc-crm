@@ -7,8 +7,16 @@
             <div class="col-md-12">
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
-                     <h1>All Deals </h1>
+                     <h1>{{$user->first_name}} {{$user->last_name}}'s Deals </h1>
                      <p>Experience a simple yet powerful way to build Dashboards.</p>
+                  </div>
+                  <div>
+                     <a href="{{route('user.deals.add', $current_user_id)}}" class="btn btn-link btn-soft-light">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-28">
+                           <path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                        Add New Deal
+                     </a>
                   </div>
                </div>
             </div>
@@ -28,7 +36,7 @@
             <div class="card">
                <div class="card-header d-flex mb-4 justify-content-between">
                   <div class="header-title">
-                     <h4 class="card-title">Company Deals Listing </h4>
+                     <h4 class="card-title">User's Deals</h4>
                   </div>
                   <div class="d-flex justify-content-between">
                      {{-- 
@@ -127,24 +135,10 @@
                   </div>
                </div>
                <div class="card-body pt-2">
-                  <div class="d-flex all-company-list">
+                  <div class="d-flex" style="display: none !important;">
                      <div class="stages_view_box">
-                        <input type="hidden" id="page_no" name="page_no" value="1" />
-                        @if (isset($companies))
-                        <div class="form-group w-100">
-                           <label class="form-label">Select Company</label>
-                           <div class="d-flex align-items-center justify-content-between">
-                              <select class="form-control" id="companies_list" name="companies_list">
-                                 <option value="0">All</option>
-                                 @foreach ($companies as $company)
-                                 <option value="{{ $company->id }}">{{ $company->name }}</option>
-                                 @endforeach
-                              </select>
-                           </div>
-                        </div>
-                        @endif
-                     </div>
-                     <div class="stages_view_box">
+                        <input type="hidden" id="companies_list" name="companies_list" value="{{$company_id}}"/>
+                        <input type="hidden" id="user_id" name="user_id" value="{{$current_user_id}}"/>
                         <div class="form-group w-100">
                            <label class="form-label">Depositing Institution</label>
                            <input type="text" class="form-control" id="depositing_institution"
@@ -231,6 +225,7 @@
    
    function getDeals(page_no) {
        var company_id = $('#companies_list').val();
+       var user_id = $('#user_id').val();
        var depositing_institution = $('#depositing_institution').val();
        var state = $('#state').val();
        var submitted_bank = $('#submitted_bank').val();
@@ -238,8 +233,9 @@
        $('#deals_view').html('Loading...');
        $('#deals_view').show();
        $('#page_no').val(page_no);
-       var url = "{{ route('company.deals.detail', ':deals_view') }}";
+       var url = "{{ route('user.deals.detail', [':user_id',':deals_view']) }}";
        url = url.replace(':deals_view', dealsView);
+       url = url.replace(':user_id', user_id);
        if (!page_no) page_no = 1;
    
        $('#show_loading').show();
@@ -268,6 +264,7 @@
    
    function ExportData(type) {
        var company_id = $('#companies_list').val();
+       var user_id = $('#user_id').val();
        var depositing_institution = $('#depositing_institution').val();
        var state = $('#state').val();
        var submitted_bank = $('#submitted_bank').val();
@@ -287,13 +284,13 @@
        if (sub_type === undefined) {
            sub_type = "";
        }
-       var params = "/?company_id="+company_id+"&depositing_institution=" + encodeURIComponent(depositing_institution) + "&state=" +
+       var params = "/?company_id="+company_id+"&user_id="+user_id+"&depositing_institution=" + encodeURIComponent(depositing_institution) + "&state=" +
            encodeURIComponent(state) + "&submitted_bank=" + encodeURIComponent(submitted_bank) + "&sub_type=" +
            encodeURIComponent(sub_type);
        if (type == 'csv') {
-           window.location.href = "{{ route('company.deals.export.csv') }}" + params;
+           window.location.href = "{{ route('deal.export.csv',$current_user_id) }}" + params;
        } else if (type == 'xls') {
-           window.location.href = "{{ route('company.deals.export.xls') }}" + params;
+           window.location.href = "{{ route('deal.export.xls',$current_user_id) }}" + params;
        }
    }
 </script>

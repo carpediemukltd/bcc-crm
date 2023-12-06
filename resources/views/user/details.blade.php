@@ -793,7 +793,7 @@
                success: function (response) {
 
                    var data = `<iframe src="https://dashboard.bccusa.com/documents/view/`+response.contact_id+`?token=`+response.token+`&hide-header=true" width="70%" height="800"></iframe>`;
-                   $('#modalBody').append(data);
+                   $('#modalBody').empty().append(data);
                    $('#TestModal').modal('show');
 
                    // console.table(response);

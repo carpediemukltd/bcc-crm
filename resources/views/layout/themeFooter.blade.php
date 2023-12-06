@@ -10,9 +10,6 @@
       </ul>
       <div class="right-panel">
          ©2023 <span>BCC, CRM</span>
-         <!-- , Developed
-
-         by <a href="https://carpediem.team/" target="_blank">Carpediem</a>. -->
       </div>
    </div>
 </footer>

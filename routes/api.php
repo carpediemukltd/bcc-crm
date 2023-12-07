@@ -39,7 +39,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     Route::resource('email-templates', EmailTemplateController::class);
-    Route::post('email-templates/add', EmailTemplateController::class,'addEmailTemplate');
+    Route::post('etemplates/add', EmailTemplateController::class,'addEmailTemplate');
     Route::post('logout', [AuthController::class, 'logout']);
 });
 

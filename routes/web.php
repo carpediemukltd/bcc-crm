@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SendGrid\CustomSmtpController;
 use App\Http\Middleware\Cors;
 use App\Http\Middleware\CheckUser;
 use App\Http\Middleware\CheckAdmin;
@@ -176,5 +177,8 @@ Route::middleware([CheckStatus::class])->group(function () {
     });
     Route::get('search', [SearchController::class, 'show'])->name('search');
     Route::post('search', [SearchController::class, 'index']);
+    // sendgrid
+    Route::resource('custom-smtps', CustomSmtpController::class);
+
 
 });

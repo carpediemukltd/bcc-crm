@@ -781,9 +781,10 @@
            // $('#TestModal').modal('show');
            var userid     = $(this).data("userid");
            var contact_id = $(this).data("contact_id");
-           var url = '{{ url("magic-link") }}/'+contact_id;
+           var url        = '{{ url("magic-link") }}/'+contact_id;
 
            $.ajax({
+
                method: 'GET',
                url: url,
                beforeSend: function () {

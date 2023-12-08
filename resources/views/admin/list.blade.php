@@ -32,10 +32,8 @@
                 
                </div>
                <div class="card-body">
-                  <div class="table-responsive">
-                     <div id="user-list-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                        <!-- date range start -->
-                        <div class="row date_range_fields">                          
+                  <!-- date range start -->
+                  <div class="row date_range_fields">                          
                            <div class="col-md-3">
                               <div class="form-group">
                                  <!-- <label class="form-label" for="password">Empty Field</label> -->
@@ -44,6 +42,9 @@
                            </div>
                         </div>
                         <!-- date range end -->
+                  <div class="table-responsive">
+                     <div id="user-list-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                        
                         
                            <table id="user-list-table" class="table table-striped dataTable no-footer" role="grid" aria-describedby="user-list-table_info">
                               <thead>

@@ -104,6 +104,9 @@
       .header-hover-menu.iq-navbar .navbar-collapse:not(.offcanvas-collapse){
         right: 18%;
       }
+      .accordion-body{
+        padding: 0;
+      }
 }
 @media screen and (max-width: 380px) {
     .card-header.align-items-center.d-flex.justify-content-between{
@@ -123,7 +126,7 @@
 
       }
       .header-title {
-        display: none;
+        /* display: none; */
       }
       .container-fluid.navbar-inner {
         padding: 0 15px;

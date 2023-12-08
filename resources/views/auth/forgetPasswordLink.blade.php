@@ -101,7 +101,7 @@
                                  </div>
                               </div>
                            </div>
-
+                           <a href="{{ route('login') }}" class="btn btn-primary">Back to Login</a>
                            <button type="submit" class="btn btn-primary">Reset</button>
                         </form>
                      </div>

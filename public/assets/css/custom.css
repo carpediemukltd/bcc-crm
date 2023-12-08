@@ -2071,3 +2071,6 @@ div#user_edit_view {
 /* .iq-nav-menu li > ul ul{
   left: 0;
 } */
+.nav-item.search_bar_view.dropdown.d-xl-block {
+  margin-right: 10px;
+}

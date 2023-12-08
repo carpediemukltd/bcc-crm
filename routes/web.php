@@ -44,7 +44,7 @@ use App\Http\Controllers\SearchController;
 Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('verify-2fa', [AuthController::class, 'verify2FA'])->name('verify-2fa');
-Route::post('resend-verification-code', [AuthController::class, 'resendVerificationCode'])->middleware('throttle:3,5'); // Throttle to 3 requests per 5 minutes
+Route::post('resend-verification-code', [AuthController::class, 'resendVerificationCode']); // Throttle to 3 requests per 5 minutes
 Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
 Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');

@@ -922,7 +922,8 @@
 
            $('button[type="submit"]').on("click",function(){
                $("#errorSpan").html("");
-               var inputNumber = phoneNumberInput.val();
+               var countryCode = selectedCountryCodeInput.val();
+               var inputNumber = countryCode+phoneNumberInput.val();
                var pattern = /^[+]\d{11}$/;
 
                if (!pattern.test(inputNumber))

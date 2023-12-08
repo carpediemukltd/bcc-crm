@@ -224,25 +224,25 @@ class AuthController extends Controller
                 error_log($e->getMessage());
             }
 
-            $message            = 'Your Bankportal Verification Code is: ' . $code;
-            $twilioPhoneNumber  = env('TWILIO_NUMBER');
-            $twilioSid          = env('TWILIO_SID');
-            $twilioToken        = env('TWILIO_AUTH_TOKEN');
-            $client             = new Client($twilioSid, $twilioToken);
-            $toPhoneNumber      = $user->phone_number;
-            try {
-                $client->messages->create(
-                    $toPhoneNumber,
-                    [
-                        'from' => $twilioPhoneNumber,
-                        'body' => $message,
-                    ]
-                );
-
-            }
-            catch (\Exception $e) {
-                return $e->getMessage();
-            }
+//            $message            = 'Your Bankportal Verification Code is: ' . $code;
+//            $twilioPhoneNumber  = env('TWILIO_NUMBER');
+//            $twilioSid          = env('TWILIO_SID');
+//            $twilioToken        = env('TWILIO_AUTH_TOKEN');
+//            $client             = new Client($twilioSid, $twilioToken);
+//            $toPhoneNumber      = $user->phone_number;
+//            try {
+//                $client->messages->create(
+//                    $toPhoneNumber,
+//                    [
+//                        'from' => $twilioPhoneNumber,
+//                        'body' => $message,
+//                    ]
+//                );
+//
+//            }
+//            catch (\Exception $e) {
+//                return $e->getMessage();
+//            }
         }
     }
 

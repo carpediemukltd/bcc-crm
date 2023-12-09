@@ -2071,3 +2071,10 @@ div#user_edit_view {
 /* .iq-nav-menu li > ul ul{
   left: 0;
 } */
+
+.tox-tinymce-aux{
+	display: none !important;
+}
+.tox-notifications-container{
+  display:none !important;
+}

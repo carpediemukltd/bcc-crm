@@ -22,7 +22,7 @@
 
 <tr>
    <td colspan="8" align="center">
-      {!! $smtps->links('sendgrid.smtp.custom_pagination') !!}
+      {!! $smtps->links('email-marketing.smtp.custom_pagination') !!}
    </td>
 </tr>
 @else

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCustomSmtpsTable extends Migration
+class CreateEmailMarketingEmailTemplatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,25 +13,21 @@ class CreateCustomSmtpsTable extends Migration
      */
     public function up()
     {
-        Schema::create('custom_smtps', function (Blueprint $table) {
+        Schema::create('email_marketing_email_templates', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('company_id');
-            $table->string('host');
-            $table->string('username');
-            $table->string('password');
-            $table->integer('port');
-            $table->string('encryption_type');
-            $table->string('reply_to');
-            $table->string('username_display');
+            $table->string('name');
+            $table->string('editor')->default('design');
+            $table->string('subject');
+            $table->longText('html_content');
+            $table->longText('plain_content');
+            $table->enum('generate_plain_content', ['1', '0'])->default('1');
             $table->softDeletes();
             $table->timestamps();
-
             // relations
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-
         });
     }
-
 
     /**
      * Reverse the migrations.
@@ -40,6 +36,6 @@ class CreateCustomSmtpsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('custom_smtps');
+        Schema::dropIfExists('email_marketing_email_templates');
     }
 }

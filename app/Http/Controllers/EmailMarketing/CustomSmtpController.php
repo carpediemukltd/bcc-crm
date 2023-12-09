@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\SendGrid;
+namespace App\Http\Controllers\EmailMarketing;
 use App\Http\Controllers\Controller;
-use App\Models\SendGrid\CustomSmtp;
+use App\Models\EmailMarketing\CustomSmtp;
 use Illuminate\Support\Facades\Validator;
 use PHPMailer\PHPMailer\PHPMailer;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ class CustomSmtpController extends Controller
     public function index()
     {
         $data = CustomSmtp::paginate(10);
-        return view('sendgrid.smtp.index', ['smtps'=> $data]);
+        return view('email-marketing.smtp.index', ['smtps'=> $data]);
     }
 
     /**
@@ -29,7 +29,7 @@ class CustomSmtpController extends Controller
      */
     public function create()
     {
-        return view('sendgrid.smtp.create');
+        return view('email-marketing.smtp.create');
     }
 
     /**

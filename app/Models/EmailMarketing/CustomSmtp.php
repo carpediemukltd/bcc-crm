@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\SendGrid;
+namespace App\Models\EmailMarketing;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

@@ -27,7 +27,7 @@
             <div class="card">
                <div class="card-header align-items-center d-flex justify-content-between">
                   <div class="header-title">
-                     <h4 class="card-title">SMTPs List </h4>
+                     <p><a href="{{route('custom-smtps.create')}}" class="btn btn-success">Create New SMTP</a></p>
                   </div>
                 
                </div>
@@ -59,7 +59,7 @@
                                  </tr>
                               </thead>
                               <tbody>
-                                 @include('sendgrid.smtp.pagination')
+                                 @include('email-marketing.smtp.pagination')
                               </tbody>
                            </table>
                            <input type="hidden" name="hidden_page" id="hidden_page" value="1" />

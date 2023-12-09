@@ -781,9 +781,10 @@
            // $('#TestModal').modal('show');
            var userid     = $(this).data("userid");
            var contact_id = $(this).data("contact_id");
-           var url = '{{ url("magic-link") }}/'+contact_id;
+           var url        = '{{ url("magic-link") }}/'+contact_id;
 
            $.ajax({
+
                method: 'GET',
                url: url,
                beforeSend: function () {
@@ -793,7 +794,7 @@
                success: function (response) {
 
                    var data = `<iframe src="https://dashboard.bccusa.com/documents/view/`+response.contact_id+`?token=`+response.token+`&hide-header=true" width="70%" height="800"></iframe>`;
-                   $('#modalBody').append(data);
+                   $('#modalBody').empty().append(data);
                    $('#TestModal').modal('show');
 
                    // console.table(response);

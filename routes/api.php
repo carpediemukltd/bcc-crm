@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\EmailTemplateController;
+use App\Http\Controllers\Api\ConversationLogController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -39,7 +40,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     Route::resource('email-templates', EmailTemplateController::class);
-    Route::post('etemplates/add', EmailTemplateController::class,'addEmailTemplate');
+    Route::post('email-conversation/add', [ConversationLogController::class,'addEmailConversation']);
     Route::post('logout', [AuthController::class, 'logout']);
 });
 

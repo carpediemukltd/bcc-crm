@@ -137,13 +137,13 @@
                         <a class="nav-link active show" data-bs-toggle="tab" href="#profile-activity" role="tab"
                            aria-selected="false">Activity</a>
                      </li>
-                     <!-- <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#profile-friends" role="tab"
-                            aria-selected="false">Emails</a>
-                        </li> -->
                      <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="tab" href="#profile-notes" role="tab"
                            aria-selected="false">Notes</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#profile-emails" role="tab"
+                            aria-selected="false">Emails</a>
                      </li>
                   </ul>
                </div>
@@ -528,6 +528,20 @@
                      <div class="mt-2">
                         <div id="notes">
                            @include('note.list')
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div id="profile-emails" class="tab-pane fade">
+                  <div class="card-header">
+                     <div class="header-title">
+                        <h4 class="card-title">Emails</h4>
+                     </div>
+                  </div>
+                  <div class="card-body">
+                     <div class="mt-2">
+                        <div id="notes">
+                           @include('conversation_log.list')
                         </div>
                      </div>
                   </div>

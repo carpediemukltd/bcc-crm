@@ -12,7 +12,6 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        'email_template/addext',
-        'api/etemplates/add',
+        'api/email-template/add',
     ];
 }

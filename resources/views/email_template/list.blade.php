@@ -152,7 +152,7 @@
                                         </table>
                                     </div>
 
-                                    <div class="row">
+                                    {{-- <div class="row">
 
                                         <div class="col">
                                             <button type="button" class="btn btn-success btn-sm btn-info addClickrBtn"
@@ -168,7 +168,7 @@
                                                 Add New
                                             </button>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="row align-items-center pagination">
                                         <div class="col-md-6">

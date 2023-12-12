@@ -26,23 +26,28 @@ class EmailTemplateController extends Controller
         $this->data['data']  = EmailTemplate::orderBy('id', 'ASC')->get();
         return view("email_template.list", $this->data);
     }
+    public function createEmailTemplate() {
+        return view("email_template.create");
+    }
 
     public function emailTemplateAdd(Request $request)
     {
         if ($request->isMethod('post')) {
 
-            if (empty($request->subject)) {
+            if (empty($request->email_subject)) {
                 return redirect()->back()->withError('Subject can not be empty.')->withInput();
             }
 
-            if (empty($request->body)) {
+            if (empty($request->email_body)) {
                 return redirect()->back()->withError('Body can not be empty.')->withInput();
             }
 
-            $body = str_replace("\n", '<br />', $request->body);
-            $data = EmailTemplate::create(['subject' => $request->subject, 'body' => $body]);
+            // $body = str_replace("\n", '<br />', $request->body);
+            $data = EmailTemplate::create(['subject' => $request->email_subject, 'body' => $request->email_body]);
 
-            return response(['message' => 'success', 'data' => EmailTemplate::where('id', $data->id)->first()]);
+            // return response(['message' => 'success', 'data' => EmailTemplate::where('id', $data->id)->first()]);
+            return redirect('email_templates')->withSuccess('Email Created..!!');
+
         }
     }
 

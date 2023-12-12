@@ -82,7 +82,6 @@ class UserController extends Controller
 
     public function addUser(Request $request)
     {
-
         $this->data['current_slug'] = 'Add Contact';
         $this->data['slug']         = 'add_user';
         $user = auth()->user();
@@ -104,7 +103,6 @@ class UserController extends Controller
         $roles = Permissions::getSubRoles($this->user);
         $this->data['roles'] = $roles;
         if ($request->isMethod('post')) {
-//            echo in_array($request->role, ['user', 'contact']);exit;
             if (!in_array($request->role, $roles)) {
                 return redirect()->back()->with('error', 'You\'ve selected an invalid role.')->withInput();
             }
@@ -207,6 +205,13 @@ class UserController extends Controller
                         ->update(['last_lead' => date("Y-m-d H:i:s")]);
                     SendNotification::dispatch(['id' => $new_user->id, 'type' => 'contact_added']);
                 }
+
+                \App\addContactToZapier([
+                    'firstName' => $new_user->first_name,
+                    'lastName' => $new_user->last_name,
+                    'phone' => $new_user->phone_number,
+                    'email' => $new_user->email,
+                ]);
                 $type = ($data['role'] == 'user') ? 'Contact' : (($data['role'] == 'owner') ? 'Super User' : ucfirst($data['role']));
                 return redirect(url('contacts'))->withSuccess("$type Created Successfully.")->withInput();
             }
@@ -447,7 +452,7 @@ class UserController extends Controller
                 foreach ($request->document_types as $type) {
                     DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type]);
                 }
-             
+
                 $user = User::whereId($id)->first();
                 try{
                     $documents = DocumentManager::whereIn('id', $notificationForNewIds)->get();

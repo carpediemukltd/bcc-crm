@@ -493,7 +493,7 @@ class UserController extends Controller
 
                 DocumentManagerUser::whereUserId($id)->delete();
                 foreach ($request->document_types as $type) {
-                    DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type]);
+                    DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type, 'due_date' => $due_date]);
                 }
 
                 $user = User::whereId($id)->first();
@@ -538,29 +538,29 @@ class UserController extends Controller
 
             return redirect(url('contacts'))->withSuccess('Contact Updated Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
-//            $documents = DocumentManager::with('DocumentGroup')->get();
-//            $sortedDocuments = $documents->sort(function ($a, $b) {
-//                // Custom sorting function
-//                $pattern = '/^\d+/'; // Regular expression to match numbers at the beginning of the title
-//
-//                // Extract numbers from the beginning of the titles
-//                preg_match($pattern, $a->title, $matchesA);
-//                preg_match($pattern, $b->title, $matchesB);
-//
-//                // Compare titles using natural order comparison
-//                if (!empty($matchesA) && empty($matchesB)) {
-//                    return 1; // Move titles starting with numbers to the end
-//                } elseif (empty($matchesA) && !empty($matchesB)) {
-//                    return -1; // Keep other titles at the beginning
-//                } else {
-//                    return strnatcasecmp($a->title, $b->title);
-//                }
-//            });
+            $documents = DocumentManager::with('DocumentGroup')->get();
+            $sortedDocuments = $documents->sort(function ($a, $b) {
+                // Custom sorting function
+                $pattern = '/^\d+/'; // Regular expression to match numbers at the beginning of the title
 
-//            $sortedDocumentsArray = $sortedDocuments->values()->all();
-//            $this->data['documents'] = $sortedDocumentsArray;
+                // Extract numbers from the beginning of the titles
+                preg_match($pattern, $a->title, $matchesA);
+                preg_match($pattern, $b->title, $matchesB);
+
+                // Compare titles using natural order comparison
+                if (!empty($matchesA) && empty($matchesB)) {
+                    return 1; // Move titles starting with numbers to the end
+                } elseif (empty($matchesA) && !empty($matchesB)) {
+                    return -1; // Keep other titles at the beginning
+                } else {
+                    return strnatcasecmp($a->title, $b->title);
+                }
+            });
+
+            $sortedDocumentsArray = $sortedDocuments->values()->all();
+            $this->data['documents'] = $sortedDocumentsArray;
             $this->data['selected_documents'] = $this->data['user']->DocumentManagers;
-//            $this->data['document_groups'] = DocumentGroup::get();
+            $this->data['document_groups'] = DocumentGroup::get();
             return view("user.edit", $this->data);
         }
     } // editUser

@@ -163,8 +163,18 @@ class UserController extends Controller
 
             $data = $request->all();
 
-            if ($data) {
-                $new_user = User::create([
+            if (!in_array($request->role,['user', 'contact']))
+                $newUserArray = [
+                    'first_name' => $data['first_name'],
+                    'last_name' => $data['last_name'],
+                    'email' => $data['email'],
+                    'phone_number'  => $data['phone_country_code']." ".$data['phone_number'],
+                    'role' => $data['role'],
+                    'company_id' => $company_id,
+                    'password' => Hash::make($data['password'])
+                ];
+            else
+                $newUserArray = [
                     'first_name' => $data['first_name'],
                     'last_name' => $data['last_name'],
                     'email' => $data['email'],
@@ -174,7 +184,10 @@ class UserController extends Controller
                     'password' => Hash::make($data['password']),
                     'email_verified' => $data['emailVerified'],
                     'mobile_verified' => $data['mobileVerified']
-                ]);
+                ];
+
+            if ($data) {
+                $new_user = User::create($newUserArray);
 
 
                 $activity = Activity::create([

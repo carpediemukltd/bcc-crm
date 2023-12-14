@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\EmailMarketing\CustomSmtpController;
 use App\Http\Middleware\Cors;
 use App\Http\Middleware\CheckUser;
 use App\Http\Middleware\CheckAdmin;
@@ -29,7 +28,9 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\ChromeExtensionController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\EmailMarketing\EmailTemplateController as EmailMarketingEmailTemplateController;
+use App\Http\Controllers\Marketing\CustomSmtpController;
+use App\Http\Controllers\Marketing\MarketingCampaignController;
+use App\Http\Controllers\Marketing\MarketingEmailTemplateController;
 use App\Http\Controllers\SearchController;
 
 /*
@@ -179,11 +180,10 @@ Route::middleware([CheckStatus::class])->group(function () {
     Route::get('search', [SearchController::class, 'show'])->name('search');
     Route::post('search', [SearchController::class, 'index']);
     // email marketing
-    Route::prefix('email-marketing')->group(function () {
-        Route::resource('custom-smtps', CustomSmtpController::class);
-        Route::resource('email-templates', EmailMarketingEmailTemplateController::class);
-
-    });
+    Route::resource('custom-smtps', CustomSmtpController::class);
+    Route::resource('marketing-email-templates', MarketingEmailTemplateController::class);
+    Route::resource('marketing-campaigns', MarketingCampaignController::class);
+    Route::get('marketing-search-users', [MarketingCampaignController::class, 'searchUsers']);
 
 
 });

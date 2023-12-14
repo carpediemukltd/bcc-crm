@@ -59,7 +59,7 @@
                                  </tr>
                               </thead>
                               <tbody>
-                                 @include('email-marketing.smtp.pagination')
+                                 @include('marketing.email.smtp.pagination')
                               </tbody>
                            </table>
                            <input type="hidden" name="hidden_page" id="hidden_page" value="1" />

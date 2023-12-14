@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\EmailMarketing;
+namespace App\Http\Controllers\Marketing;
 use App\Http\Controllers\Controller;
-use App\Models\EmailMarketing\CustomSmtp;
+use App\Models\Marketing\CustomSmtp;
 use Illuminate\Support\Facades\Validator;
 use PHPMailer\PHPMailer\PHPMailer;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ class CustomSmtpController extends Controller
     public function index()
     {
         $data = CustomSmtp::paginate(10);
-        return view('email-marketing.smtp.index', ['smtps'=> $data]);
+        return view('marketing.email.smtp.index', ['data'=> $data]);
     }
 
     /**

@@ -2078,3 +2078,33 @@ div#user_edit_view {
 .tox-notifications-container{
   display:none !important;
 }
+.email-marketing-campaign .tag {
+    display: inline-block;
+    background-color: #233659;
+    color: white;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.email-marketing-campaign .tag svg {
+    margin-left: 5px;
+    cursor: pointer;
+}
+#selectedContacts {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ced4da;
+  padding: 5px;
+}
+
+.contact-container {
+  margin-bottom: 10px; /* Increase the margin to create more separation */
+}
+
+.contact-add {
+  float: right;
+  cursor: pointer;
+  margin-left: 10px; /* Increase the margin for better spacing */
+}

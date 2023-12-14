@@ -32,10 +32,10 @@
                   </div>
                </div>
                <div class="card-body">
-                  <form action="{{ route('email-templates.store') }}" method="POST">
+                  <form action="{{ route('marketing-email-templates.store') }}" method="POST">
                      @csrf
                      <div class="row">
-                        <div class="col">
+                        <div class="col-md-4">
                            <div class="form-group">
                               <label class="form-label" for="name">Template Name:</label>
                               <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
@@ -44,22 +44,14 @@
                               @enderror
                            </div>
                         </div>
-                        <div class="col">
-                           <div class="form-group">
-                              <label class="form-label" for="subject">Subject of the Design:</label>
-                              <input type="text" class="form-control" id="subject" name="subject" value="{{ old('subject') }}" required>
-                              @error('subject')
-                              <span class="text-danger">{{ $message }}</span>
-                              @enderror
-                           </div>
-                        </div>
+                        
                      </div>
 
                      <div class="row">
                         <div class="col-sm-12">
-                           <label class="form-label" for="html_content">Content</label>
-                           <textarea name="html_content" rows="4" cols="100" class="form-control tiny-integerate"></textarea>
-                           @error('html_content')
+                           <label class="form-label" for="content">Content</label>
+                           <textarea name="content" rows="4" cols="100" class="form-control tiny-integerate"></textarea>
+                           @error('content')
                            <span class="text-danger">{{ $message }}</span>
                            @enderror
                         </div>

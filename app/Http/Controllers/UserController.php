@@ -206,11 +206,13 @@ class UserController extends Controller
                     SendNotification::dispatch(['id' => $new_user->id, 'type' => 'contact_added']);
                 }
 
+                $company = Company::whereId($company_id)->first();
                 \App\addContactToZapier([
                     'firstName' => $new_user->first_name,
                     'lastName' => $new_user->last_name,
                     'phone' => $new_user->phone_number,
                     'email' => $new_user->email,
+                    'companyName' => !$company ? null : $company->name
                 ]);
                 $type = ($data['role'] == 'user') ? 'Contact' : (($data['role'] == 'owner') ? 'Super User' : ucfirst($data['role']));
                 return redirect(url('contacts'))->withSuccess("$type Created Successfully.")->withInput();

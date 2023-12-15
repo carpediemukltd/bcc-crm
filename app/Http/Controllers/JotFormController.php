@@ -168,10 +168,11 @@ class JotFormController extends Controller
             ]);
 
             \App\addContactToZapier([
-                'First Name' => $user->first_name,
-                'Last Name' => $user->last_name,
+                'firstName' => $user->first_name,
+                'lastName' => $user->last_name,
                 'phone' => $user->phone_number,
-                'Email' => $user->email,
+                'email' => $user->email,
+                'companyName' => $company->name
             ]);
         }
         if (is_array($fields) && count($fields) > 0) {

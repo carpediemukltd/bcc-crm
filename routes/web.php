@@ -29,6 +29,7 @@ use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\ChromeExtensionController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\WebhookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,9 @@ Route::get('/magic-link/{contact_id}', [MagicLinkController::class, 'generateLin
 Route::get('/magic-link/view/{token}', [MagicLinkController::class, 'viewLink'])->name('magic.link.view');
 
 Route::post("/chat", [DialogflowController::class, "chat"]);
+
+
+Route::post("/webhook/kixie/call", [WebhookController::class, "webhookKixieCallLogs"]);
 
 Route::post('jotform-webhook', [JotFormController::class, 'handleJotformWebhook'])->name('handleJotformWebhook')->withoutMiddleware([VerifyCsrfToken::class]);
 Route::middleware([CheckStatus::class])->group(function () {

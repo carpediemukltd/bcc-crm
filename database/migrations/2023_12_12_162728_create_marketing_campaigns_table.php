@@ -17,6 +17,7 @@ class CreateMarketingCampaignsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('company_id');
             $table->string('name');
+            $table->dateTime('start_date');
             $table->enum('status', [
                 'draft',
                 'active',
@@ -27,7 +28,7 @@ class CreateMarketingCampaignsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
             //relations
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('no action');
 
         });
     }

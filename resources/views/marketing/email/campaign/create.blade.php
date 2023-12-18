@@ -32,47 +32,59 @@
                   </div>
                </div>
                <div class="card-body">
+                  <!-- Step Navigation -->
+                  <div class="row mb-4">
+                     <div class="col-sm-12">
+                        <ul class="list-inline d-flex justify-content-between">
+                           <li class="list-inline-item step" id="step1">
+                              <span>1. Basic</span>
+                           </li>
+                           <li class="list-inline-item step" id="step2">
+                              <span>2. Import Contacts</span>
+                           </li>
+                           <li class="list-inline-item step" id="step3">
+                              <span>3. Sequences</span>
+                           </li>
+                           <li class="list-inline-item step" id="step4">
+                              <span>4. Finish</span>
+                           </li>
+                        </ul>
+
+                        <span style="float: right;" id="nextBtn" class="cursor-pointer mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" />
+                           </svg></span>
+                        <span style="float: right;" id="previousBtn" class="cursor-pointer mr-2">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+                           </svg>
+                        </span>
+                     </div>
+                  </div>
+
                   <form action="{{ route('marketing-campaigns.store') }}" method="POST">
                      @csrf
-                     <div class="row">
+                     <div class="row step1">
                         <div class="col">
                            <div class="form-group">
-                              <label class="form-label" for="title">Title:</label>
+                              <label class="form-label" for="title">Give your Campaign name</label>
                               <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}" required>
                               @error('title')
                               <span class="text-danger">{{ $message }}</span>
                               @enderror
                            </div>
                         </div>
-                        <div class="col">
-                           <div class="form-group">
-                              <label class="form-label" for="subject">Subject of Email:</label>
-                              <input type="text" class="form-control" id="subject" name="subject" value="{{ old('subject') }}" required>
-                              @error('subject')
-                              <span class="text-danger">{{ $message }}</span>
-                              @enderror
-                           </div>
-                        </div>
-                        <div class="col">
-                           <div class="form-group">
-                              <label class="form-label" for="send_at">Schedule Date Time:</label>
-                              <input type="datetime-local" class="form-control" id="send_at" name="send_at" value="{{ old('send_at') }}" required>
-                              @error('send_at')
-                              <span class="text-danger">{{ $message }}</span>
-                              @enderror
-                           </div>
-                        </div>
-                     </div>
 
-                     <div class="row">
+                     </div>
+                     <div class="row step2">
                         <div class="col">
-                           <label class="form-label" for="html_content">Contacts</label>
-                           <select class="form-control" name="select_type">
+                           <label class="form-label" for="contacts">Contacts</label>
+                           <select class="form-control" name="select_type" id="contacts">
                               <option value="all">All Contacts</option>
                               <option value="targeted-contacts">Targeted Contacts</option>
                            </select>
                            <br>
                         </div>
+
                         <div class="col contactSearchForm">
                            <label class="form-label" for="html_content">Select / Deselect Contacts</label>
                            <!-- Your search form -->
@@ -81,25 +93,56 @@
                            <div id="selectedContacts" style="max-height: 200px; overflow-y: auto; border: 1px solid #ced4da; padding: 5px;"></div>
 
                            <div class="selected-contacts-container" style="max-height: 200px; overflow-y: auto; border: 1px solid #ced4da; padding: 5px;"></div>
-
+                           <input class="contacts-input" type="hidden" name="contacts">
                         </div>
+
                      </div>
 
-                     <div class="row">
-                        <div class="col-sm-12">
+                     <div class="row step3">
+                        <div class="col-sm-6">
                            <label class="form-label" for="html_content">Content</label>
                            <textarea name="html_content" rows="4" cols="100" class="form-control tiny-integerate"></textarea>
                            @error('html_content')
                            <span class="text-danger">{{ $message }}</span>
                            @enderror
                         </div>
+                        <div class="col-sm-2">
+                           <label class="form-label" for="subject">Subject</label>
+                           <input type="text" class="form-control" name="subject" id="subject">
+
+                        </div>
+                        <div class="col-sm-2">
+                           <label class="form-label" for="wait_for">Wait For Days</label>
+                           <input type="number" class="form-control" name="wait_for" id="wait_for">
+                        </div>
+                        <div class="col-sm-2">
+                        </div>
+
                      </div>
-                     <br><br><br>
-                     <div class="row">
-                        <div class="col">
-                           <button type="submit" class="btn btn-primary">Submit</button>
+
+                     <div class="row step4">
+                        <div class="col-md-6">
+
+                           <label class="form-label" for="status">Status</label>
+                           <select class="form-control" name="status" id="status">
+                              <option value="draft">Draft</option>
+                              <option value="active">Active</option>
+                           </select>
+
+                        </div>
+                        <div class="col-md-6">
+                        <label class="form-label" for="start_date">Start Date</label>
+                           <input type="datetime-local" class="form-control" id="start_date" name="start_date" value="{{ old('start_date') }}" required>
+                           @error('start_date')
+                           <span class="text-danger">{{ $message }}</span>
+                           @enderror
+
+                        </div>
+                        <div class="col-md-12 mt-5">
+                           <button type="submit" class="btn btn-primary">Finish</button>
                         </div>
                      </div>
+
                </div>
             </div>
          </div>
@@ -107,6 +150,8 @@
    </div>
 </div>
 <script>
+   var selectedContactIds = [];
+
    $(document).ready(function() {
       $('.contactSearchForm').hide();
       $('#selectedContacts').hide();
@@ -125,7 +170,6 @@
          }
       });
       // Store selected contact IDs to check for duplicates
-      var selectedContactIds = [];
 
       tinymce.init({
          selector: '.tiny-integerate',
@@ -194,6 +238,10 @@
             // Store the selected contact ID to prevent duplicates
             selectedContactIds.push(contactId);
 
+            // Update the hidden input field with selected contact IDs
+            var contactsInput = $('.contacts-input');
+            contactsInput.val(selectedContactIds.join(','));
+
             // Create tag
             var tag = $('<div>', {
                class: 'tag',
@@ -203,14 +251,14 @@
 
             // Create cross icon within the tag
             var crossIcon = $('<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L11 11M11 1L1 11" stroke="white" stroke-width="2"/></svg>');
-            crossIcon.on('click', function() {
-               // Remove the tag when the cross is clicked
-               var removedContactId = tag.attr('data-contact-id');
-               tag.remove();
+            // crossIcon.on('click', function() {
+            //    // Remove the tag when the cross is clicked
+            //    var removedContactId = tag.attr('data-contact-id');
+            //    tag.remove();
 
-               // Remove the selected contact ID from the array
-               selectedContactIds = selectedContactIds.filter(id => id !== removedContactId);
-            });
+            //    // Remove the selected contact ID from the array
+            //    selectedContactIds = selectedContactIds.filter(id => id !== removedContactId);
+            // });
 
             // Append the cross icon to the tag
             tag.append(crossIcon);
@@ -225,5 +273,73 @@
    });
 </script>
 
+<script>
+   $(document).ready(function() {
+      var currentStep = 1;
 
+      // Function to update step highlighting
+      function updateStepHighlight() {
+         $('.step').removeClass('active');
+         $('#step' + currentStep).addClass('active');
+      }
+
+      // Function to show/hide next and previous buttons
+      function updateButtonsVisibility() {
+         if (currentStep === 1) {
+            $('#previousBtn').hide();
+            $('#nextBtn').show();
+         } else if (currentStep === 4) {
+            $('#previousBtn').show();
+            $('#nextBtn').hide();
+         } else {
+            $('#previousBtn').show();
+            $('#nextBtn').show();
+         }
+         $(".step1").hide();
+         $(".step2").hide();
+         $(".step3").hide();
+         $(".step4").hide();
+         $(".step" + currentStep).show();
+      }
+
+
+      // Initial setup
+      updateStepHighlight();
+      updateButtonsVisibility();
+
+      // Next button click event
+      $('#nextBtn').click(function(e) {
+         e.preventDefault();
+         if (currentStep < 4) {
+            currentStep++;
+            updateStepHighlight();
+            updateButtonsVisibility();
+         }
+      });
+
+      // Previous button click event
+      $('#previousBtn').click(function(e) {
+         e.preventDefault();
+         if (currentStep > 1) {
+            currentStep--;
+            updateStepHighlight();
+            updateButtonsVisibility();
+         }
+      });
+   });
+   // Handle click event for dynamically added cross icon
+   $(document).on('click', '.selected-contacts-container .tag svg', function() {
+      console.log($(this))
+      var removedContactId = $(this).closest('.tag').data('contact-id');
+      // Remove the selected contact ID from the array
+      selectedContactIds = selectedContactIds.filter(id => id !== removedContactId);
+
+      // Update the hidden input field with selected contact IDs
+      var contactsInput = $('.contacts-input');
+      contactsInput.val(selectedContactIds.join(','));
+
+      // Remove the tag when the cross is clicked
+      $(this).closest('.tag').remove();
+   });
+</script>
 @endsection

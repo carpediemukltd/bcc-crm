@@ -24,7 +24,7 @@ class CreateMarketingCampaignUsersTable extends Migration
             $table->enum('email_bounced', ['0', '1'])->default('0');
             $table->timestamps();
             // relations
-            $table->foreign('marketing_campaign_id')->references('id')->on('marketing_campaigns')->onDelete('cascade');
+            $table->foreign('marketing_campaign_id')->references('id')->on('marketing_campaigns')->onDelete('no action');
 
         });
     }

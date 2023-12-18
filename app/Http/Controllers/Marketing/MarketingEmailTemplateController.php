@@ -13,15 +13,10 @@ class MarketingEmailTemplateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-        
+    public function index()
+    {        
         $data = MarketingEmailTemplate::paginate(10);
-        if ($request->ajax())
-            return view('marketing.email.template.pagination', $data)->render();
-        else
-            return view('marketing.email.template.index', ['data' => $data]);
-
+        return view('marketing.email.template.index', ['data' => $data]);
     }
 
     /**

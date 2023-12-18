@@ -24,6 +24,7 @@ class MarketingCampaignUser extends Model
         'email_opened',
         'email_bounced',
     ];
+    protected $with = ['user'];
 
 
     /**

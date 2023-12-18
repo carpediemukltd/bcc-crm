@@ -27,7 +27,7 @@ class CreateMarketingCampaignSequencesTable extends Migration
             ])->default('inactive');
             $table->timestamps();
             // relations
-            $table->foreign('marketing_campaign_id')->references('id')->on('marketing_campaigns')->onDelete('cascade');
+            $table->foreign('marketing_campaign_id')->references('id')->on('marketing_campaigns')->onDelete('no action');
 
         });
     }

@@ -21,7 +21,7 @@ class CreateMarketingEmailTemplatesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
             //relations
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('no action');
 
         });
     }

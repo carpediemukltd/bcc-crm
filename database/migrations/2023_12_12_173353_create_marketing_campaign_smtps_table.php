@@ -21,8 +21,8 @@ class CreateMarketingCampaignSmtpsTable extends Migration
             $table->timestamps();
 
             // relations
-            $table->foreign('custom_smtp_id')->references('id')->on('custom_smtps')->onDelete('cascade');
-            $table->foreign('marketing_campaign_id')->references('id')->on('marketing_campaigns')->onDelete('cascade');
+            $table->foreign('custom_smtp_id')->references('id')->on('custom_smtps')->onDelete('no action');
+            $table->foreign('marketing_campaign_id')->references('id')->on('marketing_campaigns')->onDelete('no action');
         });
     }
 

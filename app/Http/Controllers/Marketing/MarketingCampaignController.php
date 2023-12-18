@@ -1,7 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Marketing;
+
 use App\Http\Controllers\Controller;
+use App\Models\Marketing\MarketingCampaign;
+use App\Models\Marketing\MarketingCampaignSequence;
+use App\Models\Marketing\MarketingCampaignUser;
+use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,7 +19,8 @@ class MarketingCampaignController extends Controller
      */
     public function index()
     {
-        //
+        $data = MarketingCampaign::orderBy('id', 'DESC')->paginate(10);
+        return view('marketing.email.campaign.index', ['data' => $data]);
     }
 
     /**
@@ -35,7 +41,55 @@ class MarketingCampaignController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title'         => 'required',
+            'html_content'  => 'required',
+            'subject'       => 'required',
+            'wait_for'      => 'required',
+            'start_date'    => 'required',
+            'select_type'   => 'required'
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $campaign = new MarketingCampaign();
+        $campaign->company_id   = auth()->user()->company_id;
+        $campaign->name         = $request->title;
+        $campaign->start_date   = $request->start_date;
+        $campaign->status       = $request->status;
+        $campaign->save();
+        if ($campaign) {
+            $campaignSequence = new MarketingCampaignSequence();
+            $campaignSequence->marketing_campaign_id = $campaign->id;
+            $campaignSequence->subject = $request->subject;
+            $campaignSequence->body = $request->html_content;
+            $campaignSequence->wait_for = $request->wait_for;
+            $campaignSequence->save();
+
+            if ($request->select_type == 'all') {
+                $users = User::whereCompanyId(auth()->user()->company_id)->get();
+                if (count($users)) {
+                    foreach ($users as $user) {
+                        $campaignUsers = new MarketingCampaignUser();
+                        $campaignUsers->user_id = $user->id;
+                        $campaignUsers->marketing_campaign_id = $campaign->id;
+                        $campaignUsers->save();
+                    }
+                }
+            } else {
+                $campaignUsersArray = explode(',', $request->contacts);
+                foreach ($campaignUsersArray as $value) {
+                    $campaignUsers = new MarketingCampaignUser();
+                    $campaignUsers->user_id = $value;
+                    $campaignUsers->marketing_campaign_id = $campaign->id;
+                    $campaignUsers->save();
+                }
+            }
+        }
+        if ($campaign && $campaignSequence) {
+            return \Redirect::route('marketing-campaigns.index', $request->app_id)->with('success', 'Campaign created successfully.');
+        }
+        return redirect()->back()->with('error', 'Error creating campaign');
     }
 
     /**
@@ -46,7 +100,9 @@ class MarketingCampaignController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = MarketingCampaign::with(['marketingCampaignSequence', 'marketingCampaignUser'])->find($id);
+        return view('marketing.email.campaign.show', ['data' => $data]);
+
     }
 
     /**
@@ -69,7 +125,20 @@ class MarketingCampaignController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Find the marketing campaign by ID
+        $campaign = MarketingCampaign::findOrFail($id);
+
+        // Check if the request contains a status field
+        if ($request->has('status')) {
+            // Update the campaign status
+            $campaign->status = $request->input('status');
+
+            // Save the changes
+            $campaign->save();
+
+            // Redirect back or return a response as needed
+            return redirect()->back()->with('success', 'Campaign status updated successfully.');
+        }
     }
 
     /**
@@ -80,7 +149,8 @@ class MarketingCampaignController extends Controller
      */
     public function destroy($id)
     {
-        //
+        MarketingCampaign::whereId($id)->delete();
+        return redirect()->back()->with('success', 'Campaign has been deleted successfully!');
     }
     public function searchUsers()
     {

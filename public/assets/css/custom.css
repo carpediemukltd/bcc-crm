@@ -2108,3 +2108,13 @@ div#user_edit_view {
   cursor: pointer;
   margin-left: 10px; /* Increase the margin for better spacing */
 }
+
+.email-marketing-campaign .list-inline-item.active {
+  color: #00562c;
+  background: aliceblue;
+  padding: 5px;
+  border-radius: 5px;
+}
+.email-marketing-campaign span#previousBtn {
+  padding-right: 10px;
+}

@@ -135,18 +135,19 @@
                                </div>
                            </div>
                         </div>
+                         @php $disabled = (auth()->user()->role == 'admin') ? 'disabled' : '' @endphp
                          <div class="col-lg-12 mt-3">
                              <div class="form-group">
                                  <label class="form-label" for="mobileVerified">Mobile Verified:</label>
-                                 <input type="radio" name="mobileVerified" id="mobileVerified" value="1" @php echo (auth()->user()->mobile_verified == 1) ? 'checked' : '' @endphp onchange="checkMobileVerification()"> Yes
-                                 <input type="radio" name="mobileVerified" id="mobileVerified" value="0" @php echo (auth()->user()->mobile_verified == 0) ? 'checked' : '' @endphp data-id="notVerified"> No
+                                 <input type="radio" name="mobileVerified" id="mobileVerified" value="1" @php echo (auth()->user()->mobile_verified == 1) ? 'checked' : '' @endphp onchange="checkMobileVerification()" {{$disabled}}> Yes
+                                 <input type="radio" name="mobileVerified" id="mobileVerified" value="0" @php echo (auth()->user()->mobile_verified == 0) ? 'checked' : '' @endphp data-id="notVerified" {{$disabled}}> No
                              </div>
                          </div>
                          <div class="col-lg-12">
                              <div class="form-group">
                                  <label class="form-label" for="emailVerified">Email Verified:</label>
-                                 <input type="radio" name="emailVerified" id="emailVerified" value="1" @php echo (auth()->user()->email_verified == 1) ? 'checked' : '' @endphp > Yes
-                                 <input type="radio" name="emailVerified" id="emailVerified" value="0" @php echo (auth()->user()->email_verified == 0) ? 'checked' : '' @endphp > No
+                                 <input type="radio" name="emailVerified" id="emailVerified" value="1" @php echo (auth()->user()->email_verified == 1) ? 'checked' : '' @endphp {{$disabled}}> Yes
+                                 <input type="radio" name="emailVerified" id="emailVerified" value="0" @php echo (auth()->user()->email_verified == 0) ? 'checked' : '' @endphp {{$disabled}}> No
                              </div>
                          </div>
                      </div>

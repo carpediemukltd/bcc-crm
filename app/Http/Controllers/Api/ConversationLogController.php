@@ -4,48 +4,62 @@ namespace App\Http\Controllers\Api;
 
 
 
-use App\Http\Controllers\Controller;
-use App\Models\ConversationLog;
-use App\Models\User;
-use App\Services\ApiResponse;
-use Illuminate\Http\Request;
 use PDO;
+use App\Models\User;
+use Illuminate\Http\Request;
+use App\Services\ApiResponse;
+use App\Models\ConversationLog;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class ConversationLogController extends Controller
 {
     public function addEmailConversation(Request $request)
     {
         if ($request->isMethod('post')) {
-
-            /*  if (empty($request->subject)) {
-                return redirect()->back()->withError('Subject can not be empty.')->withInput();
-            }
-
-            if (empty($request->body)) {
-                return redirect()->back()->withError('Body can not be empty.')->withInput();
-            } */
-            $to_user_id = 0;
-            $user = User::where('email', $request->email)->first();
-            if ($user) {
-                $to_user_id = $user->id;
-            }
+            return ApiResponse::success([], 'Conversation Logged successfully.', 200);
             $from_user_id = 0;
             if ($request->id) {
                 $from_user_id = $request->id;
+            }
+            $from_user = User::whereId($from_user_id)->first();
+            $to_user_id = 0;
+            $to_user = User::where('email', $request->email)->where('company_id', $from_user->company_id)->first();
+            if ($to_user) {
+                $to_user_id = $to_user->id;
+            }
+
+            if (!$to_user_id) {
+                $name = explode('@', $request->email);
+                $n_user = array(
+                    'first_name' => $name[0],
+                    'last_name' => 'n/a',
+                    'email' => $request->email,
+                    'phone_number'  => '000',
+                    'role' => 'user',
+                    'company_id' => $from_user->company_id,
+                    'password' => Hash::make('chrome_extension')
+                );
+                $new_user = User::create($n_user);
+                $to_user_id = $new_user->id;
             }
             $subject = '';
             if ($request->subject) {
                 $subject = $request->subject;
             }
-            $tracking_hash = '';
-            if ($request->uuid) {
-                $tracking_hash = $request->uuid;
-            }
             $is_tracking = '0';
-            if ($request->is_tracking=='1') {
+            if ($request->is_tracking == '1') {
                 $is_tracking = '1';
             }
-            $body = str_replace("\n", '<br />', $request->body);
+
+            // $body = str_replace("\n", '<br />', $request->body);
+            $body = $request->body;
+
+            $tracking_hash = '';
+            if ($request->tracking_hash && $is_tracking == '1') {
+                $tracking_hash = $request->tracking_hash;
+                $body = str_replace("/track/$tracking_hash", '/track/just-dont-' . $tracking_hash, $body);
+            }
 
             $data = ConversationLog::create([
                 'subject' => $subject, 'body' => $body,

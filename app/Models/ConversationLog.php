@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ConversationLog extends Model
 {
     use HasFactory;
-    protected $fillable = ['from_user_id', 'to_user_id', 'subject', 'body', 'is_read', 'is_tracking', 'read_date'];
+    protected $fillable = ['from_user_id', 'to_user_id', 'subject', 'body', 'is_read', 'is_tracking', 'tracking_hash', 'read_date'];
 
     public static function getConversationByUser($id)
     {

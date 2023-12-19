@@ -60,7 +60,8 @@ Route::get('/magic-link/view/{token}', [MagicLinkController::class, 'viewLink'])
 Route::post("/chat", [DialogflowController::class, "chat"]);
 
 
-Route::post("/webhook/kixie/call", [WebhookController::class, "webhookKixieCallLogs"]);
+Route::post("/webhook/kixie/call", [WebhookController::class, "webhookKixieCall"]);
+Route::post("/webhook/kixie/sms", [WebhookController::class, "webhookKixieSms"]);
 
 Route::post('jotform-webhook', [JotFormController::class, 'handleJotformWebhook'])->name('handleJotformWebhook')->withoutMiddleware([VerifyCsrfToken::class]);
 Route::middleware([CheckStatus::class])->group(function () {

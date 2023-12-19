@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCallLogsTable extends Migration
+class CreateKixieLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateCallLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('call_logs', function (Blueprint $table) {
+        Schema::create('kixie_logs', function (Blueprint $table) {
             $table->id();
+            $table->enum('type', ['call','sms']);
+            $table->longText('data');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateCallLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('call_logs');
+        Schema::dropIfExists('kixie_logs');
     }
 }

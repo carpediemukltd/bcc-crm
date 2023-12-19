@@ -39,16 +39,18 @@ class MarketingEmailTemplateController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'    => 'required',
-            'content' => 'required',
+            'name'          => 'required',
+            'email_subject' => 'required',
+            'content'       => 'required',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
         $template = new MarketingEmailTemplate();
-        $template->name    = $request->name;
-        $template->content = $request->content;
-        $template->company_id = auth()->user()->company_id;
+        $template->name         = $request->name;
+        $template->email_subject= $request->email_subject;
+        $template->content      = $request->content;
+        $template->company_id   = auth()->user()->company_id;
         $template->save(); 
         if($template){
             return redirect()->route('marketing-email-templates.index')->with('success', 'New Email Template added successfully.');
@@ -92,16 +94,18 @@ class MarketingEmailTemplateController extends Controller
     public function update(Request $request, $id)
     {
          $validator = Validator::make($request->all(), [
-            'name'    => 'required',
-            'content' => 'required',
+            'name'          => 'required',
+            'email_subject' => 'required',
+            'content'       => 'required',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
         $template = MarketingEmailTemplate::find($id);
-        $template->name    = $request->name;
-        $template->content = $request->content;
-        $template->company_id = auth()->user()->company_id;
+        $template->name         = $request->name;
+        $template->email_subject= $request->email_subject;
+        $template->content      = $request->content;
+        $template->company_id   = auth()->user()->company_id;
         $template->save(); 
         if($template){
             return redirect()->back()->with('success', 'Email Template updated successfully.');

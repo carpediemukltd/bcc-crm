@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Marketing\MarketingCampaign;
 use App\Models\Marketing\MarketingCampaignSequence;
 use App\Models\Marketing\MarketingCampaignUser;
+use App\Models\Marketing\MarketingEmailTemplate;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -30,7 +31,8 @@ class MarketingCampaignController extends Controller
      */
     public function create()
     {
-        return view('marketing.email.campaign.create');
+        $data['templates'] = MarketingEmailTemplate::whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->get();
+        return view('marketing.email.campaign.create', ['data' => $data]);
     }
 
     /**

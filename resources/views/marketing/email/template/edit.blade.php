@@ -40,6 +40,15 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="email_subject">Email Subject:</label>
+                                        <input type="text" class="form-control" id="email_subject" name="email_subject" value="{{$data->email_subject}}" required>
+                                        @error('email_subject')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="row">

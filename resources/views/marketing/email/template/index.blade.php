@@ -35,7 +35,8 @@
                             <table id="email-templates-table" class="table table-striped dataTable no-footer" role="grid" aria-describedby="email-templates-table_info">
                                 <thead>
                                     <tr class="ligth">
-                                        <th class="sorting" tabindex="0" aria-controls="email-templates-table">Name</th>
+                                        <th class="sorting" tabindex="0" aria-controls="email-templates-table">Template Name</th>
+                                        <th class="sorting" tabindex="0" aria-controls="email-templates-table">Email Subject</th>
                                         <th class="sorting" tabindex="0" aria-controls="email-templates-table">Action</th>
                                     </tr>
                                 </thead>

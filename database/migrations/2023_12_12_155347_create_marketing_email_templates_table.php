@@ -17,6 +17,7 @@ class CreateMarketingEmailTemplatesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('company_id');
             $table->string('name');
+            $table->string('email_subject');
             $table->longText('content');
             $table->softDeletes();
             $table->timestamps();

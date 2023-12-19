@@ -19,6 +19,7 @@ class MarketingEmailTemplate extends Model
     protected $fillable = [
         'company_id',
         'name',
+        'email_subject',
         'content',
     ];
 

@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Marketing\CustomSmtp;
 use App\Models\Marketing\MarketingCampaign as MarketingMarketingCampaign;
+use App\Models\Marketing\MarketingCampaignReporting;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -42,7 +43,6 @@ class MarketingCampaign implements ShouldQueue
         if (count($campaign->marketingCampaignUser) === 0 || count($smtps) === 0) {
             return;
         }
-
         $sequence = $campaign->marketingCampaignSequence->first();
 
         if (!$sequence) {
@@ -50,8 +50,13 @@ class MarketingCampaign implements ShouldQueue
         }
         $subject = $sequence->subject;
         $body    = $sequence->body;
+        
 
         foreach ($campaign->marketingCampaignUser as $user) {
+
+            $imageTracking = '<br /><img src="https://crm.lendotics.com/image/' . $user->uuid . '?sequence=' . $sequence->id . '" height="1px" width="1px" />';
+            $body .= $imageTracking;
+        
             $userEmail = $user->user->email;
 
             // Pick a random SMTP configuration
@@ -76,17 +81,33 @@ class MarketingCampaign implements ShouldQueue
                 $mail->Subject      = $subject;
                 $mail->Body         = $body;
 
+                 // Create a MarketingCampaignReporting instance for the current email
+                 $reporting = new MarketingCampaignReporting([
+                    'user_id'                        => $user->user_id,
+                    'marketing_campaign_sequence_id' => $sequence->id,
+                    'custom_smtp_id'                 => $randomSmtp->id,
+                ]);
+
                  // Send email
                  if ($mail->send()) {
                     // Update MarketingCampaignUser columns based on successful email sending
                     $user->update([
                         'email_sent' => '1',
                     ]);
+                     // Update MarketingCampaignReporting for successful email
+                     $reporting->fill([
+                        'email_sent' => '1',
+                        'sent_date' => now()
+                    ])->save();
                 } else {
                     // Update MarketingCampaignUser columns based on failed email sending
                     $user->update([
                         'email_failed' => '1',
                     ]);
+                      // Update MarketingCampaignReporting for failed email
+                      $reporting->fill([
+                        'email_failed' => '1'
+                    ])->save();
                 }
 
                 $mail->send();
@@ -95,6 +116,11 @@ class MarketingCampaign implements ShouldQueue
                 $user->update([
                     'email_failed' => '1',
                 ]);
+                // Update MarketingCampaignReporting for exception
+                $reporting->fill([
+                    'email_failed' => '1',
+                    'failed_data' => 'Exception: ' . $e->getMessage(),
+                ])->save();
             }
         }
         // Mark the campaign as completed

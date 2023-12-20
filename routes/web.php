@@ -30,8 +30,10 @@ use App\Http\Controllers\ChromeExtensionController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Marketing\CustomSmtpController;
 use App\Http\Controllers\Marketing\MarketingCampaignController;
+use App\Http\Controllers\Marketing\MarketingCampaignReportingController;
 use App\Http\Controllers\Marketing\MarketingEmailTemplateController;
 use App\Http\Controllers\SearchController;
+use App\Models\Marketing\MarketingCampaignReporting;
 
 /*
 |--------------------------------------------------------------------------
@@ -185,4 +187,6 @@ Route::middleware([CheckStatus::class])->group(function () {
     Route::resource('marketing-campaigns', MarketingCampaignController::class);
     Route::get('marketing-search-users', [MarketingCampaignController::class, 'searchUsers']);
     Route::get('run-active-campaigns', [MarketingCampaignController::class, 'runActiveCampaign']);
+    Route::get('image/{userUuid}', [MarketingCampaignReportingController::class, 'emailOpen'])->name('emailOpen');
+
 });

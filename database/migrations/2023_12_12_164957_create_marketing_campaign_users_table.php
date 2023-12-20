@@ -22,6 +22,7 @@ class CreateMarketingCampaignUsersTable extends Migration
             $table->enum('email_failed', ['0', '1'])->default('0');
             $table->enum('email_opened', ['0', '1'])->default('0');
             $table->enum('email_bounced', ['0', '1'])->default('0');
+            $table->string('uuid')->nullable();
             $table->timestamps();
             // relations
             $table->foreign('marketing_campaign_id')->references('id')->on('marketing_campaigns')->onDelete('no action');

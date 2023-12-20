@@ -5,6 +5,7 @@ namespace App\Models\Marketing;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class MarketingCampaignUser extends Model
 {
@@ -23,8 +24,17 @@ class MarketingCampaignUser extends Model
         'email_failed',
         'email_opened',
         'email_bounced',
+        'uuid'
     ];
     protected $with = ['user'];
+
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->uuid = Str::uuid();
+        });
+    }
 
 
     /**

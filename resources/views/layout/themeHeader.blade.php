@@ -49,7 +49,7 @@
       @yield('css')
    </head>
    <style>
-      
+
    </style>
    <body class="dual-compact light crm_dashboard_view theme-default theme-with-animation card-default theme-color-default">
       <!-- loader Start -->
@@ -75,7 +75,7 @@
                   <!--logo End-->
                </a>
                <div class="d-flex align-items-center justify-content-between product-offcanvas">
-                 
+
                   <div class="offcanvas offcanvas-end shadow-none iq-product-menu-responsive" tabindex="-1" id="offcanvasBottom">
                      <div class="offcanvas-body">
                         <ul class="iq-nav-menu list-unstyled">
@@ -98,7 +98,7 @@
                            <!-- sales menu start -->
                            <li class="nav-item <?php if(isset($slug) && in_array($slug, ['deals_company', 'stages', 'roundrobin', 'companies', 'list_company', 'edit_company', 'add_company','pipelines', 'add_user', 'user_list', 'edit_user', 'user_details', 'user_deals', 'user_add_deal', 'user_edit_deal']) && !isset($_GET['type'])){echo 'active';}?>">
                               <a class="nav-link " data-bs-toggle="collapse" href="#allPagesData3" role="button" aria-expanded="false" aria-controls="allPagesData3">
-                                 
+
                                  <span class="nav-text ms-2">Sales</span>
                                  <i class="right-icon">
                                     <svg xmlns="" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
@@ -132,7 +132,7 @@
                                        </i>
                                        <span class="item-name">Pipelines</span>
                                     </a>
-                                 </li>     
+                                 </li>
                                  @endif
                                  <!-- pipeline start -->
                                  <!-- contact start -->
@@ -212,7 +212,7 @@
                                              <span class="item-name">Contact List</span>
                                           </a>
                                        </li>
-                                      
+
                                     </ul>
                                  </li>
                                  @endif
@@ -363,7 +363,7 @@
                            @if (Auth::user()->role == 'superadmin')
                            <li class="nav-item <?php if(isset($slug) && in_array($slug, ['email_templates', 'add_field', 'field_list', 'edit_field'])){echo 'active';}?>">
                               <a class="nav-link " data-bs-toggle="collapse" href="#allPagesData" role="button" aria-expanded="false" aria-controls="allPagesData">
-                                 
+
                                  <span class="nav-text ms-2">Customization</span>
                                  <i class="right-icon">
                                     <svg xmlns="" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
@@ -373,7 +373,7 @@
                                  </i>
                               </a>
                               <ul class="iq-header-sub-menu list-unstyled collapse" id="allPagesData">
-                                
+
                                  <li class="nav-item dropdown iq-responsive-menu d-block">
                                     <a class="nav-link <?php if(isset($slug) && in_array($slug, ['add_field', 'field_list', 'edit_field'])){echo 'active';}?>" role="button" data-bs-toggle="dropdown"
                                        aria-expanded="false" href="#sidebar-custon-fields">
@@ -457,10 +457,10 @@
                            </li>
                            @endif()
                            <!-- customization dropdown end -->
-                          
-                           
 
-                           
+
+
+
                            @if (Auth::user()->role == 'superadmin')
                            <li class="nav-item iq-responsive-menu d-block">
                               <a class="nav-link  <?php if((isset($_GET['type']) && $_GET['type'] == 'admin') || isset($slug) && $slug == 'admins'){echo 'active';} ?>" data-bs-toggle="collapse" href="#allPagesData2" role="button" aria-expanded="false" aria-controls="allPagesData2">
@@ -478,7 +478,7 @@
                                  </i>
                               </a>
                               <ul class="iq-header-sub-menu list-unstyled collapse" id="allPagesData2">
-                                 
+
                                  <li class="nav-item">
                                     <a class="nav-link <?php if((isset($_GET['type']) && $_GET['type'] == 'admin')){echo 'active';} ?>" href="{{ route('user.add', ['type' => 'admin']) }}">
                                        <i class="icon">
@@ -502,12 +502,64 @@
                                                 d="M8.07999 6.64999V6.65999C7.64899 6.65999 7.29999 7.00999 7.29999 7.43999C7.29999 7.86999 7.64899 8.21999 8.07999 8.21999H11.069C11.5 8.21999 11.85 7.86999 11.85 7.42899C11.85 6.99999 11.5 6.64999 11.069 6.64999H8.07999ZM15.92 12.74H8.07999C7.64899 12.74 7.29999 12.39 7.29999 11.96C7.29999 11.53 7.64899 11.179 8.07999 11.179H15.92C16.35 11.179 16.7 11.53 16.7 11.96C16.7 12.39 16.35 12.74 15.92 12.74ZM15.92 17.31H8.07999C7.77999 17.35 7.48999 17.2 7.32999 16.95C7.16999 16.69 7.16999 16.36 7.32999 16.11C7.48999 15.85 7.77999 15.71 8.07999 15.74H15.92C16.319 15.78 16.62 16.12 16.62 16.53C16.62 16.929 16.319 17.27 15.92 17.31Z"
                                                 fill="currentColor" />
                                           </svg>
-                                       </i>   
+                                       </i>
                                        <span class="item-name">Admin List</span>
                                     </a>
                                  </li>
                               </ul>
-                           </li>    
+                           </li>
+                            <li class="nav-item iq-responsive-menu d-block">
+                                    <a class="nav-link  <?php if((isset($_GET['type']) && $_GET['type'] == 'admin') || isset($slug) && $slug == 'admins'){echo 'active';} ?>" data-bs-toggle="collapse" href="#allPagesData2" role="button" aria-expanded="false" aria-controls="allPagesData2">
+                                        <i class="icon">
+                                            <svg fill="none" class="icon-20" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.1583 8.23285C16.1583 10.5825 14.2851 12.4666 11.949 12.4666C9.61292 12.4666 7.73974 10.5825 7.73974 8.23285C7.73974 5.88227 9.61292 4 11.949 4C14.2851 4 16.1583 5.88227 16.1583 8.23285ZM11.949 20C8.51785 20 5.58809 19.456 5.58809 17.2802C5.58809 15.1034 8.49904 14.5396 11.949 14.5396C15.3802 14.5396 18.31 15.0836 18.31 17.2604C18.31 19.4362 15.399 20 11.949 20ZM17.9571 8.30922C17.9571 9.50703 17.5998 10.6229 16.973 11.5505C16.9086 11.646 16.9659 11.7748 17.0796 11.7946C17.2363 11.8216 17.3984 11.8369 17.5631 11.8414C19.2062 11.8846 20.6809 10.821 21.0883 9.21974C21.6918 6.84123 19.9198 4.7059 17.6634 4.7059C17.4181 4.7059 17.1835 4.73201 16.9551 4.77884C16.9238 4.78605 16.8907 4.80046 16.8728 4.82838C16.8513 4.8626 16.8674 4.90853 16.8889 4.93825C17.5667 5.8938 17.9571 7.05918 17.9571 8.30922ZM20.6782 13.5126C21.7823 13.7296 22.5084 14.1727 22.8093 14.8166C23.0636 15.3453 23.0636 15.9586 22.8093 16.4864C22.349 17.4851 20.8654 17.8058 20.2887 17.8886C20.1696 17.9066 20.0738 17.8031 20.0864 17.6833C20.3809 14.9157 18.0377 13.6035 17.4315 13.3018C17.4055 13.2883 17.4002 13.2676 17.4028 13.255C17.4046 13.246 17.4154 13.2316 17.4351 13.2289C18.7468 13.2046 20.1571 13.3847 20.6782 13.5126ZM6.43711 11.8413C6.60186 11.8368 6.76304 11.8224 6.92063 11.7945C7.03434 11.7747 7.09165 11.6459 7.02718 11.5504C6.4004 10.6228 6.04313 9.50694 6.04313 8.30913C6.04313 7.05909 6.43353 5.89371 7.11135 4.93816C7.13284 4.90844 7.14806 4.86251 7.12746 4.82829C7.10956 4.80127 7.07553 4.78596 7.04509 4.77875C6.81586 4.73192 6.58127 4.70581 6.33593 4.70581C4.07951 4.70581 2.30751 6.84114 2.91191 9.21965C3.31932 10.8209 4.79405 11.8845 6.43711 11.8413ZM6.59694 13.2545C6.59962 13.268 6.59425 13.2878 6.56918 13.3022C5.9621 13.6039 3.61883 14.9161 3.91342 17.6827C3.92595 17.8034 3.83104 17.9061 3.71195 17.889C3.13531 17.8061 1.65163 17.4855 1.19139 16.4867C0.936203 15.9581 0.936203 15.3457 1.19139 14.817C1.49225 14.1731 2.21752 13.73 3.32156 13.512C3.84358 13.385 5.25294 13.2049 6.5656 13.2292C6.5853 13.2319 6.59515 13.2464 6.59694 13.2545Z" fill="currentColor"></path>
+                                            </svg>
+                                        </i>
+                                        <span class="item-name">Kixie Logs</span>
+                                        <i class="right-icon">
+                                            <svg xmlns="" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
+                                                 stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </i>
+                                    </a>
+                                    <ul class="iq-header-sub-menu list-unstyled collapse" id="allPagesData2">
+                                        <li class="nav-item">
+                                            <a class="nav-link <?php if(isset($slug) && $slug == 'admins'){echo 'active';}?>"
+                                               href="{{ route('kixie.logs','call')}}" >
+                                                <i class="icon" >
+                                                    <svg width="20" class="icon-20" viewBox="0 0 24 24" fill="currentColor"
+                                                         xmlns="">
+                                                        <path opacity="0.4"
+                                                              d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2"
+                                                              fill="currentColor" />
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                              d="M8.07999 6.64999V6.65999C7.64899 6.65999 7.29999 7.00999 7.29999 7.43999C7.29999 7.86999 7.64899 8.21999 8.07999 8.21999H11.069C11.5 8.21999 11.85 7.86999 11.85 7.42899C11.85 6.99999 11.5 6.64999 11.069 6.64999H8.07999ZM15.92 12.74H8.07999C7.64899 12.74 7.29999 12.39 7.29999 11.96C7.29999 11.53 7.64899 11.179 8.07999 11.179H15.92C16.35 11.179 16.7 11.53 16.7 11.96C16.7 12.39 16.35 12.74 15.92 12.74ZM15.92 17.31H8.07999C7.77999 17.35 7.48999 17.2 7.32999 16.95C7.16999 16.69 7.16999 16.36 7.32999 16.11C7.48999 15.85 7.77999 15.71 8.07999 15.74H15.92C16.319 15.78 16.62 16.12 16.62 16.53C16.62 16.929 16.319 17.27 15.92 17.31Z"
+                                                              fill="currentColor" />
+                                                    </svg>
+                                                </i>
+                                                <span class="item-name">Call Logs</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link <?php if(isset($slug) && $slug == 'admins'){echo 'active';}?>"
+                                               href="{{ route('kixie.logs','sms')}}" >
+                                                <i class="icon" >
+                                                    <svg width="20" class="icon-20" viewBox="0 0 24 24" fill="currentColor"
+                                                         xmlns="">
+                                                        <path opacity="0.4"
+                                                              d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2"
+                                                              fill="currentColor" />
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                              d="M8.07999 6.64999V6.65999C7.64899 6.65999 7.29999 7.00999 7.29999 7.43999C7.29999 7.86999 7.64899 8.21999 8.07999 8.21999H11.069C11.5 8.21999 11.85 7.86999 11.85 7.42899C11.85 6.99999 11.5 6.64999 11.069 6.64999H8.07999ZM15.92 12.74H8.07999C7.64899 12.74 7.29999 12.39 7.29999 11.96C7.29999 11.53 7.64899 11.179 8.07999 11.179H15.92C16.35 11.179 16.7 11.53 16.7 11.96C16.7 12.39 16.35 12.74 15.92 12.74ZM15.92 17.31H8.07999C7.77999 17.35 7.48999 17.2 7.32999 16.95C7.16999 16.69 7.16999 16.36 7.32999 16.11C7.48999 15.85 7.77999 15.71 8.07999 15.74H15.92C16.319 15.78 16.62 16.12 16.62 16.53C16.62 16.929 16.319 17.27 15.92 17.31Z"
+                                                              fill="currentColor" />
+                                                    </svg>
+                                                </i>
+                                                <span class="item-name">SMS Logs</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                            </li>
                            @endif
                         </ul>
                      </div>
@@ -536,9 +588,9 @@
                               </svg>
                            </span>
                         </div>
-                        
+
                      </li>
-                  
+
                      <li class="nav-item dropdown notification_view">
                         @if($notificationService::recent()['bell_notification_count'])
                            @if($notificationService::recent()['bell_notification_count'] > 99)
@@ -621,7 +673,7 @@
                </div>
             </div>
          </nav>
-         
+
          <!--Nav End-->
          <!-- start search-->
          <div id="search-container" style="display: none;">
@@ -884,4 +936,3 @@
          <!-- end search -->
 
       </div>
- 

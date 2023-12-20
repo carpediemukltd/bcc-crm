@@ -30,6 +30,7 @@ use App\Http\Controllers\ChromeExtensionController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\WebhookController;
+use App\Http\Controllers\KixieLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -113,6 +114,9 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::any('pipeline/{action}/{id?}', [PipelineController::class, 'pipelines'])->name('pipeline');
         Route::any('deals/{view}', [DealController::class, 'dealsList'])->name('deals.list');
         Route::get('admins', [UserController::class, 'admins'])->name('admins');
+
+        Route::get('kixie-logs/{type}', [KixieLogController::class, 'list'])->name('kixie.logs');
+        Route::get('kixie-logs/details/{id}', [KixieLogController::class, 'details'])->name('kixie.logs.details');
 
     });
 

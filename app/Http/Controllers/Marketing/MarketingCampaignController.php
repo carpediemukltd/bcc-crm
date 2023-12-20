@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Marketing;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\MarketingCampaign as JobsMarketingCampaign;
+use App\Jobs\MarketingCampaignUser as JobsMarketingCampaignUser;
 use App\Models\Marketing\MarketingCampaign;
 use App\Models\Marketing\MarketingCampaignSequence;
 use App\Models\Marketing\MarketingCampaignUser;
 use App\Models\Marketing\MarketingEmailTemplate;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class MarketingCampaignController extends Controller
@@ -20,7 +23,7 @@ class MarketingCampaignController extends Controller
      */
     public function index()
     {
-        $data = MarketingCampaign::orderBy('id', 'DESC')->paginate(10);
+        $data = MarketingCampaign::whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->paginate(10);
         return view('marketing.email.campaign.index', ['data' => $data]);
     }
 
@@ -69,15 +72,7 @@ class MarketingCampaignController extends Controller
             $campaignSequence->save();
 
             if ($request->select_type == 'all') {
-                $users = User::whereCompanyId(auth()->user()->company_id)->get();
-                if (count($users)) {
-                    foreach ($users as $user) {
-                        $campaignUsers = new MarketingCampaignUser();
-                        $campaignUsers->user_id = $user->id;
-                        $campaignUsers->marketing_campaign_id = $campaign->id;
-                        $campaignUsers->save();
-                    }
-                }
+                JobsMarketingCampaignUser::dispatch($campaign);
             } else {
                 $campaignUsersArray = explode(',', $request->contacts);
                 foreach ($campaignUsersArray as $value) {
@@ -104,7 +99,6 @@ class MarketingCampaignController extends Controller
     {
         $data = MarketingCampaign::with(['marketingCampaignSequence', 'marketingCampaignUser'])->find($id);
         return view('marketing.email.campaign.show', ['data' => $data]);
-
     }
 
     /**
@@ -157,12 +151,29 @@ class MarketingCampaignController extends Controller
     public function searchUsers()
     {
         $q = request('search');
-        return User::where(function ($query) use ($q) {
+        return User::whereIn('role', ['user', 'contact'])->whereCompanyId(auth()->user()->company_id)->where(function ($query) use ($q) {
             $query->where('first_name', 'like', '%' . $q . '%')
                 ->orWhere('last_name', 'like', '%' . $q . '%')
                 // ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ['%' . $q . '%'])
                 ->orWhere('email', 'like', '%' . $q . '%');
         })->select('id', 'first_name', 'last_name', 'phone_number', 'email', 'status')
             ->orderBy('id', 'DESC')->get();
+    }
+
+    public function runActiveCampaign()
+    {
+        // Get the current date and time in 'America/New_York' time zone
+        $date = Carbon::now('America/New_York');
+        // Fetch active campaigns starting from the current 'America/New_York' time
+        $campaigns = MarketingCampaign::whereStatus('active')
+            ->where('start_date', '<=', $date->toDateTimeString())
+            ->get();
+
+        // Dispatch jobs for eligible campaigns
+        if (count($campaigns)) {
+            foreach ($campaigns as $campaign) {
+                JobsMarketingCampaign::dispatch($campaign);
+            }
+        }
     }
 }

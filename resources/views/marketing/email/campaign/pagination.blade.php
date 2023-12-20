@@ -22,6 +22,8 @@
          </svg>
       </button>
       |
+      @elseif($campaign->status == 'completed')
+      
       @else
       <button class="btn btn-success deactivate-btn" data-bs-toggle="modal" data-campaign-id="{{$campaign->id}}">
          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pause-circle" viewBox="0 0 16 16">

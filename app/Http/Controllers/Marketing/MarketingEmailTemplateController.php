@@ -15,7 +15,7 @@ class MarketingEmailTemplateController extends Controller
      */
     public function index()
     {        
-        $data = MarketingEmailTemplate::paginate(10);
+        $data = MarketingEmailTemplate::whereCompanyId(auth()->user()->company_id)->paginate(10);
         return view('marketing.email.template.index', ['data' => $data]);
     }
 

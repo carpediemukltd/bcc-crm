@@ -18,7 +18,7 @@ class CustomSmtpController extends Controller
      */
     public function index()
     {
-        $data = CustomSmtp::paginate(10);
+        $data = CustomSmtp::whereCompanyId(auth()->user()->company_id)->paginate(10);
         return view('marketing.email.smtp.index', ['data'=> $data]);
     }
 
@@ -29,7 +29,7 @@ class CustomSmtpController extends Controller
      */
     public function create()
     {
-        return view('email-marketing.smtp.create');
+        return view('marketing.email.smtp.create');
     }
 
     /**

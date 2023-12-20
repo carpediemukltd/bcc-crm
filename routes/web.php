@@ -184,6 +184,5 @@ Route::middleware([CheckStatus::class])->group(function () {
     Route::resource('marketing-email-templates', MarketingEmailTemplateController::class);
     Route::resource('marketing-campaigns', MarketingCampaignController::class);
     Route::get('marketing-search-users', [MarketingCampaignController::class, 'searchUsers']);
-
-
+    Route::get('run-active-campaigns', [MarketingCampaignController::class, 'runActiveCampaign']);
 });

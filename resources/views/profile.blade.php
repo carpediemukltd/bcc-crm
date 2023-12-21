@@ -80,6 +80,7 @@
                         <div class="col">
                            <div class="form-group">
                               <input type="hidden" name="phone_country_code" id="selected-country-code" >
+                              <input type="hidden" name="old_phone_number" id="old_phone_number" value="{{str_replace("+1 ","",$user->phone_number)}}">
                               <label class="form-label" for="phone_number">Phone number:</label>
                               <div class="phone-input">
                                  <input value="{{$user->phone_number}}" name="phone_number" type="tel" id="phone-number" placeholder="Enter your phone number" class="form-control" required>

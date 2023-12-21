@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Jobs\MarketingCampaign as JobsMarketingCampaign;
 use App\Jobs\MarketingCampaignUser as JobsMarketingCampaignUser;
 use App\Models\Marketing\MarketingCampaign;
+use App\Models\Marketing\MarketingCampaignReporting;
 use App\Models\Marketing\MarketingCampaignSequence;
 use App\Models\Marketing\MarketingCampaignUser;
 use App\Models\Marketing\MarketingEmailTemplate;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use App\Services\ApiResponse;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -175,5 +177,74 @@ class MarketingCampaignController extends Controller
                 JobsMarketingCampaign::dispatch($campaign);
             }
         }
+    }
+    public function marketingAnalyticsData(Request $request){
+        $marketingCampaignId        = request('id');
+        $marketingSequenceId        = request('sequence');
+        $marketingCampaign = MarketingCampaign::with(['marketingCampaignSequence.marketingCampaignReporting'])->find($marketingCampaignId);
+
+        $totalEmails     = 0;
+        $totalSentEmails = 0;
+        $totalOpened     = 0;
+        $totalFailed     = 0;
+        $graphData = [];
+
+
+        foreach ($marketingCampaign->marketingCampaignSequence as $sequence) {
+            // Check if the sequence ID matches the selected one
+            if ($marketingSequenceId && $sequence->id != $marketingSequenceId) {
+                continue;
+            }
+            foreach ($sequence->marketingCampaignReporting as $reporting) {
+                $totalEmails++;
+                $sentDate = Carbon::parse($reporting->sent_date);
+
+                // Check if the email was sent within the last 30 days
+                if ($sentDate->isBetween(Carbon::now()->subDays(30), Carbon::now())) {
+                    $dateKey = $sentDate->toDateString();
+    
+                    // Increment the counts for the corresponding date
+                    $graphData[$dateKey]['sent'] = ($graphData[$dateKey]['sent'] ?? 0) + $reporting->email_sent;
+                    $graphData[$dateKey]['opened'] = ($graphData[$dateKey]['opened'] ?? 0) + $reporting->email_open;
+                    $graphData[$dateKey]['failed'] = ($graphData[$dateKey]['failed'] ?? 0) + $reporting->email_failed;
+                }
+                if ($reporting->email_sent) {
+                    $totalSentEmails++;
+                }
+                if ($reporting->email_open) {
+                    $totalOpened++;
+                }
+                if ($reporting->email_failed) {
+                    $totalFailed++;
+                }
+            }
+        }
+
+        $openRate = ($totalOpened / $totalSentEmails) * 100;
+        $bounceRate = ($totalFailed / $totalSentEmails) * 100;
+        
+        $data['totalEmails']    = $totalEmails;
+        $data['totalSentEmails']= $totalSentEmails;
+        $data['totalOpened']    = $totalOpened;
+        $data['totalFailed']    = $totalFailed;
+        $data['openRate']       = $openRate;
+        $data['bounceRate']     = $bounceRate;
+
+        $formattedGraphData = [];
+
+        // Prepare the data in the desired format
+        foreach ($graphData as $date => $counts) {
+            $formattedGraphData[] = [
+                'date'          => $date,
+                'emails_sent'   => $counts['sent'] ?? 0,
+                'opened_emails' => $counts['opened'] ?? 0,
+                'failed_emails' => $counts['failed'] ?? 0,
+            ];
+        }
+
+        $data['graphData'] = $formattedGraphData;
+
+        return ApiResponse::success($data);
+
     }
 }

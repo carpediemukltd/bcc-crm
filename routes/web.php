@@ -188,5 +188,5 @@ Route::middleware([CheckStatus::class])->group(function () {
     Route::get('marketing-search-users', [MarketingCampaignController::class, 'searchUsers']);
     Route::get('run-active-campaigns', [MarketingCampaignController::class, 'runActiveCampaign']);
     Route::get('image/{userUuid}', [MarketingCampaignReportingController::class, 'emailOpen'])->name('emailOpen');
-
+    Route::get('marketing-analytics-data', [MarketingCampaignController::class, 'marketingAnalyticsData']);
 });

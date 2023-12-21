@@ -119,8 +119,8 @@ class MarketingCampaign implements ShouldQueue
                 // Update MarketingCampaignReporting for exception
                 $reporting->fill([
                     'email_failed' => '1',
-                    'failed_data' => 'Exception: ' . $e->getMessage(),
-                ])->save();
+                    'failed_data' => 'Exception: ' . $e->getMessage() . ' at line ' . $e->getLine(),
+                    ])->save();
             }
         }
         // Mark the campaign as completed

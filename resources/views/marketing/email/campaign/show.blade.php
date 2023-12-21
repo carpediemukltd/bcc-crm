@@ -1,6 +1,7 @@
 @extends('layout.appTheme')
 @section('content')
 <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div class="position-relative iq-banner default">
     <div class="iq-navbar-header" style="height: 215px;">
@@ -47,6 +48,9 @@
                                     </li>
                                     <li class="list-inline-item step" id="step4">
                                         <span>4. Settings</span>
+                                    </li>
+                                    <li class="list-inline-item step" id="step5">
+                                        <span>5. Analytics</span>
                                     </li>
                                 </ul>
 
@@ -174,7 +178,43 @@
 
                         </div>
                     </div>
+                    <div class="row step5 mb-5" style="padding: 10px;">
+                        <div class="col-md-12 pb-5">
+                        <select class="form-control select-sequence" name="sequence"> <!-- Add name attribute -->
+   <option value="0">--Select Campaign Sequence--</option>
+   @if(count($data->marketingCampaignSequence))
+      @foreach($data->marketingCampaignSequence as $sequence)
+         <option value="{{$sequence->id}}">{{$sequence->subject}}</option>
+      @endforeach
+   @endif
+</select>
 
+
+                        </div><br>
+                        <div class="col-md-2">
+                            <p> Emails Sent: <span class="emails-sent-stats"></span></p>
+
+                        </div>
+                        <div class="col-md-2">
+                            <p> Opened Emails: <span class="emails-opened-stats"></span></p>
+
+                        </div>
+                        <div class="col-md-2">
+                            <p> Failed Emails: <span class="emails-failed-stats"></span> </p>
+
+                        </div>
+                        <div class="col-md-2">
+                            <p> Open Rate: <span class="emails-openrate"></span></p>
+
+                        </div>
+                        <div class="col-md-2">
+                            <p> Bounce Rate: <span class="emails-bouncerate"></span></p>
+
+                        </div>
+                        <div class="col-md-12">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -283,14 +323,6 @@
 
                 // Create cross icon within the tag
                 var crossIcon = $('<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L11 11M11 1L1 11" stroke="white" stroke-width="2"/></svg>');
-                // crossIcon.on('click', function() {
-                //    // Remove the tag when the cross is clicked
-                //    var removedContactId = tag.attr('data-contact-id');
-                //    tag.remove();
-
-                //    // Remove the selected contact ID from the array
-                //    selectedContactIds = selectedContactIds.filter(id => id !== removedContactId);
-                // });
 
                 // Append the cross icon to the tag
                 tag.append(crossIcon);
@@ -320,7 +352,7 @@
             if (currentStep === 1) {
                 $('#previousBtn').hide();
                 $('#nextBtn').show();
-            } else if (currentStep === 4) {
+            } else if (currentStep === 5) {
                 $('#previousBtn').show();
                 $('#nextBtn').hide();
             } else {
@@ -331,6 +363,7 @@
             $(".step2").hide();
             $(".step3").hide();
             $(".step4").hide();
+            $(".step5").hide();
             $(".step" + currentStep).show();
         }
 
@@ -342,10 +375,13 @@
         // Next button click event
         $('#nextBtn').click(function(e) {
             e.preventDefault();
-            if (currentStep < 4) {
+            if (currentStep < 5) {
                 currentStep++;
                 updateStepHighlight();
                 updateButtonsVisibility();
+            }
+            if (currentStep == 5) {
+                getAnalyticsData();
             }
         });
 
@@ -373,5 +409,109 @@
         // Remove the tag when the cross is clicked
         $(this).closest('.tag').remove();
     });
+
+    function getAnalyticsData() {
+
+        let lastPart = getLastPartOfUrl(window.location.href);
+        let sequenceId = $('.select-sequence').val(); // Get the selected sequence ID
+
+
+        $.ajax({
+            type: 'GET',
+            url: '/marketing-analytics-data', // Replace with your actual search endpoint
+            data: {
+                id: lastPart,
+                sequence: sequenceId, // Pass the selected sequence ID
+                // Add other parameters if needed
+            },
+            success: function(data) {
+                $(".emails-sent-stats").html('');
+                $(".emails-opened-stats").html('');
+                $(".emails-failed-stats").html('');
+                $(".eemails-openrate").html('');
+                $(".emails-bouncerate").html('');
+
+                $(".emails-sent-stats").html(data.data.totalSentEmails);
+                $(".emails-opened-stats").html(data.data.totalOpened);
+                $(".emails-failed-stats").html(data.data.totalFailed);
+                $(".emails-openrate").html(data.data.openRate);
+                $(".emails-bouncerate").html(data.data.bounceRate);
+                renderGraph(data.data.graphData);
+
+
+            },
+            error: function(error) {
+                // Handle error response
+                console.error(error);
+            }
+        });
+    }
+
+    function getLastPartOfUrl(url) {
+        // Remove trailing slashes and split the URL by '/'
+        let parts = url.replace(/\/+$/, '').split('/');
+
+        // Get the last part of the array
+        let lastPart = parts[parts.length - 1];
+
+        return lastPart;
+    }
+    function renderGraph(data) {
+    const ctx = document.getElementById('myChart');
+    
+    // Get the last 30 dates starting from today
+    const last30Dates = Array.from({ length: 30 }, (_, index) => {
+        const date = new Date();
+        date.setDate(date.getDate() - index);
+        return date.toISOString().split('T')[0];
+    }).reverse(); // Reverse to have the oldest date first
+
+    // Initialize datasets with zeros for each date
+    const datasets = [
+        {
+            label: 'Emails Sent',
+            data: Array(30).fill(0),
+            fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+        },
+        {
+            label: 'Opened Emails',
+            data: Array(30).fill(0),
+            fill: false,
+            borderColor: 'rgb(255, 205, 86)',
+            tension: 0.1
+        },
+        {
+            label: 'Failed Emails',
+            data: Array(30).fill(0),
+            fill: false,           
+            borderColor: 'rgb(255, 99, 132)',
+            tension: 0.1
+        }
+    ];
+
+    // Update datasets with actual counts for each date
+    data.forEach(entry => {
+        const index = last30Dates.indexOf(entry.date);
+        if (index !== -1) {
+            datasets[0].data[index] = entry.emails_sent;
+            datasets[1].data[index] = entry.opened_emails;
+            datasets[2].data[index] = entry.failed_emails;
+        }
+    });
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: last30Dates,
+            datasets: datasets
+        }
+    });
+}
+$(document).on('change', '.select-sequence', function() {
+   getAnalyticsData();
+});
 </script>
+
 @endsection

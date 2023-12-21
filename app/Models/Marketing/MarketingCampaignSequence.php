@@ -29,4 +29,8 @@ class MarketingCampaignSequence extends Model
     {
         return $this->belongsTo(MarketingCampaign::class);
     }
+    public function marketingCampaignReporting()
+    {
+        return $this->hasMany(MarketingCampaignReporting::class);   
+    }
 }

@@ -99,8 +99,9 @@ class MarketingCampaignController extends Controller
      */
     public function show($id)
     {
-        $data = MarketingCampaign::with(['marketingCampaignSequence', 'marketingCampaignUser'])->find($id);
-        return view('marketing.email.campaign.show', ['data' => $data]);
+        $data['campaign']   = MarketingCampaign::with(['marketingCampaignSequence', 'marketingCampaignUser'])->find($id);
+        $data['users']      = MarketingCampaignUser::where('marketing_campaign_id', $id)->paginate(10);
+        return view('marketing.email.campaign.show', ['data'=>$data]);
     }
 
     /**
@@ -246,5 +247,10 @@ class MarketingCampaignController extends Controller
 
         return ApiResponse::success($data);
 
+    }
+    public function marketingCampaignUsers(Request $request, $id){
+
+        $data['users'] = MarketingCampaignUser::where('marketing_campaign_id', $id)->paginate(10);
+        return view('marketing.email.campaign.user_pagination', ['data'=>$data])->render();
     }
 }

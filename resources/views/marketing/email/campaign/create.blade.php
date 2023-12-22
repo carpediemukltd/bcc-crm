@@ -66,7 +66,7 @@
                      <div class="row step1">
                         <div class="col">
                            <div class="form-group">
-                              <label class="form-label" >Give your Campaign name</label>
+                              <label class="form-label">Give your Campaign name</label>
                               <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}" required>
                               @error('title')
                               <span class="text-danger">{{ $message }}</span>
@@ -98,9 +98,15 @@
 
                      </div>
                      <div class="row step3" id="sequences-container">
-                        <div class="col-sm-6">
+                        <div class="col-sm-2">
+                           <ul class="list-group sequence-list">
+                              <li class="list-group-item">Sequence List</li>
+                           </ul>
+                        </div>
+
+                        <div class="col-sm-4">
                            <label class="form-label" for="html_content">Content</label>
-                           <textarea name="html_content" rows="4" cols="100" class="form-control tiny-integerate"></textarea>
+                           <textarea id="html_content" name="html_content" rows="4" cols="100" class="form-control tiny-integerate"></textarea>
                            @error('html_content')
                            <span class="text-danger">{{ $message }}</span>
                            @enderror
@@ -116,7 +122,7 @@
                         <div class="col-sm-2">
                            <label class="form-label" for="templates">Use Templates</label>
                            <select class="form-control template-list">
-                           <option data-subject="" data-content="">--Select Template--</option>
+                              <option data-subject="" data-content="">--Select Template--</option>
 
                               @if(count($data['templates']))
                               @foreach($data['templates'] as $template)
@@ -124,6 +130,9 @@
                               @endforeach
                               @endif
                            </select>
+                        </div>
+                        <div class="col-sm-1">
+                           <button class="btn btn-success save-sequence-btn" type="button">Save</button>
                         </div>
 
                      </div>
@@ -347,6 +356,125 @@
 
       // Remove the tag when the cross is clicked
       $(this).closest('.tag').remove();
+   });
+
+
+   // Function to find a sequence by ID in the sequences array
+   function findSequenceById(sequences, sequenceId) {
+      return sequences.find(sequence => sequence.id === String(sequenceId));
+   }
+
+   // Function to save a new sequence
+   function saveNewSequence() {
+      // Get sequence data
+      var subject = $('input[name="subject"]').val();
+      var htmlContent = tinymce.get('html_content').getContent();
+      var waitFor = $('input[name="wait_for"]').val();
+
+      // Create a unique identifier for the sequence (e.g., timestamp)
+      var sequenceId = Date.now().toString();
+
+      // Save the sequence data in local storage
+      var sequenceData = {
+         id: sequenceId,
+         subject: subject,
+         htmlContent: htmlContent,
+         waitFor: waitFor
+      };
+
+      // Retrieve existing sequences from local storage or initialize an empty array
+      var sequences = JSON.parse(localStorage.getItem('sequences')) || [];
+
+      // Add the new sequence data to the array
+      sequences.push(sequenceData);
+
+      // Save the updated array back to local storage
+      localStorage.setItem('sequences', JSON.stringify(sequences));
+
+      // Add a list item with the sequence subject to the container
+      var sequenceList = $('.sequence-list');
+      sequenceList.append('<li class="list-group-item" data-sequence-id="' + sequenceId + '">' + subject + '<button class="btn btn-sm btn-primary update-sequence-btn ml-2" data-sequence-id="' + sequenceId + '">Edit</button></li>');
+   }
+
+   // Function to update an existing sequence
+   function updateSequence(sequenceId) {
+      // Get sequence data
+      var subject = $('input[name="subject"]').val();
+      var htmlContent = tinymce.get('html_content').getContent();
+      var waitFor = $('input[name="wait_for"]').val();
+
+      // Retrieve existing sequences from local storage
+      var sequences = JSON.parse(localStorage.getItem('sequences')) || [];
+
+      // Find the sequence data by ID
+      var existingSequence = findSequenceById(sequences, sequenceId);
+
+      // Update the existing sequence data
+      existingSequence.subject = subject;
+      existingSequence.htmlContent = htmlContent;
+      existingSequence.waitFor = waitFor;
+
+      // Save the updated array back to local storage
+      localStorage.setItem('sequences', JSON.stringify(sequences));
+
+      // Update the text of the corresponding list item
+      var listItem = $('.sequence-list li[data-sequence-id="' + sequenceId + '"]');
+      listItem.text(subject);
+
+      // Add the "Edit" button again
+      listItem.append('<button class="btn btn-sm btn-primary update-sequence-btn ml-2" data-sequence-id="' + sequenceId + '">Edit</button>');
+
+      // Clear the form and TinyMCE content
+      $('input[name="subject"]').val('');
+      tinymce.get('html_content').setContent('');
+      $('input[name="wait_for"]').val('');
+   }
+
+   // Click event handler for the "Save" button
+   $(document).on('click', '.save-sequence-btn', function() {
+
+      var checkSubject = $('input[name="subject"]').val();
+      var checkContent = tinymce.get('html_content').getContent();
+      var checkWaitFor = $('input[name="wait_for"]').val('');
+      if(!checkContent || !checkSubject || !checkWaitFor){
+         alert('Please specify content and subject!')
+         return false;
+      }
+
+      var sequenceId = $(this).data('sequence-id');
+
+      // Check if the sequence already exists
+      if (sequenceId) {
+         // Update the existing sequence
+         updateSequence(sequenceId);
+      } else {
+         // Save a new sequence
+         saveNewSequence();
+      }
+
+      // Clear the form and TinyMCE content
+      $('input[name="subject"]').val('');
+      tinymce.get('html_content').setContent('');
+      $('input[name="wait_for"]').val('');
+   });
+
+   // Click event handler for the "Update" button next to a list item
+   $(document).on('click', '.update-sequence-btn', function() {
+      var sequenceId = $(this).data('sequence-id');
+
+      // Retrieve the sequences array from local storage
+      var sequences = JSON.parse(localStorage.getItem('sequences')) || [];
+
+      // Find the sequence data by ID
+      var selectedSequence = findSequenceById(sequences, sequenceId);
+
+      // Display the sequence data in the form
+      $('input[name="subject"]').val(selectedSequence.subject);
+      tinymce.get('html_content').setContent(selectedSequence.htmlContent);
+      $('input[name="wait_for"]').val(selectedSequence.waitFor);
+
+      // Set the data-sequence-id attribute for the "Save" button
+      $('.save-sequence-btn').data('sequence-id', sequenceId);
    });
 </script>
 @endsection

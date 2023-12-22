@@ -71,7 +71,7 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label class="form-label" for="title">Campaign name</label>
-                                        <input disabled type="text" class="form-control" id="title" name="title" value="{{ $data->name }}" required>
+                                        <input disabled type="text" class="form-control" id="title" name="title" value="{{ $data['campaign']->name }}" required>
                                         @error('title')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -105,30 +105,12 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @if(count($data->marketingCampaignUser))
-                                                    @foreach($data->marketingCampaignUser as $user)
-                                                    <tr class="odd">
-                                                        <td>{{$user->user->email}}</td>
-                                                        <td>{{$user->user->full_name}}</td>
-                                                        <td>
-                                                            @if($user->email_sent == '1')
-                                                            Email Sent
-                                                            @elseif($user->email_opened == '1')
-                                                            Email Opened
-                                                            @elseif($user->email_failed == '1')
-                                                            Email Failed
-                                                            @elseif($user->email_bounced == '1')
-                                                            Email Bounced
-                                                            @else
-                                                            Pending
-                                                            @endif
-                                                        </td>
-
-                                                    </tr>
-                                                    @endforeach
-                                                    @endif()
+                                                    @include('marketing.email.campaign.user_pagination')                                                    
                                                 </tbody>
                                             </table>
+                                            <button type="button" style="display:none;" id="click_me" class="btn btn-primary" onclick="get_users_data();">Click Me</button>
+                                         <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
+                        
                                         </div>
                                     </div>
                                 </div>
@@ -141,19 +123,19 @@
                     <div class="row step3">
                         <div class="col-sm-6">
                             <label class="form-label" for="html_content">Content</label>
-                            <textarea name="html_content" rows="4" cols="100" class="form-control tiny-integerate">{{$data->marketingCampaignSequence[0]->body}}</textarea>
+                            <textarea name="html_content" rows="4" cols="100" class="form-control tiny-integerate">{{$data['campaign']->marketingCampaignSequence[0]->body}}</textarea>
                             @error('html_content')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="col-sm-2">
                             <label class="form-label" for="subject">Subject</label>
-                            <input type="text" class="form-control" name="subject" id="subject" value="{{$data->marketingCampaignSequence[0]->subject}}">
+                            <input type="text" class="form-control" name="subject" id="subject" value="{{$data['campaign']->marketingCampaignSequence[0]->subject}}">
 
                         </div>
                         <div class="col-sm-2">
                             <label class="form-label" for="wait_for">Wait For Days</label>
-                            <input type="number" class="form-control" name="wait_for" id="wait_for" value="{{$data->marketingCampaignSequence[0]->wait_for}}">
+                            <input type="number" class="form-control" name="wait_for" id="wait_for" value="{{$data['campaign']->marketingCampaignSequence[0]->wait_for}}">
                         </div>
                         <div class="col-sm-2">
                         </div>
@@ -165,13 +147,13 @@
 
                             <label class="form-label" for="status">Status</label>
                             <select class="form-control" name="status" id="status">
-                                <option>{{$data->status}}</option>
+                                <option>{{$data['campaign']->status}}</option>
                             </select>
 
                         </div>
                         <div class="col-md-6">
                             <label class="form-label" for="start_date">Start Date</label>
-                            <input type="datetime-local" class="form-control" id="start_date" name="start_date" value="{{ $data->start_date}}" required>
+                            <input type="datetime-local" class="form-control" id="start_date" name="start_date" value="{{ $data['campaign']->start_date}}" required>
                             @error('start_date')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -182,8 +164,8 @@
                         <div class="col-md-12 pb-5">
                         <select class="form-control select-sequence" name="sequence"> <!-- Add name attribute -->
    <option value="0">--Select Campaign Sequence--</option>
-   @if(count($data->marketingCampaignSequence))
-      @foreach($data->marketingCampaignSequence as $sequence)
+   @if(count($data['campaign']->marketingCampaignSequence))
+      @foreach($data['campaign']->marketingCampaignSequence as $sequence)
          <option value="{{$sequence->id}}">{{$sequence->subject}}</option>
       @endforeach
    @endif
@@ -512,6 +494,37 @@
 $(document).on('change', '.select-sequence', function() {
    getAnalyticsData();
 });
+</script>
+
+<script type="text/javascript">
+   function get_users_data(){
+      
+      var page = $('#hidden_page').val();
+
+      $('table').addClass('loading');
+      let lastPart = getLastPartOfUrl(window.location.href);
+      
+      $.ajax({
+            url: "/marketing-campaign-users/"+lastPart+"?page="+page,
+            success:function(data){
+               $('tbody').html('');
+               $('tbody').html(data);
+               $('table').removeClass('loading');
+            }
+      });
+   } // get_users_data
+
+   
+   $(document).ready(function(){
+
+      $('body').on('click', '.pager a', function(event){
+        console.log('t')
+         event.preventDefault();
+         var page = $(this).attr('href').split('page=')[1];
+         $('#hidden_page').val(page);
+         get_users_data();
+      });
+   });
 </script>
 
 @endsection

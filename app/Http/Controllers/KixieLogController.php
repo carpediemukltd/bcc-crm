@@ -15,6 +15,5 @@ class KixieLogController extends Controller
     public function details($id){
         $log_details = KixieLog::whereId($id)->first();
         return view('logs.detail')->with(['details' => $log_details, 'type' => $log_details->type]);
-        echo "<pre>".print_r(unserialize($log_details->data),1)."</pre>";exit;
     }
 }

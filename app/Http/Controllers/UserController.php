@@ -447,40 +447,44 @@ class UserController extends Controller
                 foreach ($request->document_types as $type) {
                     DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type]);
                 }
-             
-                $user = User::whereId($id)->first();
+
+                $user = User::with('setting')->whereId($id)->first();
                 try{
                     $documents = DocumentManager::whereIn('id', $notificationForNewIds)->get();
                     if($documents != null){
-                        Mail::send('email.userDocumentsSelectionUpdate', [
-                            'first_name' => $user->first_name,
-                            'documents' => $documents
-                        ], function($message) use($user){
-                            $message->to($user->email);
-                            $message->subject('Request for new documents');
-                        });
-
-                        $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA!\nThe following document(s) have been added:\n";
-                        $i = 1;
-                        foreach ($documents as $document){
-                            $message .= $i." ".$document->title."\n";
-                            $i++;
+                        if($user->setting == null || $user->setting->email_notification == 1){
+                            Mail::send('email.userDocumentsSelectionUpdate', [
+                                'first_name' => $user->first_name,
+                                'documents' => $documents
+                            ], function($message) use($user){
+                                $message->to($user->email);
+                                $message->subject('Request for new documents');
+                            });
                         }
 
-                        $message .= "Please login https://dashboard.bccusa.com/ to finalize your application.\nReply STOP to opt out of text notifications.";
-                        $twilioPhoneNumber  = env('TWILIO_NUMBER');
-                        $twilioSid          = env('TWILIO_SID');
-                        $twilioToken        = env('TWILIO_AUTH_TOKEN');
-                        $client             = new Client($twilioSid, $twilioToken);
-                        // Remove spaces from the phone number
-                        $toPhoneNumber = str_replace(' ', '', $user->phone_number);
-                        $client->messages->create(
-                            $toPhoneNumber,
-                            [
-                                'from' => $twilioPhoneNumber,
-                                'body' => $message,
-                            ]
-                        );
+                        if($user->setting == null || $user->setting->sms_notification == 1){
+                            $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA!\nThe following document(s) have been added:\n";
+                            $i = 1;
+                            foreach ($documents as $document){
+                                $message .= $i." ".$document->title."\n";
+                                $i++;
+                            }
+
+                            $message .= "Please login https://dashboard.bccusa.com/ to finalize your application.\nReply STOP to opt out of text notifications.";
+                            $twilioPhoneNumber  = env('TWILIO_NUMBER');
+                            $twilioSid          = env('TWILIO_SID');
+                            $twilioToken        = env('TWILIO_AUTH_TOKEN');
+                            $client             = new Client($twilioSid, $twilioToken);
+                            // Remove spaces from the phone number
+                            $toPhoneNumber = str_replace(' ', '', $user->phone_number);
+                            $client->messages->create(
+                                $toPhoneNumber,
+                                [
+                                    'from' => $twilioPhoneNumber,
+                                    'body' => $message,
+                                ]
+                            );
+                        }
                     }
 
                 } catch(\Exception $ex){
@@ -807,11 +811,13 @@ class UserController extends Controller
         }
 
         foreach ($request->bank_users as $bank_user) {
-            $bank_user_data = User::whereId($bank_user)->first();
-            Mail::send('email.sendDocuments', ['first_name' => $bank_user_data->first_name,'url' => $request->url], function($message) use($bank_user_data){
-                $message->to($bank_user_data->email);
-                $message->subject('BCCUSA: New Client File Received!');
-            });
+            $bank_user_data = User::with('setting')->whereId($bank_user)->first();
+            if($bank_user_data->setting == null || $bank_user_data->setting->email_notification == 1){
+                Mail::send('email.sendDocuments', ['first_name' => $bank_user_data->first_name,'url' => $request->url], function($message) use($bank_user_data){
+                    $message->to($bank_user_data->email);
+                    $message->subject('BCCUSA: New Client File Received!');
+                });
+            }
         }
 
         return response()->json(['success' => true, 'message' => 'Email sent successfully']);
@@ -893,39 +899,43 @@ class UserController extends Controller
                 DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type, 'due_date' => $due_date]);
             }
         }
-        $user = User::whereId($id)->first();
+        $user = User::with('setting')->whereId($id)->first();
         try{
             $documents = DocumentManager::whereIn('id', $notificationForNewIds)->get();
             if(count($documents)){
-                Mail::send('email.userDocumentsSelectionUpdate', [
-                    'first_name' => $user->first_name,
-                    'documents' => $documents
-                ], function($message) use($user){
-                    $message->to($user->email);
-                    $message->subject('Request for new documents');
-                });
-
-                $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA!\nThe following document(s) have been added:\n";
-                $i = 1;
-                foreach ($documents as $document){
-                    $message .= $i."- ".$document->title."\n";
-                    $i++;
+                if($user->setting == null || $user->setting->email_notification == 1){
+                    Mail::send('email.userDocumentsSelectionUpdate', [
+                        'first_name' => $user->first_name,
+                        'documents' => $documents
+                    ], function($message) use($user){
+                        $message->to($user->email);
+                        $message->subject('Request for new documents');
+                    });
                 }
 
-                $message .= "Please login https://dashboard.bccusa.com/ to finalize your application.\nReply STOP to opt out of text notifications.";
-                $twilioPhoneNumber  = env('TWILIO_NUMBER');
-                $twilioSid          = env('TWILIO_SID');
-                $twilioToken        = env('TWILIO_AUTH_TOKEN');
-                $client             = new Client($twilioSid, $twilioToken);
-                // Remove spaces from the phone number
-                $toPhoneNumber = str_replace(' ', '', $user->phone_number);
-                $client->messages->create(
-                    $toPhoneNumber,
-                    [
-                        'from' => $twilioPhoneNumber,
-                        'body' => $message,
-                    ]
-                );
+                if($user->setting == null || $user->setting->sms_notification == 1) {
+                    $message = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA!\nThe following document(s) have been added:\n";
+                    $i = 1;
+                    foreach ($documents as $document) {
+                        $message .= $i . "- " . $document->title . "\n";
+                        $i++;
+                    }
+
+                    $message .= "Please login https://dashboard.bccusa.com/ to finalize your application.\nReply STOP to opt out of text notifications.";
+                    $twilioPhoneNumber = env('TWILIO_NUMBER');
+                    $twilioSid = env('TWILIO_SID');
+                    $twilioToken = env('TWILIO_AUTH_TOKEN');
+                    $client = new Client($twilioSid, $twilioToken);
+                    // Remove spaces from the phone number
+                    $toPhoneNumber = str_replace(' ', '', $user->phone_number);
+                    $client->messages->create(
+                        $toPhoneNumber,
+                        [
+                            'from' => $twilioPhoneNumber,
+                            'body' => $message,
+                        ]
+                    );
+                }
             }
 
         } catch(\Exception $ex){

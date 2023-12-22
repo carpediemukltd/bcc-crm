@@ -64,7 +64,7 @@ class WebhookController extends Controller
             $data['contact']['contact'] = [
                 [
                     'phone' =>  $this->checkField($sms_data['contact']['contact']['phone']),
-                    'city' => $this->checkField($sms_data['contact']['contact']['city']),
+                    'city' => isset($sms_data['contact']['contact']['city']) ? $sms_data['contact']['contact']['city'] : '',
                     'name' => $this->checkField($sms_data['contact']['contact']['name']),
                     'email' => $this->checkField($sms_data['contact']['contact']['email']),
                 ]

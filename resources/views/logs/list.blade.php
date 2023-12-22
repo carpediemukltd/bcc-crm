@@ -7,7 +7,7 @@
             <div class="col-md-12">
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
-                     <h1>Call Logs</h1>
+                     <h1>{{ucfirst($type)}} Logs</h1>
                   </div>
 
                </div>

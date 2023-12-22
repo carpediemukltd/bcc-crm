@@ -7,7 +7,7 @@
             <div class="col-md-12">
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
-                     <h1>{{strtoupper($type)}} Detail</h1>
+                     <h1>{{ucfirst($type)}} Detail</h1>
                   </div>
 
                </div>

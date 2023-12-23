@@ -22,7 +22,8 @@ class CreateMarketingCampaignsTable extends Migration
                 'draft',
                 'active',
                 'completed',
-                'paused'
+                'paused',
+                'inprogress'
             ])->default('draft');
             $table->string('uuid')->nullable();
             $table->softDeletes();

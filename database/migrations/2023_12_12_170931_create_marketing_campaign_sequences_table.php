@@ -18,13 +18,12 @@ class CreateMarketingCampaignSequencesTable extends Migration
             $table->unsignedBigInteger('marketing_campaign_id');
             $table->integer('wait_for')->default(1);
             $table->string('subject');
+            $table->dateTime('start_date');
             $table->text('body');
             $table->enum('status', [
-                'inactive',
                 'active',
-                'completed',
-                'deleted',
-            ])->default('inactive');
+                'completed'
+            ])->default('active');
             $table->timestamps();
             // relations
             $table->foreign('marketing_campaign_id')->references('id')->on('marketing_campaigns')->onDelete('no action');

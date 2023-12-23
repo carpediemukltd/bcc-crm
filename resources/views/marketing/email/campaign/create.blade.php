@@ -63,6 +63,9 @@
 
                   <form action="{{ route('marketing-campaigns.store') }}" method="POST">
                      @csrf
+
+                      <!-- Hidden input fields for sequences -->
+    <div id="hidden-sequences-container" style="display: none;"></div>
                      <div class="row step1">
                         <div class="col">
                            <div class="form-group">
@@ -98,11 +101,12 @@
 
                      </div>
                      <div class="row step3" id="sequences-container">
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                            <ul class="list-group sequence-list">
                               <li class="list-group-item">Sequence List</li>
                            </ul>
                         </div>
+                        
 
                         <div class="col-sm-4">
                            <label class="form-label" for="html_content">Content</label>
@@ -111,7 +115,7 @@
                            <span class="text-danger">{{ $message }}</span>
                            @enderror
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-1">
                            <label class="form-label" for="subject">Subject</label>
                            <input type="text" class="form-control email-subject" name="subject">
                         </div>
@@ -166,6 +170,8 @@
    </div>
 </div>
 <script>
+
+   localStorage.removeItem('sequences');
    var selectedContactIds = [];
    // Change event for the template-list dropdown
    $(document).on('change', '.template-list', function() {
@@ -428,6 +434,7 @@
       $('input[name="subject"]').val('');
       tinymce.get('html_content').setContent('');
       $('input[name="wait_for"]').val('');
+      $('.save-sequence-btn').data('sequence-id', '');
    }
 
    // Click event handler for the "Save" button
@@ -435,7 +442,7 @@
 
       var checkSubject = $('input[name="subject"]').val();
       var checkContent = tinymce.get('html_content').getContent();
-      var checkWaitFor = $('input[name="wait_for"]').val('');
+      var checkWaitFor = $('input[name="wait_for"]').val();
       if(!checkContent || !checkSubject || !checkWaitFor){
          alert('Please specify content and subject!')
          return false;
@@ -456,6 +463,7 @@
       $('input[name="subject"]').val('');
       tinymce.get('html_content').setContent('');
       $('input[name="wait_for"]').val('');
+      prepareFormData();
    });
 
    // Click event handler for the "Update" button next to a list item
@@ -476,5 +484,24 @@
       // Set the data-sequence-id attribute for the "Save" button
       $('.save-sequence-btn').data('sequence-id', sequenceId);
    });
+
+   // Function to prepare form data before submission
+   function prepareFormData() {
+      // Retrieve existing sequences from local storage
+      var sequences = JSON.parse(localStorage.getItem('sequences')) || [];
+      // Remove existing hidden input fields
+      $('#hidden-sequences-container').empty();
+
+      // Iterate through all sequences and add hidden input fields
+
+      sequences.forEach(function (sequence, index) {
+         var inputHtml = '<input type="hidden" name="sequences[' + index + '][subject]" value="' + sequence.subject + '">';
+         inputHtml += '<input type="hidden" name="sequences[' + index + '][htmlContent]" value="' + sequence.htmlContent + '">';
+         inputHtml += '<input type="hidden" name="sequences[' + index + '][waitFor]" value="' + sequence.waitFor + '">';
+         
+         $('#hidden-sequences-container').append(inputHtml);
+      });
+   }
+
 </script>
 @endsection

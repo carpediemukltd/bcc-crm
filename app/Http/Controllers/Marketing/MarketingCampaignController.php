@@ -48,13 +48,15 @@ class MarketingCampaignController extends Controller
      */
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
-            'title'         => 'required',
-            'html_content'  => 'required',
-            'subject'       => 'required',
-            'wait_for'      => 'required',
-            'start_date'    => 'required',
-            'select_type'   => 'required'
+            'title'                     => 'required',
+            'sequences'                 => 'required|array',
+            'sequences.*.subject'       => 'required',
+            'sequences.*.htmlContent'   => 'required',
+            'sequences.*.waitFor'       => 'required',
+            'start_date'                => 'required',
+            'select_type'               => 'required'
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -65,13 +67,34 @@ class MarketingCampaignController extends Controller
         $campaign->start_date   = $request->start_date;
         $campaign->status       = $request->status;
         $campaign->save();
+
         if ($campaign) {
-            $campaignSequence = new MarketingCampaignSequence();
-            $campaignSequence->marketing_campaign_id = $campaign->id;
-            $campaignSequence->subject = $request->subject;
-            $campaignSequence->body = $request->html_content;
-            $campaignSequence->wait_for = $request->wait_for;
-            $campaignSequence->save();
+            // Initialize current start date
+            $currentStartDate = $campaign->start_date;
+
+            foreach ($request->sequences as $key => $sequenceData) {
+                $campaignSequence = new MarketingCampaignSequence();
+                $campaignSequence->marketing_campaign_id = $campaign->id;
+                $campaignSequence->subject               = $sequenceData['subject'];
+                $campaignSequence->body                  = $sequenceData['htmlContent'];
+                $campaignSequence->wait_for              = $sequenceData['waitFor'];
+
+                // Set the wait_for based on the previous sequence or use 0 for the first sequence
+                $waitFor = ($key === 0) ? 0 : $request->sequences[$key - 1]['waitFor'];
+
+                // Set the start date based on the current start date and wait_for
+                $campaignSequence->start_date = ($waitFor > 0)
+                    ? date('Y-m-d H:i:s', strtotime("$currentStartDate +{$waitFor} days"))
+                    : $currentStartDate;
+
+                $campaignSequence->save();
+
+                // Update $currentStartDate only if wait_for is greater than 0
+                if ($waitFor > 0) {
+                    $currentStartDate = date('Y-m-d H:i:s', strtotime("$currentStartDate +{$waitFor} days"));
+                }
+            }
+
 
             if ($request->select_type == 'all') {
                 JobsMarketingCampaignUser::dispatch($campaign);
@@ -99,9 +122,9 @@ class MarketingCampaignController extends Controller
      */
     public function show($id)
     {
-        $data['campaign']   = MarketingCampaign::with(['marketingCampaignSequence', 'marketingCampaignUser'])->find($id);
+        $data['campaign']   = MarketingCampaign::with(['marketingCampaignSequence'])->find($id);
         $data['users']      = MarketingCampaignUser::where('marketing_campaign_id', $id)->paginate(10);
-        return view('marketing.email.campaign.show', ['data'=>$data]);
+        return view('marketing.email.campaign.show', ['data' => $data]);
     }
 
     /**
@@ -176,10 +199,12 @@ class MarketingCampaignController extends Controller
         if (count($campaigns)) {
             foreach ($campaigns as $campaign) {
                 JobsMarketingCampaign::dispatch($campaign);
+                $campaign->update(['status' => 'inprogress']);
             }
         }
     }
-    public function marketingAnalyticsData(Request $request){
+    public function marketingAnalyticsData(Request $request)
+    {
         $marketingCampaignId        = request('id');
         $marketingSequenceId        = request('sequence');
         $marketingCampaign = MarketingCampaign::with(['marketingCampaignSequence.marketingCampaignReporting'])->find($marketingCampaignId);
@@ -203,7 +228,7 @@ class MarketingCampaignController extends Controller
                 // Check if the email was sent within the last 30 days
                 if ($sentDate->isBetween(Carbon::now()->subDays(30), Carbon::now())) {
                     $dateKey = $sentDate->toDateString();
-    
+
                     // Increment the counts for the corresponding date
                     $graphData[$dateKey]['sent'] = ($graphData[$dateKey]['sent'] ?? 0) + $reporting->email_sent;
                     $graphData[$dateKey]['opened'] = ($graphData[$dateKey]['opened'] ?? 0) + $reporting->email_open;
@@ -223,9 +248,9 @@ class MarketingCampaignController extends Controller
 
         $openRate = ($totalOpened / $totalSentEmails) * 100;
         $bounceRate = ($totalFailed / $totalSentEmails) * 100;
-        
+
         $data['totalEmails']    = $totalEmails;
-        $data['totalSentEmails']= $totalSentEmails;
+        $data['totalSentEmails'] = $totalSentEmails;
         $data['totalOpened']    = $totalOpened;
         $data['totalFailed']    = $totalFailed;
         $data['openRate']       = $openRate;
@@ -246,11 +271,11 @@ class MarketingCampaignController extends Controller
         $data['graphData'] = $formattedGraphData;
 
         return ApiResponse::success($data);
-
     }
-    public function marketingCampaignUsers(Request $request, $id){
+    public function marketingCampaignUsers(Request $request, $id)
+    {
 
         $data['users'] = MarketingCampaignUser::where('marketing_campaign_id', $id)->paginate(10);
-        return view('marketing.email.campaign.user_pagination', ['data'=>$data])->render();
+        return view('marketing.email.campaign.user_pagination', ['data' => $data])->render();
     }
 }

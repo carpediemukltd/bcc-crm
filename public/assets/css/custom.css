@@ -2118,3 +2118,6 @@ div#user_edit_view {
 .email-marketing-campaign span#previousBtn {
   padding-right: 10px;
 }
+.email-marketing-campaign .list-group-item.item{
+  cursor: pointer;  
+}

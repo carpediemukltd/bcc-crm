@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Models\Marketing\CustomSmtp;
 use App\Models\Marketing\MarketingCampaign as MarketingMarketingCampaign;
 use App\Models\Marketing\MarketingCampaignReporting;
+use App\Models\Marketing\MarketingCampaignSequence;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -39,11 +40,23 @@ class MarketingCampaign implements ShouldQueue
     {
         $campaign   = MarketingMarketingCampaign::with(['marketingCampaignSequence', 'marketingCampaignUser'])->find($this->campaignClass->id);
         $smtps      = CustomSmtp::whereCompanyId($this->campaignClass->company_id)->get();
+       
+        // Get active first sequence with start_date <= now
+        $activeSequence = MarketingCampaignSequence::where('marketing_campaign_id', $campaign->id)
+        ->where('start_date', '<=', now()->toDateTimeString())
+        ->where('status', '!=', 'completed')
+        ->orderBy('start_date', 'ASC')
+        ->first();
 
+        if (!$activeSequence) {
+            // No active sequence found, mark the campaign as completed
+            $campaign->update(['status' => 'completed']);
+            return;
+        }
         if (count($campaign->marketingCampaignUser) === 0 || count($smtps) === 0) {
             return;
         }
-        $sequence = $campaign->marketingCampaignSequence->first();
+        $sequence = $activeSequence;
 
         if (!$sequence) {
             return;
@@ -123,9 +136,19 @@ class MarketingCampaign implements ShouldQueue
                     ])->save();
             }
         }
-        // Mark the campaign as completed
-        $campaign->update([
-            'status' => 'completed',
-        ]);
+         // Mark the sequence as completed
+        $activeSequence->update(['status' => 'completed']);
+
+        // Mark the campaign as completed if it was the last sequence
+        $lastSequence = MarketingCampaignSequence::where('marketing_campaign_id', $campaign->id)
+            ->where('status', '!=', 'completed')
+            ->orderBy('start_date', 'DESC')
+            ->first();
+
+        if ($lastSequence) {
+            $campaign->update(['status' => 'active']);
+        }else{
+            $campaign->update(['status' => 'completed']);
+        }
     }
 }

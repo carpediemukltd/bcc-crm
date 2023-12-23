@@ -17,6 +17,7 @@ class MarketingCampaignSequence extends Model
     protected $fillable = [
         'marketing_campaign_id',
         'wait_for',
+        'start_date',
         'subject',
         'body',
         'status',

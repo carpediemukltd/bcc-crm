@@ -105,12 +105,12 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @include('marketing.email.campaign.user_pagination')                                                    
+                                                    @include('marketing.email.campaign.user_pagination')
                                                 </tbody>
                                             </table>
                                             <button type="button" style="display:none;" id="click_me" class="btn btn-primary" onclick="get_users_data();">Click Me</button>
-                                         <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
-                        
+                                            <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
+
                                         </div>
                                     </div>
                                 </div>
@@ -121,9 +121,19 @@
                     </div>
 
                     <div class="row step3">
-                        <div class="col-sm-6">
+                        <div class="col-sm-3">
+                            <ul class="list-group sequence-list">
+                                <li class="list-group-item">Sequence List</li>
+                                @if(count($data['campaign']->marketingCampaignSequence))
+                                @foreach($data['campaign']->marketingCampaignSequence as $sequence)
+                                <li class="list-group-item item" data-subject="{{$sequence->subject}}" data-content="{{$sequence->body}}" data-waitfor="{{$sequence->wait_for}}">{{$sequence->subject}}</li>
+                                @endforeach()
+                                @endif()
+                            </ul>
+                        </div>
+                        <div class="col-sm-5">
                             <label class="form-label" for="html_content">Content</label>
-                            <textarea name="html_content" rows="4" cols="100" class="form-control tiny-integerate">{{$data['campaign']->marketingCampaignSequence[0]->body}}</textarea>
+                            <textarea id="html_content" name="html_content" rows="4" cols="100" class="form-control tiny-integerate">{{$data['campaign']->marketingCampaignSequence[0]->body}}</textarea>
                             @error('html_content')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -136,8 +146,6 @@
                         <div class="col-sm-2">
                             <label class="form-label" for="wait_for">Wait For Days</label>
                             <input type="number" class="form-control" name="wait_for" id="wait_for" value="{{$data['campaign']->marketingCampaignSequence[0]->wait_for}}">
-                        </div>
-                        <div class="col-sm-2">
                         </div>
 
                     </div>
@@ -162,14 +170,14 @@
                     </div>
                     <div class="row step5 mb-5" style="padding: 10px;">
                         <div class="col-md-12 pb-5">
-                        <select class="form-control select-sequence" name="sequence"> <!-- Add name attribute -->
-   <option value="0">--Select Campaign Sequence--</option>
-   @if(count($data['campaign']->marketingCampaignSequence))
-      @foreach($data['campaign']->marketingCampaignSequence as $sequence)
-         <option value="{{$sequence->id}}">{{$sequence->subject}}</option>
-      @endforeach
-   @endif
-</select>
+                            <select class="form-control select-sequence" name="sequence"> <!-- Add name attribute -->
+                                <option value="0">--Select Campaign Sequence--</option>
+                                @if(count($data['campaign']->marketingCampaignSequence))
+                                @foreach($data['campaign']->marketingCampaignSequence as $sequence)
+                                <option value="{{$sequence->id}}">{{$sequence->subject}}</option>
+                                @endforeach
+                                @endif
+                            </select>
 
 
                         </div><br>
@@ -438,93 +446,108 @@
 
         return lastPart;
     }
+
     function renderGraph(data) {
-    const ctx = document.getElementById('myChart');
-    
-    // Get the last 30 dates starting from today
-    const last30Dates = Array.from({ length: 30 }, (_, index) => {
-        const date = new Date();
-        date.setDate(date.getDate() - index);
-        return date.toISOString().split('T')[0];
-    }).reverse(); // Reverse to have the oldest date first
+        const ctx = document.getElementById('myChart');
 
-    // Initialize datasets with zeros for each date
-    const datasets = [
-        {
-            label: 'Emails Sent',
-            data: Array(30).fill(0),
-            fill: false,
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1
-        },
-        {
-            label: 'Opened Emails',
-            data: Array(30).fill(0),
-            fill: false,
-            borderColor: 'rgb(255, 205, 86)',
-            tension: 0.1
-        },
-        {
-            label: 'Failed Emails',
-            data: Array(30).fill(0),
-            fill: false,           
-            borderColor: 'rgb(255, 99, 132)',
-            tension: 0.1
-        }
-    ];
+        // Get the last 30 dates starting from today
+        const last30Dates = Array.from({
+            length: 30
+        }, (_, index) => {
+            const date = new Date();
+            date.setDate(date.getDate() - index);
+            return date.toISOString().split('T')[0];
+        }).reverse(); // Reverse to have the oldest date first
 
-    // Update datasets with actual counts for each date
-    data.forEach(entry => {
-        const index = last30Dates.indexOf(entry.date);
-        if (index !== -1) {
-            datasets[0].data[index] = entry.emails_sent;
-            datasets[1].data[index] = entry.opened_emails;
-            datasets[2].data[index] = entry.failed_emails;
-        }
+        // Initialize datasets with zeros for each date
+        const datasets = [{
+                label: 'Emails Sent',
+                data: Array(30).fill(0),
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            },
+            {
+                label: 'Opened Emails',
+                data: Array(30).fill(0),
+                fill: false,
+                borderColor: 'rgb(255, 205, 86)',
+                tension: 0.1
+            },
+            {
+                label: 'Failed Emails',
+                data: Array(30).fill(0),
+                fill: false,
+                borderColor: 'rgb(255, 99, 132)',
+                tension: 0.1
+            }
+        ];
+
+        // Update datasets with actual counts for each date
+        data.forEach(entry => {
+            const index = last30Dates.indexOf(entry.date);
+            if (index !== -1) {
+                datasets[0].data[index] = entry.emails_sent;
+                datasets[1].data[index] = entry.opened_emails;
+                datasets[2].data[index] = entry.failed_emails;
+            }
+        });
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: last30Dates,
+                datasets: datasets
+            }
+        });
+    }
+    $(document).on('change', '.select-sequence', function() {
+        getAnalyticsData();
     });
-
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: last30Dates,
-            datasets: datasets
-        }
-    });
-}
-$(document).on('change', '.select-sequence', function() {
-   getAnalyticsData();
-});
 </script>
 
 <script type="text/javascript">
-   function get_users_data(){
-      
-      var page = $('#hidden_page').val();
+    function get_users_data() {
 
-      $('table').addClass('loading');
-      let lastPart = getLastPartOfUrl(window.location.href);
-      
-      $.ajax({
-            url: "/marketing-campaign-users/"+lastPart+"?page="+page,
-            success:function(data){
-               $('tbody').html('');
-               $('tbody').html(data);
-               $('table').removeClass('loading');
+        var page = $('#hidden_page').val();
+
+        $('table').addClass('loading');
+        let lastPart = getLastPartOfUrl(window.location.href);
+
+        $.ajax({
+            url: "/marketing-campaign-users/" + lastPart + "?page=" + page,
+            success: function(data) {
+                $('tbody').html('');
+                $('tbody').html(data);
+                $('table').removeClass('loading');
             }
-      });
-   } // get_users_data
+        });
+    } // get_users_data
 
-   
-   $(document).ready(function(){
 
-      $('body').on('click', '.pager a', function(event){
-        console.log('t')
-         event.preventDefault();
-         var page = $(this).attr('href').split('page=')[1];
-         $('#hidden_page').val(page);
-         get_users_data();
-      });
-   });
+    $(document).ready(function() {
+
+        $('body').on('click', '.pager a', function(event) {
+            console.log('t')
+            event.preventDefault();
+            var page = $(this).attr('href').split('page=')[1];
+            $('#hidden_page').val(page);
+            get_users_data();
+        });
+    });
+    // Click event handler for the "Update" button next to a list item
+    $(document).on('click', '.list-group-item', function() {
+        $(".list-group-item").removeClass('active');
+        $(this).addClass('active');
+        var sequenceSubject = $(this).data('subject');
+        var sequenceContent = $(this).data('content');
+        var sequenceWaitFor = $(this).data('waitfor');
+
+        // Display the sequence data in the form
+        $('input[name="subject"]').val(sequenceSubject);
+        tinymce.get('html_content').setContent(sequenceContent);
+        $('input[name="wait_for"]').val(sequenceWaitFor);
+    });
 </script>
 
 @endsection

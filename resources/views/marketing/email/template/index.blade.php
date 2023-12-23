@@ -41,9 +41,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                 @include('marketing.email.template.pagination')
-                              </tbody>
-                             
+                                    @include('marketing.email.template.pagination')
+                                </tbody>
+
                             </table>
                         </div>
                     </div>

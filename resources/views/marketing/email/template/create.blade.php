@@ -43,7 +43,7 @@
                               <span class="text-danger">{{ $message }}</span>
                               @enderror
                            </div>
-                        </div>  
+                        </div>
                         <div class="col-md-4">
                            <div class="form-group">
                               <label class="form-label" for="email_subject">Email Subject:</label>
@@ -52,7 +52,7 @@
                               <span class="text-danger">{{ $message }}</span>
                               @enderror
                            </div>
-                        </div>                         
+                        </div>
                      </div>
                      <div class="row">
                         <div class="col-sm-12">

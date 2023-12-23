@@ -64,8 +64,8 @@
                   <form action="{{ route('marketing-campaigns.store') }}" method="POST">
                      @csrf
 
-                      <!-- Hidden input fields for sequences -->
-    <div id="hidden-sequences-container" style="display: none;"></div>
+                     <!-- Hidden input fields for sequences -->
+                     <div id="hidden-sequences-container" style="display: none;"></div>
                      <div class="row step1">
                         <div class="col">
                            <div class="form-group">
@@ -106,7 +106,7 @@
                               <li class="list-group-item">Sequence List</li>
                            </ul>
                         </div>
-                        
+
 
                         <div class="col-sm-4">
                            <label class="form-label" for="html_content">Content</label>
@@ -170,7 +170,6 @@
    </div>
 </div>
 <script>
-
    localStorage.removeItem('sequences');
    var selectedContactIds = [];
    // Change event for the template-list dropdown
@@ -443,7 +442,7 @@
       var checkSubject = $('input[name="subject"]').val();
       var checkContent = tinymce.get('html_content').getContent();
       var checkWaitFor = $('input[name="wait_for"]').val();
-      if(!checkContent || !checkSubject || !checkWaitFor){
+      if (!checkContent || !checkSubject || !checkWaitFor) {
          alert('Please specify content and subject!')
          return false;
       }
@@ -494,14 +493,13 @@
 
       // Iterate through all sequences and add hidden input fields
 
-      sequences.forEach(function (sequence, index) {
+      sequences.forEach(function(sequence, index) {
          var inputHtml = '<input type="hidden" name="sequences[' + index + '][subject]" value="' + sequence.subject + '">';
          inputHtml += '<input type="hidden" name="sequences[' + index + '][htmlContent]" value="' + sequence.htmlContent + '">';
          inputHtml += '<input type="hidden" name="sequences[' + index + '][waitFor]" value="' + sequence.waitFor + '">';
-         
+
          $('#hidden-sequences-container').append(inputHtml);
       });
    }
-
 </script>
 @endsection

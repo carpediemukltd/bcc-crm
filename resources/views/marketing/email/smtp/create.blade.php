@@ -40,7 +40,7 @@
                               <label class="form-label" for="host">Host:</label>
                               <input type="text" class="form-control" id="host" name="host" value="{{ old('host') }}" required>
                               @error('host')
-                                 <span class="text-danger">{{ $message }}</span>
+                              <span class="text-danger">{{ $message }}</span>
                               @enderror
                            </div>
                         </div>
@@ -49,7 +49,7 @@
                               <label class="form-label" for="port">Port:</label>
                               <input type="number" class="form-control" id="port" name="port" value="{{ old('port') }}" required>
                               @error('port')
-                                 <span class="text-danger">{{ $message }}</span>
+                              <span class="text-danger">{{ $message }}</span>
                               @enderror
                            </div>
                         </div>
@@ -61,7 +61,7 @@
                               <label class="form-label" for="username">Username:</label>
                               <input type="text" class="form-control" id="username" name="username" value="{{ old('username') }}" required>
                               @error('username')
-                                 <span class="text-danger">{{ $message }}</span>
+                              <span class="text-danger">{{ $message }}</span>
                               @enderror
                            </div>
                         </div>
@@ -70,7 +70,7 @@
                               <label class="form-label" for="password">Password:</label>
                               <input type="password" class="form-control" id="password" name="password" required>
                               @error('password')
-                                 <span class="text-danger">{{ $message }}</span>
+                              <span class="text-danger">{{ $message }}</span>
                               @enderror
                            </div>
                         </div>
@@ -82,7 +82,7 @@
                               <label class="form-label" for="encryption_type">Encryption type:</label>
                               <input type="text" class="form-control" id="encryption_type" name="encryption_type" value="{{ old('encryption_type') }}" placeholder="eg. ssl, tls" required>
                               @error('encryption_type')
-                                 <span class="text-danger">{{ $message }}</span>
+                              <span class="text-danger">{{ $message }}</span>
                               @enderror
                            </div>
                         </div>
@@ -94,7 +94,7 @@
                               <label class="form-label" for="reply_to">Reply To:</label>
                               <input type="email" class="form-control" id="reply_to" name="reply_to" value="{{ old('reply_to') }}" required>
                               @error('reply_to')
-                                 <span class="text-danger">{{ $message }}</span>
+                              <span class="text-danger">{{ $message }}</span>
                               @enderror
                            </div>
                         </div>
@@ -103,7 +103,7 @@
                               <label class="form-label" for="username_display">Display name:</label>
                               <input type="text" class="form-control" id="username_display" name="username_display" value="{{ old('username_display') }}" placeholder="BCCUSA COMPANY" required>
                               @error('username_display')
-                                 <span class="text-danger">{{ $message }}</span>
+                              <span class="text-danger">{{ $message }}</span>
                               @enderror
                            </div>
                         </div>

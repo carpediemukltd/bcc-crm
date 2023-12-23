@@ -1,4 +1,5 @@
-<?php //print_r($data['users']); die; ?>
+<?php //print_r($data['users']); die; 
+?>
 @if(isset($data['users']) && !empty($data['users']))
 @foreach($data['users'] as $user)
 <tr class="odd">
@@ -22,7 +23,7 @@
 @endforeach
 <tr>
    <td colspan="8" align="center">
-   {!! $data['users']->links('marketing.email.smtp.custom_pagination') !!}
+      {!! $data['users']->links('marketing.email.smtp.custom_pagination') !!}
    </td>
 </tr>
 @else

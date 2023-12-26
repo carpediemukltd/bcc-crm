@@ -17,7 +17,6 @@ class ConversationLogController extends Controller
     public function addEmailConversation(Request $request)
     {
         if ($request->isMethod('post')) {
-            return ApiResponse::success([], 'Conversation Logged successfully.', 200);
             $from_user_id = 0;
             if ($request->id) {
                 $from_user_id = $request->id;
@@ -35,10 +34,10 @@ class ConversationLogController extends Controller
                     'first_name' => $name[0],
                     'last_name' => 'n/a',
                     'email' => $request->email,
-                    'phone_number'  => '000',
+                    'phone_number'  => '000-000-0000',
                     'role' => 'user',
                     'company_id' => $from_user->company_id,
-                    'password' => Hash::make('chrome_extension')
+                    'password' => Hash::make('asdfasdf')
                 );
                 $new_user = User::create($n_user);
                 $to_user_id = $new_user->id;

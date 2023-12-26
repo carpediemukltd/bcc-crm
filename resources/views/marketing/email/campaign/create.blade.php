@@ -495,7 +495,7 @@
 
       sequences.forEach(function(sequence, index) {
          var inputHtml = '<input type="hidden" name="sequences[' + index + '][subject]" value="' + sequence.subject + '">';
-         inputHtml += '<input type="hidden" name="sequences[' + index + '][htmlContent]" value="' + sequence.htmlContent + '">';
+         inputHtml += '<input type="hidden" name="sequences[' + index + '][htmlContent]" value="' + encodeURIComponent(sequence.htmlContent) + '">';
          inputHtml += '<input type="hidden" name="sequences[' + index + '][waitFor]" value="' + sequence.waitFor + '">';
 
          $('#hidden-sequences-container').append(inputHtml);

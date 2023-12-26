@@ -61,14 +61,21 @@ class MarketingCampaign implements ShouldQueue
         if (!$sequence) {
             return;
         }
-        $subject = $sequence->subject;
-        $body    = $sequence->body;
+       
         
 
         foreach ($campaign->marketingCampaignUser as $user) {
+            if($user->user->dnd == '1'){
+                continue;
+            }
+            $subject = $sequence->subject;
+            $body    = $sequence->body;
 
             $imageTracking = '<br /><img src="https://crm.lendotics.com/image/' . $user->uuid . '?sequence=' . $sequence->id . '" height="1px" width="1px" />';
+            $unsubscribeUrl = env('APP_URL') . "/marketing-unsubscribe/" . $user->user->uuid;
+            $dndOption = '<div style="padding:20px;"><center><a target="_blank" href="' . $unsubscribeUrl . '">Unsubscribe</a></center></div>';
             $body .= $imageTracking;
+            $body .= $dndOption;
         
             $userEmail = $user->user->email;
 
@@ -122,8 +129,6 @@ class MarketingCampaign implements ShouldQueue
                         'email_failed' => '1'
                     ])->save();
                 }
-
-                $mail->send();
             } catch (Exception $e) {
                 // Handle exceptions if needed
                 $user->update([

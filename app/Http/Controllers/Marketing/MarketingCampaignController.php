@@ -76,7 +76,7 @@ class MarketingCampaignController extends Controller
                 $campaignSequence = new MarketingCampaignSequence();
                 $campaignSequence->marketing_campaign_id = $campaign->id;
                 $campaignSequence->subject               = $sequenceData['subject'];
-                $campaignSequence->body                  = $sequenceData['htmlContent'];
+                $campaignSequence->body                  = urldecode($sequenceData['htmlContent']);
                 $campaignSequence->wait_for              = $sequenceData['waitFor'];
 
                 // Set the wait_for based on the previous sequence or use 0 for the first sequence
@@ -135,7 +135,10 @@ class MarketingCampaignController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['campaign']   = MarketingCampaign::with(['marketingCampaignSequence'])->find($id);
+        $data['users']      = MarketingCampaignUser::where('marketing_campaign_id', $id)->paginate(10);
+        $data['templates']  = MarketingEmailTemplate::whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->get();
+        return view('marketing.email.campaign.edit', ['data' => $data]);
     }
 
     /**

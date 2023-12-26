@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Marketing;
+
 use App\Http\Controllers\Controller;
 use App\Models\Marketing\CustomSmtp;
 use Illuminate\Support\Facades\Validator;
@@ -19,7 +20,7 @@ class CustomSmtpController extends Controller
     public function index()
     {
         $data = CustomSmtp::whereCompanyId(auth()->user()->company_id)->paginate(10);
-        return view('marketing.email.smtp.index', ['data'=> $data]);
+        return view('marketing.email.smtp.index', ['data' => $data]);
     }
 
     /**
@@ -108,7 +109,8 @@ class CustomSmtpController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = CustomSmtp::find($id);
+        return view('marketing.email.smtp.edit', ['data' => $data]);
     }
 
     /**
@@ -120,7 +122,64 @@ class CustomSmtpController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'host'              => 'required',
+            'username'          => 'required',
+            'password'          => 'required',
+            'encryption_type'   => 'required',
+            'port'              => 'required',
+            'reply_to'          => 'required',
+            'username_display'  => 'required',
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Find the existing CustomSmtp record by ID
+        $customSmtp = CustomSmtp::find($id);
+
+        if (!$customSmtp) {
+            return redirect()->back()->with('error', 'SMTP record not found.');
+        }
+
+        //check if email smtp is valid
+        try {
+            $mail = new PHPMailer(true);
+            // $mail->SMTPDebug = 3;                      //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host       = $request->host;                     //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = $request->username;                     //SMTP username
+            $mail->Password   = $request->password;                                //SMTP password
+            $mail->SMTPSecure = $request->encryption_type;              //Enable implicit TLS encryption
+            $mail->Port       = $request->port;
+
+            $mail->setFrom($request->username);
+
+            $mail->addAddress('bccusa@mailinator.com');               //Name is optional
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = 'SMTP checking';
+            $mail->Body    = 'Lorem Ipsum';
+            $mail->send();
+
+
+            // Update the existing record with the new values
+            $customSmtp->update([
+                'host'              => $request->host,
+                'port'              => $request->port,
+                'encryption_type'   => $request->encryption_type,
+                'username'          => $request->username,
+                'password'          => $request->password,
+                'company_id'        => auth()->user()->company_id,
+                'reply_to'          => $request->reply_to,
+                'username_display'  => $request->username_display,
+            ]);
+            return \Redirect::route('custom-smtps.index', $request->app_id)->with('success', 'Smtp updated successfully.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     /**

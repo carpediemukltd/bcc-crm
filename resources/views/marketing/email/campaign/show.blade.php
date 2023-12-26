@@ -84,17 +84,6 @@
                                     <label class="form-label" for="html_content">Contacts</label>
                                     <div class="table-responsive">
                                         <div id="user-list-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                                            <!-- date range start -->
-                                            <div class="row date_range_fields">
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <!-- <label class="form-label" for="password">Empty Field</label> -->
-                                                        <input type="text" name="search" id="search" placeholder="Search..." class="form-control" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- date range end -->
-
                                             <table id="user-list-table" class="table table-striped dataTable no-footer" role="grid" aria-describedby="user-list-table_info">
                                                 <thead>
                                                     <tr class="ligth">

@@ -716,7 +716,7 @@
                   @endphp
                   @endforeach
                    @foreach($document_groups as $group)
-                       <div class="col-md-3">
+                       <div class="col-md-2">
                            <label class="checkbox-inline">
                                <div class="check-doc-field">
                                    <input type="checkbox" class="document_group_checkbox" name="{{$group->name}}" value="{{$group->id}}">
@@ -729,7 +729,14 @@
                   <div class="col-md-4">
                      <label class="checkbox-inline">
                      <div class="check-doc-field">
-                         <input type="checkbox" name="document_types[]" data-group-id="{{$document->DocumentGroup->id}}" value="{{$document->id}}" {{in_array($document->id, $already_selected_documents) ? 'checked' : ''}}>
+                         @php
+                             $group_ids = [];
+                             foreach($document->DocumentGroup as $group_id){
+                                 $group_ids[] = $group_id->id;
+                             }
+                             $serializedGroupIds = json_encode($group_ids);
+                         @endphp
+                         <input type="checkbox" name="document_types[]" class="document_group_checkbox_option" data-group-id="{{$serializedGroupIds}}" value="{{$document->id}}" {{in_array($document->id, $already_selected_documents) ? 'checked' : ''}}>
                      </div>
                      <p>{{$document->title}}</p>
                      </label>
@@ -982,8 +989,25 @@
    }
 
    $('.document_group_checkbox').click(function(){
-       var group_id = $(this).val();
-       $("[data-group-id='" + group_id + "']").prop('checked',$(this).prop('checked'))
+       var group_id = parseInt($(this).val());
+       if($(this).prop('checked')){
+           $(".document_group_checkbox_option").each(function() {
+               var optionGroupIds = JSON.parse($(this).attr('data-group-id'));
+               if (optionGroupIds.includes(group_id)) {
+                   // Check the checkbox
+                   $(this).prop('checked', true);
+               }
+           });
+       }else{
+           $(".document_group_checkbox_option").each(function() {
+               var optionGroupIds = JSON.parse($(this).attr('data-group-id'));
+               if (optionGroupIds.includes(group_id)) {
+                   // Check the checkbox
+                   $(this).prop('checked', false);
+               }
+           });
+       }
+
    })
 
 </script>

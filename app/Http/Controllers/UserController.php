@@ -241,7 +241,7 @@ class UserController extends Controller
 
             $sortedDocumentsArray = $sortedDocuments->values()->all();
             $this->data['documents'] = $sortedDocumentsArray;
-            $this->data['document_groups'] = DocumentGroup::get();
+            $this->data['document_groups'] = DocumentGroup::orderBy('order')->get();
             return view($request->type == 'admin' ? 'user.add-admin' : 'user.add', $this->data);
         }
     }
@@ -360,7 +360,7 @@ class UserController extends Controller
             $this->data['documents'] = $sortedDocumentsArray;
             $this->data['selected_documents'] = $this->data['user']->DocumentManagers;
             $this->data['bankusers'] = User::whereRole('bank')->get();
-            $this->data['document_groups'] = DocumentGroup::get();
+            $this->data['document_groups'] = DocumentGroup::orderBy('order')->get();
             $this->data['due_date'] = $dueDate;
             return view("user.details", $this->data,compact('activity','userRecord','document','customFieldDetails','customField','deal','stage'));
         }
@@ -519,7 +519,7 @@ class UserController extends Controller
             $sortedDocumentsArray = $sortedDocuments->values()->all();
             $this->data['documents'] = $sortedDocumentsArray;
             $this->data['selected_documents'] = $this->data['user']->DocumentManagers;
-            $this->data['document_groups'] = DocumentGroup::get();
+            $this->data['document_groups'] = DocumentGroup::orderBy('order')->get();
             return view("user.edit", $this->data);
         }
     } // editUser

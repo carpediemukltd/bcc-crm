@@ -171,6 +171,30 @@
    </div>
 </div>
 <script>
+    var userRole = "{{auth()->user()->role}}";
+
+    $('form').submit(function() {
+        if (userRole != "superadmin")
+        {
+            var iMobileVerified = $("input[name='mobileVerified']:checked").val();
+            var iEmailVerified  = ($("#emailVerifiedCheckbox").is(':checked')) ? 1 : 0;
+
+            $('<input>').attr({
+                type: 'hidden',
+                id: 'mobileVerifiedHidden',
+                name: 'mobileVerifiedHidden',
+                value: iMobileVerified
+            }).appendTo('form');
+
+            $('<input>').attr({
+                type: 'hidden',
+                id: 'emailVerifiedHidden',
+                name: 'emailVerifiedHidden',
+                value: iEmailVerified
+            }).appendTo('form');
+        }
+    });
+
    const toggle = document.getElementById('toggle2FA');
    const twoFactorTypeContainer = document.getElementById('twoFactorType');
    // Function to toggle the design

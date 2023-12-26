@@ -56,7 +56,6 @@ class UserController extends Controller
     {
         $this->data['current_slug'] = 'My Profile';
         if ($request->isMethod('post')) {
-
             $phoneNumberUtil = PhoneNumberUtil::getInstance();
             $phoneNumberObj = $phoneNumberUtil->parse($request->phone_country_code.$request->phone_number, 'US');
 
@@ -74,8 +73,8 @@ class UserController extends Controller
                 $mobileVerifiedcheckbox = $request->input('mobileVerifiedcheckbox');
                 $emailVerifiedcheckbox = $request->input('emailVerifiedcheckbox');
 
-                $mobileVerified = $request->input('mobileVerified');
-                $emailVerified = $request->input('emailVerified');
+                $mobileVerified = $request->has('mobileVerified') ? $request->input('mobileVerified') : $request->input('mobileVerifiedHidden');
+                $emailVerified = $request->has('emailVerified') ? $request->input('emailVerified') : $request->input('emailVerifiedHidden');
 
                 if (($mobileVerifiedcheckbox == 1 && $mobileVerified) && ($emailVerifiedcheckbox == 1 && $emailVerified))
                     $update_data['two_factor_type'] = 'both';
@@ -89,8 +88,8 @@ class UserController extends Controller
             }
             else
             {
-                $mobileVerified = $request->input('mobileVerified');
-                $emailVerified = $request->input('emailVerified');
+                $mobileVerified = $request->has('mobileVerified') ? $request->input('mobileVerified') : $request->input('mobileVerifiedHidden');
+                $emailVerified  = $request->has('emailVerified') ? $request->input('emailVerified') : $request->input('emailVerifiedHidden');
 
                 $update_data['mobile_verified'] = $mobileVerified;
                 $update_data['email_verified'] = $emailVerified;

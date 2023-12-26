@@ -14,7 +14,6 @@ use App\Http\Middleware\CheckSuperAdmin;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Controllers\StageController;
 use App\Http\Middleware\CheckSameCompany;
-use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\JotFormController;
@@ -30,6 +29,9 @@ use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\ChromeExtensionController;
 use App\Http\Controllers\ConversationLogController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\WebhookController;
+use App\Http\Controllers\KixieLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +61,10 @@ Route::get('/magic-link/{contact_id}', [MagicLinkController::class, 'generateLin
 Route::get('/magic-link/view/{token}', [MagicLinkController::class, 'viewLink'])->name('magic.link.view');
 
 Route::post("/chat", [DialogflowController::class, "chat"]);
+
+
+Route::post("/webhook/kixie/call", [WebhookController::class, "webhookKixieCall"]);
+Route::post("/webhook/kixie/sms", [WebhookController::class, "webhookKixieSms"]);
 
 Route::post('jotform-webhook', [JotFormController::class, 'handleJotformWebhook'])->name('handleJotformWebhook')->withoutMiddleware([VerifyCsrfToken::class]);
 Route::middleware([CheckStatus::class])->group(function () {
@@ -110,6 +116,9 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::any('pipeline/{action}/{id?}', [PipelineController::class, 'pipelines'])->name('pipeline');
         Route::any('deals/{view}', [DealController::class, 'dealsList'])->name('deals.list');
         Route::get('admins', [UserController::class, 'admins'])->name('admins');
+
+        Route::get('kixie-logs/{type}', [KixieLogController::class, 'list'])->name('kixie.logs');
+        Route::get('kixie-logs/details/{id}', [KixieLogController::class, 'details'])->name('kixie.logs.details');
 
     });
 

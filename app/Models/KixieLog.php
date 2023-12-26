@@ -5,11 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DocumentGroup extends Model
+class KixieLog extends Model
 {
     use HasFactory;
-
-    public function DocumentGroup(){
-        return $this->belongsToMany(DocumentManager::class);
-    }
 }

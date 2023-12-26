@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Hash;
 
 class JotFormController extends Controller
 {
-   
+
     public function handleJotformWebhook(Request $request)
     {
         // Get the "rawRequest" JSON string from the request data
@@ -165,6 +165,14 @@ class JotFormController extends Controller
                 'role'          => 'user',
                 'company_id'    => $companyId,
                 'password'      => Hash::make('BCCUSA.COM')
+            ]);
+
+            \App\addContactToZapier([
+                'firstName' => $user->first_name,
+                'lastName' => $user->last_name,
+                'phone' => $user->phone_number,
+                'email' => $user->email,
+                'companyName' => $company->name
             ]);
         }
         if (is_array($fields) && count($fields) > 0) {

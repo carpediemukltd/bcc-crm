@@ -160,7 +160,7 @@
             <div class="card-body">
                <div class="user_details_view" id="user_details_view">
                   <form>
-                     
+
                      <div class="row">
                         <div class="col text-right">
                            <button type="button" class="btn btn-primary contact_view_btn"
@@ -280,12 +280,12 @@
                               @endforeach
                               @endif
                               @endforeach
-                              
+
                               </div>
                                  </div>
                               </div>
                            </div>
-                              
+
                               <!-- Contact created end -->
                            </li>
                            <li>
@@ -329,7 +329,7 @@
                                     </div>
                                  </div>
                               </div>
-                              
+
                               <!-- deals created end -->
                            </li>
                            <li>
@@ -379,7 +379,7 @@
                                     </div>
                                  </div>
                               </div>
-                              
+
                               <!-- stages moves end -->
                            </li>
                            <li>
@@ -439,7 +439,7 @@
                                     </div>
                                  </div>
                               </div>
-                              
+
                               <!-- custom field end -->
                            </li>
                            <li>
@@ -472,7 +472,7 @@
                                  </small>
                                  <small class="float-right mt-1">
                                     <b>URL :</b>
-                                    <p><a href="{{$document->file_path}}">{{$document->file_name}}</a> </p> 
+                                    <p><a href="{{$document->file_path}}">{{$document->file_name}}</a> </p>
                                  </small>
                               </div>
                               @endforeach
@@ -650,9 +650,6 @@
                                     Portal</span>
                                  </div>
                               </a>
-                               @if($due_date != '')
-                                   <p>Due Date : {{date('F d Y', strtotime($due_date))}} <a href="javascript:void(0);" id="change_due_date">Change</a></p>
-                               @endif
                            </li>
                         </ul>
                      </div>
@@ -706,7 +703,8 @@
          {!! Form::open(['route' => ['document.manager.update', $user->id],'method' => 'post']) !!}
          <div class="modal-body documents_view_holder">
             <div class="response-send-email-notification"></div>
-            <h4> Document Types:</h4>
+            <p style="font-weight: bold;font-size: 1.44rem; color: black;"> Document Types: {!! $due_date != '' ? "<span style='float: right; font-size: 14px;line-height: 35px;'>Due Date : ".date('F d Y', strtotime($due_date))." <a href='javascript:void(0);' id='change_due_date'>Change</a></span>" : "" !!}
+                    </p>
             <div class="form-group ">
                <div class="row">
                   @php

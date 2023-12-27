@@ -10,6 +10,8 @@
 <body>
 <h3>Hi {{$first_name}},</h3>
 <p>An Additional document request has been added for your bank financing application!</p>
+<p style="color: #E04F44;"><b>Due Date: {{$due_date}}</b></p>
+<br/>
 <p>The Additional documents are: </p>
 <ul>
     @foreach($documents as $document)

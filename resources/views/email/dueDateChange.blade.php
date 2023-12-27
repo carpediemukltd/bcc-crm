@@ -9,15 +9,16 @@
 </head>
 <body>
 <h3>Hi {{$first_name}},</h3>
-<p>Your secure login to the BCCUSA bank portal has been created! It is accessible here: <a href="{{route('login')}}">https://dashboard.bccusa.com/</a>.</p>
-<p>Your email address is is your login and your password is BCCUSA.com until you login and change it.</p>
-<p>The following documents have been requested to provide your requested financing:</p>
+<p>The due date of your document package submission for the following documents is now {{$due_date}} :</p>
 <ul>
     @foreach($documents as $document)
         <li>{{$document->title}}</li>
     @endforeach
 </ul>
+<p>Please understand the importance of providing these documents to expedite your financing application. We want to ensure a smooth and as timely submission as possible.</p>
 <p>Please, Login to your secure Bank portal to upload these and expedite your fundings. <a href="https://dashboard.bccusa.com/">Bank Portal - Login</a></p>
 <p>Thank you!</p>
+<br/>
+<p><b>Team BCCUSA</b></p>
 </body>
 </html>

@@ -61,7 +61,7 @@
                               <input type="hidden" name="phone_country_code" id="selected-country-code" >
                               <label class="form-label" for="phone_number">Phone number:</label>
                               <div class="phone-input">
-                                 <input name="phone_number" type="tel" id="phone-number" placeholder="Enter your phone number" class="form-control" required>
+                                 <input name="phone_number" value="{{$user->phone_number}}" type="tel" id="phone-number" placeholder="Enter your phone number" class="form-control" required>
                               </div>
                                <span class="text-danger" id="phone_number_error">{{$errors->has('phone_number') ? $errors->first('phone_number') : '' }}</span>
                             </div>
@@ -221,9 +221,12 @@
 </script>
 @endsection
 @push('scripts')
-    <script>
+    <script async="true">
         $(document).ready(function(){
-            $('#phone-number').val('{{$user->phone_number}}')
+            setTimeout(() => {
+                var phoneNumber = '{{$user->phone_number}}';
+                phoneNumberInput.val(phoneNumber.substr(2, phoneNumber.length));
+            }, 1000)
         })
     </script>
 @endpush

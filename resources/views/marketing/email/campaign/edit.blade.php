@@ -1,8 +1,5 @@
 @extends('layout.appTheme')
 @section('content')
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <div class="position-relative iq-banner default">
     <div class="iq-navbar-header" style="height: 215px;">
         <div class="container-fluid iq-container">
@@ -161,7 +158,6 @@
 </div>
 <script>
     var selectedContactIds = [];
-
     $(document).ready(function() {
         $('.contactSearchForm').hide();
         $('#selectedContacts').hide();

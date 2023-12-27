@@ -1,5 +1,7 @@
 @if(isset($data) && !empty($data))
 @foreach($data as $campaign)
+@if($campaign->type == 'manual')
+
 <tr class="odd">
    <td>{{$campaign->name}}</td>
    <td>{{$campaign->status}}</td>
@@ -64,7 +66,7 @@
    </td>
 
 </tr>
-
+@endif
 @endforeach
 
 <tr>

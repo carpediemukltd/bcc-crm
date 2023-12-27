@@ -1,8 +1,5 @@
 @extends('layout.appTheme')
 @section('content')
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <div class="position-relative iq-banner default">
     <div class="iq-navbar-header" style="height: 215px;">
         <div class="container-fluid iq-container">
@@ -202,6 +199,7 @@
 </div>
 <script>
     var selectedContactIds = [];
+    var chartInstance = "";
 
     $(document).ready(function() {
         $('.contactSearchForm').hide();
@@ -376,7 +374,6 @@
     });
     // Handle click event for dynamically added cross icon
     $(document).on('click', '.selected-contacts-container .tag svg', function() {
-        console.log($(this))
         var removedContactId = $(this).closest('.tag').data('contact-id');
         // Remove the selected contact ID from the array
         selectedContactIds = selectedContactIds.filter(id => id !== removedContactId);
@@ -438,6 +435,9 @@
 
     function renderGraph(data) {
         const ctx = document.getElementById('myChart');
+        if (typeof chartInstance !== 'string') {
+            chartInstance.destroy();
+        }
 
         // Get the last 30 dates starting from today
         const last30Dates = Array.from({
@@ -482,7 +482,7 @@
             }
         });
 
-        new Chart(ctx, {
+        chartInstance = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: last30Dates,
@@ -515,9 +515,7 @@
 
 
     $(document).ready(function() {
-
         $('body').on('click', '.pager a', function(event) {
-            console.log('t')
             event.preventDefault();
             var page = $(this).attr('href').split('page=')[1];
             $('#hidden_page').val(page);

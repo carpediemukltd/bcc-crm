@@ -191,5 +191,7 @@ Route::middleware([CheckStatus::class])->group(function () {
     Route::get('marketing-analytics-data', [MarketingCampaignController::class, 'marketingAnalyticsData']);
     Route::get('marketing-campaign-users/{id}', [MarketingCampaignController::class, 'marketingCampaignUsers']);
     Route::get('marketing-unsubscribe/{uuid}', [UserController::class, 'unsubscribe']);
+    Route::get('marketing-global-reporting', [MarketingCampaignController::class, 'marketingGlobalReporting'])->name('marketingGlobalReporting');
+    Route::get('marketing-global-reporting-data', [MarketingCampaignController::class, 'marketingGlobalReportingData']);
 
 });

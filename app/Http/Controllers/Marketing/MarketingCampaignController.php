@@ -122,9 +122,15 @@ class MarketingCampaignController extends Controller
      */
     public function show($id)
     {
-        $data['campaign']   = MarketingCampaign::with(['marketingCampaignSequence'])->find($id);
+        $campaign   = MarketingCampaign::with(['marketingCampaignSequence'])->find($id);
+        $data['campaign']   = $campaign;
         $data['users']      = MarketingCampaignUser::where('marketing_campaign_id', $id)->paginate(10);
-        return view('marketing.email.campaign.show', ['data' => $data]);
+        if($campaign->type =='automate'){
+            return view('marketing.email.campaign.automate-show', ['data' => $data]);
+        }else{
+            return view('marketing.email.campaign.show', ['data' => $data]);
+        }
+        
     }
 
     /**
@@ -277,8 +283,86 @@ class MarketingCampaignController extends Controller
     }
     public function marketingCampaignUsers(Request $request, $id)
     {
-
         $data['users'] = MarketingCampaignUser::where('marketing_campaign_id', $id)->paginate(10);
         return view('marketing.email.campaign.user_pagination', ['data' => $data])->render();
     }
+    public function marketingGlobalReporting()
+    {
+        $data['campaign'] = MarketingCampaign::whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->get();
+        return view('marketing.email.reporting.global-reporting', ['data'=> $data]);
+    }
+    public function marketingGlobalReportingData()
+    {
+        $companyId = auth()->user()->company_id;
+        $marketingCampaignId = request('id') ?? 0;
+
+        $marketingCampaigns = MarketingCampaign::whereCompanyId($companyId)->with(['marketingCampaignSequence.marketingCampaignReporting']);
+
+        if ($marketingCampaignId) {
+            // If a specific campaign is selected, filter by its ID
+            $marketingCampaigns->where('id', $marketingCampaignId);
+        }
+
+        $totalEmails = 0;
+        $totalSentEmails = 0;
+        $totalOpened = 0;
+        $totalFailed = 0;
+        $graphData = [];
+
+        foreach ($marketingCampaigns->get() as $marketingCampaign) {
+            foreach ($marketingCampaign->marketingCampaignSequence as $sequence) {
+
+                foreach ($sequence->marketingCampaignReporting as $reporting) {
+                    $totalEmails++;
+                    $sentDate = Carbon::parse($reporting->sent_date);
+
+                    // Check if the email was sent within the last 30 days
+                    if ($sentDate->isBetween(Carbon::now()->subDays(30), Carbon::now())) {
+                        $dateKey = $sentDate->toDateString();
+
+                        // Increment the counts for the corresponding date
+                        $graphData[$dateKey]['sent'] = ($graphData[$dateKey]['sent'] ?? 0) + $reporting->email_sent;
+                        $graphData[$dateKey]['opened'] = ($graphData[$dateKey]['opened'] ?? 0) + $reporting->email_open;
+                        $graphData[$dateKey]['failed'] = ($graphData[$dateKey]['failed'] ?? 0) + $reporting->email_failed;
+                    }
+                    if ($reporting->email_sent) {
+                        $totalSentEmails++;
+                    }
+                    if ($reporting->email_open) {
+                        $totalOpened++;
+                    }
+                    if ($reporting->email_failed) {
+                        $totalFailed++;
+                    }
+                }
+            }
+        }
+
+        $openRate = $totalSentEmails > 0 ? ($totalOpened / $totalSentEmails) * 100 : 0;
+        $bounceRate = $totalSentEmails > 0 ? ($totalFailed / $totalSentEmails) * 100 : 0;
+
+        $data['totalEmails'] = $totalEmails;
+        $data['totalSentEmails'] = $totalSentEmails;
+        $data['totalOpened'] = $totalOpened;
+        $data['totalFailed'] = $totalFailed;
+        $data['openRate'] = $openRate;
+        $data['bounceRate'] = $bounceRate;
+
+        $formattedGraphData = [];
+
+        // Prepare the data in the desired format
+        foreach ($graphData as $date => $counts) {
+            $formattedGraphData[] = [
+                'date' => $date,
+                'emails_sent' => $counts['sent'] ?? 0,
+                'opened_emails' => $counts['opened'] ?? 0,
+                'failed_emails' => $counts['failed'] ?? 0,
+            ];
+        }
+
+        $data['graphData'] = $formattedGraphData;
+
+        return ApiResponse::success($data);
+    }
+    
 }

@@ -32,6 +32,25 @@
 
                </div>
                <div class="card-body">
+                  <h5>System Campaigns</h5>
+               <div class="table-responsive">
+                     <div class="dataTables_wrapper dt-bootstrap5 no-footer">
+                        <table class="table table-striped dataTable no-footer" role="grid" aria-describedby="user-list-table_info">
+                           <thead>
+                              <tr class="ligth">
+                                 <th class="sorting" tabindex="0" aria-controls="user-list-table">Name</th>
+                                 <th class="sorting" tabindex="0" aria-controls="user-list-table">Status</th>
+                                 <th class="sorting" tabindex="0" aria-controls="user-list-table">Action</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              @include('marketing.email.campaign.automate-pagination')
+                           </tbody>
+                        </table>
+                        <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
+                     </div>
+                  </div>
+                  <h5>Manual Campaigns</h5>
                   <div class="table-responsive">
                      <div id="user-list-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                         <table id="user-list-table" class="table table-striped dataTable no-footer" role="grid" aria-describedby="user-list-table_info">

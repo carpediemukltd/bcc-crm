@@ -25,6 +25,10 @@ class CreateMarketingCampaignsTable extends Migration
                 'paused',
                 'inprogress'
             ])->default('draft');
+            $table->enum('type', [
+                'automate',
+                'manual'
+            ])->default('manual');
             $table->string('uuid')->nullable();
             $table->softDeletes();
             $table->timestamps();

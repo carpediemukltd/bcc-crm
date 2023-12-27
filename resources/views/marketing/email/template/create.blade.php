@@ -1,7 +1,5 @@
 @extends('layout.appTheme')
 @section('content')
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-
 <div class="position-relative iq-banner default">
    <div class="iq-navbar-header" style="height: 215px;">
       <div class="container-fluid iq-container">

@@ -23,6 +23,7 @@ class MarketingCampaign extends Model
         'name',
         'status',
         'start_date',
+        'type',
         'uuid',
     ];
     protected $appends = ['total_emails', 'emails_sent', 'formatted_start_date'];

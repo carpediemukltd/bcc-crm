@@ -375,7 +375,7 @@ class UserController extends Controller
         $this->data['current_slug'] = 'Edit Contact';
         $this->data['slug']         = 'edit_user';
         $this->data['all_status']   = ['inactive', 'active', 'archived', 'deleted', 'banned'];
-
+        $auth_user = auth()->user();
         $access = Permissions::checkUserAccess($this->user, $id);
         if (!$access) {
             return redirect(route('dashboard'))->with('error', 'Access Denied.');
@@ -388,7 +388,6 @@ class UserController extends Controller
         $this->data['custom_fields'] =  CustomField::getDataByUser($id);
 
         if ($request->isMethod('put')) {
-
             $validate = [
                 'first_name' => 'required',
                 'last_name' => 'required',
@@ -441,6 +440,7 @@ class UserController extends Controller
 
                 DocumentManagerUser::whereUserId($id)->whereNotIn('document_manager_id',$request->document_types)->delete();
                 $due_date = date('Y-m-d h:m:s', strtotime(date('Y-m-d h:m:s') . ' +7 days'));
+//                echo $due_date;exit;
                 foreach ($request->document_types as $type) {
                     foreach ($request->document_types as $type) {
                         $document_exists = DocumentManagerUser::whereUserIdAndDocumentManagerId($id, $type)->first();
@@ -452,11 +452,6 @@ class UserController extends Controller
                             DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type, 'due_date' => $due_date]);
                         }
                     }
-                }
-
-                DocumentManagerUser::whereUserId($id)->delete();
-                foreach ($request->document_types as $type) {
-                    DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type]);
                 }
 
                 $user = User::whereId($id)->first();
@@ -492,7 +487,21 @@ class UserController extends Controller
                             ]
                         );
                     }
-
+                if($this->data['user']->phone_number != $update_data['phone_number']){
+                    $update_data = [
+                        'first_name'   => $request->first_name,
+                        'last_name'    => $request->last_name,
+                        'phone_number' => $request->phone_country_code." ".$request->phone_number,
+                        'status'       => $request->status,
+                    ];
+                    \App\addContactToZapier([
+                        'firstName' => $update_data['first_name'],
+                        'lastName' => $update_data['last_name'],
+                        'phone' => $update_data['phone_number'],
+                        'email' => $this->data['user']->email,
+                        'companyName' => $request->company??$auth_user->company_id
+                    ]);
+                }
                 } catch(\Exception $ex){
                     echo $ex->getMessage();
                 }

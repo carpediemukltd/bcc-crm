@@ -904,10 +904,10 @@
       //redirect to setting url
       window.location.href = window.location.origin + settingUrl;
    });
-
+   var phoneNumberInput;
    $(document).ready(function() {
       // Initialize the plugin with the user's country code.
-      var phoneNumberInput = $('#phone-number');
+      phoneNumberInput = $('#phone-number');
       var selectedCountryCodeInput = $('#selected-country-code'); // Hidden input field
 
       // Remove non-digit characters as the user types.
@@ -920,6 +920,8 @@
          separateDialCode: true,
          initialCountry: 'us', // Set the initial country to United States
          onlyCountries: ['us'], // Allow only United States
+         nationalMode: false, // Allow users to type in the international format
+         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js" // Provide the path to the utils.js script
       });
 
       // Add an event listener to update the hidden input with the selected country code.
@@ -934,7 +936,6 @@
       style.type = 'text/css';
       style.innerHTML = '.iti__country-list { display: none !important; }';
       document.head.appendChild(style);
-
    });
 </script>
 <script>
@@ -949,7 +950,7 @@
       $(".content-inner").hide();
       $("#search-container").show();
       $("#search-container .content-inner").show();
-      
+
 
 
       // Initialize an empty data object
@@ -982,7 +983,7 @@
                $(".deals-html").html('');
                $(".pipelines-html").html('');
                $(".stages-html").html('');
-               
+
                $(".contacts-html").append(response.contacts);
                $(".deals-html").append(response.deals);
                $(".pipelines-html").append(response.pipelines);
@@ -1060,10 +1061,11 @@
       $("#search-header").val('');
 
    });
-   
+
 </script>
 
 @yield('script')
+@stack('scripts')
 
 </body>
 

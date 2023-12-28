@@ -31,7 +31,7 @@
                   </div>
                </div>
                <div class="card-body">
-                  <form action="{{route('user.edit', $user->id)}}" method="POST">
+                  <form id="edit_contact" action="{{route('user.edit', $user->id)}}" method="POST" autocomplete="false">
                      @method('PUT')
                      @csrf
                      <div class="row">
@@ -61,8 +61,9 @@
                               <input type="hidden" name="phone_country_code" id="selected-country-code" >
                               <label class="form-label" for="phone_number">Phone number:</label>
                               <div class="phone-input">
-                                 <input value="{{$user->phone_number}}" name="phone_number" type="tel" id="phone-number" placeholder="Enter your phone number" class="form-control" required>
+                                 <input name="phone_number" value="{{$user->phone_number}}" type="tel" id="phone-number" placeholder="Enter your phone number" class="form-control" required>
                               </div>
+                               <span class="text-danger" id="phone_number_error">{{$errors->has('phone_number') ? $errors->first('phone_number') : '' }}</span>
                             </div>
                         </div>
                      </div>
@@ -200,5 +201,32 @@
         }
 
     })
+
+    $(document).ready(function(){
+        $('#edit_contact').submit(function (e) {
+            // Get the input value
+            var phoneNumber = $("#phone").intlTelInput("getNumber");
+
+            // Check if the phone number is valid
+            if (!$("#phone-number").intlTelInput("isValidNumber")) {
+                // Valid phone number, proceed with your form submission or other actions
+                $('#phone_number_error').html('Invalid number')
+                $("#phone-number").focus();
+                e.preventDefault();
+            } else {
+                $('#phone_number_error').html('')
+            }
+        });
+    })
 </script>
 @endsection
+@push('scripts')
+    <script async="true">
+        $(document).ready(function(){
+            setTimeout(() => {
+                var phoneNumber = '{{$user->phone_number}}';
+                phoneNumberInput.val(phoneNumber.substr(2, phoneNumber.length));
+            }, 1000)
+        })
+    </script>
+@endpush

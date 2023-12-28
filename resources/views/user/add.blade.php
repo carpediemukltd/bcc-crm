@@ -32,7 +32,7 @@
                   </div>
                </div>
                <div class="card-body">
-                  <form action="{{route('user.add')}}" method="POST">
+                  <form id="add_contact" action="{{route('user.add')}}" method="POST">
                      @csrf
                      <div class="row">
                         <div class="col">
@@ -66,9 +66,7 @@
                               <div class="phone-input">
                                  <input name="phone_number" type="tel" id="phone-number" placeholder="Enter your phone number" class="form-control" required>
                               </div>
-                              @if ($errors->has('phone_number'))
-                                 <span class="text-danger">{{ $errors->first('phone_number') }}</span>
-                              @endif
+                               <span class="text-danger" id="phone_number_error">{{$errors->has('phone_number') ? $errors->first('phone_number') : '' }}</span>
                            </div>
                         </div>
                      </div>
@@ -188,7 +186,23 @@
               }
           });
       }
+  })
 
+  $(document).ready(function(){
+      $('#add_contact').submit(function (e) {
+          // Get the input value
+          var phoneNumber = $("#phone").intlTelInput("getNumber");
+
+          // Check if the phone number is valid
+          if (!$("#phone-number").intlTelInput("isValidNumber")) {
+              // Valid phone number, proceed with your form submission or other actions
+              $('#phone_number_error').html('Invalid number')
+              $("#phone-number").focus();
+              e.preventDefault();
+          } else {
+              $('#phone_number_error').html('')
+          }
+      });
   })
    </script>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Marketing;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\AutomateBirthdayMarketingCampaign;
 use App\Jobs\MarketingCampaign as JobsMarketingCampaign;
 use App\Jobs\MarketingCampaignUser as JobsMarketingCampaignUser;
 use App\Models\Marketing\MarketingCampaign;
@@ -10,6 +11,7 @@ use App\Models\Marketing\MarketingCampaignReporting;
 use App\Models\Marketing\MarketingCampaignSequence;
 use App\Models\Marketing\MarketingCampaignUser;
 use App\Models\Marketing\MarketingEmailTemplate;
+use App\Models\Stage;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Services\ApiResponse;
@@ -25,7 +27,7 @@ class MarketingCampaignController extends Controller
      */
     public function index()
     {
-        $data = MarketingCampaign::whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->paginate(10);
+        $data = MarketingCampaign::with('stage')->whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->paginate(10);
         return view('marketing.email.campaign.index', ['data' => $data]);
     }
 
@@ -122,15 +124,15 @@ class MarketingCampaignController extends Controller
      */
     public function show($id)
     {
-        $campaign   = MarketingCampaign::with(['marketingCampaignSequence'])->find($id);
-        $data['campaign']   = $campaign;
-        $data['users']      = MarketingCampaignUser::where('marketing_campaign_id', $id)->paginate(10);
-        if($campaign->type =='automate'){
+        $campaign = MarketingCampaign::with(['marketingCampaignSequence', 'stage'])->find($id);
+        $data['campaign'] = $campaign;
+        if ($campaign->type == 'automate') {
             return view('marketing.email.campaign.automate-show', ['data' => $data]);
-        }else{
-            return view('marketing.email.campaign.show', ['data' => $data]);
         }
-        
+        $data['users'] = MarketingCampaignUser::where('marketing_campaign_id', $id)->paginate(10);
+
+        return view('marketing.email.campaign.show', ['data' => $data]);
+
     }
 
     /**
@@ -141,7 +143,13 @@ class MarketingCampaignController extends Controller
      */
     public function edit($id)
     {
-        $data['campaign']   = MarketingCampaign::with(['marketingCampaignSequence'])->find($id);
+        $campaign   = MarketingCampaign::with(['marketingCampaignSequence', 'stage'])->find($id);
+        $data['campaign'] = $campaign;
+        if ($campaign->type == 'automate') {
+            $data['stages'] = Stage::get();
+            // return $data;
+            return view('marketing.email.campaign.automate-edit', ['data' => $data]);
+        }
         $data['users']      = MarketingCampaignUser::where('marketing_campaign_id', $id)->paginate(10);
         $data['templates']  = MarketingEmailTemplate::whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->get();
         return view('marketing.email.campaign.edit', ['data' => $data]);
@@ -156,19 +164,29 @@ class MarketingCampaignController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Find the marketing campaign by ID
-        $campaign = MarketingCampaign::findOrFail($id);
-
-        // Check if the request contains a status field
-        if ($request->has('status')) {
-            // Update the campaign status
-            $campaign->status = $request->input('status');
-
+        if ($request->type == 'automate') {
+            $validator = Validator::make($request->all(), [
+                'title'         => 'required',
+                'status'        => 'required|in:active,paused', // Only allows 'active' or 'inactive'
+                'subject'       => 'required',
+                'html_content'  => 'required',
+                'stage'         => 'required|exists:stages,id', // Validate that the 'stage' exists in the 'stages' table
+            ]);
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            // Find the marketing campaign by ID
+            $campaign = MarketingCampaign::findOrFail($id);
+            $campaign->status   = $request->input('status');
+            $campaign->stage_id = $request->input('stage');
             // Save the changes
             $campaign->save();
+            if($campaign){
+                MarketingCampaignSequence::whereMarketingCampaignId($campaign->id)->update(['subject'=> $request->subject, 'body'=> $request->html_content]);
+            }
 
             // Redirect back or return a response as needed
-            return redirect()->back()->with('success', 'Campaign status updated successfully.');
+            return redirect()->back()->with('success', 'Campaign updated successfully.');
         }
     }
 
@@ -195,23 +213,6 @@ class MarketingCampaignController extends Controller
             ->orderBy('id', 'DESC')->get();
     }
 
-    public function runActiveCampaign()
-    {
-        // Get the current date and time in 'America/New_York' time zone
-        $date = Carbon::now('America/New_York');
-        // Fetch active campaigns starting from the current 'America/New_York' time
-        $campaigns = MarketingCampaign::whereStatus('active')
-            ->where('start_date', '<=', $date->toDateTimeString())
-            ->get();
-
-        // Dispatch jobs for eligible campaigns
-        if (count($campaigns)) {
-            foreach ($campaigns as $campaign) {
-                JobsMarketingCampaign::dispatch($campaign);
-                $campaign->update(['status' => 'inprogress']);
-            }
-        }
-    }
     public function marketingAnalyticsData(Request $request)
     {
         $marketingCampaignId        = request('id');
@@ -289,7 +290,7 @@ class MarketingCampaignController extends Controller
     public function marketingGlobalReporting()
     {
         $data['campaign'] = MarketingCampaign::whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->get();
-        return view('marketing.email.reporting.global-reporting', ['data'=> $data]);
+        return view('marketing.email.reporting.global-reporting', ['data' => $data]);
     }
     public function marketingGlobalReportingData()
     {
@@ -311,7 +312,6 @@ class MarketingCampaignController extends Controller
 
         foreach ($marketingCampaigns->get() as $marketingCampaign) {
             foreach ($marketingCampaign->marketingCampaignSequence as $sequence) {
-
                 foreach ($sequence->marketingCampaignReporting as $reporting) {
                     $totalEmails++;
                     $sentDate = Carbon::parse($reporting->sent_date);
@@ -364,5 +364,23 @@ class MarketingCampaignController extends Controller
 
         return ApiResponse::success($data);
     }
-    
+    public function executeActiveCampaigns()
+    {
+        // Get the current date and time in 'America/New_York' time zone
+        $date = Carbon::now('America/New_York');
+        // Fetch active campaigns starting from the current 'America/New_York' time
+        $campaigns = MarketingCampaign::whereType('manual')->whereStatus('active')
+            ->where('start_date', '<=', $date->toDateTimeString())
+            ->get();
+
+        // Dispatch jobs for eligible campaigns
+        if (count($campaigns)) {
+            foreach ($campaigns as $campaign) {
+                JobsMarketingCampaign::dispatch($campaign);
+                $campaign->update(['status' => 'inprogress']);
+            }
+        }
+        //birthday job
+        AutomateBirthdayMarketingCampaign::dispatch();
+    }    
 }

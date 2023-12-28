@@ -3,6 +3,7 @@
 namespace App\Models\Marketing;
 
 use App\Models\Company;
+use App\Models\Stage;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,6 +25,7 @@ class MarketingCampaign extends Model
         'status',
         'start_date',
         'type',
+        'stage_id',
         'uuid',
     ];
     protected $appends = ['total_emails', 'emails_sent', 'formatted_start_date'];
@@ -73,5 +75,9 @@ class MarketingCampaign extends Model
     
         // Format the date as desired
         return $carbonStartDate->format('d, M Y @ g:i A');
+    }
+    public function stage()
+    {
+        return $this->belongsTo(Stage::class);
     }
 }

@@ -56,9 +56,8 @@ class MarketingCampaign implements ShouldQueue
         if (count($campaign->marketingCampaignUser) === 0 || count($smtps) === 0) {
             return;
         }
-        $sequence = $activeSequence;
 
-        if (!$sequence) {
+        if (!$activeSequence) {
             return;
         }
        
@@ -68,10 +67,10 @@ class MarketingCampaign implements ShouldQueue
             if($user->user->dnd == '1'){
                 continue;
             }
-            $subject = $sequence->subject;
-            $body    = $sequence->body;
+            $subject = $activeSequence->subject;
+            $body    = $activeSequence->body;
 
-            $imageTracking = '<br /><img src="https://crm.lendotics.com/image/' . $user->uuid . '?sequence=' . $sequence->id . '" height="1px" width="1px" />';
+            $imageTracking = '<br /><img src="https://crm.lendotics.com/image/' . $user->uuid . '?sequence=' . $activeSequence->id . '" height="1px" width="1px" />';
             $unsubscribeUrl = env('APP_URL') . "/marketing-unsubscribe/" . $user->user->uuid;
             $dndOption = '<div style="padding:20px;"><center><a target="_blank" href="' . $unsubscribeUrl . '">Unsubscribe</a></center></div>';
             $body .= $imageTracking;
@@ -104,7 +103,7 @@ class MarketingCampaign implements ShouldQueue
                  // Create a MarketingCampaignReporting instance for the current email
                  $reporting = new MarketingCampaignReporting([
                     'user_id'                        => $user->user_id,
-                    'marketing_campaign_sequence_id' => $sequence->id,
+                    'marketing_campaign_sequence_id' => $activeSequence->id,
                     'custom_smtp_id'                 => $randomSmtp->id,
                 ]);
 

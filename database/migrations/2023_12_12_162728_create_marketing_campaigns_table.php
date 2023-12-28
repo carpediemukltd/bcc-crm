@@ -16,6 +16,7 @@ class CreateMarketingCampaignsTable extends Migration
         Schema::create('marketing_campaigns', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('company_id');
+            $table->unsignedBigInteger('stage_id')->nullable();
             $table->string('name');
             $table->dateTime('start_date');
             $table->enum('status', [
@@ -34,6 +35,7 @@ class CreateMarketingCampaignsTable extends Migration
             $table->timestamps();
             //relations
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('no action');
+            $table->foreign('stage_id')->references('id')->on('stages')->onDelete('no action');
 
         });
     }

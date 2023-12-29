@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             Users::class,
             RolesAndPermissionsSeeder::class,
             StageSeeder::class,
+            AutomateCampaignSeeder::class
         ]);
     }
 }

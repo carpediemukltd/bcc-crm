@@ -80,7 +80,6 @@
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
                      <h1>Deals Report</h1>
-                     <!-- <p>Add new deal.</p> -->
                   </div>
                </div>
             </div>

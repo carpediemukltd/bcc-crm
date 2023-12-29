@@ -8,7 +8,6 @@
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
                      <h1>BCC Help</h1>
-                     <p>Experience a simple yet powerful way to build Dashboards.</p>
                   </div>
                   <!-- <div>
                      <a href="" class="btn btn-link btn-soft-light">

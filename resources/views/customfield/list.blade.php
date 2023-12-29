@@ -9,7 +9,6 @@
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
                      <h1>Custom Fields List </h1>
-                     <p>All Custom Fields.</p>
                   </div>
                   <div>
                      <a href="{{route('customfield.add')}}" class="btn btn-link btn-soft-light">

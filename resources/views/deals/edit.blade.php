@@ -9,7 +9,6 @@
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
                      <h1>Edit Deal</h1>
-                     <p>Edit deal.</p>
                   </div>
                </div>
             </div>

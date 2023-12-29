@@ -8,7 +8,7 @@
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
                      <h1>BCC Privacy</h1>
-                     <p>This Privacy Policy outlines the data collection, use, and disclosure practices of BCC ("we," "us," or "our") in connection with our CRM services (the "Services"). <br>By using our Services, you consent to the practices described in this Privacy Policy.</p>
+                     
                   </div>
                   <!-- <div>
                      <a href="" class="btn btn-link btn-soft-light">

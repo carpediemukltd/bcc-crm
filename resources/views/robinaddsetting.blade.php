@@ -8,14 +8,7 @@
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
                      <h1>Add Robin Setting</h1>
-                     <p>Experience a simple yet powerful way to build Dashboards.</p>
                   </div>
-                  <!-- <div>
-                     <a href="#" class="btn btn-link btn-soft-light">
-                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-28"><path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                        Add New Setting
-                     </a>
-                  </div> -->
                </div>
             </div>
          </div>

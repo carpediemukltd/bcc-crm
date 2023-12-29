@@ -10,7 +10,6 @@
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
                      <h1>Edit Pipeline</h1>
-                     <p>Edit pipeline and stages.</p>
                   </div>
                </div>
             </div>

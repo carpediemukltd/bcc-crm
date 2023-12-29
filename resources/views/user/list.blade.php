@@ -8,7 +8,6 @@
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
                      <h1>Contacts List</h1>
-                     <p>All Contacts.</p>
                   </div>
                   <div>
                      <a href="{{route('user.add')}}" class="btn btn-link btn-soft-light">

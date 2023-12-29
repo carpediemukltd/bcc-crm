@@ -2074,3 +2074,9 @@ div#user_edit_view {
 .nav-item.search_bar_view.dropdown.d-xl-block {
   margin-right: 10px;
 }
+.daterangepicker .ranges li.active {
+  background-color: #00562c !important;
+}
+.daterangepicker td.active, .daterangepicker td.active:hover {
+  background-color: #00562c !important;
+}

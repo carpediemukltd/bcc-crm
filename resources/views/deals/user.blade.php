@@ -8,7 +8,6 @@
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
                      <h1>{{$user->first_name}} {{$user->last_name}}'s Deals </h1>
-                     <p>Experience a simple yet powerful way to build Dashboards.</p>
                   </div>
                   <div>
                      <a href="{{route('user.deals.add', $current_user_id)}}" class="btn btn-link btn-soft-light">

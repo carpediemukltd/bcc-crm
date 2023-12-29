@@ -9,7 +9,6 @@
                   <div>
                      <h1>Admins List</h1>
                   </div>
-                 
                </div>
             </div>
          </div>

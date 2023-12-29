@@ -945,5 +945,18 @@ class UserController extends Controller
 
         DocumentManagerUser::whereUserId($id)->update(['due_date' => $request->due_date]);
         return back()->withSuccess('Due date updated Successfully.');
+    }    
+    public function unsubscribe($uuid)
+    {
+        $user = User::whereUuid($uuid)->first();
+
+        if (!$user) {
+            abort(404, 'Oops! Something went wrong.');
+        }
+
+        $user->update(['dnd' => '1']);
+
+        return view('marketing.email.unsubscribe', compact('user'));
     }
+
 }

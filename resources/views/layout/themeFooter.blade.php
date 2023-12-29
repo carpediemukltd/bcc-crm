@@ -761,6 +761,9 @@
 <script src="{{asset('assets/js/plugins/kanban.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput-jquery.min.js"></script>
 
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
 <script>
    setTimeout(function() {

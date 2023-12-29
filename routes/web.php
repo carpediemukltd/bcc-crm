@@ -28,7 +28,12 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\ChromeExtensionController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Marketing\CustomSmtpController;
+use App\Http\Controllers\Marketing\MarketingCampaignController;
+use App\Http\Controllers\Marketing\MarketingCampaignReportingController;
+use App\Http\Controllers\Marketing\MarketingEmailTemplateController;
 use App\Http\Controllers\SearchController;
+use App\Models\Marketing\MarketingCampaignReporting;
 
 /*
 |--------------------------------------------------------------------------
@@ -176,5 +181,17 @@ Route::middleware([CheckStatus::class])->group(function () {
     });
     Route::get('search', [SearchController::class, 'show'])->name('search');
     Route::post('search', [SearchController::class, 'index']);
+    // email marketing
+    Route::resource('custom-smtps', CustomSmtpController::class);
+    Route::resource('marketing-email-templates', MarketingEmailTemplateController::class);
+    Route::resource('marketing-campaigns', MarketingCampaignController::class);
+    Route::get('marketing-search-users', [MarketingCampaignController::class, 'searchUsers']);
+    Route::get('execute-active-campaigns', [MarketingCampaignController::class, 'executeActiveCampaigns']);
+    Route::get('image/{userUuid}', [MarketingCampaignReportingController::class, 'emailOpen'])->name('emailOpen');
+    Route::get('marketing-analytics-data', [MarketingCampaignController::class, 'marketingAnalyticsData']);
+    Route::get('marketing-campaign-users/{id}', [MarketingCampaignController::class, 'marketingCampaignUsers']);
+    Route::get('marketing-unsubscribe/{uuid}', [UserController::class, 'unsubscribe']);
+    Route::get('marketing-global-reporting', [MarketingCampaignController::class, 'marketingGlobalReporting'])->name('marketingGlobalReporting');
+    Route::get('marketing-global-reporting-data', [MarketingCampaignController::class, 'marketingGlobalReportingData']);
 
 });

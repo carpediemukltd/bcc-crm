@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Permissions;
+use App\Jobs\AutomateDealReceivedMarketingCampaign;
 use App\Jobs\SendNotification;
 use App\Models\Activity;
 use App\Models\User;
@@ -238,6 +239,7 @@ class DealController extends Controller
                 }
             }
             SendNotification::dispatch(['id' => $deal->id, 'type' => 'deal_added']);
+            AutomateDealReceivedMarketingCampaign::dispatch($deal);
             return redirect(route('user.deals', [$id]))->withSuccess('Deal Created Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
             $this->data['current_slug'] = 'Add Deal';
@@ -287,7 +289,8 @@ class DealController extends Controller
                     );
                 }
             }
-
+            $deal = Deal::find($id);
+            AutomateDealReceivedMarketingCampaign::dispatch($deal);
             return redirect(route('user.deals', [$user_id]))->withSuccess('Deal Update Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
             $this->data['current_slug'] = 'Edit Deal';

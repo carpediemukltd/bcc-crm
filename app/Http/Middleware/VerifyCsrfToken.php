@@ -12,7 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        'api/email-template/add',
         '/webhook/kixie/call',
         '/webhook/kixie/sms'
     ];

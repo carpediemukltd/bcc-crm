@@ -2,34 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DocumentGroup;
-use App\Models\DocumentManager;
+use Mail;
+use Carbon\Carbon;
+use App\Models\Deal;
 use App\Models\Note;
 use App\Models\User;
-use App\Models\Deal;
-use App\Models\UserAssignBankUser;
+use App\Models\Stage;
+use App\Models\Company;
+use Twilio\Rest\Client;
+use App\Models\Activity;
+use App\Models\Documents;
 use App\Models\UserOwner;
+use App\Models\CustomField;
 use App\Models\UserDetails;
 use App\Helpers\Permissions;
-use App\Jobs\SendNotification;
-use App\Models\Activity;
-use App\Models\Company;
-use App\Models\CustomField;
-use App\Models\DocumentManagerUser;
-use App\Models\Documents;
 use Illuminate\Http\Request;
+use App\Models\DocumentGroup;
+use App\Jobs\SendNotification;
+use App\Models\ConversationLog;
+use App\Models\DocumentManager;
 use App\Models\RoundRobinSetting;
-use App\Models\Stage;
+use App\Models\UserAssignBankUser;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
+use App\Models\DocumentManagerUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use Carbon\Carbon;
-use Mail;
-use Twilio\Rest\Client;
 
 class UserController extends Controller
 {
@@ -288,6 +289,7 @@ class UserController extends Controller
         $this->data['id'] = $id;
         $this->data['user'] = User::with('documentManagers')->where(['id' => $id])->first();
         $this->data['notes'] = Note::getNotesByUser($id);
+        $this->data['emails'] = ConversationLog::getConversationByUser($id);
         $this->data['deals'] = Deal::getDealsByUser($id, 0);
         $this->data['custom_fields'] =  CustomField::getDataByUser($id);
 

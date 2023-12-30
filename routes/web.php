@@ -27,6 +27,7 @@ use App\Http\Controllers\CustomFieldController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\ChromeExtensionController;
+use App\Http\Controllers\ConversationLogController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\WebhookController;
@@ -54,6 +55,7 @@ Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPassw
 Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
 Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+Route::get('conversation/track/{tracking_hash}', [ConversationLogController::class,'trackConversation']);
 
 Route::get('/magic-link/{contact_id}', [MagicLinkController::class, 'generateLink'])->name('magic.link.generate');
 Route::get('/magic-link/view/{token}', [MagicLinkController::class, 'viewLink'])->name('magic.link.view');

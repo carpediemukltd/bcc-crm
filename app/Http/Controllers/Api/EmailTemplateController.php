@@ -23,9 +23,23 @@ class EmailTemplateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function addEmailTemplate(Request $request)
     {
-        //
+        if ($request->isMethod('post')) {
+
+            if (empty($request->subject)) {
+                return redirect()->back()->withError('Subject can not be empty.')->withInput();
+            }
+
+            if (empty($request->body)) {
+                return redirect()->back()->withError('Body can not be empty.')->withInput();
+            }
+
+            $body = str_replace("\n", '<br />', $request->body);
+            $data = EmailTemplate::create(['subject' => $request->subject, 'body' => $body]);
+
+            return response(['message' => 'success', 'data' => EmailTemplate::where('id', $data->id)->first()]);
+        }
     }
 
     /**

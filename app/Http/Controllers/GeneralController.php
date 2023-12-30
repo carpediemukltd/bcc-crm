@@ -1,82 +1,141 @@
 <?php
 
- namespace App\Http\Controllers;
+namespace App\Http\Controllers;
 
- use Illuminate\Http\Request;
- use App\Models\User;
+use App\Jobs\CleanDummyData;
+use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Validator;
 
- class GeneralController extends Controller
- {
-   public function privacySetting(){
+class GeneralController extends Controller
+{
+   public function privacySetting()
+   {
       $this->data['current_slug'] = 'Privacy Setting';
       return view('privacysetting', $this->data);
    } //privacySetting
-   
 
-   public function userList(){
+
+   public function userList()
+   {
       return view('general.userlist');
    }
 
-   public function userProfile(){
+   public function userProfile()
+   {
       return view('general.userprofile');
    }
 
-   public function userAdd(){
+   public function userAdd()
+   {
       return view('general.useradd');
    }
 
-   public function userForm(){
+   public function userForm()
+   {
       return view('general.userform');
    }
 
-   public function userTable(){
+   public function userTable()
+   {
       return view('general.usertable');
    }
 
-   public function contactDetails(){
+   public function contactDetails()
+   {
       return view('general.contactdetails');
    }
-   
-   public function outlinedIcon(){
+
+   public function outlinedIcon()
+   {
       return view('general.outlinedicon');
    }
-   public function stagesCard(){
+   public function stagesCard()
+   {
       return view('general.stagescard');
    }
-   public function dealsListing(){
+   public function dealsListing()
+   {
       return view('general.dealslisting');
    }
-   public function companyOnboarding(){
+   public function companyOnboarding()
+   {
       return view('general.companyOnboarding');
    }
-   public function dynamicBanner(){
+   public function dynamicBanner()
+   {
       return view('general.dynamicbanner');
    }
-   public function help(){
+   public function help()
+   {
       return view('help');
    }
-   public function contact(){
+   public function contact()
+   {
       return view('contact');
    }
-   public function about(){
+   public function about()
+   {
       return view('about');
    }
-   public function robinsetting(){
+   public function robinsetting()
+   {
       return view('robinsetting');
    }
-   public function editsetting(){
+   public function editsetting()
+   {
       return view('editsetting');
    }
-   public function robinaddsetting(){
+   public function robinaddsetting()
+   {
       return view('robinaddsetting');
    }
-   public function boardview(){
+   public function boardview()
+   {
       return view('boardview');
    }
-   public function dealsboardview(){
+   public function dealsboardview()
+   {
       return view('dealsboardview');
    }
-   public function searchingBar(){
+   public function searchingBar()
+   {
       return view('searching-bar');
    }
- }
+   public function getCleanDummyData()
+   {
+      return view('admin.clean-data');
+   }
+
+   public function postCleanDummyData(Request $request)
+   {
+      $validator = Validator::make($request->all(), [
+         'column'    => 'required|in:first_name,last_name,email,phone_number,status,created_at',
+         'operators' => 'required|in:=,!=,<,<=,>,>=,contains,starts_with,ends_with',
+         'value'     => 'required',
+      ]);
+
+      if ($validator->fails()) {
+         return response()->json(['error' => $validator->errors()], 403);
+      }
+
+      // Get form data
+      $column     = $request->input('column');
+      $operator   = $request->input('operators');
+      $value      = $request->input('value');
+      $userEmail  = auth()->user()->email;
+
+      // Dispatch the job with form data
+      $data = [
+         'column'    => $column,
+         'operator'  => $operator,
+         'value'     => $value,
+         'userEmail' => $userEmail,
+      ];
+
+      CleanDummyData::dispatch($data);
+
+      return redirect()->back()->with('success', 'You will be notified on you email address once data is erased successfully!');
+   }
+}

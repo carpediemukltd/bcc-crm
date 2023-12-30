@@ -265,19 +265,17 @@
                                  </svg>
                                  <p>{{date('d-m-Y h:i:s', strtotime($activeities->created_at));}}</p>
                               </small>
-                              @foreach($userRecord as $userrecord)
-                              @if($activeities->user_id == $userrecord->id)
+                            
                               <div class="d-inline-block w-100">
                                  <small class="float-right mt-1">
                                     <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M7.67 2H16.34C19.73 2 22 4.38 22 7.92V16.091C22 19.62 19.73 22 16.34 22H7.67C4.28 22 2 19.62 2 16.091V7.92C2 4.38 4.28 2 7.67 2ZM11.43 14.99L16.18 10.24C16.52 9.9 16.52 9.35 16.18 9C15.84 8.66 15.28 8.66 14.94 9L10.81 13.13L9.06 11.38C8.72 11.04 8.16 11.04 7.82 11.38C7.48 11.72 7.48 12.27 7.82 12.62L10.2 14.99C10.37 15.16 10.59 15.24 10.81 15.24C11.04 15.24 11.26 15.16 11.43 14.99Z" fill="currentColor"></path>
                                     </svg>
                                     <b>Created By :</b>
-                                    <p>{{$userrecord->first_name}} {{$userrecord->last_name}}</p>
+                                    <p>{{$activeities->user->full_name}}</p>
                                  </small>
                               </div>
-                            @endif
-                              @endforeach
+                           
                               @endif
                               @endforeach
 
@@ -309,20 +307,18 @@
                                  </svg>
                                  <p>{{date('d-m-Y h:i:s', strtotime($activeities->created_at));}}</p>
                               </small>
-                              @foreach($userRecord as $userrecord)
-                              @if($activeities->user_id == $userrecord->id)
+                             
                               <div class="d-inline-block w-100">
                                  <small class="float-right mt-1">
                                     <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M7.67 2H16.34C19.73 2 22 4.38 22 7.92V16.091C22 19.62 19.73 22 16.34 22H7.67C4.28 22 2 19.62 2 16.091V7.92C2 4.38 4.28 2 7.67 2ZM11.43 14.99L16.18 10.24C16.52 9.9 16.52 9.35 16.18 9C15.84 8.66 15.28 8.66 14.94 9L10.81 13.13L9.06 11.38C8.72 11.04 8.16 11.04 7.82 11.38C7.48 11.72 7.48 12.27 7.82 12.62L10.2 14.99C10.37 15.16 10.59 15.24 10.81 15.24C11.04 15.24 11.26 15.16 11.43 14.99Z" fill="currentColor"></path>
                                     </svg>
                                     <b>Created By :</b>
-                                    <p>{{$userrecord->first_name}}</p>
-                                    <p>{{$userrecord->last_name}}</p>
+                                   
+                                    <p>{{$activeities->user->full_name}}</p>
                                  </small>
                               </div>
-                              @endif
-                              @endforeach
+                             
                               @endif
                               @endforeach
                                           </div>
@@ -353,16 +349,14 @@
                                  </svg>
                                  <p>{{date('d-m-Y h:i:s', strtotime($activeities->created_at));}} </p>
                               </small>
-                              @foreach($userRecord as $userrecord)
-                              @if($activeities->user_id == $userrecord->id)
+                             
                               <div class="d-inline-block w-100">
                                  <small class="float-right mt-1">
                                     <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M7.67 2H16.34C19.73 2 22 4.38 22 7.92V16.091C22 19.62 19.73 22 16.34 22H7.67C4.28 22 2 19.62 2 16.091V7.92C2 4.38 4.28 2 7.67 2ZM11.43 14.99L16.18 10.24C16.52 9.9 16.52 9.35 16.18 9C15.84 8.66 15.28 8.66 14.94 9L10.81 13.13L9.06 11.38C8.72 11.04 8.16 11.04 7.82 11.38C7.48 11.72 7.48 12.27 7.82 12.62L10.2 14.99C10.37 15.16 10.59 15.24 10.81 15.24C11.04 15.24 11.26 15.16 11.43 14.99Z" fill="currentColor"></path>
                                     </svg>
                                     <b>Created By :</b>
-                                    <p>{{$userrecord->first_name}}</p>
-                                    <p>{{$userrecord->last_name}}</p>
+                                    <p>{{$activeities->user->full_name}}</p>
                                  </small>
                               </div>
                               <div class="d-inline-block w-100">
@@ -371,8 +365,7 @@
                                     <p>{{$activeities->details}} </p>
                                  </small>
                               </div>
-                              @endif
-                              @endforeach
+                             
                               @endif
                               @endforeach
                                        </div>
@@ -403,20 +396,17 @@
                                  </svg>
                                  <p>{{date('d-m-Y h:i:s', strtotime($activeities->created_at));}}</p>
                               </small>
-                              @foreach($userRecord as $userrecord)
-                              @if($activeities->user_id == $userrecord->id)
+                             
                               <div class="d-inline-block w-100">
                                  <small class="float-right mt-1">
                                     <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M7.67 2H16.34C19.73 2 22 4.38 22 7.92V16.091C22 19.62 19.73 22 16.34 22H7.67C4.28 22 2 19.62 2 16.091V7.92C2 4.38 4.28 2 7.67 2ZM11.43 14.99L16.18 10.24C16.52 9.9 16.52 9.35 16.18 9C15.84 8.66 15.28 8.66 14.94 9L10.81 13.13L9.06 11.38C8.72 11.04 8.16 11.04 7.82 11.38C7.48 11.72 7.48 12.27 7.82 12.62L10.2 14.99C10.37 15.16 10.59 15.24 10.81 15.24C11.04 15.24 11.26 15.16 11.43 14.99Z" fill="currentColor"></path>
                                     </svg>
                                     <b>Created By :</b>
-                                    <p>{{$userrecord->first_name}}</p>
-                                    <p>{{$userrecord->last_name}}</p>
+                                    <p>{{$activeities->user->full_name}}</p>
                                  </small>
                               </div>
-                              @endif
-                              @endforeach
+                             
                               @endif
                               @endforeach
                               @foreach($customFieldDetails as $customFieldDetails)
@@ -688,6 +678,9 @@
                   @endforeach
                </select>
             </div>
+            {{$bankusers->links()}}
+            <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
+
          </div>
          <div class="modal-footer">
             <button disabled type="button" class="btn btn-primary" id="send_email_notification"><i class="fa fa-envelope"></i> Send Email Notification</button>
@@ -782,6 +775,34 @@
 <script type="text/javascript">
 
    $(document).ready(function(){
+      //ajax pagination
+      $('li.page-item.disabled[aria-label="« Previous"]').remove();
+
+      $('body').on('click', '.page-item a', function(event){
+         event.preventDefault();
+
+         $("span.page-link").closest(".page-item").append('<a class="page-link" href="?page=1">1</a>');
+         $("span.page-link").remove();
+
+         $(".page-item").removeClass('active');
+         $(this).closest('.page-item').addClass('active');
+         var page = $(this).attr('href').split('page=')[1];
+         $('#hidden_page').val(page);
+         getBankUsers();
+      });
+
+      function getBankUsers(){
+        var page = $('#hidden_page').val();
+         $.ajax({
+               url: "?requestType=ajax-bank-users&page="+page,
+               success:function(data){
+                  $('#bank_users').html('');
+                  $('#bank_users').html(data);
+               }
+         });
+   } // get_users_data
+
+      // end ajax pagination
        $(document).on('click', '#viewBCCPortal', function(){
            // $('#TestModal').modal('show');
            var userid     = $(this).data("userid");

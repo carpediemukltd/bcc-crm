@@ -8,7 +8,6 @@
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
                      <h1>Edit Custom Field</h1>
-                     <p>You can edit this Custom Field.</p>
                   </div>
                </div>
             </div>

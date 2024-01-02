@@ -9,7 +9,13 @@
                   <div>
                      <h1>Campaigns List</h1>
                   </div>
-
+                  <div class="header-title">
+                     <a href="{{route('marketing-campaigns.create')}}" class="btn btn-link btn-soft-light">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-28">
+                        <path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg> Create New Campaign
+                     </a>
+                  </div>
                </div>
             </div>
          </div>
@@ -25,12 +31,6 @@
       <div class="row">
          <div class="col-sm-12">
             <div class="card">
-               <div class="card-header align-items-center d-flex justify-content-between">
-                  <div class="header-title">
-                     <p><a href="{{route('marketing-campaigns.create')}}" class="btn btn-success">Create New Campaign</a></p>
-                  </div>
-
-               </div>
                <div class="card-body">
                   <h5>System Campaigns</h5>
                <div class="table-responsive">
@@ -40,7 +40,7 @@
                               <tr class="ligth">
                                  <th class="sorting" tabindex="0" aria-controls="user-list-table">Name</th>
                                  <th class="sorting" tabindex="0" aria-controls="user-list-table">Status</th>
-                                 <th class="sorting" tabindex="0" aria-controls="user-list-table">Action</th>
+                                 <th class="sorting text-center" tabindex="0" aria-controls="user-list-table">Action</th>
                               </tr>
                            </thead>
                            <tbody>
@@ -50,7 +50,7 @@
                         <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
                      </div>
                   </div>
-                  <h5>Manual Campaigns</h5>
+                  <h5 class="mt-4 mb-2">Manual Campaigns</h5>
                   <div class="table-responsive">
                      <div id="user-list-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                         <table id="user-list-table" class="table table-striped dataTable no-footer" role="grid" aria-describedby="user-list-table_info">

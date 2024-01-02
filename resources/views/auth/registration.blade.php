@@ -124,6 +124,7 @@
                                     </div>
                                  </div>
                                  <div class="d-flex justify-content-center">
+                                    <a href="{{ route('login') }}" class="btn btn-primary">Back to Login</a>
                                     <button type="submit" class="btn btn-primary">Sign Up</button>
                                  </div>
                                  <!-- <p class="text-center my-3">or sign in with other accounts?</p>

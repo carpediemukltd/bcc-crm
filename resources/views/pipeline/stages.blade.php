@@ -8,7 +8,6 @@
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
                      <h1>Stages </h1>
-                     <p>Experience a simple yet powerful way to build Dashboard</p>
                   </div>
                </div>
             </div>

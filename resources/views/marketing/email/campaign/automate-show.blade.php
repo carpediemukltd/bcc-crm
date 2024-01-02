@@ -43,7 +43,7 @@
 
                         </div>
 
-                        <div class="col-sm-8 pt-5">
+                        <div class="col-sm-10 pt-5">
                             <label class="form-label" for="html_content">Content</label>
                             <textarea id="html_content" name="html_content" rows="4" cols="100" class="form-control tiny-integerate">{{$data['campaign']->marketingCampaignSequence[0]->body}}</textarea>
                             @error('html_content')

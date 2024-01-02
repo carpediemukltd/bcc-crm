@@ -114,7 +114,7 @@
                      </div>
 
                      <div class="row">
-                        <div class="col">
+                        <div class="col text-right">
                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                      </div>

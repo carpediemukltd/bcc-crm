@@ -60,7 +60,7 @@
                            </div>
                            <!--logo End-->                        
                         </a>
-                        <h2 class="mb-2">Reset Password</h2>
+                        <h2 class="mb-2">Reset Password h</h2>
                         <p>Enter your email address and we'll send you an email with instructions to reset your password.</p>
                         @include('alert_message')
                         
@@ -77,6 +77,7 @@
                                  </div>
                               </div>
                            </div>
+                           <a href="{{ route('login') }}" class="btn btn-primary">Back to Login</a>
                            <button type="submit" class="btn btn-primary">Reset</button>
                         </form>
                      </div>

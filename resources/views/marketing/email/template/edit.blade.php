@@ -30,7 +30,7 @@
                             @csrf
                             @method('PUT')
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label" for="name">Template Name:</label>
                                         <input type="text" class="form-control" id="name" name="name" value="{{$data->name}}" required>
@@ -39,7 +39,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label" for="email_subject">Email Subject:</label>
                                         <input type="text" class="form-control" id="email_subject" name="email_subject" value="{{$data->email_subject}}" required>
@@ -59,9 +59,9 @@
                                     @enderror
                                 </div>
                             </div>
-                            <br><br><br>
+                            <br>
                             <div class="row">
-                                <div class="col">
+                                <div class="col text-right">
                                     <button type="submit" class="btn btn-primary">Update</button>
                                 </div>
                             </div>

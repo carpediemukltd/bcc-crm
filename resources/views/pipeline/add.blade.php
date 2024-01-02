@@ -9,7 +9,6 @@
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
                      <h1>Add Pipeline</h1>
-                     <p>Add new pipeline and stages.</p>
                   </div>
                </div>
             </div>

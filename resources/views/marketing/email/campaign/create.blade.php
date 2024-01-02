@@ -24,38 +24,32 @@
       <div class="row">
          <div class="col-sm-12">
             <div class="card">
-               <div class="card-header align-items-center d-flex justify-content-between">
+               <!-- <div class="card-header">
                   <div class="header-title">
-                     <h4 class="card-title">Campaign Create</h4>
+                     <h4 class="card-title text-center">Let's create a new campaign</h4>
                   </div>
-               </div>
+               </div> -->
                <div class="card-body">
+                  <div class="steps_view_integrate">
                   <!-- Step Navigation -->
                   <div class="row mb-4">
                      <div class="col-sm-12">
                         <ul class="list-inline d-flex justify-content-between">
                            <li class="list-inline-item step" id="step1">
-                              <span>1. Basic</span>
+                              <span>1</span>
                            </li>
                            <li class="list-inline-item step" id="step2">
-                              <span>2. Import Contacts</span>
+                              <span>2</span>
                            </li>
                            <li class="list-inline-item step" id="step3">
-                              <span>3. Sequences</span>
+                              <span>3</span>
                            </li>
                            <li class="list-inline-item step" id="step4">
-                              <span>4. Finish</span>
+                              <span>4</span>
                            </li>
                         </ul>
 
-                        <span style="float: right;" id="nextBtn" class="cursor-pointer mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
-                              <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" />
-                           </svg></span>
-                        <span style="float: right;" id="previousBtn" class="cursor-pointer mr-2">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
-                              <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
-                           </svg>
-                        </span>
+                        
                      </div>
                   </div>
 
@@ -67,8 +61,8 @@
                      <div class="row step1">
                         <div class="col">
                            <div class="form-group">
-                              <label class="form-label">Give your Campaign name</label>
-                              <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}" required>
+                              <label class="form-label">Let's create a new campaign</label>
+                              <input type="text" class="form-control" placeholder="Campaign Name" id="title" name="title" value="{{ old('title') }}" required>
                               @error('title')
                               <span class="text-danger">{{ $message }}</span>
                               @enderror
@@ -78,7 +72,7 @@
                      </div>
                      <div class="row step2">
                         <div class="col">
-                           <label class="form-label" for="contacts">Contacts</label>
+                           <label class="form-label" for="contacts">Import Contacts</label>
                            <select class="form-control" name="select_type" id="contacts">
                               <option value="all">All Contacts</option>
                               <option value="targeted-contacts">Targeted Contacts</option>
@@ -91,7 +85,7 @@
                            <!-- Your search form -->
                            <input class="form-control" type="text" id="searchQuery" name="searchQuery" placeholder="Search Contacts">
 
-                           <div id="selectedContacts" style="max-height: 200px; overflow-y: auto; border: 1px solid #ced4da; padding: 5px;"></div>
+                           <div id="selectedContacts" style="max-height: 200px; overflow-y: auto; border: 1px solid #ced4da; padding: 5px 5px 0;"></div>
 
                            <div class="selected-contacts-container" style="max-height: 200px; overflow-y: auto; border: 1px solid #ced4da; padding: 5px;"></div>
                            <input class="contacts-input" type="hidden" name="contacts">
@@ -160,7 +154,19 @@
                            <button type="submit" class="btn btn-primary">Finish</button>
                         </div>
                      </div>
-
+                     <div class="text-right">
+                        
+                        <span id="previousBtn" class="cursor-pointer mt-4 mr-2">
+                        <svg style="transform: rotate(180deg);" xmlns="http://www.w3.org/2000/svg" width="13" height="12" viewBox="0 0 13 12" fill="none"><path d="M1.5522 12C1.82039 12 2.08998 11.8962 2.29498 11.6887L7.1911 6.75669C7.38908 6.55628 7.5 6.2848 7.5 6.00053C7.5 5.71769 7.38908 5.44621 7.1911 5.2458L2.29498 0.310919C1.88357 -0.104112 1.21803 -0.104112 0.806624 0.313761C0.396625 0.731634 0.398029 1.40677 0.809432 1.8218L4.95576 6.00053L0.809432 10.1793C0.398029 10.5943 0.396625 11.268 0.806624 11.6859C1.01162 11.8962 1.28262 12 1.5522 12Z" fill="white"></path><path d="M6.5522 12C6.82039 12 7.08998 11.8962 7.29498 11.6887L12.1911 6.75669C12.3891 6.55628 12.5 6.2848 12.5 6.00053C12.5 5.71769 12.3891 5.44621 12.1911 5.2458L7.29498 0.310919C6.88357 -0.104112 6.21803 -0.104112 5.80662 0.313761C5.39662 0.731634 5.39803 1.40677 5.80943 1.8218L9.95576 6.00053L5.80943 10.1793C5.39803 10.5943 5.39662 11.268 5.80662 11.6859C6.01162 11.8962 6.28262 12 6.5522 12Z" fill="white"></path></svg>
+                           
+                           Back
+                        </span>
+                        <span id="nextBtn" class="cursor-pointer mt-4 ml-2">
+                           Next
+                           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" viewBox="0 0 13 12" fill="none"><path d="M1.5522 12C1.82039 12 2.08998 11.8962 2.29498 11.6887L7.1911 6.75669C7.38908 6.55628 7.5 6.2848 7.5 6.00053C7.5 5.71769 7.38908 5.44621 7.1911 5.2458L2.29498 0.310919C1.88357 -0.104112 1.21803 -0.104112 0.806624 0.313761C0.396625 0.731634 0.398029 1.40677 0.809432 1.8218L4.95576 6.00053L0.809432 10.1793C0.398029 10.5943 0.396625 11.268 0.806624 11.6859C1.01162 11.8962 1.28262 12 1.5522 12Z" fill="white"></path><path d="M6.5522 12C6.82039 12 7.08998 11.8962 7.29498 11.6887L12.1911 6.75669C12.3891 6.55628 12.5 6.2848 12.5 6.00053C12.5 5.71769 12.3891 5.44621 12.1911 5.2458L7.29498 0.310919C6.88357 -0.104112 6.21803 -0.104112 5.80662 0.313761C5.39662 0.731634 5.39803 1.40677 5.80943 1.8218L9.95576 6.00053L5.80943 10.1793C5.39803 10.5943 5.39662 11.268 5.80662 11.6859C6.01162 11.8962 6.28262 12 6.5522 12Z" fill="white"></path></svg>
+                        </span>
+                     </div>
+               </div>
                </div>
             </div>
          </div>

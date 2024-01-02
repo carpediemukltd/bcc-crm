@@ -8,7 +8,6 @@
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
                      <h1>Company List</h1>
-                     <p>All Companies.</p>
                   </div>
                </div>
             </div>

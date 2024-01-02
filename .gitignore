@@ -16,4 +16,5 @@ yarn-error.log
 /.vscode
 .rnd
 /public/profile_images
+/public/csv/imports
 /public/csv/

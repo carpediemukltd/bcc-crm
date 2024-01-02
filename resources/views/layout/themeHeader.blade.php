@@ -111,29 +111,13 @@
                                     <a class="nav-link <?php if(isset($slug) && in_array($slug, ['add_user', 'user_list', 'edit_user', 'user_details', 'user_deals', 'user_add_deal', 'user_edit_deal']) && !isset($_GET['type'])){echo 'active';}?>" data-bs-toggle="dropdown" href="#sidebar-user" role="button" aria-expanded="false"
                                        aria-controls="sidebar-special">
                                        <i class="icon">
-                                          <svg width="20" class="icon-20" viewBox="0 0 24 24" fill="none" xmlns="">
-                                             <path
-                                                d="M11.9488 14.54C8.49884 14.54 5.58789 15.1038 5.58789 17.2795C5.58789 19.4562 8.51765 20.0001 11.9488 20.0001C15.3988 20.0001 18.3098 19.4364 18.3098 17.2606C18.3098 15.084 15.38 14.54 11.9488 14.54Z"
-                                                fill="currentColor"></path>
-                                             <path opacity="0.4"
-                                                d="M11.949 12.467C14.2851 12.467 16.1583 10.5831 16.1583 8.23351C16.1583 5.88306 14.2851 4 11.949 4C9.61293 4 7.73975 5.88306 7.73975 8.23351C7.73975 10.5831 9.61293 12.467 11.949 12.467Z"
-                                                fill="currentColor"></path>
-                                             <path opacity="0.4"
-                                                d="M21.0881 9.21923C21.6925 6.84176 19.9205 4.70654 17.664 4.70654C17.4187 4.70654 17.1841 4.73356 16.9549 4.77949C16.9244 4.78669 16.8904 4.802 16.8725 4.82902C16.8519 4.86324 16.8671 4.90917 16.8895 4.93889C17.5673 5.89528 17.9568 7.0597 17.9568 8.30967C17.9568 9.50741 17.5996 10.6241 16.9728 11.5508C16.9083 11.6462 16.9656 11.775 17.0793 11.7948C17.2369 11.8227 17.3981 11.8371 17.5629 11.8416C19.2059 11.8849 20.6807 10.8213 21.0881 9.21923Z"
-                                                fill="currentColor"></path>
-                                             <path
-                                                d="M22.8094 14.817C22.5086 14.1722 21.7824 13.73 20.6783 13.513C20.1572 13.3851 18.747 13.205 17.4352 13.2293C17.4155 13.232 17.4048 13.2455 17.403 13.2545C17.4003 13.2671 17.4057 13.2887 17.4316 13.3022C18.0378 13.6039 20.3811 14.916 20.0865 17.6834C20.074 17.8032 20.1698 17.9068 20.2888 17.8888C20.8655 17.8059 22.3492 17.4853 22.8094 16.4866C23.0637 15.9589 23.0637 15.3456 22.8094 14.817Z"
-                                                fill="currentColor"></path>
-                                             <path opacity="0.4"
-                                                d="M7.04459 4.77973C6.81626 4.7329 6.58077 4.70679 6.33543 4.70679C4.07901 4.70679 2.30701 6.84201 2.9123 9.21947C3.31882 10.8216 4.79355 11.8851 6.43661 11.8419C6.60136 11.8374 6.76343 11.8221 6.92013 11.7951C7.03384 11.7753 7.09115 11.6465 7.02668 11.551C6.3999 10.6234 6.04263 9.50765 6.04263 8.30991C6.04263 7.05904 6.43303 5.89462 7.11085 4.93913C7.13234 4.90941 7.14845 4.86348 7.12696 4.82926C7.10906 4.80135 7.07593 4.78694 7.04459 4.77973Z"
-                                                fill="currentColor"></path>
-                                             <path
-                                                d="M3.32156 13.5127C2.21752 13.7297 1.49225 14.1719 1.19139 14.8167C0.936203 15.3453 0.936203 15.9586 1.19139 16.4872C1.65163 17.4851 3.13531 17.8066 3.71195 17.8885C3.83104 17.9065 3.92595 17.8038 3.91342 17.6832C3.61883 14.9167 5.9621 13.6046 6.56918 13.3029C6.59425 13.2885 6.59962 13.2677 6.59694 13.2542C6.59515 13.2452 6.5853 13.2317 6.5656 13.2299C5.25294 13.2047 3.84358 13.3848 3.32156 13.5127Z"
-                                                fill="currentColor"></path>
-                                          </svg>
+                                       <svg class="icon-20" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <path d="M17.9028 8.85107L13.4596 12.4641C12.6201 13.1301 11.4389 13.1301 10.5994 12.4641L6.11865 8.85107" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M16.9089 21C19.9502 21.0084 22 18.5095 22 15.4384V8.57001C22 5.49883 19.9502 3 16.9089 3H7.09114C4.04979 3 2 5.49883 2 8.57001V15.4384C2 18.5095 4.04979 21.0084 7.09114 21H16.9089Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+  </svg>
                                        </i>
                                        <span class="item-name">Email</span>
-                                       <i class="right-icon">
+                                       <i class="right-icon arrow_right_icons">
                                           <svg xmlns="" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
                                              stroke="currentColor">
                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -163,21 +147,10 @@
                                           <a class="nav-link <?php if(isset($slug) && $slug == 'user_list'){echo 'active';}?>"
                                              href="{{route('marketing-email-templates.index')}}">
                                              <i class="icon">
-                                                <svg width="20" class="icon-20" height="20" viewBox="0 0 24 24" fill="none"
-                                                   xmlns="">
-                                                   <path opacity="0.4"
-                                                      d="M16.6756 2H7.33333C3.92889 2 2 3.92889 2 7.33333V16.6667C2 20.0711 3.92889 22 7.33333 22H16.6756C20.08 22 22 20.0711 22 16.6667V7.33333C22 3.92889 20.08 2 16.6756 2Z"
-                                                      fill="currentColor"></path>
-                                                   <path
-                                                      d="M7.36866 9.3689C6.91533 9.3689 6.54199 9.74223 6.54199 10.2045V17.0756C6.54199 17.5289 6.91533 17.9022 7.36866 17.9022C7.83088 17.9022 8.20421 17.5289 8.20421 17.0756V10.2045C8.20421 9.74223 7.83088 9.3689 7.36866 9.3689Z"
-                                                      fill="currentColor"></path>
-                                                   <path
-                                                      d="M12.0352 6.08887C11.5818 6.08887 11.2085 6.4622 11.2085 6.92442V17.0755C11.2085 17.5289 11.5818 17.9022 12.0352 17.9022C12.4974 17.9022 12.8707 17.5289 12.8707 17.0755V6.92442C12.8707 6.4622 12.4974 6.08887 12.0352 6.08887Z"
-                                                      fill="currentColor"></path>
-                                                   <path
-                                                      d="M16.6398 12.9956C16.1775 12.9956 15.8042 13.3689 15.8042 13.8312V17.0756C15.8042 17.5289 16.1775 17.9023 16.6309 17.9023C17.0931 17.9023 17.4664 17.5289 17.4664 17.0756V13.8312C17.4664 13.3689 17.0931 12.9956 16.6398 12.9956Z"
-                                                      fill="currentColor"></path>
-                                                </svg>
+                                             <svg fill="none" class="icon-20" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M21.419 15.732C21.419 19.31 19.31 21.419 15.732 21.419H7.95C4.363 21.419 2.25 19.31 2.25 15.732V7.932C2.25 4.359 3.564 2.25 7.143 2.25H9.143C9.861 2.251 10.537 2.588 10.967 3.163L11.88 4.377C12.312 4.951 12.988 5.289 13.706 5.29H16.536C20.123 5.29 21.447 7.116 21.447 10.767L21.419 15.732Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M7.48145 14.4629H16.2164" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+  </svg>
                                              </i>
                                              <span class="item-name">Email Templates</span>
                                           </a>
@@ -186,21 +159,9 @@
                                           <a class="nav-link <?php if(isset($slug) && $slug == 'user_list'){echo 'active';}?>"
                                              href="{{route('marketing-campaigns.index')}}">
                                              <i class="icon">
-                                                <svg width="20" class="icon-20" height="20" viewBox="0 0 24 24" fill="none"
-                                                   xmlns="">
-                                                   <path opacity="0.4"
-                                                      d="M16.6756 2H7.33333C3.92889 2 2 3.92889 2 7.33333V16.6667C2 20.0711 3.92889 22 7.33333 22H16.6756C20.08 22 22 20.0711 22 16.6667V7.33333C22 3.92889 20.08 2 16.6756 2Z"
-                                                      fill="currentColor"></path>
-                                                   <path
-                                                      d="M7.36866 9.3689C6.91533 9.3689 6.54199 9.74223 6.54199 10.2045V17.0756C6.54199 17.5289 6.91533 17.9022 7.36866 17.9022C7.83088 17.9022 8.20421 17.5289 8.20421 17.0756V10.2045C8.20421 9.74223 7.83088 9.3689 7.36866 9.3689Z"
-                                                      fill="currentColor"></path>
-                                                   <path
-                                                      d="M12.0352 6.08887C11.5818 6.08887 11.2085 6.4622 11.2085 6.92442V17.0755C11.2085 17.5289 11.5818 17.9022 12.0352 17.9022C12.4974 17.9022 12.8707 17.5289 12.8707 17.0755V6.92442C12.8707 6.4622 12.4974 6.08887 12.0352 6.08887Z"
-                                                      fill="currentColor"></path>
-                                                   <path
-                                                      d="M16.6398 12.9956C16.1775 12.9956 15.8042 13.3689 15.8042 13.8312V17.0756C15.8042 17.5289 16.1775 17.9023 16.6309 17.9023C17.0931 17.9023 17.4664 17.5289 17.4664 17.0756V13.8312C17.4664 13.3689 17.0931 12.9956 16.6398 12.9956Z"
-                                                      fill="currentColor"></path>
-                                                </svg>
+                                             <svg fill="none" class="icon-20" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <path d="M15.8325 8.17463L10.109 13.9592L3.59944 9.88767C2.66675 9.30414 2.86077 7.88744 3.91572 7.57893L19.3712 3.05277C20.3373 2.76963 21.2326 3.67283 20.9456 4.642L16.3731 20.0868C16.0598 21.1432 14.6512 21.332 14.0732 20.3953L10.106 13.9602" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+  </svg>
                                              </i>
                                              <span class="item-name">Campaigns</span>
                                           </a>
@@ -303,7 +264,7 @@
                                           </svg>
                                        </i>
                                        <span class="item-name">Contacts</span>
-                                       <i class="right-icon">
+                                       <i class="right-icon arrow_right_icons">
                                           <svg xmlns="" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
                                              stroke="currentColor">
                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -370,7 +331,7 @@
                                           </svg>
                                        </i>
                                        <span class="item-name">Companies</span>
-                                       <i class="right-icon">
+                                       <i class="right-icon arrow_right_icons">
                                           <svg xmlns="" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
                                              stroke="currentColor">
                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -525,7 +486,7 @@
                                           </svg>
                                        </i>
                                        <span class="item-name">Email Marketing</span>
-                                       <i class="right-icon">
+                                       <i class="right-icon arrow_right_icons">
                                           <svg xmlns="" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
                                              stroke="currentColor">
                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -611,7 +572,7 @@
                               <a class="nav-link " data-bs-toggle="collapse" href="#allPagesData" role="button" aria-expanded="false" aria-controls="allPagesData">
                                  
                                  <span class="nav-text ms-2">Customization</span>
-                                 <i class="right-icon">
+                                 <i class="right-icon arrow_right_icons">
                                     <svg xmlns="" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
                                        stroke="currentColor">
                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -716,7 +677,7 @@
                                  </svg>
                                  </i>
                                  <span class="item-name">Admin</span>
-                                 <i class="right-icon">
+                                 <i class="right-icon arrow_right_icons">
                                     <svg xmlns="" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
                                        stroke="currentColor">
                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -772,7 +733,7 @@
                </div>
                <div class="navbar-collapse collapse" id="navbarSupportedContent">
                   <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
-                     <li class="nav-item search_bar_view dropdown border-end pe-3 d-xl-block">
+                     <li class="nav-item search_bar_view dropdown d-xl-block">
                         <div class="form-group input-group mb-0 search-input">
                            <input id="search-header" type="text" class="form-control" placeholder="Search..." fdprocessedid="l5a9mq">
                            <span class="input-group-text">
@@ -891,68 +852,66 @@
             <!-- search filter end-->
             <div class="content-inner container-fluid pb-0">
                <div class="row contacts-row">
-                     <div class="col-lg-12">
-                        <div class="card">
-                           <div class="card-header d-flex justify-content-between">
-                                 <div class="header-title">
-                                    <h4 class="card-title">Contacts</h4>
-                                 </div>
+                  <div class="col-lg-12">
+                     <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                           <div class="header-title">
+                              <h4 class="card-title">Contacts</h4>
                            </div>
-                           <div class="card-body">
-                                 <div class="table-responsive">
-                                    <div class="dataTables_wrapper">
-                                       <form action="#" method="POST" enctype="multipart/form-data">
-
-                                             <div class="table-responsive">
-                                                <div id="user-list-table_wrapper" class="dataTables_wrapper">
-                                                   <div class="table-responsive">
-                                                         <table class="table">
-                                                            <thead>
-                                                               <tr class="ligth">
-                                                                     <th class="sorting sorting_asc" tabindex="0"
-                                                                        aria-controls="user-list-table" rowspan="1" colspan="1"
-                                                                        aria-sort="ascending"
-                                                                        aria-label="Sr: activate to sort column descending">Name
-                                                                     </th>
-                                                                     <th class="sorting" tabindex="0"
-                                                                        aria-controls="user-list-table" rowspan="1" colspan="1"
-                                                                        aria-label="Title: activate to sort column ascending">
-                                                                        Phone</th>
-                                                                     <th class="sorting" tabindex="0"
-                                                                        aria-controls="user-list-table" rowspan="1" colspan="1"
-                                                                        aria-label="Type: activate to sort column ascending">
-                                                                        Email</th>
-                                                                     <th class="sorting" tabindex="0"
-                                                                        aria-controls="user-list-table" rowspan="1" colspan="1"
-                                                                        aria-label="Type: activate to sort column ascending">
-                                                                        Status</th>
-                                                                     <th style="min-width: 100px" class="sorting" tabindex="0"
-                                                                        aria-controls="user-list-table" rowspan="1" colspan="1"
-                                                                        aria-label="Action: activate to sort column ascending">
-                                                                        Details</th>
-                                                               </tr>
-                                                            </thead>
-                                                            <tbody class="ui-sortable contacts-html">
-                                                            </tbody>
-                                                         </table>
-                                                   </div>
-                                                </div>
-                                             </div>
-
-                                       </form>
+                        </div>
+                        <div class="card-body">
+                           <div class="table-responsive">
+                              <div class="dataTables_wrapper">
+                                 <form action="#" method="POST" enctype="multipart/form-data">
+                                    <div class="table-responsive">
+                                       <div id="user-list-table_wrapper" class="dataTables_wrapper">
+                                          <div class="table-responsive">
+                                             <table class="table">
+                                                <thead>
+                                                   <tr class="ligth">
+                                                         <th class="sorting sorting_asc" tabindex="0"
+                                                            aria-controls="user-list-table" rowspan="1" colspan="1"
+                                                            aria-sort="ascending"
+                                                            aria-label="Sr: activate to sort column descending">Name
+                                                         </th>
+                                                         <th class="sorting" tabindex="0"
+                                                            aria-controls="user-list-table" rowspan="1" colspan="1"
+                                                            aria-label="Title: activate to sort column ascending">
+                                                            Phone</th>
+                                                         <th class="sorting" tabindex="0"
+                                                            aria-controls="user-list-table" rowspan="1" colspan="1"
+                                                            aria-label="Type: activate to sort column ascending">
+                                                            Email</th>
+                                                         <th class="sorting" tabindex="0"
+                                                            aria-controls="user-list-table" rowspan="1" colspan="1"
+                                                            aria-label="Type: activate to sort column ascending">
+                                                            Status</th>
+                                                         <th style="min-width: 100px" class="sorting" tabindex="0"
+                                                            aria-controls="user-list-table" rowspan="1" colspan="1"
+                                                            aria-label="Action: activate to sort column ascending">
+                                                            Details</th>
+                                                   </tr>
+                                                </thead>
+                                                <tbody class="ui-sortable contacts-html">
+                                                </tbody>
+                                             </table>
+                                          </div>
+                                       </div>
                                     </div>
-                                 </div>
+                                 </form>
+                              </div>
                            </div>
                         </div>
                      </div>
+                  </div>
                </div>
                <div class="row deals-row">
                      <div class="col-lg-12">
                         <div class="card">
                            <div class="card-header d-flex justify-content-between">
-                                 <div class="header-title">
-                                    <h4 class="card-title">Deals</h4>
-                                 </div>
+                              <div class="header-title">
+                                 <h4 class="card-title">Deals</h4>
+                              </div>
                            </div>
                            <div class="card-body">
                                  <div class="table-responsive">

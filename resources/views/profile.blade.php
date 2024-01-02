@@ -8,7 +8,6 @@
                <div class="flex-wrap d-flex justify-content-between align-items-center">
                   <div>
                      <h1>My Profile</h1>
-                     <p>Edit your profile details and password also.</p>
                   </div>
                   <div>
                      <!-- <a href="" class="btn btn-link btn-soft-light">

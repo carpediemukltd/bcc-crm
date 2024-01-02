@@ -9,6 +9,12 @@
                         <div>
                             <h1>Email Templates List</h1>
                         </div>
+                        <a href="{{route('marketing-email-templates.create')}}" class="btn btn-link btn-soft-light">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-28">
+                                <path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            Create New Template
+                        </a>
                     </div>
                 </div>
             </div>
@@ -24,12 +30,6 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header align-items-center d-flex justify-content-between">
-                        <div class="header-title">
-                            <p><a href="{{route('marketing-email-templates.create')}}" class="btn btn-success">Create New Template</a></p>
-
-                        </div>
-                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="email-templates-table" class="table table-striped dataTable no-footer" role="grid" aria-describedby="email-templates-table_info">

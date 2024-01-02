@@ -33,7 +33,7 @@
                   <form action="{{ route('marketing-email-templates.store') }}" method="POST">
                      @csrf
                      <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                            <div class="form-group">
                               <label class="form-label" for="name">Template Name:</label>
                               <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
@@ -42,7 +42,7 @@
                               @enderror
                            </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                            <div class="form-group">
                               <label class="form-label" for="email_subject">Email Subject:</label>
                               <input type="text" class="form-control" id="email_subject" name="email_subject" value="{{ old('email_subject') }}" required>
@@ -63,7 +63,7 @@
                      </div>
                      <br><br><br>
                      <div class="row">
-                        <div class="col">
+                        <div class="col text-right">
                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                      </div>

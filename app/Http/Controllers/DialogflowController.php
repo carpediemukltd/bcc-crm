@@ -31,8 +31,6 @@ class DialogflowController extends Controller
         putenv("GOOGLE_APPLICATION_CREDENTIALS=".public_path(env("GOOGLE_APPLICATION_CREDENTIALS")));
         if(in_array($_SERVER["HTTP_HOST"], ["127.0.0.1", "localhost"]))
             self::$sStorageDisk = "local";
-
-        Config::set('app.debug', true);
     }
     public static function index(Request $request) : array
     {

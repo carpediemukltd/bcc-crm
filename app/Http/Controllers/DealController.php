@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\DialogflowController;
 use App\Helpers\Permissions;
 use App\Jobs\SendNotification;
 use App\Models\Activity;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Illuminate\Support\Facades\Http;
 
 class DealController extends Controller
 {
@@ -169,10 +171,9 @@ class DealController extends Controller
         return view('deals_report', compact('slug'));
     }
 
-    public function filter_deals(Request $request)
-    {
+    public function filter_deals(Request $request) {
 
-        $dates = explode("-", $request->daterange);
+        $dates = explode("-",$request->daterange);
         $Date1 = rtrim(date('Y-m-d', strtotime($dates[0])));
         $Date2 = ltrim(date('Y-m-d', strtotime($dates[1])));
 
@@ -238,6 +239,56 @@ class DealController extends Controller
                 }
             }
             SendNotification::dispatch(['id' => $deal->id, 'type' => 'deal_added']);
+
+            ############################################################### ML
+
+            $aUserDetail = UserDetails::where("user_id", $id)
+                ->select([
+                    "data",
+                    "custom_field_id"
+                ])
+                ->orderBy("id", "DESC")
+                ->get()
+                ->toArray();
+
+            if(sizeof($aUserDetail) > 0)
+            {
+                $aDataPoints = ["State" => $request->state, "Requested" => $request->amount];
+
+                $aCustomFields = [];
+                foreach($aUserDetail AS $iKey => $aData)
+                    $aCustomFields[$aData["custom_field_id"]][] = $aData;
+
+                $aDataPoints["Company Name"]    = $aCustomFields[1][0]["data"] == "" ? "Unknown" : $aCustomFields[1][0]["data"];
+                $aDataPoints["Credit"]          = $aCustomFields[36][0]["data"];
+
+                $objResponse = Http::withHeaders([
+                    'Content-Type' => 'application/json',
+                ])->post("http://52.87.44.199:5000/predict", [$aDataPoints]);;
+
+                $aData      = $objResponse->json();
+                if(isset($aData["response"]))
+                {
+                    $sOutcome   = $aData["response"];
+
+                    Deal::where("id", $deal->id)
+                        ->update([
+                            "predictive_outcome" => $sOutcome == "Approved" ? 1 : 0
+                        ]);
+                }
+                else
+                {
+                    $sRequestData = json_encode($aDataPoints);
+                    $sResponseData = json_encode($aData);
+
+                    $sHTML = '<p>RequestData: <br>'.$sRequestData.'<br><br></p>';
+                    $sHTML .= '<p>ResponseData: <br>'.$sResponseData.'</p>';
+                    DialogflowController::sendEmail("ERROR: ML server generated error",$sHTML, ["muhammadjunaid@carpediem.team"]);
+                }
+            }
+
+            ############################################################### /ML
+
             return redirect(route('user.deals', [$id]))->withSuccess('Deal Created Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
             $this->data['current_slug'] = 'Add Deal';
@@ -287,6 +338,54 @@ class DealController extends Controller
                     );
                 }
             }
+            ############################################################### ML
+
+            $aUserDetail = UserDetails::where("user_id", $user_id)
+                ->select([
+                    "data",
+                    "custom_field_id"
+                ])
+                ->orderBy("id", "DESC")
+                ->get()
+                ->toArray();
+
+            if(sizeof($aUserDetail) > 0)
+            {
+                $aDataPoints = ["State" => $request->state, "Requested" => $request->amount];
+
+                $aCustomFields = [];
+                foreach($aUserDetail AS $iKey => $aData)
+                    $aCustomFields[$aData["custom_field_id"]][] = $aData;
+
+                $aDataPoints["Company Name"]    = $aCustomFields[1][0]["data"] == "" ? "Unknown" : $aCustomFields[1][0]["data"];
+                $aDataPoints["Credit"]          = $aCustomFields[36][0]["data"];
+
+                $objResponse = Http::withHeaders([
+                    'Content-Type' => 'application/json',
+                ])->post("http://52.87.44.199:5000/predict", [$aDataPoints]);;
+
+                $aData      = $objResponse->json();
+                if(isset($aData["response"]))
+                {
+                    $sOutcome   = $aData["response"];
+
+                    Deal::where("id", $id)
+                        ->update([
+                            "predictive_outcome" => $sOutcome == "Approved" ? 1 : 0
+                        ]);
+                }
+                else
+                {
+                    $sRequestData = json_encode($aDataPoints);
+                    $sResponseData = json_encode($aData);
+
+                    $sHTML = '<p>RequestData: <br>'.$sRequestData.'<br><br></p>';
+                    $sHTML .= '<p>ResponseData: <br>'.$sResponseData.'</p>';
+                    DialogflowController::sendEmail("ERROR: ML server generated error",$sHTML, ["muhammadjunaid@carpediem.team"]);
+                }
+            }
+
+            ############################################################### /ML
 
             return redirect(route('user.deals', [$user_id]))->withSuccess('Deal Update Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
@@ -326,7 +425,7 @@ class DealController extends Controller
                 'moduleName' => 'Stage',
                 'user_id' => auth()->id(),
                 'contact_id' => $user_id,
-                'details' => $satgeName[0]->title
+                'details' =>$satgeName[0]->title
 
             ]);
 

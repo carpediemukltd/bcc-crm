@@ -2208,3 +2208,6 @@ div#user_edit_view {
 .list-group.sequence-list li:last-child{
   border-bottom: none;
 }
+.iq-nav-menu li > ul li ul{
+  position: static;
+}

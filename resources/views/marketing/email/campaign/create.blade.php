@@ -94,28 +94,28 @@
                      </div>
                      <div class="row step3" id="sequences-container">
                         <div class="col-sm-3">
+                           <h4 class="mb-3">Sequence List</h4>
                            <ul class="list-group sequence-list">
-                              <li class="list-group-item">Sequence List</li>
+                              <!-- <li class="list-group-item">Sequence List</li> -->
                            </ul>
+                           <div class="">
+                              <button class="btn btn-success save-sequence-btn" type="button">Save</button>
+                           </div>
                         </div>
 
 
-                        <div class="col-sm-4">
-                           <label class="form-label" for="html_content">Content</label>
-                           <textarea id="html_content" name="html_content" rows="4" cols="100" class="form-control tiny-integerate"></textarea>
-                           @error('html_content')
-                           <span class="text-danger">{{ $message }}</span>
-                           @enderror
-                        </div>
-                        <div class="col-sm-1">
+                        <div class="col-sm-9">
+                           <h4 class="mb-3">Sequence Details</h4>
+                           <div class="row">
+                           <div class="col-sm-4">
                            <label class="form-label" for="subject">Subject</label>
                            <input type="text" class="form-control email-subject" name="subject">
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-4">
                            <label class="form-label" for="wait_for">Wait For Days</label>
                            <input min="0" type="number" class="form-control" name="wait_for" value="0">
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-4">
                            <label class="form-label" for="templates">Use Templates</label>
                            <select class="form-control template-list">
                               <option data-subject="" data-content="">--Select Template--</option>
@@ -127,9 +127,17 @@
                               @endif
                            </select>
                         </div>
-                        <div class="col-sm-1">
-                           <button class="btn btn-success save-sequence-btn" type="button">Save</button>
+                        
+                           </div>
+                           <div class="content_view_holder mt-4">
+                              <label class="form-label" for="html_content">Content</label>
+                              <textarea id="html_content" name="html_content" rows="4" cols="100" class="form-control tiny-integerate"></textarea>
+                              @error('html_content')
+                              <span class="text-danger">{{ $message }}</span>
+                              @enderror
+                           </div>
                         </div>
+                        
 
                      </div>
 
@@ -150,7 +158,7 @@
                            @enderror
 
                         </div>
-                        <div class="col-md-12 mt-5">
+                        <div class="col-md-12 text-right mt-5">
                            <button type="submit" class="btn btn-primary">Finish</button>
                         </div>
                      </div>
@@ -165,6 +173,7 @@
                            Next
                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" viewBox="0 0 13 12" fill="none"><path d="M1.5522 12C1.82039 12 2.08998 11.8962 2.29498 11.6887L7.1911 6.75669C7.38908 6.55628 7.5 6.2848 7.5 6.00053C7.5 5.71769 7.38908 5.44621 7.1911 5.2458L2.29498 0.310919C1.88357 -0.104112 1.21803 -0.104112 0.806624 0.313761C0.396625 0.731634 0.398029 1.40677 0.809432 1.8218L4.95576 6.00053L0.809432 10.1793C0.398029 10.5943 0.396625 11.268 0.806624 11.6859C1.01162 11.8962 1.28262 12 1.5522 12Z" fill="white"></path><path d="M6.5522 12C6.82039 12 7.08998 11.8962 7.29498 11.6887L12.1911 6.75669C12.3891 6.55628 12.5 6.2848 12.5 6.00053C12.5 5.71769 12.3891 5.44621 12.1911 5.2458L7.29498 0.310919C6.88357 -0.104112 6.21803 -0.104112 5.80662 0.313761C5.39662 0.731634 5.39803 1.40677 5.80943 1.8218L9.95576 6.00053L5.80943 10.1793C5.39803 10.5943 5.39662 11.268 5.80662 11.6859C6.01162 11.8962 6.28262 12 6.5522 12Z" fill="white"></path></svg>
                         </span>
+                        
                      </div>
                </div>
                </div>

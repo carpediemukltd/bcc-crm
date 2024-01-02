@@ -56,9 +56,14 @@ class MarketingCampaignController extends Controller
             'sequences'                 => 'required|array',
             'sequences.*.subject'       => 'required',
             'sequences.*.htmlContent'   => 'required',
-            'sequences.*.waitFor'       => 'required',
-            'start_date'                => 'required',
-            'select_type'               => 'required'
+            'sequences.*.waitFor'       => 'required|numeric|min:0', // Allow only numeric values greater than or equal to 0
+            'start_date'                => 'required|date_format:Y-m-d\TH:i', // Adjusted format for datetime-local input
+            'select_type'               => 'required',
+            'select_type'               => 'required|in:all,targeted-contacts', // Added validation for select_type
+            'contacts'                  => 'required_if:select_type,targeted-contacts', // Validation for contacts if select_type is 'specific'
+            'contacts.*'                => 'exists:users,id', // Assuming contacts are user IDs, adjust this validation rule accordingly
+            'status'                    => 'required|in:active,draft,paused,inprogress',
+
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -186,6 +191,23 @@ class MarketingCampaignController extends Controller
             }
 
             // Redirect back or return a response as needed
+            return redirect()->back()->with('success', 'Campaign updated successfully.');
+        }else{
+            $validator = Validator::make($request->all(), [
+                'title'                     => 'required',
+                'start_date'                => 'required|date_format:Y-m-d\TH:i', // Adjusted format for datetime-local input
+                'status'                    => 'required|in:active,draft,paused,inprogress',
+            ]);
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            $campaign = MarketingCampaign::find($id);
+            $campaign->company_id   = auth()->user()->company_id;
+            $campaign->name         = $request->title;
+            $campaign->start_date   = $request->start_date;
+            $campaign->status       = $request->status;
+            $campaign->save();
+    
             return redirect()->back()->with('success', 'Campaign updated successfully.');
         }
     }

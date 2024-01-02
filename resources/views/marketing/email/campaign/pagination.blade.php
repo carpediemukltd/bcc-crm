@@ -1,5 +1,5 @@
-@if(isset($data) && !empty($data))
-@foreach($data as $campaign)
+@if(isset($campaigns) && !empty($campaigns))
+@foreach($campaigns as $campaign)
 @if($campaign->type == 'manual')
 
 <tr class="odd">
@@ -81,7 +81,7 @@
 
 <tr>
    <td colspan="8" align="center">
-      {!! $data->links('marketing.email.smtp.custom_pagination') !!}
+      {!! $campaigns->links('marketing.email.smtp.custom_pagination') !!}
    </td>
 </tr>
 @else

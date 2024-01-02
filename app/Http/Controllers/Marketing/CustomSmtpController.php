@@ -19,8 +19,10 @@ class CustomSmtpController extends Controller
      */
     public function index()
     {
-        $data = CustomSmtp::whereCompanyId(auth()->user()->company_id)->paginate(10);
-        return view('marketing.email.smtp.index', ['data' => $data]);
+        $data['current_slug']   = 'SMTPs';
+        $data['slug']           = 'smtps';
+        $data['smtps']          = CustomSmtp::whereCompanyId(auth()->user()->company_id)->paginate(10);
+        return view('marketing.email.smtp.index',  $data);
     }
 
     /**
@@ -30,7 +32,9 @@ class CustomSmtpController extends Controller
      */
     public function create()
     {
-        return view('marketing.email.smtp.create');
+        $data['current_slug']   = 'Create New Smtp';
+        $data['slug']           = 'smtps';
+        return view('marketing.email.smtp.create', $data);
     }
 
     /**
@@ -109,8 +113,10 @@ class CustomSmtpController extends Controller
      */
     public function edit($id)
     {
-        $data = CustomSmtp::find($id);
-        return view('marketing.email.smtp.edit', ['data' => $data]);
+        $data['current_slug']   = 'Edit Smtp';
+        $data['slug']           = 'smtps';
+        $data['smtp'] = CustomSmtp::find($id);
+        return view('marketing.email.smtp.edit', $data);
     }
 
     /**

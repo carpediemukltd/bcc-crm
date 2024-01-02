@@ -120,8 +120,8 @@
                            <select class="form-control template-list">
                               <option data-subject="" data-content="">--Select Template--</option>
 
-                              @if(count($data['templates']))
-                              @foreach($data['templates'] as $template)
+                              @if(count($templates))
+                              @foreach($templates as $template)
                               <option data-subject="{{ $template->email_subject }}" data-content="{{ $template->content }}">{{ $template->name }}</option>
                               @endforeach
                               @endif

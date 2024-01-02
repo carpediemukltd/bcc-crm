@@ -26,14 +26,14 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('marketing-email-templates.update', $data->id) }}" method="POST">
+                        <form action="{{ route('marketing-email-templates.update', $template->id) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label" for="name">Template Name:</label>
-                                        <input type="text" class="form-control" id="name" name="name" value="{{$data->name}}" required>
+                                        <input type="text" class="form-control" id="name" name="name" value="{{$template->name}}" required>
                                         @error('name')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -42,7 +42,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label" for="email_subject">Email Subject:</label>
-                                        <input type="text" class="form-control" id="email_subject" name="email_subject" value="{{$data->email_subject}}" required>
+                                        <input type="text" class="form-control" id="email_subject" name="email_subject" value="{{$template->email_subject}}" required>
                                         @error('email_subject')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -53,7 +53,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <label class="form-label" for="content">Content</label>
-                                    <textarea name="content" rows="4" cols="100" class="form-control tiny-integerate">{{$data->content}}</textarea>
+                                    <textarea name="content" rows="4" cols="100" class="form-control tiny-integerate">{{$template->content}}</textarea>
                                     @error('content')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror

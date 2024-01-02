@@ -59,14 +59,14 @@
                             </div>
                         </div>
 
-                        <form method="POST" action="{{ route('marketing-campaigns.update', $data['campaign']->id) }}">
+                        <form method="POST" action="{{ route('marketing-campaigns.update', $campaign->id) }}">
                             @csrf
                             @method('PUT')
                             <div class="row step1">
                                 <div class="col">
                                     <div class="form-group">
                                         <label class="form-label" for="title">Campaign name</label>
-                                        <input type="text" class="form-control" id="title" name="title" value="{{ $data['campaign']->name }}" required>
+                                        <input type="text" class="form-control" id="title" name="title" value="{{ $campaign->name }}" required>
                                         @error('title')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -107,8 +107,8 @@
                         <div class="col-sm-3">
                             <ul class="list-group sequence-list">
                                 <li class="list-group-item">Sequence List</li>
-                                @if(count($data['campaign']->marketingCampaignSequence))
-                                @foreach($data['campaign']->marketingCampaignSequence as $sequence)
+                                @if(count($campaign->marketingCampaignSequence))
+                                @foreach($campaign->marketingCampaignSequence as $sequence)
                                 <li class="list-group-item item" data-subject="{{$sequence->subject}}" data-content="{{$sequence->body}}" data-waitfor="{{$sequence->wait_for}}">{{$sequence->subject}}</li>
                                 @endforeach()
                                 @endif()
@@ -116,19 +116,19 @@
                         </div>
                         <div class="col-sm-5">
                             <label class="form-label" for="html_content">Content</label>
-                            <textarea id="html_content" name="html_content" rows="4" cols="100" class="form-control tiny-integerate">{{$data['campaign']->marketingCampaignSequence[0]->body}}</textarea>
+                            <textarea id="html_content" name="html_content" rows="4" cols="100" class="form-control tiny-integerate">{{$campaign->marketingCampaignSequence[0]->body}}</textarea>
                             @error('html_content')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="col-sm-2">
                             <label class="form-label" for="subject">Subject</label>
-                            <input type="text" class="form-control" name="subject" id="subject" value="{{$data['campaign']->marketingCampaignSequence[0]->subject}}">
+                            <input type="text" class="form-control" name="subject" id="subject" value="{{$campaign->marketingCampaignSequence[0]->subject}}">
 
                         </div>
                         <div class="col-sm-2">
                             <label class="form-label" for="wait_for">Wait For Days</label>
-                            <input type="number" class="form-control" name="wait_for" id="wait_for" value="{{$data['campaign']->marketingCampaignSequence[0]->wait_for}}">
+                            <input type="number" class="form-control" name="wait_for" id="wait_for" value="{{$campaign->marketingCampaignSequence[0]->wait_for}}">
                         </div>
 
                     </div>
@@ -138,10 +138,10 @@
 
                             <label class="form-label" for="status">Status</label>
                             <select class="form-control" name="status" id="status">
-                                <option value="draft" {{ ($data['campaign']->status == 'draft') ? 'selected' : '' }}>Draft</option>
-                                <option value="active" {{ ($data['campaign']->status == 'active') ? 'selected' : '' }}>Active</option>
-                                <option value="paused" {{ ($data['campaign']->status == 'paused') ? 'selected' : '' }}>Paused</option>
-                                <option value="inprogress" {{ ($data['campaign']->status == 'inprogress') ? 'selected' : '' }}>In Progress</option>
+                                <option value="draft" {{ ($campaign->status == 'draft') ? 'selected' : '' }}>Draft</option>
+                                <option value="active" {{ ($campaign->status == 'active') ? 'selected' : '' }}>Active</option>
+                                <option value="paused" {{ ($campaign->status == 'paused') ? 'selected' : '' }}>Paused</option>
+                                <option value="inprogress" {{ ($campaign->status == 'inprogress') ? 'selected' : '' }}>In Progress</option>
                             </select>
                             @error('status')
                                 <span class="text-danger">{{ $message }}</span>
@@ -150,14 +150,14 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label" for="start_date">Start Date</label>
-                            <input type="datetime-local" class="form-control" id="start_date" name="start_date" value="{{ $data['campaign']->start_date}}" required>
+                            <input type="datetime-local" class="form-control" id="start_date" name="start_date" value="{{ $campaign->start_date}}" required>
                             @error('start_date')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
 
                         </div>
                         <div class="col-md-12 mt-5">
-                            @if($data['campaign']->status != 'completed')
+                            @if($campaign->status != 'completed')
                            <button type="submit" class="btn btn-primary">Update</button>
                            @else
                            <button disabled type="button" class="btn btn-primary">Update</button>

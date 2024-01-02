@@ -15,8 +15,10 @@ class MarketingEmailTemplateController extends Controller
      */
     public function index()
     {        
-        $data = MarketingEmailTemplate::whereCompanyId(auth()->user()->company_id)->paginate(10);
-        return view('marketing.email.template.index', ['data' => $data]);
+        $data['current_slug']   = 'Email Templates';
+        $data['slug']           = 'templates';
+        $data['templates'] = MarketingEmailTemplate::whereCompanyId(auth()->user()->company_id)->paginate(10);
+        return view('marketing.email.template.index', $data);
     }
 
     /**
@@ -26,8 +28,9 @@ class MarketingEmailTemplateController extends Controller
      */
     public function create()
     {
-        return view('marketing.email.template.create');
-
+        $data['current_slug']   = 'Create New Template';
+        $data['slug']           = 'templates';
+        return view('marketing.email.template.create', $data);
     }
 
     /**
@@ -67,8 +70,10 @@ class MarketingEmailTemplateController extends Controller
      */
     public function show($id)
     {
-        $data = MarketingEmailTemplate::find($id);
-        return view('marketing.email.template.show', ['data'=> $data]);
+        $data['current_slug']   = 'Template View';
+        $data['slug']           = 'templates';
+        $data['template'] = MarketingEmailTemplate::find($id);
+        return view('marketing.email.template.show', $data);
 
     }
 
@@ -80,8 +85,10 @@ class MarketingEmailTemplateController extends Controller
      */
     public function edit($id)
     {
-        $data = MarketingEmailTemplate::find($id);
-        return view('marketing.email.template.edit', ['data'=> $data]);
+        $data['current_slug']   = 'Edit Template';
+        $data['slug']           = 'templates';
+        $data['template'] = MarketingEmailTemplate::find($id);
+        return view('marketing.email.template.edit', $data);
     }
 
     /**

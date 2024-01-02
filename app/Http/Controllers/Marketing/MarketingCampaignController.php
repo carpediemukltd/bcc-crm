@@ -27,8 +27,10 @@ class MarketingCampaignController extends Controller
      */
     public function index()
     {
-        $data = MarketingCampaign::with('stage')->whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->paginate(10);
-        return view('marketing.email.campaign.index', ['data' => $data]);
+        $data['current_slug']   = 'Campaigns';
+        $data['slug']           = 'campaigns';
+        $data['campaigns'] = MarketingCampaign::with('stage')->whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->paginate(10);
+        return view('marketing.email.campaign.index', $data);
     }
 
     /**
@@ -38,8 +40,10 @@ class MarketingCampaignController extends Controller
      */
     public function create()
     {
+        $data['current_slug']   = 'Create New Campaign';
+        $data['slug']           = 'campaigns';
         $data['templates'] = MarketingEmailTemplate::whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->get();
-        return view('marketing.email.campaign.create', ['data' => $data]);
+        return view('marketing.email.campaign.create', $data);
     }
 
     /**
@@ -129,14 +133,17 @@ class MarketingCampaignController extends Controller
      */
     public function show($id)
     {
+        $data['current_slug']   = 'Campaign View';
+        $data['slug']           = 'campaigns';
+
         $campaign = MarketingCampaign::with(['marketingCampaignSequence', 'stage'])->find($id);
         $data['campaign'] = $campaign;
         if ($campaign->type == 'automate') {
-            return view('marketing.email.campaign.automate-show', ['data' => $data]);
+            return view('marketing.email.campaign.automate-show', $data);
         }
         $data['users'] = MarketingCampaignUser::where('marketing_campaign_id', $id)->paginate(10);
 
-        return view('marketing.email.campaign.show', ['data' => $data]);
+        return view('marketing.email.campaign.show', $data);
 
     }
 
@@ -148,16 +155,18 @@ class MarketingCampaignController extends Controller
      */
     public function edit($id)
     {
+        $data['current_slug']   = 'Edit Campaign';
+        $data['slug']           = 'campaigns';
         $campaign   = MarketingCampaign::with(['marketingCampaignSequence', 'stage'])->find($id);
         $data['campaign'] = $campaign;
         if ($campaign->type == 'automate') {
             $data['stages'] = Stage::get();
             // return $data;
-            return view('marketing.email.campaign.automate-edit', ['data' => $data]);
+            return view('marketing.email.campaign.automate-edit',$data);
         }
         $data['users']      = MarketingCampaignUser::where('marketing_campaign_id', $id)->paginate(10);
         $data['templates']  = MarketingEmailTemplate::whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->get();
-        return view('marketing.email.campaign.edit', ['data' => $data]);
+        return view('marketing.email.campaign.edit', $data);
     }
 
     /**
@@ -311,8 +320,11 @@ class MarketingCampaignController extends Controller
     }
     public function marketingGlobalReporting()
     {
-        $data['campaign'] = MarketingCampaign::whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->get();
-        return view('marketing.email.reporting.global-reporting', ['data' => $data]);
+        $data['current_slug']   = 'Global Reporting';
+        $data['slug']           = 'reporting';
+        
+        $data['campaigns'] = MarketingCampaign::whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->get();
+        return view('marketing.email.reporting.global-reporting', $data);
     }
     public function marketingGlobalReportingData()
     {

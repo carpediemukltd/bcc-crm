@@ -26,14 +26,14 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label" for="name">Template Name:</label>
                                     <input type="text" class="form-control" id="name" name="name" value="{{$template->name}}" disabled>
 
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label" for="email_subject">Email Subject:</label>
                                     <input type="text" class="form-control" id="email_subject" name="email_subject" value="{{$template->email_subject}}" disabled>

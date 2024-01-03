@@ -112,9 +112,9 @@
                                        aria-controls="sidebar-special">
                                        <i class="icon">
                                        <svg class="icon-20" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-    <path d="M17.9028 8.85107L13.4596 12.4641C12.6201 13.1301 11.4389 13.1301 10.5994 12.4641L6.11865 8.85107" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M16.9089 21C19.9502 21.0084 22 18.5095 22 15.4384V8.57001C22 5.49883 19.9502 3 16.9089 3H7.09114C4.04979 3 2 5.49883 2 8.57001V15.4384C2 18.5095 4.04979 21.0084 7.09114 21H16.9089Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-  </svg>
+                                          <path d="M17.9028 8.85107L13.4596 12.4641C12.6201 13.1301 11.4389 13.1301 10.5994 12.4641L6.11865 8.85107" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                          <path fill-rule="evenodd" clip-rule="evenodd" d="M16.9089 21C19.9502 21.0084 22 18.5095 22 15.4384V8.57001C22 5.49883 19.9502 3 16.9089 3H7.09114C4.04979 3 2 5.49883 2 8.57001V15.4384C2 18.5095 4.04979 21.0084 7.09114 21H16.9089Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                       </svg>
                                        </i>
                                        <span class="item-name">Email</span>
                                        <i class="right-icon arrow_right_icons">
@@ -148,9 +148,9 @@
                                              href="{{route('marketing-email-templates.index')}}">
                                              <i class="icon">
                                              <svg fill="none" class="icon-20" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M21.419 15.732C21.419 19.31 19.31 21.419 15.732 21.419H7.95C4.363 21.419 2.25 19.31 2.25 15.732V7.932C2.25 4.359 3.564 2.25 7.143 2.25H9.143C9.861 2.251 10.537 2.588 10.967 3.163L11.88 4.377C12.312 4.951 12.988 5.289 13.706 5.29H16.536C20.123 5.29 21.447 7.116 21.447 10.767L21.419 15.732Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-    <path d="M7.48145 14.4629H16.2164" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-  </svg>
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M21.419 15.732C21.419 19.31 19.31 21.419 15.732 21.419H7.95C4.363 21.419 2.25 19.31 2.25 15.732V7.932C2.25 4.359 3.564 2.25 7.143 2.25H9.143C9.861 2.251 10.537 2.588 10.967 3.163L11.88 4.377C12.312 4.951 12.988 5.289 13.706 5.29H16.536C20.123 5.29 21.447 7.116 21.447 10.767L21.419 15.732Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path d="M7.48145 14.4629H16.2164" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                             </svg>
                                              </i>
                                              <span class="item-name">Email Templates</span>
                                           </a>
@@ -160,8 +160,8 @@
                                              href="{{route('marketing-campaigns.index')}}">
                                              <i class="icon">
                                              <svg fill="none" class="icon-20" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-    <path d="M15.8325 8.17463L10.109 13.9592L3.59944 9.88767C2.66675 9.30414 2.86077 7.88744 3.91572 7.57893L19.3712 3.05277C20.3373 2.76963 21.2326 3.67283 20.9456 4.642L16.3731 20.0868C16.0598 21.1432 14.6512 21.332 14.0732 20.3953L10.106 13.9602" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-  </svg>
+                                                <path d="M15.8325 8.17463L10.109 13.9592L3.59944 9.88767C2.66675 9.30414 2.86077 7.88744 3.91572 7.57893L19.3712 3.05277C20.3373 2.76963 21.2326 3.67283 20.9456 4.642L16.3731 20.0868C16.0598 21.1432 14.6512 21.332 14.0732 20.3953L10.106 13.9602" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                             </svg>
                                              </i>
                                              <span class="item-name">Campaigns</span>
                                           </a>
@@ -198,7 +198,7 @@
 
                            <!-- sales menu start -->
                            <li class="nav-item <?php if(isset($slug) && in_array($slug, ['deals_company', 'stages', 'roundrobin', 'companies', 'list_company', 'edit_company', 'add_company','pipelines', 'add_user', 'user_list', 'edit_user', 'user_details', 'user_deals', 'user_add_deal', 'user_edit_deal']) && !isset($_GET['type'])){echo 'active';}?>">
-                              <a class="nav-link " data-bs-toggle="collapse" href="#allPagesData3" role="button" aria-expanded="false" aria-controls="allPagesData3">
+                              <a class="nav-link " data-bs-toggle="collapse" href="#allPagesData4" role="button" aria-expanded="false" aria-controls="allPagesData3">
                                  
                                  <span class="nav-text ms-2">Sales</span>
                                  <i class="right-icon">
@@ -208,7 +208,7 @@
                                     </svg>
                                  </i>
                               </a>
-                              <ul class="iq-header-sub-menu list-unstyled collapse" id="allPagesData3">
+                              <ul class="iq-header-sub-menu list-unstyled collapse" id="allPagesData4">
                                  <!-- pipeline start -->
                                  @if (Auth::user()->role == 'superadmin')
                                  <li class="nav-item">

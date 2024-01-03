@@ -1877,15 +1877,15 @@ div#user_edit_view {
   font-size: 14px;
 }
 .iq-navbar-header h1{
-  position: relative;
-  top: 25px;
+  /* position: relative;
+  top: 25px; */
 }
 .iq-navbar-header h1 + p{
   display: none;
 }
 .iq-navbar-header .btn.btn-link.btn-soft-light{
-  position: relative;
-  top: 25px;
+  /* position: relative;
+  top: 25px; */
 }
 .logo-main img{
   width: 170px;
@@ -2169,4 +2169,45 @@ div#user_edit_view {
   padding: 10px 20px;
   border-radius: 3px;
   display: inline-block;
+}
+.iq-navbar-header{
+  height:150px !important
+}
+.content_view_holder .tox-tinymce {
+  border: 1px solid #eee !important;
+  border-radius: 4px !important;
+  height: 330px !important;
+}
+.content_view_holder .tox .tox-menubar{
+  background-color: #408363;
+}
+.content_view_holder .tox .tox-mbtn{
+  color: #fff;
+}
+.content_view_holder .tox-statusbar__wordcount {
+  display: none;
+}
+.content_view_holder .tox-statusbar__branding {
+  display: none;
+}
+.content_view_holder .tox-statusbar__path {
+  display: none !important;
+}
+.list-group.sequence-list {
+  border: none !important;
+  background: #efef !important;
+  padding: 20px;
+  border-radius: 4px;
+}
+.list-group.sequence-list li{
+  border: none;
+  border-bottom: 1px solid #ddd;
+  background: inherit;
+  padding: 20px 0;
+}
+.list-group.sequence-list li:last-child{
+  border-bottom: none;
+}
+.iq-nav-menu li > ul li ul{
+  position: static;
 }

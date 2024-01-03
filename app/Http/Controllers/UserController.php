@@ -277,6 +277,10 @@ class UserController extends Controller
 
     public function userDetails(Request $request, $id)
     {
+        if(request('requestType') == 'ajax-bank-users'){
+            $data['users'] = User::whereRole('bank')->paginate(10);
+            return view('user.bank-users-pagination', ['data' => $data])->render();
+        }
         $this->data['current_slug']  = 'Contact Details';
         $this->data['slug']          = 'user_details';
         $access = Permissions::checkUserAccess($this->user, $id);
@@ -320,13 +324,10 @@ class UserController extends Controller
             // dd($request, $id , $abc);
             return redirect(route('user.details', $id))->withSuccess('Contact Update Successfully.')->withInput();
         } else if ($request->isMethod('get')) {
-            $activity = Activity::where('contact_id',$id)->get();
-            $userRecord = User::all();
+            $activity = Activity::with('user')->where('contact_id',$id)->get();
             $document = Documents::where('user_id',$id)->get();
-            $customFieldDetails = UserDetails::where('user_id',$id)->get();
-            $customField = CustomField::all();
-
-            // dd($customFieldDetails , $customField);
+            $customFieldDetails = UserDetails::where('user_id',$id)->get();        
+            $customField = CustomField::getDataByUser($id);
             $deal = Deal::where('user_id',$id)->get();
             $stage = Stage::all();
 
@@ -350,7 +351,6 @@ class UserController extends Controller
             });
 
             $dueDate = '';
-//            echo "<pre>".print_r($this->data['user']->DocumentManagers,1)."</pre>";exit;
             foreach($this->data['user']->DocumentManagers as $documentManager){
                 if($documentManager->pivot->document_uploaded == 0){
                     $dueDate = $documentManager->pivot->due_date;
@@ -361,10 +361,10 @@ class UserController extends Controller
             $sortedDocumentsArray = $sortedDocuments->values()->all();
             $this->data['documents'] = $sortedDocumentsArray;
             $this->data['selected_documents'] = $this->data['user']->DocumentManagers;
-            $this->data['bankusers'] = User::whereRole('bank')->get();
+            $this->data['bankusers'] = User::whereRole('bank')->paginate(10);
             $this->data['document_groups'] = DocumentGroup::orderBy('order')->get();
             $this->data['due_date'] = $dueDate;
-            return view("user.details", $this->data,compact('activity','userRecord','document','customFieldDetails','customField','deal','stage'));
+            return view("user.details", $this->data,compact('activity','document','customFieldDetails','customField','deal','stage'));
         }
     } // userDetails
 

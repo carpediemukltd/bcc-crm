@@ -2071,3 +2071,12 @@ div#user_edit_view {
 /* .iq-nav-menu li > ul ul{
   left: 0;
 } */
+
+/* Adjust the height as needed */
+#sendDocuments select[multiple] {
+  height: 200px; /* Set your desired height here */
+}
+#sendDocuments select[multiple] option {
+  padding: 5px; /* Adjust the padding as needed */
+  cursor: pointer;
+}

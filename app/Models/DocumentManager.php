@@ -14,4 +14,8 @@ class DocumentManager extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function DocumentGroup(){
+        return $this->belongsToMany(DocumentGroup::class);
+    }
 }

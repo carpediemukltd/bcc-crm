@@ -6,6 +6,10 @@
 * NOTE: This file contains the styling for Template.
 *
 */
+html,body{
+	scrollbar-width: thin;
+	scrollbar-color: #00562c61 #f1f1f1 !important;
+}
 :focus {
   outline: none;
 }
@@ -894,11 +898,11 @@ div#deals_list span {
   width: 97px;
 }
 .preloader-dot-loading .cssload-loading i {
-  width: 19px;
-  height: 19px;
+  width: 10px;
+  height: 10px;
   display: inline-block;
   border-radius: 50%;
-  background: #2a2b26;
+  background: #00562c;
 }
 .preloader-dot-loading .cssload-loading i:first-child {
   opacity: 0;
@@ -1737,10 +1741,11 @@ p.sub_text:after{
   width: 100%;
   height: 100vh;
 }
-div#user_details_view {
-  max-height: 540px;
+.user-details-scroll {
+  max-height:483px;
   overflow-y: auto;
   overflow-x: hidden;
+  margin-top: 20px;
 }
 div#user_edit_view {
   height: 540px;
@@ -1920,12 +1925,149 @@ div#user_edit_view {
 .documents_view_holder .form-group .check-doc-field + p{
   text-align: left;
   overflow: hidden;
+  margin-bottom: 5px;
+  font-size: 13px;
 }
 .activity_scroll_view, .notes-view-scroll{
-  max-height: 540px;
+  height: 540px;
   overflow-y: auto;
   overflow-x: hidden;
 }
 .w-100.float-right.mt-1 svg {
   color: #28704d;
 }
+.form-control.notes_field + .mentiony-content img{
+  width: 100%;
+}
+/* loader css start */
+.loader {
+  position: fixed;
+  background: #fff;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.logo {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  background-color: rgba(223, 162, 72, 0.1);
+  position: relative;
+  backdrop-filter: blur(10px);
+  overflow: hidden; 
+
+  
+}
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    border-radius: 50%;
+    position: relative;
+    top: -2px;
+    animation: 3s spin-animation ease-in-out infinite;
+            transform-origin: center center;
+  }
+  @keyframes spin-animation {
+    0% {
+        transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    }
+
+    25% {
+        transform: perspective(120px) rotateX(-180deg) rotateY(0deg);
+    }
+
+    50% {
+        transform: perspective(120px) rotateX(-180deg) rotateY(-180deg);
+    }
+
+    75% {
+        transform: perspective(120px) rotateX(0deg) rotateY(-180deg);
+    }
+
+    100% {
+        transform: perspective(120px) rotateX(0deg) rotateY(-360deg);
+    }
+}
+.logo::after,
+.logo::before {
+  position: absolute;
+  display: inline-block;
+  content: "";
+}
+
+.logo::after {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: inherit;
+  z-index: -20;
+  background-image: linear-gradient(10deg, #DFA248, #DFA248);
+}
+
+.logo::before {
+  border-top: 6px solid #00562C;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  z-index: 1;
+  box-shadow: 0 -5px 5px rgba(223, 162, 72, 0.9);
+  top: -2px;
+  left: -2px;
+  height: calc(100% + 1px);
+  width: calc(100% + 1px);
+}
+
+.loader,
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+    border-top-color: #00562C;
+    box-shadow: 0 -5px 5px rgba(223, 162, 72, 0.1);
+  }
+
+  50% {
+    transform: rotate(180deg);
+    border-top-color: #00562C;
+    box-shadow: 0 -5px 5px rgba(223, 162, 72, 0.1);
+  }
+
+  100% {
+    transform: rotate(360deg);
+    border-top-color: #00562C;
+    box-shadow: 0 -5px 5px rgba(223, 162, 72, 0.1);
+  }
+}
+/* loader css ent */
+.doc-upload-view.accordion .accordion-item .accordion-header{
+  background-color: inherit;
+  position: relative;
+}
+.doc-upload-view.accordion .accordion-item .accordion-header button{
+  padding: 0 15px 0 0; 
+}
+/* .doc-upload-view .accordion-button::after{
+  position: absolute;
+  top: 0;
+  left: -27px;
+} */
+.ml-2{
+  margin-left: 10px;
+}.ml-r{
+  margin-right: 10px;
+}
+.iq-timeline0 li .timeline-dots{
+  top: 0;
+}
+/* .iq-nav-menu li > ul ul{
+  left: 0;
+} */

@@ -32,7 +32,7 @@
                   </div>
                </div>
                <div class="card-body">
-                  <form action="{{route('user.add')}}" method="POST">
+                  <form id="add_contact" action="{{route('user.add')}}" method="POST">
                      @csrf
                      <div class="row">
                         <div class="col">
@@ -66,9 +66,7 @@
                               <div class="phone-input">
                                  <input name="phone_number" type="tel" id="phone-number" placeholder="Enter your phone number" class="form-control" required>
                               </div>
-                              @if ($errors->has('phone_number'))
-                                 <span class="text-danger">{{ $errors->first('phone_number') }}</span>
-                              @endif
+                               <span class="text-danger" id="phone_number_error">{{$errors->has('phone_number') ? $errors->first('phone_number') : '' }}</span>
                            </div>
                         </div>
                      </div>
@@ -77,11 +75,28 @@
                               <label class="form-label" for="email" style="color: #000;">Document Types:</label>
                               <div class="form-group">
                                   <div class="row">
+                                  @foreach($document_groups as $group)
+                                      <div class="col-md-2">
+                                          <label class="checkbox-inline">
+                                              <div class="check-doc-field">
+                                                  <input type="checkbox" class="document_group_checkbox" name="{{$group->name}}" value="{{$group->id}}">
+                                              </div>
+                                              <p><b>{{$group->name}}</b></p>
+                                          </label>
+                                      </div>
+                                  @endforeach
                                   @foreach($documents as $document)
                                       <div class="col-md-4">
                                           <label class="checkbox-inline">
                                              <div class="check-doc-field">
-                                              <input type="checkbox" name="document_types[]" value="{{$document->id}}">
+                                             @php
+                                                $group_ids = [];
+                                                foreach($document->DocumentGroup as $group_id){
+                                                    $group_ids[] = $group_id->id;
+                                                }
+                                                $serializedGroupIds = json_encode($group_ids);
+                                             @endphp
+                                             <input type="checkbox" name="document_types[]" class="document_group_checkbox_option" data-group-id="{{$serializedGroupIds}}" value="{{$document->id}}">
                                              </div>
                                              <p>{{$document->title}}</p>
                                           </label>
@@ -167,6 +182,44 @@
       console.log('removed');
    }
   }
+
+  $('.document_group_checkbox').click(function(){
+      var group_id = parseInt($(this).val());
+      if($(this).prop('checked')){
+          $(".document_group_checkbox_option").each(function() {
+              var optionGroupIds = JSON.parse($(this).attr('data-group-id'));
+              if (optionGroupIds.includes(group_id)) {
+                  // Check the checkbox
+                  $(this).prop('checked', true);
+              }
+          });
+      }else{
+          $(".document_group_checkbox_option").each(function() {
+              var optionGroupIds = JSON.parse($(this).attr('data-group-id'));
+              if (optionGroupIds.includes(group_id)) {
+                  // Check the checkbox
+                  $(this).prop('checked', false);
+              }
+          });
+      }
+  })
+
+  $(document).ready(function(){
+      $('#add_contact').submit(function (e) {
+          // Get the input value
+          var phoneNumber = $("#phone").intlTelInput("getNumber");
+
+          // Check if the phone number is valid
+          if (!$("#phone-number").intlTelInput("isValidNumber")) {
+              // Valid phone number, proceed with your form submission or other actions
+              $('#phone_number_error').html('Invalid number')
+              $("#phone-number").focus();
+              e.preventDefault();
+          } else {
+              $('#phone_number_error').html('')
+          }
+      });
+  })
    </script>
 
 @endsection

@@ -104,7 +104,7 @@ class UserController extends Controller
             }
             $query->where('stage_id', request('stage'));
         }
-        $data['deals']  = $query->select('id', 'user_id', 'title', 'stage_id', 'amount')->get();
+        $data['deals']  = $query->select('id', 'user_id', 'title', 'stage_id', 'amount', 'updated_at as funded_date', 'submitted_bank as bank', 'reference_id')->get();
         $data['stages'] = Stage::get();
         return ApiResponse::success($data, '', 200);
     }

@@ -29,19 +29,24 @@
    </head>
    <body class=" ">
       <!-- loader Start -->
-      <div id="loading">
+      <!-- <div id="loading">
          <div class="loader simple-loader">
             <div class="loader-body">
                <img src="{{asset('assets/images/loader.webp')}}" alt="loader" class="light-loader img-fluid w-25" width="200" height="200">
             </div>
+         </div>
+      </div> -->
+      <div class="loader">
+         <div class="logo">
+            <img src="{{asset('assets/images/app-icon.png')}}" style="width:50px;height:50px;" />
          </div>
       </div>
       <!-- loader END -->
       <div class="wrapper">
          <section class="login-content">
             <div class="row m-0 align-items-center bg-white vh-100">
-               <div class="col-md-6 d-md-block d-none bg-primary p-0 vh-100 overflow-hidden">
-                  <img src="{{asset('assets/images/auth/05.png')}}" class="img-fluid gradient-main animated-scaleX" alt="images" loading="lazy">
+               <div class="col-md-6 d-md-block d-none p-0 vh-100 overflow-hidden">
+                  <img src="{{asset('assets/images/auth/login-bg.png')}}" class="img-fluid login-brand-banner gradient-main" alt="images">
                </div>
                <div class="col-md-6">
                   <div class="row justify-content-center">

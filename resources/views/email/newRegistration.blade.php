@@ -17,8 +17,7 @@
         <li>{{$document->title}}</li>
     @endforeach
 </ul>
-<p>If you have any questions, we're here to help every step of the way.</p>
-<p>Sincerely,</p>
-<p><b>Team BCCUSA</b></p>
+<p>Please, Login to your secure Bank portal to upload these and expedite your fundings. <a href="https://dashboard.bccusa.com/">Bank Portal - Login</a></p>
+<p>Thank you!</p>
 </body>
 </html>

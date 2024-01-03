@@ -112,7 +112,6 @@ class UserController extends Controller
 
     public function addUser(Request $request)
     {
-
         $this->data['current_slug'] = 'Add Contact';
         $this->data['slug']         = 'add_user';
         $user = auth()->user();
@@ -438,7 +437,6 @@ class UserController extends Controller
         $this->data['custom_fields'] =  CustomField::getDataByUser($id);
 
         if ($request->isMethod('put')) {
-
             $validate = [
                 'first_name' => 'required',
                 'last_name' => 'required',

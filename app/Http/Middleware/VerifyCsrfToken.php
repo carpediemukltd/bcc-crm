@@ -13,5 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        '/webhook/kixie/call',
+        '/webhook/kixie/sms'
     ];
 }

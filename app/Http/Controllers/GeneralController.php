@@ -117,7 +117,7 @@ class GeneralController extends Controller
       ]);
 
       if ($validator->fails()) {
-         return response()->json(['error' => $validator->errors()], 403);
+         return redirect()->back()->with(['error' => $validator->errors()->first()], 403);
       }
 
       // Get form data
@@ -133,7 +133,23 @@ class GeneralController extends Controller
          'value'     => $value,
          'userEmail' => $userEmail,
       ];
+      $query = User::query();
 
+      if ($operator === 'contains') {
+         $query->where($column, 'LIKE', '%' . $value . '%');
+      } elseif ($operator === 'starts_with') {
+         $query->where($column, 'LIKE', $value . '%');
+      } elseif ($operator === 'ends_with') {
+         $query->where($column, 'LIKE', '%' . $value);
+      } else {
+         $query->where($column, $operator, $value);
+      }
+
+      $usersExist = $query->count();
+
+      if (!$usersExist) {
+         return redirect()->back()->with('error', 'Sorry, There are no users found with the filters you selected!');
+      }
       CleanDummyData::dispatch($data);
 
       return redirect()->back()->with('success', 'You will be notified on you email address once data is erased successfully!');

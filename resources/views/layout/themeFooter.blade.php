@@ -964,7 +964,6 @@
       style.type = 'text/css';
       style.innerHTML = '.iti__country-list { display: none !important; }';
       document.head.appendChild(style);
-
       phoneNumberInput.blur(function(){
            $("#errorSpan").html("");
            var countryCode = selectedCountryCodeInput.val();

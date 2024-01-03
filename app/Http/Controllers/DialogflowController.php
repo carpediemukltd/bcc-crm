@@ -7,7 +7,6 @@ use App\Models\ChatLog;
 use App\Models\ChatPotentialUser;
 use App\Models\ChatScheduling;
 use App\Events\ChatMessage;
-use App\Models\ChatLog;
 use App\Models\Deal;
 use App\Models\Documents;
 use App\Models\RequiredDocument;

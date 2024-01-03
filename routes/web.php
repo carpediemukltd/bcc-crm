@@ -56,7 +56,7 @@ Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPass
 Route::get('/magic-link/{contact_id}', [MagicLinkController::class, 'generateLink'])->name('magic.link.generate');
 Route::get('/magic-link/view/{token}', [MagicLinkController::class, 'viewLink'])->name('magic.link.view');
 
-Route::post("/chat", [DialogflowController::class, "chat"]);
+Route::post("/chatMessage", [DialogflowController::class, "chatMessage"]);
 
 Route::post('jotform-webhook', [JotFormController::class, 'handleJotformWebhook'])->name('handleJotformWebhook')->withoutMiddleware([VerifyCsrfToken::class]);
 Route::middleware([CheckStatus::class])->group(function () {

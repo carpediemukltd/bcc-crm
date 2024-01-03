@@ -124,7 +124,7 @@
                 </div>
             </div>
          </div>
-      
+
       <!-- <div class="col-lg-6 col-md-12">
          <div class="card card-block card-stretch card-height">
             <div class="card-header">
@@ -451,12 +451,68 @@
 </div>
 <!-- bcc footer start -->
 <div class="chat-container">
-    <div class="chat-icon">Chat</div>
+    <div class="chat-icon" id="chat-title">
+        <span id="chat-title">Chat</span>
+        <span class="badge"></span>
+    </div>
     <div class="chat-window">
         <div class="chat-messages" id="chat-messages">
+            <div class="clearSession">
+                <div class="d-flex inline" style="display: inline; float: left">Do you want to close this session</div>
+                <div class="clickToClear" style="cursor:pointer; display: inline; float: right">x</div>
+            </div>
+            <div class="jumbotron noSession">You do not have any open chats</div>
+
+            @php
+                $iUserId = auth()->user()->id;
+                $iOwnerId = request()->cookie("consultant");
+                if($iOwnerId)
+                {
+                    $objCheckClosedChat =App\Models\ChatLog::where("chat_message", 200)
+                        ->where(function ($query) use ($iUserId, $iOwnerId) {
+                            $query->where(function ($query) use ($iUserId, $iOwnerId) {
+                                $query->where('sender_id', $iUserId)
+                                      ->where('receiver_id', $iOwnerId);
+                            })
+                            ->orWhere(function ($query) use ($iOwnerId, $iUserId) {
+                                $query->where('sender_id', $iOwnerId)
+                                      ->where('receiver_id', $iUserId);
+                            });
+                        })
+                        ->select(["id"])
+                        ->latest()
+                        ->first();
+                    if($objCheckClosedChat)
+                    {
+                        $aAllChats =App\Models\ChatLog::where("id", ">", $objCheckClosedChat->id)
+                            ->where(function ($query) use ($iUserId, $iOwnerId) {
+                                $query->where(function ($query) use ($iUserId, $iOwnerId) {
+                                    $query->where('sender_id', $iUserId)
+                                          ->where('receiver_id', $iOwnerId);
+                                })
+                                ->orWhere(function ($query) use ($iOwnerId, $iUserId) {
+                                    $query->where('sender_id', $iOwnerId)
+                                          ->where('receiver_id', $iUserId);
+                                });
+                            })
+                            ->select(["chat_message", "sender_id", "receiver_id", "id"])
+                            ->get();
+                        if($aAllChats)
+                        {
+                            foreach($aAllChats AS $iKey => $aValue)
+                            {
+                                if($iUserId == $aValue["sender_id"])
+                                    echo '<div class="message user-message"><div class="content">'.$aValue["chat_message"].'</div></div>';
+                                else
+                                    echo '<div class="message other-message"><div class="content" style="word-wrap: break-word">'.$aValue["chat_message"].'</div></div>';
+                            }
+                        }
+                    }
+                }
+            @endphp
         </div>
         <div class="user-input">
-            <input type="text" id="user-message" placeholder="Type your message...">
+            <input disabled type="text" id="user-message" placeholder="Type your message...">
             <button id="send-button">Send</button>
         </div>
     </div>
@@ -464,6 +520,7 @@
 @endsection
 @section('script')
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker@3.1.0/daterangepicker.min.js"></script>
+<script type="text/javascript" src="{{asset("pusher/pusher.min.js")}}"></script>
 
 <script>
     var demos = @json($week_data);
@@ -603,6 +660,9 @@
 </script>
 
 <script>
+
+    let userId = 0;
+    let messageCounter = 0;
     $(function () {
 
         const date = new Date();
@@ -665,7 +725,7 @@
                         response.fri_count,
                         response.sat_count
                     ];
-    
+
                     chart.updateSeries([{
                         name: 'User Count',
                         data: responseData,
@@ -681,9 +741,6 @@
             });
         }
     });
-
-    const sessionID = {{rand(999, 99999)}};
-    let firstMessage = true;
     document.addEventListener("DOMContentLoaded", function () {
 
         const chatIcon = document.querySelector(".chat-icon");
@@ -691,9 +748,8 @@
         let isChatOpen = false;
         let borderRadius = $(".chat-icon").css("border-radius");
         chatIcon.addEventListener("click", function () {
-            if(firstMessage)
-                addUserMessage("hi");
-
+            messageCounter = 0;
+            $(".badge").text("");
             isChatOpen = !isChatOpen;
             chatWindow.style.display = isChatOpen ? "block" : "none";
             if(borderRadius == "50px")
@@ -723,26 +779,175 @@
     })
 
     async function addUserMessage(message) {
+        if(userId == 0)
+            return false;
 
         let messageDiv = "";
-        if(firstMessage) {
-            firstMessage = false;
-        } else {
-            messageDiv = document.createElement('div');
-            messageDiv.classList.add('message', 'user-message');
-            messageDiv.innerHTML = `<div class="content">${message}</div>`;
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        const response  = await AsyncAjax("{{url("chat")}}", {"message": message, "sessionID": sessionID});
-        messageDiv      = document.createElement('div');
-
-        messageDiv.classList.add('message', 'other-message');
-        messageDiv.innerHTML = `<div class="content">${response.message}</div>`;
+        messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', 'user-message');
+        messageDiv.innerHTML = `<div class="content">${message}</div>`;
         chatMessages.appendChild(messageDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
+        setChatContent("user-chat", message, 1);
+
+        await AsyncAjax("{{url("chatMessage")}}", {"message": message, "userId": userId, channel: "chat"+userId});
+        setCookie("consultant", userId, 5);
     }
+
+    let pusher = new Pusher("{{env("PUSHER_APP_KEY")}}", {
+        cluster: "{{env("PUSHER_APP_CLUSTER")}}",
+        encrypted: true
+    })
+    let channel = pusher.subscribe("chat{{auth()->user()->id}}");
+    channel.bind("App\\Events\\ChatMessage", function(data) {
+        let message = "";
+        try {
+            data = JSON.parse(data.message);
+        } catch(e) {
+            data = data.message;
+        }
+        message = data.message;
+        setCloseStatus(data);
+        console.log(data);
+        setChatContent("user-chat", message, 2);
+        if(!getCookie("clientName"))
+            setCookie("clientName", data.clientName, 5);
+
+        if(data.close) {
+            setCloseStatus({}, true);
+        } else {
+            let messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', 'other-message');
+            messageDiv.innerHTML = `<div class="content" style="word-wrap: break-word">${message}</div>`;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            if($(".chat-window").css("display") === "none")
+                $(".badge").text(++messageCounter);
+        }
+    });
+    function setCookie(cookieName, cookieValue, expirationMinutes) {
+        var d = new Date();
+        d.setTime(d.getTime() + (expirationMinutes * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+    }
+    function expireCookie(cookieName) {
+        var expiredDate = new Date();
+        expiredDate.setFullYear(expiredDate.getFullYear() - 1); // Set the date to the past
+        var expires = "expires=" + expiredDate.toUTCString();
+        document.cookie = cookieName + "=; " + expires + "; path=/";
+    }
+    function getCookie(cookieName) {
+        const allCookie = document.cookie.split(";");
+        for(let i = 0; i < allCookie.length; i++) {
+            let cookie = allCookie[i].split("=");
+            if(cookie[0].trim() === cookieName)
+                return cookie[1];
+        }
+        return false;
+    }
+    let intervalTime = "";
+    $(document).ready(function() {
+        const cookieValue = getCookie("consultant");
+        if(cookieValue) {
+            $("#chat-title").text(getCookie("clientName"));
+            setCloseStatus({userId: cookieValue})
+            intervalTime = setInterval(() => {
+                let cookieValue = getCookie("consultant");
+                if(!cookieValue) {
+                    setCloseStatus({}, true);
+                }
+            }, 100000);
+        }
+        // expireCookie("user-chat")
+        // let chatData = getCookie("user-chat");
+        // if(chatData) {
+        //     chatData = JSON.parse(chatData);
+        //     for(let i = 0; i < chatData.length; i++) {
+        //         // let message = atob(chatData[i].message);
+        //         let message = chatData[i].message;
+        //         if(chatData[i].toOrFrom === 1) {
+        //             let messageDiv = document.createElement('div');
+        //             messageDiv.classList.add('message', 'user-message');
+        //             messageDiv.innerHTML = `<div class="content">${message}</div>`;
+        //             chatMessages.appendChild(messageDiv);
+        //             chatMessages.scrollTop = chatMessages.scrollHeight;
+        //         } else {
+        //             let messageDiv      = document.createElement('div');
+        //             messageDiv.classList.add('message', 'other-message');
+        //             messageDiv.innerHTML = `<div class="content" style="word-wrap: break-word">${message}</div>`;
+        //             chatMessages.appendChild(messageDiv);
+        //             chatMessages.scrollTop = chatMessages.scrollHeight;
+        //         }
+        //     }
+        // }
+    })
+    function setCloseStatus(data = {}, closed = false) {
+        if(closed) {
+            userId       = 0;
+            $(".chat-messages").append(`
+            <div class="jumbotron" align="center" style="font-size: 16px">
+                Your chat session has been expired
+            </div>`);
+            $(".clearSession").hide();
+            $(".noSession").show();
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            $("#chat-title").text("Chat");
+            clearInterval(intervalTime);
+            expireCookie("consultant")
+            expireCookie("user-chat")
+            expireCookie("clientName");
+            $(".chat-messages").css({"paddingTop": "1%"});
+            $("#user-message").attr("disabled", true);
+
+        } else {
+            $(".clearSession").show();
+            $(".chat-messages").css({"paddingTop": "10%"});
+            setCookie("consultant", data.userId, 5);
+            userId       = data.userId;
+            $(".noSession").hide();
+            $("#user-message").attr("disabled", false);
+            $(".jumbotron").hide();
+        }
+    }
+    function convertToHtmlEntities(inputString) {
+        return inputString.replace(/[&<>"'`;]/g, function(match) {
+            switch(match) {
+                case "&":
+                    return "";
+                case "<":
+                    return "";
+                case ">":
+                    return "";
+                case '"':
+                    return "";
+                case "'":
+                    return "";
+                case '`':
+                    return "";
+                case ';':
+                    return ""; // HTML entity for semicolon
+                default:
+                    return match;
+            }
+        });
+    }
+    function setChatContent(cookieName, chatMessage, toOrFrom = 1) {
+        let chatData = getCookie(cookieName);
+        if (chatData) {
+            chatData = JSON.parse(decodeURIComponent(chatData));
+        } else {
+            chatData = [];
+        }
+        chatData.push({ message: convertToHtmlEntities(chatMessage), toOrFrom: toOrFrom });
+        setCookie(cookieName, JSON.stringify(chatData), 5);
+    }
+    $(".clickToClear").on("click", async function() {
+        if(confirm("Are you sure? Do you want to close this session?")) {
+            await AsyncAjax("{{url("chatMessage")}}", {message: 200, close: true, "channel": "chat"+userId, userId: userId});
+            setCloseStatus({}, true);
+        }
+    });
 </script>
 @endsection
 

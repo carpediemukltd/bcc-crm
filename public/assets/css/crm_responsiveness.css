@@ -88,12 +88,6 @@
     .nav-item.search_bar_view.dropdown.d-xl-block {
       display: none;
     }
-
-
-
-
-
-
     .iq-nav-menu ul{
 
       box-shadow: none !important;
@@ -112,7 +106,7 @@
         display: none;
       }
       .header-hover-menu.iq-navbar .navbar-collapse:not(.offcanvas-collapse){
-        right: 18%;
+        right: 22%;
       }
       .accordion-body{
         padding: 0;

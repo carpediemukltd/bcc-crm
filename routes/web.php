@@ -31,6 +31,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\KixieLogController;
+use App\Http\Controllers\MapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -185,5 +186,7 @@ Route::middleware([CheckStatus::class])->group(function () {
     });
     Route::get('search', [SearchController::class, 'show'])->name('search');
     Route::post('search', [SearchController::class, 'index']);
+    Route::get('bank-map/show', [MapController::class, 'show']);
+
 
 });

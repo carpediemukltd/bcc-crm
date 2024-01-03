@@ -61,7 +61,7 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label class="form-label" for="title">Campaign name</label>
-                                        <input disabled type="text" class="form-control" id="title" name="title" value="{{ $data['campaign']->name }}" required>
+                                        <input disabled type="text" class="form-control" id="title" name="title" value="{{ $campaign->name }}" required>
                                         @error('title')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -103,9 +103,9 @@
                                 <div class="col-sm-3">
                                 <h4 class="mb-3">Sequence List</h4>
                                     <ul class="list-group sequence-list">
-                                        
-                                        @if(count($data['campaign']->marketingCampaignSequence))
-                                        @foreach($data['campaign']->marketingCampaignSequence as $sequence)
+                                        <li class="list-group-item">Sequence List</li>
+                                        @if(count($campaign->marketingCampaignSequence))
+                                        @foreach($campaign->marketingCampaignSequence as $sequence)
                                         <li class="list-group-item item" data-subject="{{$sequence->subject}}" data-content="{{$sequence->body}}" data-waitfor="{{$sequence->wait_for}}">{{$sequence->subject}}</li>
                                         @endforeach()
                                         @endif()
@@ -116,17 +116,17 @@
                            <div class="row">
                            <div class="col-sm-6">
                                     <label class="form-label" for="subject">Subject</label>
-                                    <input type="text" class="form-control" name="subject" id="subject" value="{{$data['campaign']->marketingCampaignSequence[0]->subject}}">
+                                    <input type="text" class="form-control" name="subject" id="subject" value="{{$campaign->marketingCampaignSequence[0]->subject}}">
 
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form-label" for="wait_for">Wait For Days</label>
-                                    <input type="number" class="form-control" name="wait_for" id="wait_for" value="{{$data['campaign']->marketingCampaignSequence[0]->wait_for}}">
+                                    <input type="number" class="form-control" name="wait_for" id="wait_for" value="{{$campaign->marketingCampaignSequence[0]->wait_for}}">
                                 </div>
                            </div>
                                 <div class="content_view_holder mt-4">
                                     <!-- <label class="form-label" for="html_content">Content</label> -->
-                                    <textarea id="html_content" name="html_content" rows="4" cols="100" class="form-control tiny-integerate">{{$data['campaign']->marketingCampaignSequence[0]->body}}</textarea>
+                                    <textarea id="html_content" name="html_content" rows="4" cols="100" class="form-control tiny-integerate">{{$campaign->marketingCampaignSequence[0]->body}}</textarea>
                                     @error('html_content')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -141,13 +141,13 @@
 
                                     <label class="form-label" for="status">Status</label>
                                     <select class="form-control" name="status" id="status">
-                                        <option>{{$data['campaign']->status}}</option>
+                                        <option>{{$campaign->status}}</option>
                                     </select>
 
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label" for="start_date">Start Date</label>
-                                    <input type="datetime-local" class="form-control" id="start_date" name="start_date" value="{{ $data['campaign']->start_date}}" required>
+                                    <input type="datetime-local" class="form-control" id="start_date" name="start_date" value="{{ $campaign->start_date}}" required>
                                     @error('start_date')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -158,8 +158,8 @@
                                 <div class="col-md-12 pb-5">
                                     <select class="form-control select-sequence" name="sequence"> <!-- Add name attribute -->
                                         <option value="0">--Select Campaign Sequence--</option>
-                                        @if(count($data['campaign']->marketingCampaignSequence))
-                                        @foreach($data['campaign']->marketingCampaignSequence as $sequence)
+                                        @if(count($campaign->marketingCampaignSequence))
+                                        @foreach($campaign->marketingCampaignSequence as $sequence)
                                         <option value="{{$sequence->id}}">{{$sequence->subject}}</option>
                                         @endforeach
                                         @endif
@@ -245,48 +245,6 @@
                 'insertdatetime media table paste code help wordcount'
             ],
         });
-
-        // search feature
-        // Handle search and update dropdown
-        //  $('#searchQuery').on('input propertychange', function () {
-        document.getElementById('searchQuery').addEventListener('input', function() {
-
-            var searchQuery = $(this).val();
-            $("#selectedContacts").html('');
-            // Perform an AJAX post call with the searchValue using jQuery
-            if (searchQuery) {
-                // Implement AJAX to fetch search results from Laravel backend
-                $.ajax({
-                    type: 'GET',
-                    url: '/marketing-search-users', // Replace with your actual search endpoint
-                    data: {
-                        query: searchQuery,
-                        // Add other parameters if needed
-                    },
-                    success: function(searchResults) {
-                        // Update the dropdown options based on search results
-                        var dropdown = $('#selectedContacts');
-                        $('#selectedContacts').show();
-                        dropdown.empty(); // Clear existing options
-
-                        $.each(searchResults, function(index, contact) {
-                            // Check if the contact is already selected
-                            if (!selectedContactIds.includes(contact.id)) {
-                                var option = $(`<div class="${contact.id}-contact" style="margin-bottom:10px;">${contact.full_name} (${contact.email}) <span data-id="${contact.id}" data-name="${contact.full_name}" class="contact-add"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16"> <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/> <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/> </svg></span></div>`);
-                                dropdown.append(option);
-                            }
-                        });
-                    },
-                    error: function(error) {
-                        // Handle error response
-                        console.error(error);
-                    }
-                });
-
-            }
-
-        });
-
         // Handle click event for dynamically added "Add" text
         $(document).on('click', '#selectedContacts .contact-add', function() {
             $('.selected-contacts-container').show();

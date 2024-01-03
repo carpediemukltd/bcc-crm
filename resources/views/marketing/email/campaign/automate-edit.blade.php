@@ -24,22 +24,22 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <form method="POST" action="{{route('marketing-campaigns.update', $data['campaign']->id)}}">
+                    <form method="POST" action="{{route('marketing-campaigns.update', $campaign->id)}}">
                         @csrf
                         @method('PUT')
                         <div class="row" style="padding:20px">
                             <input type="hidden" name="type" value="automate">
                             <div class="col-sm-4">
                                 <label class="form-label" for="title">Campaign name</label>
-                                <input type="text" class="form-control" id="title" name="title" value="{{ $data['campaign']->name }}" required>
+                                <input type="text" class="form-control" id="title" name="title" value="{{ $campaign->name }}" required>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="status">Status</label>
                                 <select class="form-control" name="status" id="status" name="status">
-                                    <option <?php if ($data['campaign']->status == 'active') {
+                                    <option <?php if ($campaign->status == 'active') {
                                                 echo 'selected';
                                             } ?> value="active">Active</option>
-                                    <option <?php if ($data['campaign']->status == 'paused') {
+                                    <option <?php if ($campaign->status == 'paused') {
                                                 echo 'selected';
                                             } ?> value="paused">Paused</option>
                                 </select>
@@ -47,10 +47,10 @@
                             <div class="col-md-4">
                                 <label class="form-label" for="status">Stage</label>
                                 <select class="form-control" name="stage" id="stage">
-                                    <option value="0" {{ !$data['campaign']->stage ? 'selected' : '' }}>--Select Stage--</option>
-                                    @if(count($data['stages']))
-                                    @foreach($data['stages'] as $stage)
-                                    <option {{ $data['campaign']->stage && $stage->id == $data['campaign']->stage->id ? 'selected' : '' }} value="{{ $stage->id }}">{{ $stage->title }}</option>
+                                    <option value="0" {{ !$campaign->stage ? 'selected' : '' }}>--Select Stage--</option>
+                                    @if(count($stages))
+                                    @foreach($stages as $stage)
+                                    <option {{ $campaign->stage && $stage->id == $campaign->stage->id ? 'selected' : '' }} value="{{ $stage->id }}">{{ $stage->title }}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -58,11 +58,11 @@
                             </div>
                             <div class="col-sm-2 pt-5">
                                 <label class="form-label" for="subject">Subject</label>
-                                <input required type="text" class="form-control" name="subject" id="subject" value="{{$data['campaign']->marketingCampaignSequence[0]->subject}}">
+                                <input required type="text" class="form-control" name="subject" id="subject" value="{{$campaign->marketingCampaignSequence[0]->subject}}">
                             </div>
                             <div class="col-sm-8 pt-5">
                                 <label class="form-label" for="html_content">Content</label>
-                                <textarea required id="html_content" name="html_content" rows="4" cols="100" class="form-control tiny-integerate">{{$data['campaign']->marketingCampaignSequence[0]->body}}</textarea>
+                                <textarea required id="html_content" name="html_content" rows="4" cols="100" class="form-control tiny-integerate">{{$campaign->marketingCampaignSequence[0]->body}}</textarea>
                                 @error('html_content')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror

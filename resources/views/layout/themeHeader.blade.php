@@ -96,7 +96,7 @@
                               </a>
                            </li>
                            <!-- marketing -->
-                           <li class="nav-item <?php if(isset($slug) && in_array($slug, [ 'stages', 'roundrobin', 'companies', 'list_company', 'edit_company', 'add_company','pipelines', 'add_user', 'user_list', 'edit_user', 'user_details', 'user_deals', 'user_add_deal', 'user_edit_deal']) && !isset($_GET['type'])){echo 'active';}?>">
+                           <li class="nav-item <?php if(isset($slug) && in_array($slug, ['smtps', 'campaigns', 'templates', 'reporting'])){echo 'active';}?>">
                               <a class="nav-link " data-bs-toggle="collapse" href="#allPagesData3" role="button" aria-expanded="false" aria-controls="allPagesData3">
                                  <span class="nav-text ms-2">Marketing</span>
                                  <i class="right-icon">
@@ -108,7 +108,7 @@
                               </a>
                               <ul class="iq-header-sub-menu list-unstyled collapse" id="allPagesData3">
                                  <li class="nav-item dropdown iq-responsive-menu d-block">
-                                    <a class="nav-link <?php if(isset($slug) && in_array($slug, ['add_user', 'user_list', 'edit_user', 'user_details', 'user_deals', 'user_add_deal', 'user_edit_deal']) && !isset($_GET['type'])){echo 'active';}?>" data-bs-toggle="dropdown" href="#sidebar-user" role="button" aria-expanded="false"
+                                    <a class="nav-link <?php if(isset($slug) && in_array($slug, ['smtps', 'campaigns', 'templates', 'reporting'])){echo 'active';}?>" data-bs-toggle="dropdown" href="#sidebar-user" role="button" aria-expanded="false"
                                        aria-controls="sidebar-special">
                                        <i class="icon">
                                        <svg class="icon-20" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -127,7 +127,7 @@
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-search-11"
                                        >
                                        <li class="nav-item">
-                                          <a class="nav-link <?php if(isset($slug) && $slug == 'add_user' && !isset($_GET['type'])){echo 'active';}?>"
+                                          <a class="nav-link <?php if(isset($slug) && $slug == 'smtps'){echo 'active';}?>"
                                              href="{{route('custom-smtps.index')}}">
                                              <i class="icon">
                                                 <svg width="20" class="icon-20" height="20" viewBox="0 0 24 24" fill="none"
@@ -144,7 +144,7 @@
                                           </a>
                                        </li>
                                        <li class="nav-item">
-                                          <a class="nav-link <?php if(isset($slug) && $slug == 'user_list'){echo 'active';}?>"
+                                          <a class="nav-link <?php if(isset($slug) && $slug == 'templates'){echo 'active';}?>"
                                              href="{{route('marketing-email-templates.index')}}">
                                              <i class="icon">
                                              <svg fill="none" class="icon-20" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -156,7 +156,7 @@
                                           </a>
                                        </li>
                                        <li class="nav-item">
-                                          <a class="nav-link <?php if(isset($slug) && $slug == 'user_list'){echo 'active';}?>"
+                                          <a class="nav-link <?php if(isset($slug) && $slug == 'campaigns'){echo 'active';}?>"
                                              href="{{route('marketing-campaigns.index')}}">
                                              <i class="icon">
                                              <svg fill="none" class="icon-20" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -167,7 +167,7 @@
                                           </a>
                                        </li>
                                        <li class="nav-item">
-                                          <a class="nav-link <?php if(isset($slug) && $slug == 'global_stats'){echo 'active';}?>"
+                                          <a class="nav-link <?php if(isset($slug) && $slug == 'reporting'){echo 'active';}?>"
                                              href="{{route('marketingGlobalReporting')}}">
                                              <i class="icon">
                                                 <svg width="20" class="icon-20" height="20" viewBox="0 0 24 24" fill="none"

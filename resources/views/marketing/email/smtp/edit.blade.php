@@ -32,14 +32,14 @@
                   </div>
                </div>
                <div class="card-body">
-                  <form action="{{ route('custom-smtps.update', $data->id) }}" method="POST">
+                  <form action="{{ route('custom-smtps.update', $smtp->id) }}" method="POST">
                      @csrf
                      @method('PUT')
                      <div class="row">
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="host">Host:</label>
-                              <input type="text" class="form-control" id="host" name="host" value="{{ $data->host }}" required>
+                              <input type="text" class="form-control" id="host" name="host" value="{{ $smtp->host }}" required>
                               @error('host')
                               <span class="text-danger">{{ $message }}</span>
                               @enderror
@@ -48,7 +48,7 @@
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="port">Port:</label>
-                              <input type="number" class="form-control" id="port" name="port" value="{{  $data->port }}" required>
+                              <input type="number" class="form-control" id="port" name="port" value="{{  $smtp->port }}" required>
                               @error('port')
                               <span class="text-danger">{{ $message }}</span>
                               @enderror
@@ -60,7 +60,7 @@
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="username">Username:</label>
-                              <input type="text" class="form-control" id="username" name="username" value="{{ $data->username }}" required>
+                              <input type="text" class="form-control" id="username" name="username" value="{{ $smtp->username }}" required>
                               @error('username')
                               <span class="text-danger">{{ $message }}</span>
                               @enderror
@@ -69,7 +69,7 @@
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="password">Password:</label>
-                              <input type="password" class="form-control" id="password" name="password" required value="{{$data->password}}">
+                              <input type="password" class="form-control" id="password" name="password" required value="{{$smtp->password}}">
                               @error('password')
                               <span class="text-danger">{{ $message }}</span>
                               @enderror
@@ -81,7 +81,7 @@
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="encryption_type">Encryption type:</label>
-                              <input type="text" class="form-control" id="encryption_type" name="encryption_type" value="{{ $data->encryption_type }}" placeholder="eg. ssl, tls" required>
+                              <input type="text" class="form-control" id="encryption_type" name="encryption_type" value="{{ $smtp->encryption_type }}" placeholder="eg. ssl, tls" required>
                               @error('encryption_type')
                               <span class="text-danger">{{ $message }}</span>
                               @enderror
@@ -93,7 +93,7 @@
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="reply_to">Reply To:</label>
-                              <input type="email" class="form-control" id="reply_to" name="reply_to" value="{{ $data->reply_to }}" required>
+                              <input type="email" class="form-control" id="reply_to" name="reply_to" value="{{ $smtp->reply_to }}" required>
                               @error('reply_to')
                               <span class="text-danger">{{ $message }}</span>
                               @enderror
@@ -102,7 +102,7 @@
                         <div class="col">
                            <div class="form-group">
                               <label class="form-label" for="username_display">Display name:</label>
-                              <input type="text" class="form-control" id="username_display" name="username_display" value="{{ $data->username_display }}" placeholder="BCCUSA COMPANY" required>
+                              <input type="text" class="form-control" id="username_display" name="username_display" value="{{ $smtp->username_display }}" placeholder="BCCUSA COMPANY" required>
                               @error('username_display')
                               <span class="text-danger">{{ $message }}</span>
                               @enderror

@@ -27,8 +27,10 @@ class MarketingCampaignController extends Controller
      */
     public function index()
     {
-        $data = MarketingCampaign::with('stage')->whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->paginate(10);
-        return view('marketing.email.campaign.index', ['data' => $data]);
+        $data['current_slug']   = 'Campaigns';
+        $data['slug']           = 'campaigns';
+        $data['campaigns'] = MarketingCampaign::with('stage')->whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->paginate(10);
+        return view('marketing.email.campaign.index', $data);
     }
 
     /**
@@ -38,8 +40,10 @@ class MarketingCampaignController extends Controller
      */
     public function create()
     {
+        $data['current_slug']   = 'Create New Campaign';
+        $data['slug']           = 'campaigns';
         $data['templates'] = MarketingEmailTemplate::whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->get();
-        return view('marketing.email.campaign.create', ['data' => $data]);
+        return view('marketing.email.campaign.create', $data);
     }
 
     /**
@@ -56,9 +60,14 @@ class MarketingCampaignController extends Controller
             'sequences'                 => 'required|array',
             'sequences.*.subject'       => 'required',
             'sequences.*.htmlContent'   => 'required',
-            'sequences.*.waitFor'       => 'required',
-            'start_date'                => 'required',
-            'select_type'               => 'required'
+            'sequences.*.waitFor'       => 'required|numeric|min:0', // Allow only numeric values greater than or equal to 0
+            'start_date'                => 'required|date_format:Y-m-d\TH:i', // Adjusted format for datetime-local input
+            'select_type'               => 'required',
+            'select_type'               => 'required|in:all,targeted-contacts', // Added validation for select_type
+            'contacts'                  => 'required_if:select_type,targeted-contacts', // Validation for contacts if select_type is 'specific'
+            'contacts.*'                => 'exists:users,id', // Assuming contacts are user IDs, adjust this validation rule accordingly
+            'status'                    => 'required|in:active,draft,paused,inprogress',
+
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -124,14 +133,17 @@ class MarketingCampaignController extends Controller
      */
     public function show($id)
     {
+        $data['current_slug']   = 'Campaign View';
+        $data['slug']           = 'campaigns';
+
         $campaign = MarketingCampaign::with(['marketingCampaignSequence', 'stage'])->find($id);
         $data['campaign'] = $campaign;
         if ($campaign->type == 'automate') {
-            return view('marketing.email.campaign.automate-show', ['data' => $data]);
+            return view('marketing.email.campaign.automate-show', $data);
         }
         $data['users'] = MarketingCampaignUser::where('marketing_campaign_id', $id)->paginate(10);
 
-        return view('marketing.email.campaign.show', ['data' => $data]);
+        return view('marketing.email.campaign.show', $data);
 
     }
 
@@ -143,16 +155,18 @@ class MarketingCampaignController extends Controller
      */
     public function edit($id)
     {
+        $data['current_slug']   = 'Edit Campaign';
+        $data['slug']           = 'campaigns';
         $campaign   = MarketingCampaign::with(['marketingCampaignSequence', 'stage'])->find($id);
         $data['campaign'] = $campaign;
         if ($campaign->type == 'automate') {
             $data['stages'] = Stage::get();
             // return $data;
-            return view('marketing.email.campaign.automate-edit', ['data' => $data]);
+            return view('marketing.email.campaign.automate-edit',$data);
         }
         $data['users']      = MarketingCampaignUser::where('marketing_campaign_id', $id)->paginate(10);
         $data['templates']  = MarketingEmailTemplate::whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->get();
-        return view('marketing.email.campaign.edit', ['data' => $data]);
+        return view('marketing.email.campaign.edit', $data);
     }
 
     /**
@@ -186,6 +200,23 @@ class MarketingCampaignController extends Controller
             }
 
             // Redirect back or return a response as needed
+            return redirect()->back()->with('success', 'Campaign updated successfully.');
+        }else{
+            $validator = Validator::make($request->all(), [
+                'title'                     => 'required',
+                'start_date'                => 'required|date_format:Y-m-d\TH:i', // Adjusted format for datetime-local input
+                'status'                    => 'required|in:active,draft,paused,inprogress',
+            ]);
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            $campaign = MarketingCampaign::find($id);
+            $campaign->company_id   = auth()->user()->company_id;
+            $campaign->name         = $request->title;
+            $campaign->start_date   = $request->start_date;
+            $campaign->status       = $request->status;
+            $campaign->save();
+    
             return redirect()->back()->with('success', 'Campaign updated successfully.');
         }
     }
@@ -289,8 +320,11 @@ class MarketingCampaignController extends Controller
     }
     public function marketingGlobalReporting()
     {
-        $data['campaign'] = MarketingCampaign::whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->get();
-        return view('marketing.email.reporting.global-reporting', ['data' => $data]);
+        $data['current_slug']   = 'Global Reporting';
+        $data['slug']           = 'reporting';
+        
+        $data['campaigns'] = MarketingCampaign::whereCompanyId(auth()->user()->company_id)->orderBy('id', 'DESC')->get();
+        return view('marketing.email.reporting.global-reporting', $data);
     }
     public function marketingGlobalReportingData()
     {

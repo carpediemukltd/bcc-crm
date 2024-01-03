@@ -35,9 +35,9 @@
                             <div class="col-md-12 pb-5">
                                 <select class="form-control select-campaign" name="campaign">
                                     <option value="0">--Select Campaign--</option>
-                                    @if(count($data['campaign']))
-                                    @foreach($data['campaign'] as $camp)
-                                    <option value="{{$camp->id}}">{{$camp->name}}</option>
+                                    @if(count($campaigns))
+                                    @foreach($campaigns as $camp)
+                                        <option value="{{$camp->id}}">{{$camp->name}}</option>
                                     @endforeach
                                     @endif
                                 </select>

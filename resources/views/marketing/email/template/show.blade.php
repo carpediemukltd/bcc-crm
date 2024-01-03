@@ -29,14 +29,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label" for="name">Template Name:</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="{{$data->name}}" disabled>
+                                    <input type="text" class="form-control" id="name" name="name" value="{{$template->name}}" disabled>
 
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label" for="email_subject">Email Subject:</label>
-                                    <input type="text" class="form-control" id="email_subject" name="email_subject" value="{{$data->email_subject}}" disabled>
+                                    <input type="text" class="form-control" id="email_subject" name="email_subject" value="{{$template->email_subject}}" disabled>
 
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <label class="form-label" for="content">Content</label>
-                                <textarea name="content" rows="4" cols="100" class="form-control tiny-integerate">{{$data->content}}</textarea>
+                                <textarea name="content" rows="4" cols="100" class="form-control tiny-integerate">{{$template->content}}</textarea>
                             </div>
                         </div>
                     </div>
@@ -54,16 +54,18 @@
     </div>
 </div>
 <script>
-    tinymce.init({
-        selector: '.tiny-integerate',
-        toolbar_location: "top",
-        menubar: true,
-        toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-        plugins: [
-            'advlist autolink lists link image charmap print preview anchor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table paste code help wordcount'
-        ],
+    $(document).ready(function() {
+        tinymce.init({
+            selector: '.tiny-integerate',
+            toolbar_location: "top",
+            menubar: true,
+            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+            ],
+        });
     });
 </script>
 

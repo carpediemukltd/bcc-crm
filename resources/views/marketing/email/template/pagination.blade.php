@@ -1,5 +1,5 @@
-@if(isset($data) && !empty($data))
-@foreach($data as $template)
+@if(isset($templates) && !empty($templates))
+@foreach($templates as $template)
 <tr class="odd">
    <td>{{$template->name}}</td>
    <td>{{$template->email_subject}}</td>
@@ -35,7 +35,7 @@
 
 <tr>
    <td colspan="8" align="center">
-      {!! $data->links('marketing.email.template.custom_pagination') !!}
+      {!! $templates->links('marketing.email.template.custom_pagination') !!}
    </td>
 </tr>
 @else

@@ -1,5 +1,5 @@
-@if(isset($data) && !empty($data))
-@foreach($data as $smtp)
+@if(isset($smtps) && !empty($smtps))
+@foreach($smtps as $smtp)
 <tr class="odd">
    <td>{{$smtp->host}}</td>
    <td>{{$smtp->username}}</td>
@@ -37,7 +37,7 @@
 
 <tr>
    <td colspan="8" align="center">
-      {!! $data->links('marketing.email.smtp.custom_pagination') !!}
+      {!! $smtps->links('marketing.email.smtp.custom_pagination') !!}
    </td>
 </tr>
 @else

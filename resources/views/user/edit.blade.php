@@ -31,7 +31,7 @@
                   </div>
                </div>
                <div class="card-body">
-                  <form action="{{route('user.edit', $user->id)}}" method="POST">
+                  <form id="edit_contact" action="{{route('user.edit', $user->id)}}" method="POST" autocomplete="false">
                      @method('PUT')
                      @csrf
                      <div class="row">
@@ -61,8 +61,9 @@
                               <input type="hidden" name="phone_country_code" id="selected-country-code" >
                               <label class="form-label" for="phone_number">Phone number:</label>
                               <div class="phone-input">
-                                 <input value="{{$user->phone_number}}" name="phone_number" type="tel" id="phone-number" placeholder="Enter your phone number" class="form-control" required>
+                                 <input name="phone_number" value="{{$user->phone_number}}" type="tel" id="phone-number" placeholder="Enter your phone number" class="form-control" required>
                               </div>
+                               <span class="text-danger" id="phone_number_error">{{$errors->has('phone_number') ? $errors->first('phone_number') : '' }}</span>
                             </div>
                         </div>
                      </div>
@@ -80,11 +81,28 @@
                                                   $already_selected_documents[] = $selected_document->id;
                                               @endphp
                                           @endforeach
+                                          @foreach($document_groups as $group)
+                                              <div class="col-md-2">
+                                                  <label class="checkbox-inline">
+                                                      <div class="check-doc-field">
+                                                          <input type="checkbox" class="document_group_checkbox" name="{{$group->name}}" value="{{$group->id}}">
+                                                      </div>
+                                                      <p><b>{{$group->name}}</b></p>
+                                                  </label>
+                                              </div>
+                                          @endforeach
                                           @foreach($documents as $document)
                                               <div class="col-md-4">
                                                   <label class="checkbox-inline">
                                                       <div class="check-doc-field">
-                                                         <input type="checkbox" name="document_types[]" value="{{$document->id}}" {{in_array($document->id, $already_selected_documents) ? 'checked' : ''}}> 
+                                                          @php
+                                                              $group_ids = [];
+                                                              foreach($document->DocumentGroup as $group_id){
+                                                                  $group_ids[] = $group_id->id;
+                                                              }
+                                                              $serializedGroupIds = json_encode($group_ids);
+                                                          @endphp
+                                                          <input type="checkbox" name="document_types[]" class="document_group_checkbox_option" data-group-id="{{$serializedGroupIds}}" value="{{$document->id}}" {{in_array($document->id, $already_selected_documents) ? 'checked' : ''}}>
                                                       </div>
                                                       <p>{{$document->title}}</p>
                                                   </label>
@@ -146,7 +164,7 @@
                         </div>
                      </div>
                      <!-- custom fields end -->
-                     
+
 
                      <div class="row">
                         <div class="col">
@@ -161,4 +179,54 @@
       </div>
    </div>
 </div>
+<script type="text/javascript">
+    $('.document_group_checkbox').click(function(){
+        var group_id = parseInt($(this).val());
+        if($(this).prop('checked')){
+            $(".document_group_checkbox_option").each(function() {
+                var optionGroupIds = JSON.parse($(this).attr('data-group-id'));
+                if (optionGroupIds.includes(group_id)) {
+                    // Check the checkbox
+                    $(this).prop('checked', true);
+                }
+            });
+        }else{
+            $(".document_group_checkbox_option").each(function() {
+                var optionGroupIds = JSON.parse($(this).attr('data-group-id'));
+                if (optionGroupIds.includes(group_id)) {
+                    // Check the checkbox
+                    $(this).prop('checked', false);
+                }
+            });
+        }
+
+    })
+
+    $(document).ready(function(){
+        $('#edit_contact').submit(function (e) {
+            // Get the input value
+            var phoneNumber = $("#phone").intlTelInput("getNumber");
+
+            // Check if the phone number is valid
+            if (!$("#phone-number").intlTelInput("isValidNumber")) {
+                // Valid phone number, proceed with your form submission or other actions
+                $('#phone_number_error').html('Invalid number')
+                $("#phone-number").focus();
+                e.preventDefault();
+            } else {
+                $('#phone_number_error').html('')
+            }
+        });
+    })
+</script>
 @endsection
+@push('scripts')
+    <script async="true">
+        $(document).ready(function(){
+            setTimeout(() => {
+                var phoneNumber = '{{$user->phone_number}}';
+                phoneNumberInput.val(phoneNumber.substr(2, phoneNumber.length));
+            }, 1000)
+        })
+    </script>
+@endpush

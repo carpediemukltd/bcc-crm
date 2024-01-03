@@ -9,7 +9,16 @@ use Illuminate\Support\Facades\DB;
 class Deal extends Model
 {
     use HasFactory;
-    protected $fillable = ['id', 'title', 'user_id', 'pipeline_id', 'stage_id', 'amount', 'deal_owner', 'lead_source', 'depositing_institution', 'state', 'submitted_bank', 'sub_type'];
+    protected $fillable = ['id', 'title', 'user_id', 'pipeline_id', 'stage_id', 'amount', 'deal_owner', 'lead_source', 'depositing_institution', 'state', 'submitted_bank', 'sub_type', 'reference_id'];
+
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            // assign random string and deal id
+            $model->reference_id = self::generateRandomString(10);
+        });
+    }
 
     public static function getDeals($user_id, $deal_id)
     {
@@ -96,5 +105,11 @@ class Deal extends Model
             ->select(["S.title"])
             ->where("D.user_id", $iUserId)
             ->get();
+    }
+
+    private static function generateRandomString($length=10){
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; // characters to be used in the random string
+        $rand   = mt_rand(1, 99);
+        return substr(str_shuffle($characters), 0, $length) . $rand; // generate random string
     }
 }

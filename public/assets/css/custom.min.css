@@ -15,3 +15,99 @@
   .hide{
     display: none ;
   }
+  .navbar-brand.login-brand-logo.mb-4 {
+    display: block;
+    text-align: center;
+    position: relative;
+    top: -20px;
+  }
+  .login-brand-banner{
+    background-color: #dfa248;
+    padding: 70px;
+  }
+  /* loader css start */
+.loader {
+  position: fixed;
+  background: #fff;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.logo {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  background-color: rgba(223, 162, 72, 0.1);
+  position: relative;
+  backdrop-filter: blur(10px);
+  overflow: hidden; 
+
+  
+}
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    border-radius: 50%;
+    position: relative;
+    top: -2px;
+  }
+.logo::after,
+.logo::before {
+  position: absolute;
+  display: inline-block;
+  content: "";
+}
+
+.logo::after {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: inherit;
+  z-index: -20;
+  background-image: linear-gradient(10deg, #DFA248, #DFA248);
+}
+
+.logo::before {
+  border-top: 6px solid #00562C;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  z-index: 1;
+  box-shadow: 0 -5px 5px rgba(223, 162, 72, 0.9);
+  top: -2px;
+  left: -2px;
+  height: calc(100% + 1px);
+  width: calc(100% + 1px);
+}
+
+.loader,
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+    border-top-color: #00562C;
+    box-shadow: 0 -5px 5px rgba(223, 162, 72, 0.1);
+  }
+
+  50% {
+    transform: rotate(180deg);
+    border-top-color: #00562C;
+    box-shadow: 0 -5px 5px rgba(223, 162, 72, 0.1);
+  }
+
+  100% {
+    transform: rotate(360deg);
+    border-top-color: #00562C;
+    box-shadow: 0 -5px 5px rgba(223, 162, 72, 0.1);
+  }
+}
+/* loader css ent */

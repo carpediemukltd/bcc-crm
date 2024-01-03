@@ -127,7 +127,7 @@
                   </div>
                </div>
                <div class="card-body pt-2">
-                  <div class="d-flex">
+                  <div class="d-flex all-company-list">
                      <div class="stages_view_box">
                         <input type="hidden" id="page_no" name="page_no" value="1" />
                         @if (isset($companies))

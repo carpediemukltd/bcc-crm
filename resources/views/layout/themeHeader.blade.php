@@ -96,7 +96,7 @@
                               </a>
                            </li>
                            <!-- marketing -->
-                           <li class="nav-item <?php if(isset($slug) && in_array($slug, ['deals_company', 'stages', 'roundrobin', 'companies', 'list_company', 'edit_company', 'add_company','pipelines', 'add_user', 'user_list', 'edit_user', 'user_details', 'user_deals', 'user_add_deal', 'user_edit_deal']) && !isset($_GET['type'])){echo 'active';}?>">
+                           <li class="nav-item <?php if(isset($slug) && in_array($slug, [ 'stages', 'roundrobin', 'companies', 'list_company', 'edit_company', 'add_company','pipelines', 'add_user', 'user_list', 'edit_user', 'user_details', 'user_deals', 'user_add_deal', 'user_edit_deal']) && !isset($_GET['type'])){echo 'active';}?>">
                               <a class="nav-link " data-bs-toggle="collapse" href="#allPagesData3" role="button" aria-expanded="false" aria-controls="allPagesData3">
                                  <span class="nav-text ms-2">Marketing</span>
                                  <i class="right-icon">

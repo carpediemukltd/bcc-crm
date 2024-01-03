@@ -17,15 +17,15 @@
 }
 /* ipad start */
 @media screen and (max-width: 768px) {
-    .iq-navbar-header h1 {
+    /* .iq-navbar-header h1 {
         top: 10px;
-    }
+    } */
     .iq-banner .iq-navbar-header{
     height: 150px !important;
     }
-    .iq-navbar-header .btn.btn-link.btn-soft-light{
+    /* .iq-navbar-header .btn.btn-link.btn-soft-light{
         top: 10px;
-    }
+    } */
     .header-hover-menu.iq-navbar .navbar-collapse:not(.offcanvas-collapse){
       background-color: inherit;
       position: absolute;
@@ -87,6 +87,16 @@
     }
     .nav-item.search_bar_view.dropdown.d-xl-block {
       display: none;
+    }
+
+
+
+
+
+
+    .iq-nav-menu ul{
+
+      box-shadow: none !important;
     }
   }
 /* mobile view start */

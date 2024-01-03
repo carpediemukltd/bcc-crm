@@ -912,7 +912,7 @@
    var phoneNumberInput;
    $(document).ready(function() {
       localStorage.clear(); //clear the localstorage
-       // Initialize the plugin with the user's country code.
+      // Initialize the plugin with the user's country code.
       phoneNumberInput = $('#phone-number');
       var selectedCountryCodeInput = $('#selected-country-code'); // Hidden input field
 

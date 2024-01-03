@@ -134,7 +134,6 @@ class UserController extends Controller
         $roles = Permissions::getSubRoles($this->user);
         $this->data['roles'] = $roles;
         if ($request->isMethod('post')) {
-//            echo in_array($request->role, ['user', 'contact']);exit;
             if (!in_array($request->role, $roles)) {
                 return redirect()->back()->with('error', 'You\'ve selected an invalid role.')->withInput();
             }
@@ -214,8 +213,9 @@ class UserController extends Controller
                 }
 
                 if (in_array($request->role, ['user', 'contact'])) {
+                    $due_date = date('Y-m-d h:m:s', strtotime(date('Y-m-d h:m:s') . ' +7 days'));
                     $new_user->documentManagers()->attach($request->document_types, [
-                        'due_date' => date('Y-m-d h:m:s', strtotime(date('Y-m-d h:m:s') . ' +7 days')),
+                        'due_date' => $due_date,
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]);
@@ -223,13 +223,14 @@ class UserController extends Controller
                     try{
                         Mail::send('email.newRegistration', [
                             'first_name' => $new_user->first_name,
-                            'documents' => DocumentManager::whereIn('id', $request->document_types)->get()
+                            'documents' => DocumentManager::whereIn('id', $request->document_types)->get(),
+                            'due_date' => date('F j, Y', strtotime($due_date))
                         ], function($message) use($new_user){
                             $message->to($new_user->email);
                             $message->subject('Welcome to BCCUSA');
                         });
 
-                        $message            = "Hi $new_user->first_name, Your secure login to the BCCUSA bank portal has been created! It is accessible here: ".route('login').". Your email address is your login and your password is BCCUSA.com until you login and change it. Please upload all requested documents securely via our portal. Reply STOP to opt out of text notifications.";
+                        $message            = "Hi $new_user->first_name, Your secure login to the BCCUSA bank portal has been created! It is accessible here: ".route('login').". Your email address is your login and your password is BCCUSA.com until you login and change it. Please upload all requested documents securely via our portal. \nDue Date: ".date('F j, Y', strtotime($due_date))."\nReply STOP to opt out of text notifications.";
                         $twilioPhoneNumber  = env('TWILIO_NUMBER');
                         $twilioSid          = env('TWILIO_SID');
                         $twilioToken        = env('TWILIO_AUTH_TOKEN');
@@ -258,6 +259,15 @@ class UserController extends Controller
                         ->update(['last_lead' => date("Y-m-d H:i:s")]);
                     SendNotification::dispatch(['id' => $new_user->id, 'type' => 'contact_added']);
                 }
+
+                $company = Company::whereId($company_id)->first();
+                \App\addContactToZapier([
+                    'firstName' => $new_user->first_name,
+                    'lastName' => $new_user->last_name,
+                    'phone' => $new_user->phone_number,
+                    'email' => $new_user->email,
+                    'companyName' => !$company ? null : $company->name
+                ]);
                 $type = ($data['role'] == 'user') ? 'Contact' : (($data['role'] == 'owner') ? 'Super User' : ucfirst($data['role']));
                 return redirect(url('contacts'))->withSuccess("$type Created Successfully.")->withInput();
             }
@@ -285,7 +295,7 @@ class UserController extends Controller
 
             $sortedDocumentsArray = $sortedDocuments->values()->all();
             $this->data['documents'] = $sortedDocumentsArray;
-            $this->data['document_groups'] = DocumentGroup::get();
+            $this->data['document_groups'] = DocumentGroup::orderBy('order')->get();
             return view($request->type == 'admin' ? 'user.add-admin' : 'user.add', $this->data);
         }
     }
@@ -404,7 +414,7 @@ class UserController extends Controller
             $this->data['documents'] = $sortedDocumentsArray;
             $this->data['selected_documents'] = $this->data['user']->DocumentManagers;
             $this->data['bankusers'] = User::whereRole('bank')->get();
-            $this->data['document_groups'] = DocumentGroup::get();
+            $this->data['document_groups'] = DocumentGroup::orderBy('order')->get();
             $this->data['due_date'] = $dueDate;
             return view("user.details", $this->data,compact('activity','userRecord','document','customFieldDetails','customField','deal','stage'));
         }
@@ -415,7 +425,7 @@ class UserController extends Controller
         $this->data['current_slug'] = 'Edit Contact';
         $this->data['slug']         = 'edit_user';
         $this->data['all_status']   = ['inactive', 'active', 'archived', 'deleted', 'banned'];
-
+        $auth_user = auth()->user();
         $access = Permissions::checkUserAccess($this->user, $id);
         if (!$access) {
             return redirect(route('dashboard'))->with('error', 'Access Denied.');
@@ -490,6 +500,7 @@ class UserController extends Controller
 
                 DocumentManagerUser::whereUserId($id)->whereNotIn('document_manager_id',$request->document_types)->delete();
                 $due_date = date('Y-m-d h:m:s', strtotime(date('Y-m-d h:m:s') . ' +7 days'));
+//                echo $due_date;exit;
                 foreach ($request->document_types as $type) {
                     foreach ($request->document_types as $type) {
                         $document_exists = DocumentManagerUser::whereUserIdAndDocumentManagerId($id, $type)->first();
@@ -503,31 +514,25 @@ class UserController extends Controller
                     }
                 }
 
-                DocumentManagerUser::whereUserId($id)->delete();
-                foreach ($request->document_types as $type) {
-                    DocumentManagerUser::create(['user_id' =>$id , 'document_manager_id' => $type, 'due_date' => $due_date]);
-                }
-
                 $user = User::whereId($id)->first();
                 try{
                     $documents = DocumentManager::whereIn('id', $notificationForNewIds)->get();
                     if($documents != null){
                         Mail::send('email.userDocumentsSelectionUpdate', [
                             'first_name' => $user->first_name,
-                            'documents' => $documents
+                            'documents' => $documents,
+                            'due_date' => date('F j, Y', strtotime($due_date))
                         ], function($message) use($user){
                             $message->to($user->email);
                             $message->subject('Request for new documents');
                         });
 
                         $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA!\nThe following document(s) have been added:\n";
-                        $i = 1;
                         foreach ($documents as $document){
-                            $message .= $i." ".$document->title."\n";
-                            $i++;
+                            $message .= "\u{2022} ".$document->title."\n";
                         }
 
-                        $message .= "Please login https://dashboard.bccusa.com/ to finalize your application.\nReply STOP to opt out of text notifications.";
+                        $message .= "Please login https://dashboard.bccusa.com/ to finalize your application. \nDue Date: ".date('F j, Y', strtotime($due_date))."\nReply STOP to opt out of text notifications.";
                         $twilioPhoneNumber  = env('TWILIO_NUMBER');
                         $twilioSid          = env('TWILIO_SID');
                         $twilioToken        = env('TWILIO_AUTH_TOKEN');
@@ -542,7 +547,21 @@ class UserController extends Controller
                             ]
                         );
                     }
-
+                if($this->data['user']->phone_number != $update_data['phone_number']){
+                    $update_data = [
+                        'first_name'   => $request->first_name,
+                        'last_name'    => $request->last_name,
+                        'phone_number' => $request->phone_country_code." ".$request->phone_number,
+                        'status'       => $request->status,
+                    ];
+                    \App\addContactToZapier([
+                        'firstName' => $update_data['first_name'],
+                        'lastName' => $update_data['last_name'],
+                        'phone' => $update_data['phone_number'],
+                        'email' => $this->data['user']->email,
+                        'companyName' => $request->company??$auth_user->company_id
+                    ]);
+                }
                 } catch(\Exception $ex){
                     echo $ex->getMessage();
                 }
@@ -572,7 +591,7 @@ class UserController extends Controller
             $sortedDocumentsArray = $sortedDocuments->values()->all();
             $this->data['documents'] = $sortedDocumentsArray;
             $this->data['selected_documents'] = $this->data['user']->DocumentManagers;
-            $this->data['document_groups'] = DocumentGroup::get();
+            $this->data['document_groups'] = DocumentGroup::orderBy('order')->get();
             return view("user.edit", $this->data);
         }
     } // editUser
@@ -959,20 +978,19 @@ class UserController extends Controller
             if(count($documents)){
                 Mail::send('email.userDocumentsSelectionUpdate', [
                     'first_name' => $user->first_name,
-                    'documents' => $documents
+                    'documents' => $documents,
+                    'due_date' => date('F j, Y', strtotime($due_date))
                 ], function($message) use($user){
                     $message->to($user->email);
                     $message->subject('Request for new documents');
                 });
 
                 $message            = "Hi $user->first_name, An additional document request has been added for your bank financing application with BCCUSA!\nThe following document(s) have been added:\n";
-                $i = 1;
                 foreach ($documents as $document){
-                    $message .= $i."- ".$document->title."\n";
-                    $i++;
+                    $message .= "\u{2022} ".$document->title."\n";
                 }
 
-                $message .= "Please login https://dashboard.bccusa.com/ to finalize your application.\nReply STOP to opt out of text notifications.";
+                $message .= "Please login https://dashboard.bccusa.com/ to finalize your application.\nDue Date: ".date('F j, Y', strtotime($due_date))."\nReply STOP to opt out of text notifications.";
                 $twilioPhoneNumber  = env('TWILIO_NUMBER');
                 $twilioSid          = env('TWILIO_SID');
                 $twilioToken        = env('TWILIO_AUTH_TOKEN');
@@ -1003,7 +1021,45 @@ class UserController extends Controller
             ],
         ]);
 
-        DocumentManagerUser::whereUserId($id)->update(['due_date' => $request->due_date]);
+        try{
+            DocumentManagerUser::whereUserId($id)->update(['due_date' => $request->due_date]);
+            $existingDocumentManagerIds = DocumentManagerUser::whereUserId($id)->pluck('document_manager_id');
+            $documents = DocumentManager::whereIn('id', $existingDocumentManagerIds)->get();
+            $user = User::whereId($id)->first();
+            if(count($documents)){
+                Mail::send('email.dueDateChange', [
+                    'first_name' => $user->first_name,
+                    'documents' => $documents,
+                    'due_date' => date('F j, Y', strtotime($request->due_date))
+                ], function($message) use($user){
+                    $message->to($user->email);
+                    $message->subject('Due date changed');
+                });
+
+                $message            = "Hi $user->first_name, The due date of your document package submission for the following documents is now: ".date('F j, Y', strtotime($request->due_date))."\n\n";
+                foreach ($documents as $document){
+                    $message .= "\u{2022} ".$document->title."\n";
+                }
+
+                $message .= "\nPlease understand the importance of providing these documents to expedite your financing application. We want to ensure a smooth and as timely submission as possible.\n\nPlease login https://dashboard.bccusa.com/ to finalize your application.\n\nReply STOP to opt out of text notifications.";
+                $twilioPhoneNumber  = env('TWILIO_NUMBER');
+                $twilioSid          = env('TWILIO_SID');
+                $twilioToken        = env('TWILIO_AUTH_TOKEN');
+                $client             = new Client($twilioSid, $twilioToken);
+                // Remove spaces from the phone number
+                $toPhoneNumber = str_replace(' ', '', $user->phone_number);
+                $client->messages->create(
+                    $toPhoneNumber,
+                    [
+                        'from' => $twilioPhoneNumber,
+                        'body' => $message,
+                    ]
+                );
+            }
+
+        } catch(\Exception $ex){
+            echo $ex->getMessage();
+        }
         return back()->withSuccess('Due date updated Successfully.');
     }
 }

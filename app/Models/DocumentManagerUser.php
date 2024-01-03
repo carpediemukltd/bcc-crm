@@ -9,6 +9,6 @@ class DocumentManagerUser extends Model
 {
     use HasFactory;
     protected $table = 'document_manager_user';
-    protected $fillable = ['user_id', 'document_manager_id','due_date'];
+    protected $fillable = ['user_id', 'document_manager_id', 'due_date'];
 
 }

@@ -109,6 +109,22 @@
                               </div>
                           </div>
                       </div>
+                      <div class="row">
+                          <div class="col">
+                              <div class="form-group">
+                                  <label class="form-label" for="mobileVerified">Mobile Verified:</label>
+                                  <input type="radio" name="mobileVerified" id="mobileVerified" value="1"> Yes
+                                  <input type="radio" name="mobileVerified" id="mobileVerified" value="0" checked> No
+                              </div>
+                          </div>
+                          <div class="col">
+                              <div class="form-group">
+                                  <label class="form-label" for="emailVerified">Email Verified:</label>
+                                  <input type="radio" name="emailVerified" id="emailVerified" value="1" checked> Yes
+                                  <input type="radio" name="emailVerified" id="emailVerified" value="0"> No
+                              </div>
+                          </div>
+                      </div>
                       <!-- custom fields start -->
                      <div class="accordion custom-accordion mb-3" id="CustomAccordionExample">
                         <div class="accordion-item">

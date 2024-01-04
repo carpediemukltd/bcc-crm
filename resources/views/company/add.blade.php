@@ -25,7 +25,7 @@
       </div>
       <div class="iq-header-img">
          <img src="{{asset('assets/images/dashboard/top-header.png')}}" alt="header" class="theme-color-default-img img-fluid w-100 h-100 animated-scaleX" loading="lazy">
-         
+
       </div>
    </div>
 </div>
@@ -52,7 +52,7 @@
                      </div>
                   </div>
                </div>
-               
+
                 <div class="header-title mt-3 mb-4">
                    <h4 class="card-title">Admin Details</h4>
                 </div>
@@ -104,13 +104,16 @@
                         <div class="phone-input">
                            <input name="phone_number" class="form-control" type="tel" id="phone-number" placeholder="Enter your phone number" class="form-control" required>
                         </div>
+                         @if (session('error'))
+                             <span class="text-danger">{{ session('error') }}</span>
+                         @endif
                         @if ($errors->has('phone_number'))
                            <span class="text-danger">{{ $errors->first('phone_number') }}</span>
                         @endif
                     </div>
                   </div>
                </div>
-            
+
                <div class="row"><div class="col"><br></div></div>
 
                <div class="row">

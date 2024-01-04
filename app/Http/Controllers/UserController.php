@@ -22,6 +22,7 @@ use App\Models\RoundRobinSetting;
 use App\Models\Stage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use libphonenumber\PhoneNumberUtil;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -55,14 +56,43 @@ class UserController extends Controller
     {
         $this->data['current_slug'] = 'My Profile';
         if ($request->isMethod('post')) {
+            $phoneNumberUtil = PhoneNumberUtil::getInstance();
+            $phoneNumberObj = $phoneNumberUtil->parse($request->phone_country_code.$request->phone_number, 'US');
+
+            if(!$phoneNumberUtil->isValidNumberForRegion($phoneNumberObj,'US'))
+                return redirect()->back()->with('error', 'Phone number is invalid.');
+
             $update_data = [
                 'first_name'            => $request->first_name,
                 'last_name'             => $request->last_name,
                 'phone_number'          => $request->phone_country_code." ".$request->phone_number,
                 'two_factor_enabled'    => $request->has('two_factor') ? '1' : '0',
             ];
-            if($request->has('two_factor')){
-                $update_data['two_factor_type'] = $request->two_factor_type;
+            if ($request->has('two_factor')) {
+
+                $mobileVerifiedcheckbox = $request->input('mobileVerifiedcheckbox');
+                $emailVerifiedcheckbox = $request->input('emailVerifiedcheckbox');
+
+                $mobileVerified = $request->has('mobileVerified') ? $request->input('mobileVerified') : $request->input('mobileVerifiedHidden');
+                $emailVerified = $request->has('emailVerified') ? $request->input('emailVerified') : $request->input('emailVerifiedHidden');
+
+                if (($mobileVerifiedcheckbox == 1 && $mobileVerified) && ($emailVerifiedcheckbox == 1 && $emailVerified))
+                    $update_data['two_factor_type'] = 'both';
+                elseif ($mobileVerifiedcheckbox == 1 && $mobileVerified)
+                    $update_data['two_factor_type'] = 'phone';
+                elseif ($emailVerifiedcheckbox == 1 && $emailVerified)
+                    $update_data['two_factor_type'] = 'email';
+
+                $update_data['mobile_verified'] = $mobileVerified;
+                $update_data['email_verified'] = $emailVerified;
+            }
+            else
+            {
+                $mobileVerified = $request->has('mobileVerified') ? $request->input('mobileVerified') : $request->input('mobileVerifiedHidden');
+                $emailVerified  = $request->has('emailVerified') ? $request->input('emailVerified') : $request->input('emailVerifiedHidden');
+
+                $update_data['mobile_verified'] = $mobileVerified;
+                $update_data['email_verified'] = $emailVerified;
             }
             if ($request->password && !$request->confirm_password) {
                 return redirect()->back()->withError('Confirm password is required.')->withInput();
@@ -122,10 +152,16 @@ class UserController extends Controller
             }
 
             $request->validate($validate);
+            $phoneNumberUtil = PhoneNumberUtil::getInstance();
+            $phoneNumberObj = $phoneNumberUtil->parse($request->phone_country_code.$request->phone_number, 'US');
+
+            if(!$phoneNumberUtil->isValidNumberForRegion($phoneNumberObj,'US'))
+                return redirect()->back()->with('error', 'Phone number is invalid.');
+
             $data = $request->all();
 
-            if ($data) {
-                $new_user = User::create([
+            if (!in_array($request->role,['user', 'contact']))
+                $newUserArray = [
                     'first_name' => $data['first_name'],
                     'last_name' => $data['last_name'],
                     'email' => $data['email'],
@@ -133,7 +169,22 @@ class UserController extends Controller
                     'role' => $data['role'],
                     'company_id' => $company_id,
                     'password' => Hash::make($data['password'])
-                ]);
+                ];
+            else
+                $newUserArray = [
+                    'first_name' => $data['first_name'],
+                    'last_name' => $data['last_name'],
+                    'email' => $data['email'],
+                    'phone_number'  => $data['phone_country_code']." ".$data['phone_number'],
+                    'role' => $data['role'],
+                    'company_id' => $company_id,
+                    'password' => Hash::make($data['password']),
+                    'email_verified' => $data['emailVerified'],
+                    'mobile_verified' => $data['mobileVerified']
+                ];
+
+            if ($data) {
+                $new_user = User::create($newUserArray);
 
 
                 $activity = Activity::create([
@@ -398,11 +449,20 @@ class UserController extends Controller
             }
 
             $request->validate($validate);
+
+            $phoneNumberUtil = PhoneNumberUtil::getInstance();
+            $phoneNumberObj = $phoneNumberUtil->parse($request->phone_country_code.$request->phone_number, 'US');
+
+            if(!$phoneNumberUtil->isValidNumberForRegion($phoneNumberObj,'US'))
+                return redirect()->back()->with('error', 'Phone number is invalid.');
+
             $update_data = [
                 'first_name'   => $request->first_name,
                 'last_name'    => $request->last_name,
                 'phone_number' => $request->phone_country_code." ".$request->phone_number,
                 'status'       => $request->status,
+                'email_verified' => $request->emailVerified,
+                'mobile_verified' => $request->mobileVerified
             ];
 
             if ($request->password && strlen($request->password) < 6) {

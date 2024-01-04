@@ -55,7 +55,9 @@
                      <h4 class="me-2 mb-3 h4">{{ucwords($user->first_name. ' '. $user->last_name)}}</h4>
                      <!-- <span> - Web Developer</span> -->
                      <div class="d-flex flex-wrap align-items-center justify-content-between">
-                        <a class="" href="mailto:{{$user->email}}">
+                        <a class="" href="mailto:{{$user->email}}" data-email="{{$user->email}}" id="contact_email" target="_gmail">
+                           
+
                            <i class="user_icon icon">
                               <svg width="22" class="icon-22" viewBox="0 0 22 22" fill="currentColor"
                                  xmlns="">
@@ -796,6 +798,12 @@
 <script type="text/javascript">
 
    $(document).ready(function(){
+      var email =$('#contact_email').data('email');
+      if (navigator.userAgent.indexOf("Chrome") !== -1) {
+         if(email) $('#contact_email').attr('href','https://mail.google.com/mail/?to='+email+'#compose=new');
+      }else{
+         if(email) $('#contact_email').attr('href','https://mail.google.com/mail/?view=cm&to='+email+'#compose=new');
+      }
        $(document).on('click', '#viewBCCPortal', function(){
            // $('#TestModal').modal('show');
            var userid     = $(this).data("userid");

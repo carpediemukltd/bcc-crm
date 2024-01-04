@@ -1,5 +1,18 @@
 @extends('layout.appTheme')
 @section('content')
+    <style>
+        /* disable arrow keys from input field */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
 <div class="position-relative  iq-banner ">
    <div class="iq-navbar-header" style="height: 215px;">
       <div class="container-fluid iq-container">
@@ -67,11 +80,12 @@
                         <div class="col">
                            <div class="form-group">
                               <input type="hidden" name="phone_country_code" id="selected-country-code" >
+                              <input type="hidden" name="old_phone_number" id="old_phone_number" value="{{str_replace("+1 ","",$user->phone_number)}}">
                               <label class="form-label" for="phone_number">Phone number:</label>
                               <div class="phone-input">
                                  <input value="{{$user->phone_number}}" name="phone_number" type="tel" id="phone-number" placeholder="Enter your phone number" class="form-control" required>
                               </div>
-                             </div>
+                           </div>
                         </div>
                      </div>
 
@@ -108,12 +122,35 @@
                         </div>
                         <div id="twoFactorType" class="{{ auth()->user()->two_factor_enabled ? 'col-lg-3' : 'col-lg-3 display-none' }}">
                            <div class="form-group p-0 mb-0">
-                              <select name="two_factor_type" class="form-control">
-                                 <option value="email" {{ auth()->user()->two_factor_type === 'email' ? 'selected' : '' }}>Email</option>
-                                 <option value="phone" {{ auth()->user()->two_factor_type === 'phone' ? 'selected' : '' }}>Phone Number</option>
-                              </select>
+                               @php
+                                   $mobileVerified = (auth()->user()->two_factor_type == 'both'|| auth()->user()->two_factor_type == 'phone') ? 'checked' : '';
+                                   $emailVerified = (auth()->user()->two_factor_type == 'both' || auth()->user()->two_factor_type == 'email') ? 'checked' : '';
+                               @endphp
+                               <div class="col-lg-6 ml-1">
+                                   <input class="form-check-input" type="checkbox" value="1" id="mobileVerifiedCheckbox" {{$mobileVerified}} onchange="showModal(this)" name="mobileVerifiedcheckbox">
+                                   <label class="form-check-label" for="mobileVerifiedCheckbox">Mobile</label>
+                               </div>
+                               <div class="col-lg-6">
+                                   <input class="form-check-input" type="checkbox" value="1" id="emailVerifiedCheckbox" {{$emailVerified}} onchange="showModal(this)" name="emailVerifiedcheckbox">
+                                   <label class="form-check-label" for="emailVerifiedCheckbox">Email</label>
+                               </div>
                            </div>
                         </div>
+                         @php $disabled = (auth()->user()->role == 'admin') ? 'disabled' : '' @endphp
+                         <div class="col-lg-12 mt-3">
+                             <div class="form-group">
+                                 <label class="form-label" for="mobileVerified">Mobile Verified:</label>
+                                 <input type="radio" name="mobileVerified" id="mobileVerified" value="1" @php echo (auth()->user()->mobile_verified == 1) ? 'checked' : '' @endphp onchange="checkMobileVerification()" {{$disabled}}> Yes
+                                 <input type="radio" name="mobileVerified" id="mobileVerified" value="0" @php echo (auth()->user()->mobile_verified == 0) ? 'checked' : '' @endphp data-id="notVerified" {{$disabled}}> No
+                             </div>
+                         </div>
+                         <div class="col-lg-12">
+                             <div class="form-group">
+                                 <label class="form-label" for="emailVerified">Email Verified:</label>
+                                 <input type="radio" name="emailVerified" id="emailVerified" value="1" @php echo (auth()->user()->email_verified == 1) ? 'checked' : '' @endphp {{$disabled}}> Yes
+                                 <input type="radio" name="emailVerified" id="emailVerified" value="0" @php echo (auth()->user()->email_verified == 0) ? 'checked' : '' @endphp {{$disabled}}> No
+                             </div>
+                         </div>
                      </div>
 
                      <div class="row">
@@ -134,6 +171,30 @@
    </div>
 </div>
 <script>
+    var userRole = "{{auth()->user()->role}}";
+
+    $('form').submit(function() {
+        if (userRole != "superadmin")
+        {
+            var iMobileVerified = $("input[name='mobileVerified']:checked").val();
+            var iEmailVerified  = ($("#emailVerifiedCheckbox").is(':checked')) ? 1 : 0;
+
+            $('<input>').attr({
+                type: 'hidden',
+                id: 'mobileVerifiedHidden',
+                name: 'mobileVerifiedHidden',
+                value: iMobileVerified
+            }).appendTo('form');
+
+            $('<input>').attr({
+                type: 'hidden',
+                id: 'emailVerifiedHidden',
+                name: 'emailVerifiedHidden',
+                value: iEmailVerified
+            }).appendTo('form');
+        }
+    });
+
    const toggle = document.getElementById('toggle2FA');
    const twoFactorTypeContainer = document.getElementById('twoFactorType');
    // Function to toggle the design
@@ -147,5 +208,164 @@
 
       }
    });
+
+   function showModal(obj) {
+       var TargetId = $(obj).attr("id");
+       var email = $("#email").val();
+       var phoneNumber = $("#phone-number").val();
+
+       if(phoneNumber == "" || phoneNumber == "null" || phoneNumber == null)
+       {
+           if($(obj).is(':checked'))
+               $(obj).prop('checked',false);
+           else
+               $(obj).prop('checked',true);
+
+           Swal.fire({
+               icon: "error",
+               title: "Error!",
+               text: "Enter Phone number"
+           });
+           return false;
+       }
+
+       if (TargetId == "mobileVerifiedCheckbox")
+       {
+           $.ajaxSetup({
+               headers: {
+                   'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+               }
+           });
+           var iMobileVerified = $("input[name='mobileVerified']:checked").val();
+           var iEmailVerified = ($("#emailVerifiedCheckbox").is(':checked')) ? 1 : 0;
+
+           if(iMobileVerified == 0)
+           {
+               $.ajax({
+                   type: 'POST',
+                   url: '/resend-verification-code',
+                   data: {'email': email, 'phoneNumber': $("#selected-country-code").val()+' '+phoneNumber},
+                   success: function(response) {
+                       if(response.error){
+                           if($(obj).is(':checked'))
+                               $(obj).prop('checked',false);
+                           else
+                               $(obj).prop('checked',true);
+                           Swal.fire({
+                               icon: "error",
+                               title: "Error!",
+                               text: response.error
+                           });
+                           return false;
+                       }else{
+                           //code sent successfully
+                           Swal.fire({
+                               icon: "success",
+                               title: "2FA-Code Sent!",
+                               text: response.success,
+                               confirmButtonText: "Enter Code"
+                           }).then((result) => {
+                               if (result.isConfirmed) {
+                                   Swal.fire({
+                                       title: "Verify Code",
+                                       input: "number",
+                                       showCancelButton: true,
+                                       confirmButtonText: "Verify",
+                                       showLoaderOnConfirm: true,
+                                       didOpen: function (){
+                                           // Disable Up and Down Arrows on mouse wheel
+                                           $("#swal2-input").on('mousewheel',function(e){
+                                               $(this).blur();
+                                           });
+
+                                           $("#swal2-input").on('keydown',function(e) {
+                                               var key = e.charCode || e.keyCode;
+                                               // Disable Up and Down Arrows on Keyboard
+                                               if(key == 38 || key == 40 || key == 190)
+                                                   e.preventDefault();
+                                           });
+                                       },
+                                       preConfirm: async (code) => {
+                                           $.ajax({
+                                               type: "POST",
+                                               url: "{{route('verify-2fa')}}",
+                                               data: {'verification_code': code, 'email': email,'mobileVerified': 1, 'EmailVerified' : iEmailVerified},
+                                               success: function(response){
+                                                   if(response.error)
+                                                   {
+                                                       if($(obj).is(':checked'))
+                                                           $(obj).prop('checked',false);
+                                                       else
+                                                           $(obj).prop('checked',true);
+                                                       Swal.fire({
+                                                           icon: "error",
+                                                           title: "Error!",
+                                                           text: response.error
+                                                       });
+                                                       return false;
+                                                   }
+                                                   else
+                                                   {
+                                                       Swal.fire({
+                                                           icon: "success",
+                                                           title: "Record Updated!",
+                                                           text: response.success
+                                                       });
+                                                       location.reload();
+                                                   }
+                                               }
+                                           });
+                                       },
+                                       allowOutsideClick: () => !Swal.isLoading()
+                                   }).then((result) => {
+                                       if (result.isDismissed){
+                                           if($(obj).is(':checked'))
+                                               $(obj).prop('checked',false);
+                                           else
+                                               $(obj).prop('checked',true);
+                                       }
+                                   });
+                               }
+                               else if(result.isDismissed)
+                               {
+                                   if($(obj).is(':checked'))
+                                       $(obj).prop('checked',false);
+                                   else
+                                       $(obj).prop('checked',true);
+                               }
+                           });
+                       }
+                   },
+                   error: function() {
+                       if($(obj).is(':checked'))
+                           $(obj).prop('checked',false);
+                       else
+                           $(obj).prop('checked',true);
+                       Swal.fire({
+                           icon: "error",
+                           title: "Error!",
+                           text: "Too Many Attempts."
+                       });
+                       return false;
+                   }
+               });
+           }
+       }
+   }
+
+   function checkMobileVerification() {
+       var iMobileVerified = ($("#mobileVerifiedCheckbox").is(':checked')) ? 1 : 0;
+
+       if (iMobileVerified === 0)
+       {
+           Swal.fire({
+               icon: "error",
+               title: "Error!",
+               text: "First Verify the Mobile Number."
+           });
+           $("input[data-id='notVerified']").prop("checked",true);
+           return false;
+       }
+   }
 </script>
 @endsection

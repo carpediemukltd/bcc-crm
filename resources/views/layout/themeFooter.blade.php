@@ -906,9 +906,32 @@
    });
    var phoneNumberInput;
    $(document).ready(function() {
+      localStorage.clear(); //clear the localstorage
       // Initialize the plugin with the user's country code.
       phoneNumberInput = $('#phone-number');
       var selectedCountryCodeInput = $('#selected-country-code'); // Hidden input field
+
+       //Validate the number format of mobile
+       if($("div").hasClass("phone-input"))
+       {
+           $(".phone-input").after("<span id='errorSpan' style='color:red'></span>");
+
+           $('button[type="submit"]').on("click",function(){
+               $("#errorSpan").html("");
+               var countryCode = selectedCountryCodeInput.val();
+               var inputNumber = countryCode+phoneNumberInput.val();
+               var pattern = /^[+]\d{11}$/;
+
+               if (!pattern.test(inputNumber))
+               {
+                   phoneNumberInput.focus();
+                   $("#errorSpan").html("Invalid Format");
+                   return false;
+               }
+               else
+                   $("#errorSpan").html("");
+           });
+       }
 
       // Remove non-digit characters as the user types.
       phoneNumberInput.on('input', function() {
@@ -936,6 +959,63 @@
       style.type = 'text/css';
       style.innerHTML = '.iti__country-list { display: none !important; }';
       document.head.appendChild(style);
+      phoneNumberInput.blur(function(){
+           $("#errorSpan").html("");
+           var countryCode = selectedCountryCodeInput.val();
+           var inputNumber = countryCode+phoneNumberInput.val();
+           var pattern = /^[+]\d{11}$/;
+           var oldPhoneNumber = $("#old_phone_number").val();
+           var currentPhoneNumber = phoneNumberInput.val();
+
+           if (!pattern.test(inputNumber))
+           {
+               phoneNumberInput.focus();
+               $("#errorSpan").html("Invalid Format");
+               return false;
+           }
+           else
+               $("#errorSpan").html("");
+
+           var mobileVerificationCheckBox = ($("#mobileVerifiedCheckbox").is(':checked')) ? 1 : 0;
+           var mobileVerifiedRadioButton = $("input[name='mobileVerified']:checked").val();
+
+           if (!localStorage.getItem("mobileVerificationCheckBox"))
+               localStorage.setItem("mobileVerificationCheckBox",mobileVerificationCheckBox);
+           if (!localStorage.getItem("mobileVerifiedRadioButton"))
+               localStorage.setItem("mobileVerifiedRadioButton",mobileVerifiedRadioButton);
+
+           if (oldPhoneNumber)
+           {
+               if (currentPhoneNumber != oldPhoneNumber)
+               {
+                   Swal.fire({
+                       icon: "error",
+                       title: "Error!",
+                       text: "You have changed your phone number now you have to verify it again."
+                   });
+
+                   if (mobileVerificationCheckBox == 1 || mobileVerifiedRadioButton == 1)
+                   {
+                       $("#mobileVerifiedCheckbox").prop("checked",false);
+                       $("input[data-id='notVerified']").prop("checked",true);
+                   }
+               }
+               else
+               {
+                   mobileVerificationCheckBox = localStorage.getItem("mobileVerificationCheckBox");
+                   mobileVerifiedRadioButton = localStorage.getItem("mobileVerifiedRadioButton");
+                   if (mobileVerificationCheckBox == 1)
+                       $("#mobileVerifiedCheckbox").prop("checked",true);
+                   else
+                       $("#mobileVerifiedCheckbox").prop("checked",false);
+                   if (mobileVerifiedRadioButton == 1)
+                       $("#mobileVerified").prop("checked",true);
+                   else
+                       $("input[data-id='notVerified']").prop("checked",true);
+
+               }
+           }
+       });
    });
 </script>
 <script>

@@ -46,6 +46,9 @@
       <meta name="csrf-token" content="{{ csrf_token() }}">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
 
+      <!-- Sweet Alert -->
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css">
       @yield('css')
    </head>
    <style>

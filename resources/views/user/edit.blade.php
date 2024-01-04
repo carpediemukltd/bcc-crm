@@ -134,6 +134,22 @@
                            </div>
                         </div>
                      </div>
+                      <div class="row">
+                          <div class="col">
+                              <div class="form-group">
+                                  <label class="form-label" for="mobileVerified">Mobile Verified:</label>
+                                  <input type="radio" name="mobileVerified" id="mobileVerified" value="1" @php echo ($user->mobile_verified == 1) ? 'checked' : '' @endphp> Yes
+                                  <input type="radio" name="mobileVerified" id="mobileVerified" value="0" @php echo ($user->mobile_verified == 0) ? 'checked' : '' @endphp> No
+                              </div>
+                          </div>
+                          <div class="col">
+                              <div class="form-group">
+                                  <label class="form-label" for="emailVerified">Email Verified:</label>
+                                  <input type="radio" name="emailVerified" id="emailVerified" value="1" @php echo ($user->email_verified == 1) ? 'checked' : '' @endphp> Yes
+                                  <input type="radio" name="emailVerified" id="emailVerified" value="0" @php echo ($user->email_verified == 0) ? 'checked' : '' @endphp> No
+                              </div>
+                          </div>
+                      </div>
                      <!-- custom fields start -->
                      <div class="accordion custom-accordion mb-3" id="CustomAccordionExample">
                         <div class="accordion-item">

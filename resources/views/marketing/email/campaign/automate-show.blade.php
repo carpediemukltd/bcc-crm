@@ -24,35 +24,38 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="row" style="padding:20px">
-                        <div class="col-sm-6">
-                            <label class="form-label" for="title">Campaign name</label>
-                            <input disabled type="text" class="form-control" id="title" name="title" value="{{ $campaign->name }}" required>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h4 class="mb-3">Sequence Subject</h4>
+                                <label class="form-label" for="subject">Subject</label>
+                                <input type="text" class="form-control" name="subject" id="subject" value="{{$campaign->marketingCampaignSequence[0]->subject}}">
+                            </div>
+                            <div class="col-sm-8">
+                                <h4 class="mb-3">Sequence Details</h4>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label class="form-label" for="title">Campaign name</label>
+                                        <input disabled type="text" class="form-control" id="title" name="title" value="{{ $campaign->name }}" required>
 
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="status">Status</label>
+                                        <select class="form-control" name="status" id="status">
+                                            <option>{{$campaign->status}}</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="content_view_holder mt-4">
+                                    <!-- <label class="form-label" for="html_content">Content</label> -->
+                                    <textarea id="html_content" name="html_content" rows="4" cols="100" class="form-control tiny-integerate">{{$campaign->marketingCampaignSequence[0]->body}}</textarea>
+                                    @error('html_content')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <label class="form-label" for="status">Status</label>
-                            <select class="form-control" name="status" id="status">
-                                <option>{{$campaign->status}}</option>
-                            </select>
-
-                        </div>
-                        <div class="col-sm-2 pt-5">
-                            <label class="form-label" for="subject">Subject</label>
-                            <input type="text" class="form-control" name="subject" id="subject" value="{{$campaign->marketingCampaignSequence[0]->subject}}">
-
-                        </div>
-
-                        <div class="col-sm-10 pt-5">
-                            <label class="form-label" for="html_content">Content</label>
-                            <textarea id="html_content" name="html_content" rows="4" cols="100" class="form-control tiny-integerate">{{$campaign->marketingCampaignSequence[0]->body}}</textarea>
-                            @error('html_content')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                       
-                
-
                     </div>
                 </div>
             </div>

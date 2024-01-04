@@ -2209,5 +2209,6 @@ div#user_edit_view {
   border-bottom: none;
 }
 .iq-nav-menu li > ul li ul{
-  position: static;
+  position: absolute;
+  left: 173px !important;
 }

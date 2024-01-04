@@ -92,6 +92,10 @@
 
       box-shadow: none !important;
     }
+    .iq-nav-menu li > ul li ul{
+      position: static;
+      left: 0 !important;
+    }
   }
 /* mobile view start */
 @media screen and (max-width: 480px) {

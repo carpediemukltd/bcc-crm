@@ -24,11 +24,6 @@
       <div class="row">
          <div class="col-sm-12">
             <div class="card">
-               <!-- <div class="card-header">
-                  <div class="header-title">
-                     <h4 class="card-title text-center">Let's create a new campaign</h4>
-                  </div>
-               </div> -->
                <div class="card-body">
                   <div class="steps_view_integrate">
                   <!-- Step Navigation -->

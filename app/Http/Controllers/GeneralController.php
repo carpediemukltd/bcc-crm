@@ -105,7 +105,9 @@ class GeneralController extends Controller
    }
    public function getCleanDummyData()
    {
-      return view('admin.clean-data');
+      $data['current_slug'] = 'Clean Dummy Data';
+      $data['slug']         = 'clean_data';
+      return view('admin.clean-data', $data);
    }
 
    public function postCleanDummyData(Request $request)
@@ -148,7 +150,7 @@ class GeneralController extends Controller
       $usersExist = $query->count();
 
       if (!$usersExist) {
-         return redirect()->back()->with('error', 'Sorry, There are no users found with the filters you selected!');
+         return redirect()->back()->with('error', 'There are no users found with the filters you selected!');
       }
       CleanDummyData::dispatch($data);
 

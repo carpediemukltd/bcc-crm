@@ -27,13 +27,13 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="alert alert-warning">
-                            <p>Warning: This action will permanently delete data. Be careful to proceed! </p>
+                            <p>Warning: This action will permanently delete users data. Be careful to proceed! </p>
                         </div>
                         <form action="{{ route('clean-dummy-data.post') }}" method="post" id="cleanDummyDataForm" onsubmit="return confirmAndValidate()">
                             @csrf
                             <div class="row date_range_fields">
                                 <div class="col-md-4">
-                                    <select class="form-control" name="column" id="column">
+                                    <select class="form-control" name="column" id="column" required>
                                         <option value="" selected disabled>--Select column--</option>
                                         <option value="first_name">First Name</option>
                                         <option value="last_name">Last Name</option>
@@ -45,7 +45,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-4">
-                                    <select class="form-control" name="operators">
+                                    <select class="form-control" name="operators" required>
                                         <option value="" selected disabled>--Select Operator--</option>
                                         <option value="=">Equal</option>
                                         <option value="!=">Not Equal</option>

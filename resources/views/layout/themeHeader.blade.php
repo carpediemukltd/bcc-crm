@@ -572,7 +572,7 @@
                               <a class="nav-link " data-bs-toggle="collapse" href="#allPagesData" role="button" aria-expanded="false" aria-controls="allPagesData">
                                  
                                  <span class="nav-text ms-2">Customization</span>
-                                 <i class="right-icon arrow_right_icons">
+                                 <i class="right-icon ">
                                     <svg xmlns="" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
                                        stroke="currentColor">
                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -596,7 +596,7 @@
                                           </svg>
                                        </i>
                                        <span class="item-name">Custom Fields</span>
-                                       <i class="right-icon">
+                                       <i class="right-icon arrow_right_icons">
                                           <svg xmlns="" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
                                              stroke="currentColor">
                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -677,7 +677,7 @@
                                  </svg>
                                  </i>
                                  <span class="item-name">Admin</span>
-                                 <i class="right-icon arrow_right_icons">
+                                 <i class="right-icon ">
                                     <svg xmlns="" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
                                        stroke="currentColor">
                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />

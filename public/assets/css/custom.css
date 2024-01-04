@@ -1653,23 +1653,32 @@ p.sub_text:after{
 }
 /* different name of satges style start */
 .card.close-to-close .card_title{
-  border-top: 2px solid rgb( 238, 94, 153 );
+  border-top: 3px solid #1E90FF;
   border-radius: 3px;
 }
 .card.funded .card_title {
-  border-top: 2px solid rgb( 182, 96, 224 );
+  border-top: 3px solid #008000;
   border-radius: 4px;
 }
 .card.submitted .card_title{
-  border-top: 2px solid rgb( 15, 157, 159 );
+  border-top: 3px solid #4B0082;
   border-radius: 4px;
 }
 .card.document-collection .card_title{
-  border-top: 2px solid rgb( 135, 144, 158 );
+  border-top: 3px solid #FFD700;
   border-radius: 4px;
 }
 .card.did-not-fund .card_title{
-  border-top: 2px solid rgb( 248, 174, 0 );
+  border-top: 3px solid #FF0000;
+  border-radius: 4px;
+}
+
+.card.card.dead-\/-did-not-fund .card_title{
+  border-top: 3px solid #FF0000;
+  border-radius: 4px;
+}
+.card.submitted .card_title{
+  border-top: 3px solid #4B0082;
   border-radius: 4px;
 }
 .group .card-body.has_shadow{

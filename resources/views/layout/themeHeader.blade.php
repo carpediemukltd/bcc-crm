@@ -662,6 +662,9 @@
                               <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
                            </li>
                            <li>
+                              <a class="dropdown-item" href="{{ route('clean-dummy-data.get') }}">Manage Data</a>
+                           </li>
+                           <li>
                               <a class="dropdown-item" href="{{ route('privacy') }}">Privacy Setting</a>
                            </li>
                            <li>

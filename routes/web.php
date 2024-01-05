@@ -117,6 +117,9 @@ Route::middleware([CheckStatus::class])->group(function () {
 
         Route::get('kixie-logs/{type}', [KixieLogController::class, 'list'])->name('kixie.logs');
         Route::get('kixie-logs/details/{id}', [KixieLogController::class, 'details'])->name('kixie.logs.details');
+        Route::get('clean-dummy-data', [GeneralController::class, 'getCleanDummyData'])->name('clean-dummy-data.get');
+        Route::post('clean-dummy-data', [GeneralController::class, 'postCleanDummyData'])->name('clean-dummy-data.post');
+        
 
     });
 

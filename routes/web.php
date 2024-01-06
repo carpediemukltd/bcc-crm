@@ -28,9 +28,11 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\ChromeExtensionController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\BusinessSettingEntityController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\KixieLogController;
+use App\Http\Controllers\SettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -168,6 +170,11 @@ Route::middleware([CheckStatus::class])->group(function () {
         Route::post('update-stage-settings-options', [NotificationController::class, 'updateStageSettingsOptions']);
         Route::get('notifications', [NotificationController::class, 'index'])->name('notifications');
         Route::any('roundrobin', [RoundRobinController::class, 'index'])->name('roundrobin');
+        Route::prefix('settings')->group(function () {
+            Route::get('/', [SettingsController::class, 'index'])->name('settings');
+            Route::resource('business-settings', BusinessSettingEntityController::class);
+
+        });
     });
     Route::prefix('demo')->group(function () {
         Route::get('userlist', [GeneralController::class, 'userList'])->name('userlist');

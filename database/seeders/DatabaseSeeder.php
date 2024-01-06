@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             Users::class,
             RolesAndPermissionsSeeder::class,
             StageSeeder::class,
-            DealReferenceIdsSeeder::class
+            DealReferenceIdsSeeder::class,
+            BusinessSettingEntityTypeSeeder::class
         ]);
     }
 }

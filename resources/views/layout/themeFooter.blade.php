@@ -782,7 +782,7 @@
 <script src="{{asset('assets/js/charts/alternate-dashboard.js?v=3.0.0')}}" defer></script>
 <!-- Hopeui Script -->
 <script src="{{asset('assets/js/hope-ui.js?v=3.0.0')}}" defer></script>
-<script src="{{asset('assets/js/hope-uipro.js?v=3.0.0')}}" defer></script>
+<!-- <script src="{{asset('assets/js/hope-uipro.js?v=3.0.0')}}" defer></script> -->
 <script src="{{asset('assets/js/sidebar.js?v=3.0.0')}}" defer></script>
 
 <script src="{{asset('assets/vendor/sortable/Sortable.min.js')}}"></script>
